@@ -12,7 +12,7 @@ class HomeController extends BaseController {
      * Post Model
      * @var Post
      */
-     protected $deployments;
+     protected $account;
     /**
      * User Model
      * @var User
@@ -23,9 +23,9 @@ class HomeController extends BaseController {
      * @param Post $post
      * @param User $user
      */
-    public function __construct(Deployment $deployment, User $user) {
+    public function __construct(CloudAccount $account, User $user) {
         parent::__construct();
-        $this->deployments = $deployment;
+        $this->account = $account;
         $this->user = $user;
     }
     /**
@@ -35,30 +35,14 @@ class HomeController extends BaseController {
      */
     public function getIndex() {
         if (Auth::check()) {
-            //$deployments = Deployment::where('user_id', Auth::id())->get();
-			$deployments = DeploymentQueryHelper::getQuery( $this->deployments, 10 );
+            $accounts = CloudAccount::where('user_id', Auth::id())->paginate(10);
 		
         } else {
-            $deployments = array();
-        }
-        try {
-            $search_term = Input::get('q');
-            if (empty($search_term)) {
-                $search_term = 'xdocker';
-            }
-            
-            $response = xDockerEngine::dockerHubGet($search_term);
-            $dockerInstances = !empty($response) ? $response->results : '';
-        }
-        catch(Exception $e) {
-            Log::error('Exception while loading docker images!');
-            $dockerInstances = array();
+            $accounts = array();
         }
         // Show the page
         return View::make('site/home/index', array(
-            'deployments' => $deployments,
-            'search_term' => $search_term,
-            'dockerInstances' => $dockerInstances
+            'accounts' => $accounts
         ));
     }
 }

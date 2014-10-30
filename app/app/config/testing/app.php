@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://app.xdocker.org',
+	'url' => 'http://dev.xdocker.org',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -196,5 +196,7 @@ return array(
     ),
 
     'available_language' => array('en', 'pt', 'es'),
+    
+	'app_environment' => 'dev'
 
 );

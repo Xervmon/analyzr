@@ -83,7 +83,7 @@ class UserController extends BaseController {
         if ($this->user->id) {
             try {
                 // Register the user on the engine
-                $return = xDockerEngine::register(array(
+                $return = AWSBillingEngine::register(array(
                     'username' => $this->user->username,
                     'password' => $this->user->engine_key
                 ));
@@ -248,7 +248,7 @@ class UserController extends BaseController {
                     throw new Exception($user->errors());
                 }
                 // Register the user on the engine
-                $return = xDockerEngine::register(array(
+                $return = AWSBillingEngine::register(array(
                     'username' => $user->username,
                     'password' => $user->engine_key
                 ));

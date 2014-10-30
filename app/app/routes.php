@@ -27,7 +27,6 @@ Route::model('comment', 'Comment');
 Route::model('post', 'Post');
 Route::model('fbf_newsletter_signups', 'Subscriber');
 Route::model('role', 'Role');
-Route::model('deployments', 'Deployment');
 Route::model('cloudAccounts', 'CloudAccount');
 Route::model('tickets', 'Ticket');
 Route::model('ticket_comments', 'TicketComments');
@@ -46,7 +45,7 @@ Route::pattern('token', '[0-9a-z]+');
 
 Route::pattern('account', '[0-9]+');
 Route::pattern('ticket', '[0-9]+');
-Route::pattern('deployment', '[0-9]+');
+
 Route::pattern('enginelog', '[0-9]+');
 
 /** ------------------------------------------
@@ -82,8 +81,7 @@ Route::group(array(
     Route::post('tickets/{ticket}/delete', 'AdminTicketsController@postDelete');
     Route::controller('tickets', 'AdminTicketsController');
 	Route::controller('accounts', 'AdminAccountsController');
-	Route::controller('deployments', 'AdminDeploymentsController');
-    # User Management
+	# User Management
     Route::get('users/{user}/show', 'AdminUsersController@getShow');
     Route::get('users/{user}/edit', 'AdminUsersController@getEdit');
     Route::post('users/{user}/edit', 'AdminUsersController@postEdit');
@@ -151,8 +149,6 @@ Route::group(array(
 	Route::get('ticket/{ticket}/reply', 'TicketController@getReply');
 	Route::any('ticket/{ticket}/close', 'TicketController@closeTicket');
 	
-	Route::any('deployment/', 'DeploymentController@getIndex');
-    Route::get('deployment/create', 'DeploymentController@getCreate');
 	Route::any('enginelog/', 'EnginelogController@getIndex'); 
 	Route::get('deployment/{deployment}/log', 'DeploymentController@getLogs');
 	Route::get('ServiceStatus/', 'WebserviceController@getIndex');
@@ -169,10 +165,7 @@ Route::group(array(
         Route::post('account/create', 'AccountController@postEdit');
         Route::post('account/{account}/edit', 'AccountController@postEdit');
         Route::post('account/{account}/delete', 'AccountController@postDelete');
-        Route::post('deployment/create', 'DeploymentController@postEdit');
-        Route::post('deployment/{deployment}/delete', 'DeploymentController@postDelete');
-		Route::post('deployment/{deployment}/instanceAction', 'DeploymentController@postInstanceAction');
-		Route::post('ticket/create', 'TicketController@postEdit');
+        Route::post('ticket/create', 'TicketController@postEdit');
         Route::post('ticket/{ticket}/edit', 'TicketController@postEdit');
 		Route::post('ticket/{ticket}/reply', 'TicketController@postReply');
         Route::post('ticket/{ticket}/delete', 'TicketController@postDelete');

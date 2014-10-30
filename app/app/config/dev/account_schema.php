@@ -28,22 +28,10 @@ return array(
             'title' => 'Billing Bucket',
             'required' => false
         ) ,
-    ) ,
-    'Rackspace Cloud' => array(
-        'credentials[accountId]' => array(
+        'credentials[billingStatus]' => array(
             'type' => 'string',
-            'title' => 'Account ID',
-            'required' => true
-        ) ,
-        'credentials[username]' => array(
-            'type' => 'string',
-            'title' => 'Username',
-            'required' => true
-        ) ,
-        'credentials[apiKey]' => array(
-            'type' => 'string',
-            'title' => 'Api Key',
-            'required' => true
+            'title' => 'Status',
+            'required' => false
         ) ,
     ) ,
 );

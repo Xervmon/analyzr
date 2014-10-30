@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => false,
+	'debug' => true,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://www.xdocker.io',
+	'url' => 'http://dev.xdocker.org',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -197,6 +197,6 @@ return array(
 
     'available_language' => array('en', 'pt', 'es'),
     
-	'app_environment' => 'production'
+	'app_environment' => 'dev'
 
 );
