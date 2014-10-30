@@ -9,18 +9,18 @@
 return array(
     'steps' => array(
         'select' => array(
-            'title' => 'Select',
-            'description' => 'Just search for and hit play on the docker instance you want to use, from the list below.'
+            'title' => 'Configure',
+            'description' => 'Provide your cloud credentials!'
         ),
         'configure' => array(
-            'title' => 'Configure',
-            'description' => 'Choose where and how you\'d like to to be deployed (instance, size, ports, security keys, groups etc).'
+            'title' => 'Validate',
+            'description' => 'Su'
         ),
         'manage' => array(
             'title' => 'Manage',
-            'description' => 'xDocker allows you to easily manage, refresh or delete your deployments.'
+            'description' => 'We aggregate your spend and analyze your cost data'
         )
     ),
-    'xervmon_intro'=>'xDocker is a part of the powerful Xervmon cloud management suite',
+    'xervmon_intro'=>'AWSUsage Analyzr is a part of the powerful Xervmon cloud management suite',
     'xervmon_call_to_action'=>'Learn how you can save upto 50% on cloud costs with Xervmon'
 );
