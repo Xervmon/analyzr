@@ -58,12 +58,12 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => '127.0.0.1',
-			'database'  => 'dev',
-			'username'  => 'dev',
-			'password'  => 'oYTrSdbR0II76Qnl',
+			'database'  => 'awsusage',
+			'username'  => 'awsusage',
+			'password'  => 'awsusage2763man',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
-			'prefix'    => 'xd_',
+			'prefix'    => 'awsusage_',
 		),
 
 		'pgsql' => array(
