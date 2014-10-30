@@ -60,7 +60,7 @@ return array(
 			'host'      => '127.0.0.1',
 			'database'  => 'awsusage',
 			'username'  => 'awsusage',
-			'password'  => 'awsusage2763man',
+			'password'  => 't3SrV0T6LlVReVyF',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => 'awsusage_',
