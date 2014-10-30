@@ -6,10 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AWSBillingEngine' => $baseDir . '/app/library/awsusage/AWSBillingEngine.php',
     'AWSPRoviderImpl' => $baseDir . '/app/library/CloudDrivers/AWSProviderImpl.php',
     'AWSPricingController' => $baseDir . '/app/controllers/aws/AWSPricingController.php',
     'AccountController' => $baseDir . '/app/controllers/account/AccountController.php',
-    'AddDeploymentIdToTicketsTable' => $baseDir . '/app/database/migrations/2014_10_26_043505_add_deploymentId_to_tickets_table.php',
     'AddEngineKeyLog' => $baseDir . '/app/database/migrations/2014_09_29_041347_add_engine_key_log.php',
     'AdminAccountsController' => $baseDir . '/app/controllers/admin/AdminAccountsController.php',
     'AdminBlogsController' => $baseDir . '/app/controllers/admin/AdminBlogsController.php',
@@ -34,14 +34,12 @@ return array(
     'ConfideSetupUsersTable' => $baseDir . '/app/database/migrations/2013_02_05_024934_confide_setup_users_table.php',
     'CreateCloudAccountsTable' => $baseDir . '/app/database/migrations/2014_09_08_163809_create_CloudAccounts_table.php',
     'CreateCommentsTable' => $baseDir . '/app/database/migrations/2013_02_05_044505_create_comments_table.php',
-    'CreateDeploymentsTable' => $baseDir . '/app/database/migrations/2014_09_11_141820_create_deployments_table.php',
     'CreatePostsTable' => $baseDir . '/app/database/migrations/2013_02_05_043505_create_posts_table.php',
     'CreateSignupsTable' => $baseDir . '/app/database/migrations/2013_11_26_091111_create_signups_table.php',
     'CreateTicketCommentsTable' => $baseDir . '/app/database/migrations/2014_10_14_043_create_ticket_comments_table.php',
     'CreateTicketsTable' => $baseDir . '/app/database/migrations/2014_10_13_043505_create_tickets_table.php',
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
     'Deployment' => $baseDir . '/app/models/Deployment.php',
-    'DeploymentController' => $baseDir . '/app/controllers/deployment/DeploymentController.php',
     'DeploymentQueryHelper' => $baseDir . '/app/library/helpers/DeploymentQueryHelper.php',
     'EC2InstancePrices' => $baseDir . '/app/library/helpers/EC2InstancePrices.php',
     'EngineLog' => $baseDir . '/app/models/EngineLog.php',
@@ -54,7 +52,6 @@ return array(
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/File/Iterator/Facade.php',
     'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/File/Iterator/Factory.php',
     'HomeController' => $baseDir . '/app/controllers/HomeController.php',
-    'Hub' => $baseDir . '/app/library/Docker/Hub.php',
     'IProvider' => $baseDir . '/app/library/IProvider.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
     'PHPUnit_Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
@@ -426,7 +423,6 @@ return array(
     'PermissionsTableSeeder' => $baseDir . '/app/database/seeds/PermissionsTableSeeder.php',
     'Post' => $baseDir . '/app/models/Post.php',
     'PostsTableSeeder' => $baseDir . '/app/database/seeds/PostsTableSeeder.php',
-    'RemoteAPI' => $baseDir . '/app/library/Docker/RemoteAPI.php',
     'Role' => $baseDir . '/app/models/Role.php',
     'RolesTableSeeder' => $baseDir . '/app/database/seeds/RolesTableSeeder.php',
     'SebastianBergmann\\Comparator\\ArrayComparator' => $vendorDir . '/sebastian/comparator/src/ArrayComparator.php',
@@ -478,5 +474,4 @@ return array(
     'Zizaco\\Confide\\MigrationCommand' => $vendorDir . '/zizaco/confide/src/commands/MigrationCommand.php',
     'Zizaco\\Confide\\RoutesCommand' => $vendorDir . '/zizaco/confide/src/commands/RoutesCommand.php',
     'Zizaco\\Entrust\\MigrationCommand' => $vendorDir . '/zizaco/entrust/src/commands/MigrationCommand.php',
-    'xDockerEngine' => $baseDir . '/app/library/Docker/xDockerEngine.php',
 );
