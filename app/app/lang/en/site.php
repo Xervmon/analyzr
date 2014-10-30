@@ -30,7 +30,7 @@ return array(
     'aws_pricing' => 'AWS Prices',
     'admin_panel' => 'Admin Panel',
     'name'=>'AWS Usage Analyzer (β)',
-    'tagline'=>'Only analytics you ever need for manage your assets on AWS',
+    'tagline'=>'Only analytics you ever need to manage your assets on AWS',
     'title'=>'Analyze your spend on AWS',
     'footertitle' => 'Powered By Xervmon',
     'follow_us' => 'Follow Us',
