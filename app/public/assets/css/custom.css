@@ -1,0 +1,174 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: auto;
+	padding: 45px 0px 60px;;
+}
+/*
+.page-header {
+	padding-bottom: 1.0px;
+	margin-top: 10px;
+	margin-right: 0px;
+	margin-bottom: 10px;
+	margin-left: 0px;
+	border-bottom: 1px solid #eeeeee;
+}
+*/
+ /* Wrapper for page content to push down footer */
+#wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by it's height */
+        margin: 0 auto -60px;
+}
+
+      /* Set the fixed height of the footer here */
+#push{
+	height: 60px;
+}
+
+div#footer {
+	border-top: 1px solid #E2E2E2;
+	background: #FFF;
+}
+ 
+div#footer p {
+	margin-bottom:0px;
+}
+
+div#footer  .container > .row > div.column:first-child{
+	margin-top: 2em;
+}
+
+.footer-social > p:first-child {
+	text-align:right;
+}
+
+.footer-social-icons {
+	float:right;
+}
+      
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 769px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+		div#footer  .container > .row > div.column:first-child{
+			margin-top: 5px;
+		}
+		
+		.footer-social > p:first-child {
+			text-align:center;
+		}
+
+		.footer-social-icons {
+			float:none;
+			text-align:center;
+			margin-bottom:5px !important;
+		}
+ }
+.social-login-icons {
+    margin-right: 20px;
+}
+.social-google {
+    color: #da573b;
+    border-color: #be5238;
+}
+.social-google:hover {
+    color: #be5238;
+    border-color: #9b4631;
+}
+.social-git {
+    color: #34495E;
+    border-color: #34495E;
+}
+.social-git:hover {
+    color: #2C3E50;
+    border-color: #2C3E50;
+}
+.social-facebook {
+    color: #4c699e;
+    border-color: #47618d;
+}
+.social-facebook:hover {
+    color: #47618d;
+    border-color: #3c5173;
+}
+.social-linkedin {
+    color: #4875B4;
+    border-color: #466b99;
+}
+.social-linkedin:hover {
+    color: #466b99;
+    border-color: #3b5a7c;
+}
+.main {
+    width: 320px;
+    margin: 0 auto;
+}
+.login-checkbox {
+    float: right;
+}
+.login-checkbox > label > #remember {
+    margin-top: 5px;
+}
+.home-search {
+    margin-bottom: 0px;
+}
+.list-group-custom > li > div > a > img {
+    width: 35px;
+}
+.list-group-custom > li > div > .media-body > p {
+    font-size: 14px;
+    margin: 0px;
+}
+.list-group-custom > li > div > .media-body > .media-heading {
+    font-size: 20px;
+    font-weight: bold;
+}
+.nav-tabs {
+    margin-bottom: 15px;
+}
+.navbar-brand img {
+    margin-top: -5%;
+}
+.clear-both {
+    clear: both;
+}
+.banner-github {
+    position: absolute;
+    top: 64px;
+    right: 0;
+    border: 0;
+}
+.label {
+    font-weight: 500;
+}
+/* The main xDocker CSS stuff */
+
+.process-next-arrow-horizontal {
+    position: absolute;
+    top: 2em;
+    right: -0.5em;
+}
+.process-next-arrow-vertical {
+    margin: 0.2em;
+}
+.display-initial {
+    display: initial;
+}
+
+
+/* Reset whitespace wrapping on .btn in smaller screens to allow them to bend */
+
+@media (max-width: 980px) {
+    .btn {
+        white-space: inherit;
+   }
+}
+

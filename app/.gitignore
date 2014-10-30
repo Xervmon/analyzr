@@ -1,0 +1,23 @@
+# Laravel
+/bootstrap/compiled.php
+/app/storage/logs
+/app/storage/sessions
+
+# Configuration
+/app/config/local
+# /app/config/staging
+# /app/config/production
+
+# Composer
+# composer.phar
+# /vendor
+composer.lock
+
+# OS
+.DS_Store
+.idea/
+vagrant
+.vagrant
+
+# Packages
+_ide_helpers.php
