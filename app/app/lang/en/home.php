@@ -14,11 +14,11 @@ return array(
         ),
         'configure' => array(
             'title' => 'Validate',
-            'description' => 'Su'
+            'description' => 'Take a snack break and come back!'
         ),
         'manage' => array(
             'title' => 'Manage',
-            'description' => 'We aggregate your spend and analyze your cost data'
+            'description' => 'We aggregate your spend and analyze your cost data!'
         )
     ),
     'xervmon_intro'=>'AWSUsage Analyzr is a part of the powerful Xervmon cloud management suite',
