@@ -105,6 +105,7 @@ class AccountController extends BaseController {
 			case 'BAD_CREDENTIALS':
 			case 'FAILURE' : $ret = Redirect::to('account')->with('error', 'Check Account Credentials!');
 			case 'ENGINE_FAILURE' : $ret =  Redirect::to('account')->with('error', 'Check if AWS Usage Processing engine is up!');
+			case 'ENGINE_CREDENTIALS_FAILURE' : $ret =  Redirect::to('account')->with('error', 'Engine credentials mis-match. Contact support team t');
 		}	
 		return $ret;
 	}
@@ -115,8 +116,13 @@ class AccountController extends BaseController {
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
 		$obj = json_decode($responseJson);
+		
+		if(!StringHelper::isJson($responseJson))
+		{
+			return 'ENGINE_CREDENTIALS_FAILURE';
+		}
 				
-		if(!empty($responseJson) && $obj->status == 'OK')
+		if($obj->status == 'OK')
 		{
 			Log::info('Preparing the account for processing..');
 			$credentials 	 	= json_decode($account->credentials);
