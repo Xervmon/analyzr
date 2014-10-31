@@ -33,8 +33,7 @@ class WebserviceController extends BaseController {
           	return Redirect::to('/')->with('error', Lang::get('genera.must_login'));
 		}
         return View::make('site/serviceStatus/index', array(
-            'vars' => array( Lang::get('site.docker_service') => xDockerEngine::getDockerServiceStatus(), 
-            				Lang::get('site.webservice') => xDockerEngine::getxDockerServiceStatus(), )
+            'vars' => array( Lang::get('site.webservice') => AWSBillingEngine::getServiceStatus(), )
         ));
     }
 }

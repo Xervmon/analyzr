@@ -79,11 +79,19 @@ class AWSBillingEngine {
         return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['removeUsername'], $data);
     }
 	
-	///Following methods are helper for accessing the config variables
-	public static function getTag($dockerName)
+	public static function getServiceStatus()
 	{
-		$settings = Config::get('docker_settings');
-		return isset($settings[$dockerName]) ? $settings[$dockerName]['tags'] : '';
+		$responseJson = self::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+		$status = 'error';
+		if(StringHelper::isJson($responseJson))
+		{
+			$obj = json_decode($responseJson);
+			if(!empty($obj) && $obj->status == 'OK')
+			{
+				$status = 'OK';
+			}
+		}	
+		return $status;
 	}
 	
 }
