@@ -116,7 +116,7 @@ class AccountController extends BaseController {
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
 		$obj = json_decode($responseJson);
 				
-		if(StringHelper::isJson($responseJson)  && $obj->status == 'OK')
+		if(!empty($responseJson) && $obj->status == 'OK')
 		{
 			Log::info('Preparing the account for processing..');
 			$credentials 	 	= json_decode($account->credentials);
