@@ -101,11 +101,11 @@ class AccountController extends BaseController {
 		$ret = '';
 		switch ($state)
 		{
-			case 'SUCCESS': $ret = Redirect::intended('account')->with('success', Lang::get('account/account.account_updated'));
+			case 'SUCCESS': $ret = Redirect::intended('account')->with('success', Lang::get('account/account.account_updated')); break;
 			case 'BAD_CREDENTIALS':
-			case 'FAILURE' : $ret = Redirect::to('account')->with('error', 'Check Account Credentials!');
-			case 'ENGINE_FAILURE' : $ret =  Redirect::to('account')->with('error', 'Check if AWS Usage Processing engine is up!');
-			case 'ENGINE_CREDENTIALS_FAILURE' : $ret =  Redirect::to('account')->with('error', 'Engine credentials mis-match. Contact support team t');
+			case 'FAILURE' : $ret = Redirect::to('account')->with('error', 'Check Account Credentials!'); break;
+			case 'ENGINE_FAILURE' : $ret =  Redirect::to('account')->with('error', 'Check if AWS Usage Processing engine is up!'); break;
+			case 'ENGINE_CREDENTIALS_FAILURE' : $ret =  Redirect::to('account')->with('error', 'Engine credentials mis-match. Contact support team.'); break;
 		}	
 		return $ret;
 	}
