@@ -83,7 +83,7 @@ class AccountController extends BaseController {
 				$ret = $this->process($account);
 				CloudAccountHelper::save($account);
 				
-				$this->redirect($ret);
+				return $this->redirect($ret);
             	//return Redirect::intended('account')->with('success', Lang::get('account/account.account_updated'));
             } else {
                 return Redirect::to('account')->with('error', Lang::get('account/account.account_auth_failed'));
@@ -96,15 +96,17 @@ class AccountController extends BaseController {
     }
 
 
-	private function redirect($ret)
+	private function redirect($state)
 	{
-		switch ($ret)
+		$ret = '';
+		switch ($state)
 		{
-			case 'SUCCESS': return Redirect::intended('account')->with('success', Lang::get('account/account.account_updated'));
+			case 'SUCCESS': $ret = Redirect::intended('account')->with('success', Lang::get('account/account.account_updated'));
 			case 'BAD_CREDENTIALS':
-			case 'FAILURE' : return Redirect::to('account')->with('error', 'Check Account Credentials!');
-			case 'ENGINE_FAILURE' : return Redirect::to('account')->with('error', 'Check if AWS Usage Processing engine is up!');
+			case 'FAILURE' : $ret = Redirect::to('account')->with('error', 'Check Account Credentials!');
+			case 'ENGINE_FAILURE' : $ret =  Redirect::to('account')->with('error', 'Check if AWS Usage Processing engine is up!');
 		}	
+		return $ret;
 	}
 	
 	
@@ -139,12 +141,12 @@ class AccountController extends BaseController {
 				else {
 					$account ->status =' failed';
 					$account->job_id = '';
-					Log::info('Seems like bad credentials:'.json_encode($account));
+					Log::error('Seems like bad credentials:'.json_encode($account));
 					return 'FAILURE';
 				}
 			}
 			else {
-				Log::info('Failed to add to billing queue'.json_encode($account));
+				Log::error('Failed to add to billing queue'.json_encode($account));
 				return 'BAD_CREDENTIALS';
 			}
 		}
