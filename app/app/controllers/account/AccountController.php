@@ -80,8 +80,11 @@ class AccountController extends BaseController {
             
             if ($conStatus == 1) {
             	Log::info('Credentials are encrypted before saving to DB.');
+				$ret = $this->process();
 				CloudAccountHelper::save($account);
-            	return Redirect::intended('account')->with('success', Lang::get('account/account.account_updated'));
+				
+				$this->redirect($ret);
+            	//return Redirect::intended('account')->with('success', Lang::get('account/account.account_updated'));
             } else {
                 return Redirect::to('account')->with('error', Lang::get('account/account.account_auth_failed'));
             }
@@ -91,7 +94,70 @@ class AccountController extends BaseController {
             return Redirect::to('account')->with('error', $e->getMessage());
         }
     }
-    /**
+
+
+	private function redirect($ret)
+	{
+		switch ($ret)
+		{
+			case 'SUCCESS': return Redirect::intended('account')->with('success', Lang::get('account/account.account_updated'));
+			case 'BAD_CREDENTIALS':
+			case 'FAILURE' : return Redirect::to('account')->with('error', 'Check Account Credentials!');
+			case 'ENGINE_FAILURE' : return Redirect::to('account')->with('error', 'Check if AWS Usage Processing engine is up!');
+		}	
+	}
+	
+	
+	private function process(& $account)
+	{
+		$responseJson = AWSBilling::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
+		$obj = json_decode($responseJson);
+				
+		if(StringHelper::isJson($responseJson)  && $obj->status == 'OK')
+		{
+			Log::info('Preparing the account for processing..');
+			$credentials 	 	= json_decode($account->credentials);
+			$data['token'] 	 	= $obj->token;
+			$data['apiKey'] 	= StringHelper::encrypt($credentials ->apiKey, md5(Auth::user()->username));
+			$data['secretKey'] 	= StringHelper::encrypt($credentials ->secretKey, md5(Auth::user()->username));
+			$data['accountId'] 	= $credentials->accountId;
+			$data['bucketName'] = $credentials->billingBucket;
+			$json = AWSBillingEing::create_billing($data);
+			Log::info('Adding the job to billing queue for processing..');
+			
+			if(StringHelper::isJson($json))
+			{
+				$ret = json_decode($json);
+				if($ret->status == 'OK')
+				{
+					$account ->status =' In process';
+					$account->job_id = $ret->job_id;
+					Log::info('Job Id:'.$ret->job_id);
+					return 'SUCCESS';
+				}
+				else {
+					$account ->status =' failed';
+					$account->job_id = '';
+					Log::info('Seems like bad credentials:'.json_encode($account));
+					return 'FAILURE';
+				}
+			}
+			else {
+				Log::info('Failed to add to billing queue'.json_encode($account));
+				return 'BAD_CREDENTIALS';
+			}
+		}
+		else
+			{
+				return 'ENGINE_FAILURE';
+			}
+	}
+    
+	 
+	 /** 
+	 *//* 
+	 *//**
      * Remove the specified Account .
      *
      * @param $account
