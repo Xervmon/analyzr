@@ -123,7 +123,7 @@ class AccountController extends BaseController {
 			$data['secretKey'] 	= StringHelper::encrypt($credentials ->secretKey, md5(Auth::user()->username));
 			$data['accountId'] 	= $credentials->accountId;
 			$data['bucketName'] = $credentials->billingBucket;
-			$json = AWSBillingEing::create_billing($data);
+			$json = AWSBillingEngine::create_billing($data);
 			Log::info('Adding the job to billing queue for processing..');
 			
 			if(StringHelper::isJson($json))
