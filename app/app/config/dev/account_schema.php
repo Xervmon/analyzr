@@ -26,12 +26,7 @@ return array(
         'credentials[billingBucket]' => array(
             'type' => 'string',
             'title' => 'Billing Bucket',
-            'required' => false
-        ) ,
-        'credentials[billingStatus]' => array(
-            'type' => 'string',
-            'title' => 'Status',
-            'required' => false
+            'required' => true
         ) ,
     ) ,
 );
