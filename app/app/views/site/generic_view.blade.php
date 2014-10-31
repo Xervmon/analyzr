@@ -10,7 +10,6 @@
 	<ul class="list-group">
 		@if(!empty($accounts)) 
 			@foreach ($accounts as $account)
-					?>
 		  			<li class="list-group-item">
 						<div class="media">
 							<p>

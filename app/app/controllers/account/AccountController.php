@@ -80,7 +80,7 @@ class AccountController extends BaseController {
             
             if ($conStatus == 1) {
             	Log::info('Credentials are encrypted before saving to DB.');
-				$ret = $this->process();
+				$ret = $this->process($account);
 				CloudAccountHelper::save($account);
 				
 				$this->redirect($ret);
