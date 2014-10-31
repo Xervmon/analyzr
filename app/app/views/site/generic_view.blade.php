@@ -15,7 +15,7 @@
 						<div class="media">
 							<p>
 								<a alt="{{ $account->name }}" title="{{ $account->name }}" href="{{ URL::to('account/'.$account->id.'/edit') }}" class="pull-left" href="#">
-								    <img title="{{ $account->name }}" class="media-object img-responsive" src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.'.$deployment->cloudProvider.'.logo')) }}" alt="{{ $account->name }}" />
+								    <img title="{{ $account->name }}" class="media-object img-responsive" src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.'.$account->cloudProvider.'.logo')) }}" alt="{{ $account->name }}" />
 								</a> 
 							</p>
 							<form class="pull-right" method="post" action="{{ URL::to('account/' . $account->id . '/refresh') }}">
@@ -33,7 +33,7 @@
 								</p>
 								
 								<p>
-									<span title="Created At"><span class="glyphicon glyphicon-calendar"></span> <strong>Build Date</strong>:{{{ $deployment->created_at }}}</span>
+									<span title="Created At"><span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}</span>
 								</p>
 								
 							</div>
