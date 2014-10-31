@@ -35,7 +35,6 @@
 									<span title="Created At"><span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}</span>
 								</p>
 								<p>
-									
 									<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
 								</p>
 							</div>
