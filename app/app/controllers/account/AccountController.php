@@ -110,7 +110,7 @@ class AccountController extends BaseController {
 	
 	private function process(& $account)
 	{
-		$responseJson = AWSBilling::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
 		$obj = json_decode($responseJson);
 				
