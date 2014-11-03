@@ -26,7 +26,7 @@ class AddToAccounts1Table extends Migration {
 	public function down()
 	{
 		// Delete the `accounts` table
-		Schema::drop('job_id');
+		Schema::drop('wsResults');
 		//Schema::drop('status');
 	}
 
