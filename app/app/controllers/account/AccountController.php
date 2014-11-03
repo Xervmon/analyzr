@@ -219,7 +219,7 @@ class AccountController extends BaseController {
 		        	Log::error('Error while saving Account : '.json_encode( $dep->errors()));
 					return Redirect::to('account')->with('error', 'Error saving Account!' );
 		        }
-				return Redirect::to('account')->with('success', $deployment->name .' is refreshed' );
+				return Redirect::to('account')->with('success', $account->name .' is refreshed' );
 			}
 			else  if(!empty($obj2) && $obj2->status == 'error')
 			 {
