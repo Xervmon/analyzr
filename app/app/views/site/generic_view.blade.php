@@ -44,7 +44,7 @@
 		@endif
 	</ul>
 	@if(empty($accounts) || count($accounts) === 0) 
-		<div class="alert alert-info"> {{{ Lang::get('accounts/accounts.empty_accounts') }}}</div>
+		<div class="alert alert-info"> {{{ Lang::get('account/account.empty_accounts') }}}</div>
 	@endif
 </div>
 	<!-- <div class="text-center">
