@@ -130,7 +130,7 @@ class AccountController extends BaseController {
 			$data['apiKey'] 	= StringHelper::encrypt($credentials ->apiKey, md5(Auth::user()->username));
 			$data['secretKey'] 	= StringHelper::encrypt($credentials ->secretKey, md5(Auth::user()->username));
 			$data['accountId'] 	= $credentials->accountId;
-			$data['bucketName'] = $credentials->billingBucket;
+			$data['billingBucket'] = $credentials->billingBucket;
 			$json = AWSBillingEngine::create_billing($data);
 			Log::info('Adding the job to billing queue for processing..'.$json);
 			
@@ -144,10 +144,10 @@ class AccountController extends BaseController {
 					Log::info('Job Id:'.$ret->job_id);
 					return 'SUCCESS';
 				}
-				else {
-					$account ->status =' failed';
+				else if($ret->status == 'error')
+					$account ->status = $ret->status;
 					$account->job_id = '';
-					Log::error('Seems like bad credentials:'.json_encode($account));
+					Log::error($ret->message.' '.json_encode($account));
 					return 'FAILURE';
 				}
 			}
