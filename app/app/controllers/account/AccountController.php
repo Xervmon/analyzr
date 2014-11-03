@@ -189,7 +189,7 @@ class AccountController extends BaseController {
 	public function checkStatus($id)
 	{
 		$this->check();
-		$account = Account::where('user_id', Auth::id())->find($id);
+		$account = CloudAccount::where('user_id', Auth::id())->find($id);
 		if(empty($account))
 		{
 			return Redirect::to('account')->with('info', 'Selected Account do not need refresh!');
