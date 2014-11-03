@@ -11,6 +11,8 @@ return array(
     'AWSPricingController' => $baseDir . '/app/controllers/aws/AWSPricingController.php',
     'AccountController' => $baseDir . '/app/controllers/account/AccountController.php',
     'AddEngineKeyLog' => $baseDir . '/app/database/migrations/2014_09_29_041347_add_engine_key_log.php',
+    'AddToAccounts1Table' => $baseDir . '/app/database/migrations/2014_10_30_043_add_to_accounts_table.php',
+    'AddToAccountsTable' => $baseDir . '/app/database/migrations/2014_11_03_043_add_to_accounts1_table.php',
     'AdminAccountsController' => $baseDir . '/app/controllers/admin/AdminAccountsController.php',
     'AdminBlogsController' => $baseDir . '/app/controllers/admin/AdminBlogsController.php',
     'AdminCommentsController' => $baseDir . '/app/controllers/admin/AdminCommentsController.php',
