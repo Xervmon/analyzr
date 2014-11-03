@@ -145,6 +145,7 @@ class AccountController extends BaseController {
 					return 'SUCCESS';
 				}
 				else if($ret->status == 'error')
+				{
 					$account ->status = $ret->status;
 					$account->job_id = '';
 					Log::error($ret->message.' '.json_encode($account));
