@@ -132,7 +132,7 @@ class AccountController extends BaseController {
 			$data['accountId'] 	= $credentials->accountId;
 			$data['bucketName'] = $credentials->billingBucket;
 			$json = AWSBillingEngine::create_billing($data);
-			Log::info('Adding the job to billing queue for processing..');
+			Log::info('Adding the job to billing queue for processing..'.$json);
 			
 			if(StringHelper::isJson($json))
 			{
