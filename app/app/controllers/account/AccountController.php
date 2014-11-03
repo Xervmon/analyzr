@@ -158,7 +158,7 @@ class AccountController extends BaseController {
 		}
 		else
 			{
-				return 'ENGINE_FAILURE';
+				return 'ENGINE_CREDENTIALS_FAILURE';
 			}
 	}
     

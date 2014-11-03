@@ -126,6 +126,31 @@ Route::get('contact-us', function () {
     // Return about us page
     return View::make('site/contact-us');
 });
+
+Route::when('roadmap', 'detectLang');
+Route::get('roadmap', function () {
+    // Return about us page
+    return View::make('site/static/roadmap');
+});
+
+Route::when('data-security', 'detectLang');
+Route::get('data-security', function () {
+    // Return about us page
+    return View::make('site/static/data-security');
+});
+
+Route::when('devops', 'detectLang');
+Route::get('devops', function () {
+    // Return about us page
+    return View::make('site/static/devops');
+});
+
+Route::when('videos', 'detectLang');
+Route::get('videos', function () {
+    // Return about us page
+    return View::make('site/static/videos');
+});
+
 /* We don't use the default blog stuff
 # Posts - Second to last set, match slug
 Route::get('{postSlug}', 'BlogController@getView');
