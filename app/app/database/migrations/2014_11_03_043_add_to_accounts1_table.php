@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddToAccounts1Table extends Migration {
+class AddToAccountsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -14,7 +14,9 @@ class AddToAccounts1Table extends Migration {
 	{
 		Schema::table('cloudAccounts', function(Blueprint $table)
 		{
-			$table->text('wsResults');
+			$table->string('job_id');
+			$table->string('status');
+
 		});
 	}
 
@@ -26,7 +28,7 @@ class AddToAccounts1Table extends Migration {
 	public function down()
 	{
 		// Delete the `accounts` table
-		Schema::drop('job_id');
+		//Schema::drop('job_id');
 		//Schema::drop('status');
 	}
 

@@ -167,6 +167,7 @@ Route::group(array(
     Route::any('account/', 'AccountController@getIndex'); 
 	Route::get('account/create', 'AccountController@getCreate');
     Route::get('account/{account}/edit', 'AccountController@getCreate');
+	Route::any('account/{account}/refresh', 'AccountController@checkStatus');
 	
 	Route::any('ticket/', 'TicketController@getIndex'); 
 	Route::get('ticket/create', 'TicketController@getCreate');
@@ -177,9 +178,7 @@ Route::group(array(
 	Route::any('enginelog/', 'EnginelogController@getIndex'); 
 	Route::get('deployment/{deployment}/log', 'DeploymentController@getLogs');
 	Route::get('ServiceStatus/', 'WebserviceController@getIndex');
-	Route::get('deployment/images', 'DeploymentController@getImages');
-	Route::any('deployment/{deployment}/downloadKey', 'DeploymentController@getDownloadKey');
-	Route::any('deployment/{deployment}/refresh', 'DeploymentController@checkStatus');
+	
 	
 	 Route::any('awsPricing/', 'AWSPricingController@getIndex'); 
 	

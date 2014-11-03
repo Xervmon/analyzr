@@ -20,6 +20,12 @@
 						<span class="pull-left" href="#">
 						    <img class="media-object img-responsive" src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.'.$account->cloudProvider.'.logo')) }}" alt="{{ $account->cloudProvider }}" />
 						</span>
+						<form class="pull-right" method="post" action="{{ URL::to('account/' . $deployment->id . '/refresh') }}">
+								<!-- CSRF Token -->
+								<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+								<!-- ./ csrf token -->
+								<button type="submit" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-refresh"></span></button>
+							</form>
 						<form class="pull-right" method="post" action="{{ URL::to('account/' . $account->id . '/delete') }}">
 							<!-- CSRF Token -->
 							<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
@@ -31,6 +37,9 @@
 							<h4 class="media-heading">{{ String::title($account->name) }}</h4>
 							<p>
 								<span class="glyphicon glyphicon-calendar"></span> <!--Sept 16th, 2012-->{{{ $account->created_at }}}
+							</p>
+							<p>
+								<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
 							</p>
 						</div>
 					</div>

@@ -110,7 +110,6 @@ class AccountController extends BaseController {
 		return $ret;
 	}
 	
-	
 	private function process(& $account)
 	{
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
@@ -162,6 +161,91 @@ class AccountController extends BaseController {
 				return 'ENGINE_CREDENTIALS_FAILURE';
 			}
 	}
+
+	private function check($json = false)
+	{
+		if($json)
+		{
+			if(AWSBillingEngine::getServiceStatus() == 'error')
+			{
+				Log::error(Lang::get('account/account.awsbilling_service_down'));
+				print json_encode(array('status' => 'error', 'message' => Lang::get('account/account.awsbilling_service_down')));
+				return;
+			}
+		}
+		else 
+		{
+			
+			if(AWSBillingEngine::getServiceStatus() == 'error')
+			{
+				Log::error(Lang::get('account/account.awsbilling_service_down'));
+				print json_encode(array('status' => 'error', 'message' => Lang::get('account/account.awsbilling_service_down')));
+				return;
+			}
+		}
+	}
+
+
+	public function checkStatus($id)
+	{
+		$this->check();
+		$account = Account::where('user_id', Auth::id())->find($id);
+		if(empty($account))
+		{
+			return Redirect::to('account')->with('info', 'Selected Account do not need refresh!');
+		}
+		$user = Auth::user();
+		$responseJson = AWSBillingEngine::authenticate(array('username' => $user->username, 'password' => md5($user->engine_key)));
+		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
+		$obj = json_decode($responseJson);
+		
+		if(!empty($obj) && $obj->status == 'OK')
+		{
+			$responseJson = AWSBillingEngine::getDeploymentStatus(array('token' => $obj->token, 'job_id' => $account->job_id));
+			EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'getDeploymentStatus', 'return' => $responseJson));
+		
+			$obj2 = json_decode($responseJson);
+			if(!empty($obj2) && $obj2->status == 'OK')
+			{
+				if(!isset($obj2 -> result))
+				{
+					Log::error('No Result in the checkStatus Request to be saved!');
+					$obj2 -> result ='';
+				} 
+				$account->status = $obj2->job_status;
+				$account -> wsResults = json_encode($obj2 -> result);
+				$success = $account->save();
+		        if (!$success) {
+		        	Log::error('Error while saving Account : '.json_encode( $dep->errors()));
+					return Redirect::to('account')->with('error', 'Error saving Account!' );
+		        }
+				return Redirect::to('account')->with('success', $deployment->name .' is refreshed' );
+			}
+			else  if(!empty($obj2) && $obj2->status == 'error')
+			 {
+				 // There was a problem deleting the user
+				 Log::error('Request to check status of account failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
+				 Log::error('Log :' . implode(' ', $obj2->job_log));
+	            return Redirect::to('account')->with('error', $obj2->fail_message );
+			 }	
+			else
+			{
+				  return Redirect::to('ServiceStatus')->with('error', 'Backend API is down, please try again later!');			
+			}
+			
+		 }	
+		 else if(!empty($obj) && $obj->status == 'error')
+		 {
+			 // There was a problem deleting the user
+			Log::error('Request to check status of account failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
+			Log::error('Log :' . implode(' ', $obj2->job_log));
+            return Redirect::to('account')->with('error', $obj->fail_message );
+		 }	
+		 else
+		 {
+			return Redirect::to('ServiceStatus')->with('error', 'Backend API is down, please try again later!');			
+		 }	
+	}
     
 	 
 	 /** 
@@ -172,21 +256,10 @@ class AccountController extends BaseController {
      * @param $account
      *
      */
-    public function postDelete($account) {
+    public function postDelete($id) {
     		
-    	if(empty($account->id)) $account = CloudAccount::where('user_id', Auth::id())->find($account);
-		
-		$deployment = Deployment::where('user_id', Auth::id())->where('cloudAccountId', $account->id)->get();
-		if(!$deployment->isEmpty())
-		{
-			  return Redirect::to('account')->with('error', 'Deployment is linked with this account and hence cannot be deleted');
-		}
-		
-		
-        CloudAccount::where('id', $account->id)->where('user_id', Auth::id())->delete();
+    	CloudAccount::where('id', $id)->where('user_id', Auth::id())->delete();
         
-        $id = $account->id;
-        $account->delete();
         // Was the comment post deleted?
         $account = CloudAccount::where('user_id', Auth::id())->find($id);
         if (empty($account)) {
