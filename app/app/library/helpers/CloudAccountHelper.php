@@ -35,26 +35,27 @@ class CloudAccountHelper
 			if(!empty($obj) && $obj->status == 'OK')
 		 	{
 				$response = AWSBillingEngine::GetCurrentCost(array('token' => $obj->token));
-				return $response;
+				
+				return StringHelper::isJson($response) ? json_decode($response, true) : array('status' => 'error', 'message' => 'Invalid response from processing engine') ;
 			}
 			else if(!empty($obj) && $obj->status == 'error')
 			{
 				Log::error('Request to Account logs failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
 				Log::error('Log :' . implode(' ', $obj2->job_log));
-            	return json_encode(array('status' => 'error', 'message' => $obj2->fail_message));
+            	return array('status' => 'error', 'message' => $obj2->fail_message);
 			}
 			else
 				{
-					return json_encode(array('status' => 'error', 'message' => 'Backend API is down, please try again later!'));
+					return array('status' => 'error', 'message' => 'Backend API is down, please try again later!');
 				}
 		}
 		else if(empty($account)) 
 		{
-			return json_encode(array('status' => 'error', 'message' => 'Empty account, no data found'));
+			return array('status' => 'error', 'message' => 'Empty account, no data found');
 		}
 		else 
 		{
-			return json_encode(array('status' => 'error', 'message' => 'Unexpected error. Contacted support.'));	
+			return array('status' => 'error', 'message' => 'Unexpected error. Contacted support.');	
 		}
 	}
 	

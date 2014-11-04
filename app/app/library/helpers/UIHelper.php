@@ -222,6 +222,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 	public static function displayCurrentCost($data)
 	{
 		$str = '';
+		$data = (object) $data;
 		if($data->status == 'OK')
 		{
 			$costData = (array) $data->cost_data;
