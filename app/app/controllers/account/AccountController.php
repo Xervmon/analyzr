@@ -299,7 +299,7 @@ class AccountController extends BaseController {
 			
 			if(!empty($obj) && $obj->status == 'OK')
 		 	{
-				$response = AWSBillingEngine::GetCurrentCost(array('token' => $obj->token, 'job_id' => $account->job_id));
+				$response = AWSBillingEngine::GetCurrentCost(array('token' => $obj->token));
 				return View::make('site/account/costs', array(
             	'response' => $response,
             	'account' => $account));

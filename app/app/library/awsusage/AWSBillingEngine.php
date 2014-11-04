@@ -64,7 +64,9 @@ class AWSBillingEngine {
     
 	public static function GetCurrentCost($data) {
         self::init();
-        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['GetCurrentCost'] . '/' . $data['job_id'], $data);
+		Log::info('URL ' . self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['GetCurrentCost']);
+        Log::info('Data '.json_encode($data));
+        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['GetCurrentCost'] , $data);
     }
 	
 	public static function Collection($data) {

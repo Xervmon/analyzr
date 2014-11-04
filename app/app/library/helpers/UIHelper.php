@@ -217,5 +217,24 @@ Inverse	<span class="label label-inverse">Inverse</span>
 			return self::getLabel('error');
 		}
 	}
+	
+	
+	public static function displayCurrentCost($data)
+	{
+		$str = '';
+		if($data->status == 'OK')
+		{
+			$costData = (array) $data->cost_data;
+			foreach($costData as $row => $val)
+			{
+				$str .= $row .':' . $val.PHP_EOL;
+			}
+		}
+		else if($data->status == 'error')
+		{
+				$str = $data->message;
+		}
+		return $str;
+	}
 
 }
