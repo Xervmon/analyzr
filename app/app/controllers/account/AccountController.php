@@ -296,7 +296,7 @@ class AccountController extends BaseController {
 		$obj = json_decode($responseJson);
 		if(!empty($obj) && $obj->status == 'OK')
 		{
-			$response = AWSBillingEngine::GetCurrentCost(array('token' => $obj->token, 'service_names' => array($serviceName)));
+			$response = AWSBillingEngine::Collection(array('token' => $obj->token, 'service_names' => array($serviceName)));
 			print_r($response);
 		}
 	}
