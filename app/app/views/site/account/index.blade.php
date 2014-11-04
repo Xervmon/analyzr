@@ -40,6 +40,10 @@
 							</p>
 							<p>
 								<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
+								| 
+								<?php
+									echo '<a title="ViewLog" href="'.URL::to('account/'.$account->id.'/log').'" ><span class="glyphicon glyphicon-th-list"> </span>  </a>';
+								?>
 							</p>
 						</div>
 					</div>
