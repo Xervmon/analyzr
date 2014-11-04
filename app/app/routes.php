@@ -176,7 +176,7 @@ Route::group(array(
 	Route::any('ticket/{ticket}/close', 'TicketController@closeTicket');
 	
 	Route::any('enginelog/', 'EnginelogController@getIndex'); 
-	Route::get('deployment/{deployment}/log', 'DeploymentController@getLogs');
+	Route::get('account/{account}/log', 'AccountController@getLogs');
 	Route::get('ServiceStatus/', 'WebserviceController@getIndex');
 	
 	
