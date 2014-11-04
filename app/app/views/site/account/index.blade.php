@@ -44,6 +44,10 @@
 								<?php
 									echo '<a title="ViewLog" href="'.URL::to('account/'.$account->id.'/log').'" ><span class="glyphicon glyphicon-th-list"> </span>  </a>';
 								?>
+								| 
+								<?php
+									echo '<a title="ViewLog" href="'.URL::to('account/'.$account->id.'/CurrentCosts').'" ><span class="glyphicon glyphicon-tag"> </span>  </a>';
+								?>
 							</p>
 						</div>
 					</div>

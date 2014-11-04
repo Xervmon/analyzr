@@ -177,6 +177,7 @@ Route::group(array(
 	
 	Route::any('enginelog/', 'EnginelogController@getIndex'); 
 	Route::get('account/{account}/log', 'AccountController@getLogs');
+	Route::get('account/{account}/CurrentCosts', 'AccountController@getCurrentCosts');
 	Route::get('ServiceStatus/', 'WebserviceController@getIndex');
 	
 	
