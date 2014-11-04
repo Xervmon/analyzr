@@ -222,6 +222,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 	public static function displayCurrentCost($data)
 	{
 		$str = '';
+		$str = '<h5><span class="glyphicon glyphicon-tag"> </span> Cost Data</h5>';
 		$data = (object) $data;
 		if($data->status == 'OK')
 		{
