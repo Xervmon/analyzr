@@ -76,6 +76,11 @@ class CloudProvider {
 			case 'describeInstances':
 				$response = self::getDriver($account)->describeInstances(array('DryRun' => false, 'InstanceIds' =>array($instanceID)));
 				break;	
+			
+			case 'securityGroups':
+				$response = self::getDriver($account)->describeSecurityGroups(array('DryRun' => false));
+				break;	
+				
 			case 'downloadKey' :
 				$responseJson = xDockerEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate-executeAction', 'return' => $responseJson));

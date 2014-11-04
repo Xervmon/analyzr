@@ -41,9 +41,12 @@
 							<p>
 								<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
 								| 
-								<?php
-									echo '<a title="ViewLog" href="'.URL::to('account/'.$account->id.'/log').'" ><span class="glyphicon glyphicon-th-list"> </span>  </a>';
-								?>
+								<form class="pull-right" method="post" action="{{ URL::to('account/' . $account->id . '/securityGroups') }}">
+									<!-- CSRF Token -->
+									<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+									<!-- ./ csrf token -->
+									<button type="submit" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-lock"></span></button>
+								</form>
 								
 							</p>
 							<p>
