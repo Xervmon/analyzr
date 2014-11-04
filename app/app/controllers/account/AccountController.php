@@ -289,14 +289,15 @@ class AccountController extends BaseController {
 	public function Collection($id)
 	{
 		$this->check();
-		$serviceName = Input::get('serviceName');
+		$servicesConf = Config::get('aws_services');
+		$serviceNames = array_keys($servicesConf);
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
 		$obj = json_decode($responseJson);
 		if(!empty($obj) && $obj->status == 'OK')
 		{
-			$response = AWSBillingEngine::Collection(array('token' => $obj->token, 'service_names' => array($serviceName)));
+			$response = AWSBillingEngine::Collection(array('token' => $obj->token, 'service_names' => $serviceNames));
 			print_r($response);
 		}
 	}

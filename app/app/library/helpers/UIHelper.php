@@ -229,7 +229,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 			$costData = (array) $data->cost_data;
 			foreach($costData as $row => $val)
 			{
-				$str .= '<a href="account/'.$id.'/Collection">'.$row .'</a> : ' . $val. ' | ';
+				$str .= $row . ' : ' . $val. ' | ';
 			}
 		}
 		else if($data->status == 'error')
@@ -238,5 +238,6 @@ Inverse	<span class="label label-inverse">Inverse</span>
 		}
 		return $str;
 	}
+	
 
 }
