@@ -228,7 +228,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 			$costData = (array) $data->cost_data;
 			foreach($costData as $row => $val)
 			{
-				$str .= $row .':' . $val.PHP_EOL;
+				$str .= $row .':' . $val.'|';
 			}
 		}
 		else if($data->status == 'error')
