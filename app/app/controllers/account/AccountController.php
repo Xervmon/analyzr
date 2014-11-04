@@ -286,43 +286,19 @@ class AccountController extends BaseController {
 		
 	}
 
-	public function getCurrentCosts($id)
+	public function Collection($id)
 	{
 		$this->check();
+		$serviceName = Input::get('serviceName');
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
-		
-		if(!empty($account) && isset($account->job_id))
+		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
+		$obj = json_decode($responseJson);
+		if(!empty($obj) && $obj->status == 'OK')
 		{
-			$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
-		 	EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
-		 	$obj = json_decode($responseJson);
-			
-			if(!empty($obj) && $obj->status == 'OK')
-		 	{
-				$response = AWSBillingEngine::GetCurrentCost(array('token' => $obj->token));
-				return View::make('site/account/costs', array(
-            	'response' => $response,
-            	'account' => $account));
-				
-			}
-			else if(!empty($obj) && $obj->status == 'error')
-			{
-				Log::error('Request to Account logs failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
-				Log::error('Log :' . implode(' ', $obj2->job_log));
-            	return Redirect::to('account')->with('error', $obj->fail_message );
-			}
-			else
-				{
-					return Redirect::to('ServiceStatus')->with('error', 'Backend API is down, please try again later!');
-				}
+			$response = AWSBillingEngine::GetCurrentCost(array('token' => $obj->token, 'service_names' => array($serviceName)));
+			print_r($response);
 		}
-		else if(empty($account)) {
-			 return Redirect::to('account')->with('info', 'No Account Logs found! ' );
-		}
-		else {
-			 return Redirect::to('account')->with('info', 'No logs found! ' );
-		}
-		
 	}
     
 	 

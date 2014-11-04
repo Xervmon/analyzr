@@ -26,6 +26,11 @@ class CloudAccountHelper
 	
 	public static function findCurrentCost($account)
 	{
+		if(AWSBillingEngine::getServiceStatus() == 'error')
+		{
+			Log::error(Lang::get('account/account.awsbilling_service_down'));
+			return array('status' => 'error', 'message' => Lang::get('account/account.awsbilling_service_down'));
+		}
 		if(!empty($account))
 		{
 			if($account->status == 'Completed')

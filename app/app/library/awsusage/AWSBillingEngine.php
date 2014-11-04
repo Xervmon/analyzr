@@ -71,7 +71,10 @@ class AWSBillingEngine {
 	
 	public static function Collection($data) {
         self::init();
-        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['Collection'] . '/' . $data['job_id'], $data);
+		Log::info('URL ' . self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['Collection']);
+        Log::info('Data '.json_encode($data));
+      
+        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['Collection'] , $data);
     }
    
 	

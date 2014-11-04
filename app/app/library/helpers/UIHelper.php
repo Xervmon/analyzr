@@ -219,7 +219,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 	}
 	
 	
-	public static function displayCurrentCost($data)
+	public static function displayCurrentCost($id, $data)
 	{
 		$str = '';
 		$str = '<h5><span class="glyphicon glyphicon-tag"> </span> Cost Data</h5>';
@@ -229,7 +229,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 			$costData = (array) $data->cost_data;
 			foreach($costData as $row => $val)
 			{
-				$str .= $row .' : ' . $val. ' | ';
+				$str .= '<a href="account/'.$id.'/Collection">'.$row .'</a> : ' . $val. ' | ';
 			}
 		}
 		else if($data->status == 'error')
