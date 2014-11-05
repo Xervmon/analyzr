@@ -180,7 +180,7 @@ Route::group(array(
 	Route::any('enginelog/', 'EnginelogController@getIndex'); 
 	Route::get('account/{account}/log', 'AccountController@getLogs');
 	Route::get('account/{account}/Collection', 'AccountController@Collection');
-	Route::any('account/{account}/SecurityGroups', 'AccountController@getSecurityGroups');
+	Route::any('account/{account}/getSecurityGroups', 'AccountController@getSecurityGroups');
 	Route::get('ServiceStatus/', 'WebserviceController@getIndex');
 	
 	
