@@ -309,18 +309,25 @@ class AccountController extends BaseController {
 		}
 	}
 	
+	
+	public function SecurityGroups($id)
+	{
+		$this->check();
+		$account = CloudAccount::where('user_id', Auth::id())->find($id);
+		return View::make('site/account/securityGroups', array(
+            	'account' => $account));
+	}
+	
 	public function getSecurityGroups($id)
 	{
 		$this->check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
 		$securityGroups = CloudProvider::getSecurityGroups(__FUNCTION__, $id, '');
-		return json_encode($securityGroups);
-		
-		//Datatables::of($securityGroups)
+		return Datatables::of($securityGroups)
 
 		//->remove_column('id')
 
-        //->make();
+        ->make();
 	}
      
 	 /** 
