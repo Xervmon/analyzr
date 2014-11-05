@@ -22,6 +22,7 @@ return array(
 	'GroupName' => 'GroupName',
 	'GroupId' => 'GroupId',
 	'Description' => 'Description',
-	'Misc' => 'Misc'
+	'Misc' => 'Misc',
+	'securityGroups' => 'SecurityGroups'
 	
 );
