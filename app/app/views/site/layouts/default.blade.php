@@ -22,7 +22,8 @@
         <link rel="stylesheet" href="{{asset('bower_components/bootswatch/paper/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
         <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
-		<style>
+        
+        <style>
 		@section('styles')
 		@show
 		</style>
@@ -31,7 +32,9 @@
 		<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-
+		<script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
+        
+		
 		<!-- Favicons
 		================================================== -->
 		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{{ asset('assets/ico/apple-touch-icon-144-precomposed.png') }}}">
