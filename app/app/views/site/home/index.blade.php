@@ -65,7 +65,7 @@
        </div>
     </section>
 @else
-	@include('site.generic_view')
+	@include('site.dashboard_view')
 @endif
        
 @stop
