@@ -318,7 +318,7 @@ class AccountController extends BaseController {
             	'account' => $account));
 	}
 	
-	public function getSecurityGroups($id)
+	public function getSecurityGroupsData($id)
 	{
 		$this->check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
