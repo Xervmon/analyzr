@@ -178,7 +178,6 @@ Route::group(array(
 	Route::any('enginelog/', 'EnginelogController@getIndex'); 
 	Route::get('account/{account}/log', 'AccountController@getLogs');
 	Route::get('account/{account}/Collection', 'AccountController@Collection');
-	Route::get('account/{account}/SecurityGroups', 'AccountController@getSecurityGroups');
 	Route::get('ServiceStatus/', 'WebserviceController@getIndex');
 	
 	
@@ -195,6 +194,8 @@ Route::group(array(
         Route::post('ticket/{ticket}/edit', 'TicketController@postEdit');
 		Route::post('ticket/{ticket}/reply', 'TicketController@postReply');
         Route::post('ticket/{ticket}/delete', 'TicketController@postDelete');
+		Route::post('account/{account}/SecurityGroups', 'AccountController@getSecurityGroups');
+	
     });
     
     
