@@ -231,6 +231,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 			{
 				$str .= $row . ' : ' . $val. ' | ';
 			}
+			$str .= 'Total :' . $data->total;
 		}
 		else if($data->status == 'error')
 		{
