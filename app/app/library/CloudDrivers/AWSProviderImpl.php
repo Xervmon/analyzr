@@ -192,7 +192,8 @@ class AWSPRoviderImpl implements IProvider
 		{
 			try
 			{	
-				$securityGroups = $this->ec2Client->DescribeSecurityGroups($params);
+				//$securityGroups = $this->ec2Client->DescribeSecurityGroups($params);
+				$securityGroups = $this -> ec2Client -> getIterator('DescribeSecurityGroups', $params);
 				if (!empty($securityGroups))
 				{
 					return array('status' => 'OK', 'message'  => $securityGroups-> toArray());
