@@ -44,7 +44,7 @@ class AccountController extends BaseController {
 		$data= '';
 		foreach($accounts as $account)
 		{
-			$account -> currentCost  = CloudAccountHelper::findCurrentCost($account->id);
+			$account -> currentCost  = CloudAccountHelper::findCurrentCost($account);
 			$data[] = $account;
 		}
         // var_dump($accounts, $this->accounts, $this->accounts->owner);
