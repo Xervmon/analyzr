@@ -40,13 +40,8 @@
 							</p>
 							<p>
 								<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
-								
-								<form class="pull-right" method="post" action="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}">
-									<!-- CSRF Token -->
-									<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-									<!-- ./ csrf token -->
-									<button type="submit" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-lock"></span></button>
-								</form>
+								| 
+								<a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
 								
 							</p>
 							<p>

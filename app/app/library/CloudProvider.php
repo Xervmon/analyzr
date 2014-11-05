@@ -129,5 +129,13 @@ class CloudProvider {
 		}
 	}
 	
+	public static function getSecurityGroups($function, $cloudAccountId, $filter)
+	{
+		$account = CloudAccountHelper::findAndDecrypt($cloudAccountId);
+		
+		$data = self::executeAction($function, $account, $filter);
+		return $data;
+	}
+	
 	
 }
