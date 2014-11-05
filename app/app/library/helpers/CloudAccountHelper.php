@@ -42,7 +42,6 @@ class CloudAccountHelper
 				if(!empty($obj) && $obj->status == 'OK')
 			 	{
 					$response = AWSBillingEngine::GetCurrentCost(array('token' => $obj->token));
-					
 					return StringHelper::isJson($response) ? json_decode($response, true) : array('status' => 'error', 'message' => 'Invalid response from processing engine') ;
 				}
 				else if(!empty($obj) && $obj->status == 'error')
