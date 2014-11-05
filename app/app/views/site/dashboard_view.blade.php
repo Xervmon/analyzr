@@ -50,6 +50,7 @@
 
 <script src="{{asset('assets/js/nvd3/lib/d3.v2.min.js')}}"></script>
 <script src="{{asset('assets/js/nvd3/nv.d3.min.js')}}"></script>
+<script src="{{asset('assets/js/nvd3/lib/stream_layers.js')}}"></script>
 <link rel="stylesheet" href="{{asset('assets/css/nvd3/nv.d3.min.css')}}">
 	
 	
