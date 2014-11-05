@@ -19,10 +19,10 @@ return array(
 	'empty_accounts'  		   => 'You do not have any accounts. Create one by clicking on "Add Account" below',
 	'deployment.account_required'  => 'To deploy, please create <a href="'.URL::to('account/create').'">Account</a> first',
 	'awsbilling_service_down' => 'AWS Billing service down, please contact support',
-	'GroupName' => 'GroupName',
-	'GroupId' => 'GroupId',
-	'Description' => 'Description',
-	'Misc' => 'Misc',
+	'table.GroupName' => 'GroupName',
+	'table.GroupId' => 'GroupId',
+	'table.Description' => 'Description',
+	'table.Misc' => 'Misc',
 	'securityGroups' => 'SecurityGroups'
 	
 );
