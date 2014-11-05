@@ -26,7 +26,7 @@
 							<div class="media-body">
 								
 								<h4 class="media-heading">{{ String::title($account->name) }} </h4> <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
-								<p>
+								<p class="chart">
 									
 									
 								</p>
@@ -45,3 +45,9 @@
 		<div class="alert alert-info"> {{{ Lang::get('account/account.empty_accounts') }}}</div>
 	@endif
 </div>
+
+<script>
+$( document ).ready(function() {
+	alert('Dashboard loaded');
+});
+</script>
