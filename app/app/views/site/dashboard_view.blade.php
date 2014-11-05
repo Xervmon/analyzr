@@ -36,6 +36,9 @@
 								
 								<p>
 									<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
+									| 
+									<a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
+								
 								</p>
 							</div>
 						</div>
