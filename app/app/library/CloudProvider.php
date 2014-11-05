@@ -77,7 +77,7 @@ class CloudProvider {
 				$response = self::getDriver($account)->describeInstances(array('DryRun' => false, 'InstanceIds' =>array($instanceID)));
 				break;	
 			
-			case 'securityGroups':
+			case 'getSecurityGroups':
 				$response = self::getDriver($account)->describeSecurityGroups(array('DryRun' => false));
 				break;	
 				
