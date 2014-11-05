@@ -1,7 +1,7 @@
 <div class="page-header">
 	<div class="row">
 		<div class="col-md-9">
-			<h5>Your Accounts:</h5>
+			<h5>Dashboard</h5>
 		</div>
 	</div>
 </div>
@@ -46,24 +46,4 @@
 	@if(empty($accounts) || count($accounts) === 0) 
 		<div class="alert alert-info"> {{{ Lang::get('account/account.empty_accounts') }}}</div>
 	@endif
-</div>
-	<!-- <div class="text-center">
-		<div class="pagination">
-			<ul>
-	        	<li class="previous"><a href="#fakelink" class="fui-arrow-left"></a></li>
-	            <li class="active"><a href="#fakelink">1</a></li>
-	            <li><a href="#fakelink">2</a></li>
-	            <li><a href="#fakelink">3</a></li>
-	            <li><a href="#fakelink">4</a></li>
-	            <li><a href="#fakelink">5</a></li>
-	            <li><a href="#fakelink">6</a></li>
-	            <li><a href="#fakelink">7</a></li>
-	            <li><a href="#fakelink">8</a></li>
-	            <li class="next"><a href="#fakelink" class="fui-arrow-right"></a></li>
-			</ul>
-		</div>
-	</div> -->
-	<div>
-	<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
-	</div>
 </div>
