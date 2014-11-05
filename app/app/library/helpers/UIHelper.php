@@ -232,8 +232,8 @@ Inverse	<span class="label label-inverse">Inverse</span>
 				$str .= $row . ' : ' . $val. ' | ';
 			}
 			$str .= 'Total :' . $data->total .'<br>';
-			$str .= '<span class="glyphicon glyphicon-calendar">Current Month: </span>'.$data->month;
-			$str .= '<br/><span class="glyphicon glyphicon-calendar">Last Updated: </span>'.StringHelper::timeAgo($data->lastUpdate);
+			$str .= '<span class="glyphicon glyphicon-calendar"></span> Current Month : '.$data->month;
+			$str .= '<br/><span class="glyphicon glyphicon-calendar"></span>Current Month : '.StringHelper::timeAgo($data->lastUpdate);
 		}
 		else if($data->status == 'error')
 		{
