@@ -32,7 +32,8 @@
 		</tbody>
 	</table>
 @stop
-
+<script src="//cdn.datatables.net/1.9.4/js/jquery.dataTables.min.js"></script>
+    
 {{-- Scripts --}}
 @section('scripts')
 	<script type="text/javascript">
