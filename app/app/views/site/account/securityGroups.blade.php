@@ -14,10 +14,10 @@
 <table id="securityGroups" class="table table-striped table-hover">
 		<thead>
 			<tr>
-				<th class="col-md-4">{{{ Lang::get('accounts/table.GroupName') }}}</th>
-				<th class="col-md-4">{{{ Lang::get('accounts/table.GroupId') }}}</th>
-				<th class="col-md-4">{{{ Lang::get('accounts/table.Description') }}}</th>
-				<th class="col-md-4">{{{ Lang::get('accounts/table.Misc') }}}</th>
+				<th class="col-md-4">{{{ Lang::get('account/table.GroupName') }}}</th>
+				<th class="col-md-4">{{{ Lang::get('account/table.GroupId') }}}</th>
+				<th class="col-md-4">{{{ Lang::get('account/table.Description') }}}</th>
+				<th class="col-md-4">{{{ Lang::get('account/table.Misc') }}}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -40,7 +40,7 @@
 				},
 				"bProcessing": true,
 		        "bServerSide": true,
-		        "sAjaxSource": "{{ URL::to('accounts/SecurityGroups') }}",
+		        "sAjaxSource": "{{ URL::to('account/SecurityGroupsData') }}",
 		        "fnDrawCallback": function ( oSettings ) {
 	           		$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
 	     		}
