@@ -25,7 +25,7 @@
 							</form>
 							<div class="media-body">
 								
-								<h4 class="media-heading">{{ String::title($account->name) }} </h4>
+								<h4 class="media-heading">{{ String::title($account->name) }} <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}</h4>
 								<p>
 									
 									
