@@ -45,8 +45,7 @@
     </div>
 </div>
 <script type="text/javascript">
-	var ec2
-    // @FIXME Perhaps a PHP based table generation solution is better suited
-    window.reserved_instance_prices={{ec2Data.reserved_instances}};
-    window.ondemand_instance_prices=<?php echo json_encode($ondemand_instance_prices); ?>;
+	// @FIXME Perhaps a PHP based table generation solution is better suited
+    window.reserved_instance_prices= '<?=json_encode($ec2Data->reserved_instances)?>';
+    window.ondemand_instance_prices='<?=json_encode($ec2Data->ondemand)?>';
 </script>

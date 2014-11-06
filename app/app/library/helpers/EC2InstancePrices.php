@@ -361,9 +361,9 @@
                 "reserved_instances" => $this -> get_ec2_reserved_instances_prices(),
                 "ondemand" => $this -> get_ec2_ondemand_instances_prices()
             );
-
-            header('Content-type: application/json');
-            print json_encode($ret);
+			return $ret;
+            //header('Content-type: application/json');
+            //print json_encode($ret);
         }
 		
 		public static function OnDemand($parameters)
