@@ -12,5 +12,41 @@
 </div>
 
 
-<?php echo '<pre>' ;print_r(ec2Data); ?>
+
 @stop
+
+
+<style>
+    #AWSPricing_reserved_holder .chosen-container,#AWSPricing_ondemand_holder .chosen-container{max-width: 140px;}
+</style>
+<div class="container-fluid">
+    <div class="clearfix contentBlock">
+        <h4 class="display-block clearfix">AWS Pricing</h4>
+        <div  class="contentBlockNew well-small">
+            <legend>
+                Reserved Instance Pricing:
+            </legend>
+            <div id="AWSPricing_reserved_holder">
+                <div class="text-center well well-small">
+                    <i class="icon-spinner icon-spin"></i> Loading ...
+                </div>
+            </div>
+        </div>
+        <div  class="contentBlockNew well-small">
+            <legend>
+                On-Demand Instance Pricing:
+            </legend>
+            <div id="AWSPricing_ondemand_holder">
+                <div class="text-center well well-small">
+                    <i class="icon-spinner icon-spin"></i> Loading ...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	var ec2
+    // @FIXME Perhaps a PHP based table generation solution is better suited
+    window.reserved_instance_prices={{ec2Data.reserved_instances}};
+    window.ondemand_instance_prices=<?php echo json_encode($ondemand_instance_prices); ?>;
+</script>
