@@ -11,7 +11,9 @@
 	</div>
 </div>
 
-
+<?php
+print_r($ec2Data);die();
+?>
 
 @stop
 
