@@ -48,6 +48,6 @@ print_r($ec2Data);die();
 </div>
 <script type="text/javascript">
 	// @FIXME Perhaps a PHP based table generation solution is better suited
-    window.reserved_instance_prices= '<?=json_encode($ec2Data->reserved_instances)?>';
-    window.ondemand_instance_prices='<?=json_encode($ec2Data->ondemand)?>';
+    window.reserved_instance_prices= '<?=json_encode($ec2Data['reserved_instances'])?>';
+    window.ondemand_instance_prices='<?=json_encode($ec2Data->['ondemand'])?>';
 </script>
