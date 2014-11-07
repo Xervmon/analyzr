@@ -46,5 +46,7 @@ But when you are vetting a service, as to how it looks and works, you may need t
 	'pledge' => 'Pledge',
 	'videos' => 'Videos',
 	'billingExperts' => 'Billing Experts',
-	'AWSPricing' => 'AWS Pricing'
+	'AWSPricing' => 'AWS Pricing',
+	'Reserved' => 'Reserved Instances Costs',
+	'Ondemand' => 'Ondemand Instances Costs'
 );

@@ -83,7 +83,10 @@
 		                        	<ul class="dropdown-menu">
 	    								<li><a href="{{{ URL::to('account') }}}"><span class="glyphicon glyphicon-wrench"></span> {{{ Lang::get('site.accounts') }}}</a></li>
 	    								<li class="divider"></li>
-	    								<li><a href="{{{ URL::to('AWSPricing') }}}"><span class="glyphicon glyphicon-tag"></span> {{{ Lang::get('site.AWSPricing') }}}</a></li>
+	    								<li><a href="{{{ URL::to('Reserved') }}}"><span class="glyphicon glyphicon-registration-mark"></span> {{{ Lang::get('site.Reserved') }}}</a></li>
+										<li class="divider"></li>
+	    								<li><a href="{{{ URL::to('Ondemand') }}}"><span class="glyphicon glyphicon-tag"></span> {{{ Lang::get('site.Ondemand') }}}</a></li>
+
 	    								<li class="divider"></li>
 	    								<li><a href="{{{ URL::to('enginelog') }}}"><span class="glyphicon glyphicon-inbox"></span> {{{ Lang::get('site.enginelog') }}}</a></li>
 	    								<li class="divider"></li>

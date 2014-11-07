@@ -184,7 +184,8 @@ Route::group(array(
 	Route::get('ServiceStatus/', 'WebserviceController@getIndex');
 	
 	
-	 Route::any('AWSPricing/', 'AWSPricingController@getIndex'); 
+	 Route::any('Reserved/', 'AWSPricingController@getReserved'); 
+	 Route::any('Ondemand/', 'AWSPricingController@getOndemand'); 
 	
     // Route::get('deployment/{id}/edit/', 'DeploymentController@getCreate');
     Route::group(array(
