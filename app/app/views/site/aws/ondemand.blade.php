@@ -30,6 +30,6 @@
 <script src="{{asset('assets/js/xervmon/utils.js')}}"></script>
 <script type="text/javascript">
 	// @FIXME Perhaps a PHP based table generation solution is better suited
-    window.ondemand_instance_prices = {{json_encode($ondemand['ondemand'])}};
+    window.ondemand_instance_prices = {{json_encode($ondemand)}};
 </script>
 @stop
