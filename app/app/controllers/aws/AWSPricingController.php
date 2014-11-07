@@ -3,7 +3,8 @@
  * Class and Function List:
  * Function list:
  * - __construct()
- * - getIndex()
+ * - getReserved()
+ * - getOndemand()
  * Classes list:
  * - AWSController extends BaseController
  */
