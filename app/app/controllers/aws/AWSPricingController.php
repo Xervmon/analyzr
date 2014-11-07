@@ -44,7 +44,7 @@ class AWSPricingController extends BaseController {
     public function getOndemand() {
         $ec2 = new EC2InstancePrices();
 		//$ec2->get_ec2_ondemand_instances_prices('us-east-1', 'm1.small', 'linux')
-        return View::make('site/aws/reserved', array(
+        return View::make('site/aws/ondemand', array(
             'ondemand' => $ec2->get_ec2_ondemand_instances_prices()
         ));
     }
