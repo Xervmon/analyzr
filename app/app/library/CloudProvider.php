@@ -134,7 +134,7 @@ class CloudProvider {
 		$account = CloudAccountHelper::findAndDecrypt($cloudAccountId);
 		
 		$data = self::executeAction($function, $account, $filter);
-		if($data['status'] == 'OK')
+		if(!empty($data) && $data['status'] === 'OK')
 		{
 			return $data['message'];
 		}

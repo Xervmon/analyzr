@@ -1,7 +1,7 @@
 {
   "name": "bootswatch",
   "description": "Bootswatch is a collection of themes for Bootstrap.",
-  "version": "3.2.0+4",
+  "version": "3.2.0+3",
   "author": "Thomas Park",
   "homepage": "http://bootswatch.com",
   "repository": {
@@ -40,11 +40,11 @@
     "html5shiv": "~3.7.0",
     "respond": "~1.4.2"
   },
-  "_release": "3.2.0+4",
+  "_release": "3.2.0+3",
   "_resolution": {
     "type": "version",
-    "tag": "v3.2.0+4",
-    "commit": "c6def2a07b63f0fdc7dab5dbc4f06cdbf5227cdc"
+    "tag": "v3.2.0+3",
+    "commit": "80737eebb10731383dd61f9c5e50951667434cc8"
   },
   "_source": "git://github.com/thomaspark/bootswatch.git",
   "_target": "~3.2.0",

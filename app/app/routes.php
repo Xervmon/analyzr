@@ -168,7 +168,7 @@ Route::group(array(
 	Route::get('account/create', 'AccountController@getCreate');
     Route::get('account/{account}/edit', 'AccountController@getCreate');
 	Route::any('account/{account}/refresh', 'AccountController@checkStatus');
-	Route::get('account/{account}/SecurityGroups', 'AccountController@SecurityGroups');
+    Route::get('account/{account}/SecurityGroups', 'AccountController@SecurityGroups');
 	
 	
 	Route::any('ticket/', 'TicketController@getIndex'); 

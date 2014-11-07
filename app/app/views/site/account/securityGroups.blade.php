@@ -29,6 +29,9 @@
 
 {{-- Scripts --}}
 @section('scripts')
+    <script src="{{asset('bower_components/DataTables/media/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('assets/js/datatables-bootstrap.js')}}"></script>
+    <script src="{{asset('assets/js/datatables.fnReloadAjax.js')}}"></script>
 	<script type="text/javascript">
 		var oTable;
 		$(document).ready(function() {
@@ -40,7 +43,7 @@
 				},
 				"bProcessing": true,
 		        "bServerSide": true,
-		        "sAjaxSource": "{{ URL::to('account/SecurityGroupsData') }}",
+		        "sAjaxSource": "{{ URL::to('account/'.$account->id.'/SecurityGroupsData') }}",
 		        "fnDrawCallback": function ( oSettings ) {
 	           		$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
 	     		}
