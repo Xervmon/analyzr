@@ -30,6 +30,6 @@
 <script src="{{asset('assets/js/xervmon/utils.js')}}"></script>
 <script type="text/javascript">
 	// @FIXME Perhaps a PHP based table generation solution is better suited
-    window.reserved_instance_prices = {{json_encode($reserved['reserved_instances'])}};
+    window.reserved_instance_prices = {{json_encode($reserved)}};
 </script>
 @stop
