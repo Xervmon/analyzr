@@ -76,7 +76,8 @@ $( document ).ready(function() {
 
     chart.yAxis
         .tickFormat(d3.format(',.1f'));
-
+	var data = exampleData();
+	console.log(data);
     d3.select('.chart svg')
         .datum(exampleData())
         .call(chart);
