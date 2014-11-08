@@ -77,11 +77,8 @@
 		
 		        <!-- Slides Container -->
 		        <div u="slides" style="cursor: move; position: absolute; center: 0px; top: 0px; width: 980px; height: 100px; overflow: hidden;">
-		            @foreach($dockerInstances as $instance)
-						@if(xDockerEngine::enabled($instance->name))
-							<div><img u="image" title="{{ $instance -> name }} : {{ $instance -> description }}" alt="{{ $instance -> name }} : {{ $instance -> description }}" src="{{ asset('/assets/img/providers/'.xDockerEngine::getLogo($instance -> name)) }}" /></div>
-		            	@endif
-		            @endforeach
+		            <div><img u="image" title="Amazon AWS" alt="Amazon AWS " src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.Amazon AWS'.'.logo')) }}" /></div>
+		            	
 		           
 		        </div>
 	     	</div>
