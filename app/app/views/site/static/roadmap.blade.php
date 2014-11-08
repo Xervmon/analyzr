@@ -42,7 +42,7 @@
 		            <div><img u="image" title="Amazon AWS" alt="Amazon AWS " src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.Amazon AWS'.'.logo')) }}" /></div>
 		            <div><img u="image" title="Compliance : Gain insights and customize as per your organization needs." alt="Compliance : Gain insights and customize as per your organization needs." src="{{ asset('/assets/img/providers/fedramp-logo.jpg') }}" /></div>
 		            <div><img u="image" title="Compliance : Gain insights and customize as per your organization needs." alt="Compliance : Gain insights and customize as per your organization needs." src="{{ asset('/assets/img/providers/fips-logo.jpg') }}" /></div>
-		            <div><img u="image" title="Compliance : Gain insights and customize as per your organization needs." alt="Compliance : Gain insights and customize as per your organization needs." src="{{ asset('/assets/img/providers/hippa-logo.png') }}" /></div>
+		            <div><img u="image" title="Compliance : Gain insights and customize as per your organization needs." alt="Compliance : Gain insights and customize as per your organization needs." src="{{ asset('/assets/img/providers/hipaa-logo.png') }}" /></div>
 		            <div><img u="image" title="Compliance : Gain insights and customize as per your organization needs." alt="Compliance : Gain insights and customize as per your organization needs." src="{{ asset('/assets/img/providers/iso-logo.jpg') }}" /></div>
 		            <div><img u="image" title="Compliance : Gain insights and customize as per your organization needs." alt="Compliance : Gain insights and customize as per your organization needs." src="{{ asset('/assets/img/providers/itar-logo.jpg') }}" /></div>
 		            <div><img u="image" title="Compliance : Gain insights and customize as per your organization needs." alt="Compliance : Gain insights and customize as per your organization needs." src="{{ asset('/assets/img/providers/pci-logo.jpg') }}" /></div>
@@ -52,7 +52,7 @@
 		        </div>
 	     	</div>
        </div>
-		<p>Call us today on (800) 813-1315 or <a href="mailto:roapmap-awsusageanalyzr@xervmon.com">email us </a> with your feature request in relation to our xDocker service. </p>
+		<p>Call us today on (800) 813-1315 or <a href="mailto:roapmap-awsusageanalyzr@xervmon.com">email us </a> with your feature request in relation to Analyzr service. </p>
 		
 	</div>
 </div>
