@@ -29,6 +29,10 @@
 			})
 			.done(function( response ) {
 				console.log(response);
+				if (!$.isArray(response)) {
+                    response = JSON.parse(response);
+                    //	alert(data);
+                }
 			    $('#securityGroups').append(convertJsonToTableSecurityGroups(response));
 			});
 			
