@@ -12,7 +12,7 @@
 </div>
 
 <?php
-ech '<pre>';
+echo '<pre>';
 print_r($securityGroups); die();
 ?>
 
