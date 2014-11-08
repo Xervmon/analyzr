@@ -28,6 +28,7 @@
 			  cache: false
 			})
 			.done(function( response ) {
+				console.log(response);
 			    $('#securityGroups').append(convertJsonToTableSecurityGroups(response));
 			});
 			
