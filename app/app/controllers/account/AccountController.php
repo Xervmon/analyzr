@@ -327,9 +327,7 @@ class AccountController extends BaseController {
 		{
 			$stdClass = new stdClass();
 			$stdClass-> Group = $group['GroupId'] .'-'.$group['GroupName'] . '-'.$group['Description'];
-			$stdClass-> IpPermissions = json_encode($group['IpPermissions']) ;
-			$table = $this->getTable($group['IpPermissions']);
-			$stdClass -> table = $table;
+			$stdClass -> IPPermissions = $this->getTable($group['IpPermissions']);
 			$arr[] = $stdClass;
 		}
 		return $arr;
