@@ -59,6 +59,7 @@
 	
 
 <script>
+var accountData = '{{ json_encode(CloudAccountHelper::findCurrentCost($account)) }}';
 $( document ).ready(function() {
 	alert('Dashboard loaded');
 	nv.addGraph(function() {
