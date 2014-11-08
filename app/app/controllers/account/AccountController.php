@@ -345,7 +345,14 @@ class AccountController extends BaseController {
 					$markup .= $name .'=' . json_encode($val).'</br>';
 				}
 				else {
-					$markup .= $name .'=' . $val.'</br>';	
+					if(in_array($val, array(22, 80)))
+					{
+						$markup .= UIHelper::getBadge2('danger', $name .'=' . $val).'</br>';	
+					}
+					else 
+					{
+						$markup .= UIHelper::getBadge2('OK', $name .'=' . $val).'</br>';	
+					}
 				}
 				
 			}

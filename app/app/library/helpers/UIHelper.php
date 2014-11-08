@@ -78,6 +78,23 @@ Inverse	<span class="label label-inverse">Inverse</span>
 		
 	}
 
+	public static function getBadge2($status, $val)
+	{
+		switch($status)
+		{
+			case 'OK' 	: return '<span class="badge alert-success">'.$val.'</span>'; break;
+			
+			case 'info' 		: return '<span class="badge alert-info">'.$val.'</span>'; break;
+			
+			case 'default' 		: return '<span class="badge alert-warning">'.$val.'</span>'; break;
+			
+			case 'danger' 		: return '<span class="badge alert-danger">'.$val.'</span>'; break;
+			
+			default:			  return '<span class="badge alert-danger">'.$val.'</span>'; break;
+								
+		}
+	}
+
 	public static function getDataOrganized($params)
 	{
 			//Array ( [config] => Array ( [currency] => USD [unit] => perhr ) [regions] => 
