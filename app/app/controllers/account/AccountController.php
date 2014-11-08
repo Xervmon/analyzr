@@ -338,24 +338,28 @@ class AccountController extends BaseController {
 	 	$markup = '<table id="exportTableid" class="table table-striped table-bordered">';
 		foreach($ipPermissions as $row)
 		{
+			$markup .= '<tr>';
 			foreach($row as $name => $val)
 			{
+				$markup .= '<td>';
 				if(is_array($val))
 				{
-					$markup .= $name .'=' . json_encode($val).'</br>';
+					$markup .= $name .'=' . json_encode($val);
 				}
 				else {
 					if(in_array($val, array(22, 80)))
 					{
-						$markup .= UIHelper::getLabel2('danger', $name .'=' . $val).'</br>';	
+						$markup .= UIHelper::getLabel2('danger', $name .'=' . $val);	
 					}
 					else 
 					{
-						$markup .= UIHelper::getLabel2('OK', $name .'=' . $val).'</br>';	
+						$markup .= UIHelper::getLabel2('OK', $name .'=' . $val);	
 					}
 				}
+				$markup .= '</td>';
 				
 			}
+			$markup .= '</tr>';
 		}
 		return $markup .= '</table>';
 	}
