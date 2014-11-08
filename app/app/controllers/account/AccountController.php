@@ -347,11 +347,11 @@ class AccountController extends BaseController {
 				else {
 					if(in_array($val, array(22, 80)))
 					{
-						$markup .= UIHelper::getBadge2('danger', $name .'=' . $val).'</br>';	
+						$markup .= UIHelper::getLabel2('danger', $name .'=' . $val).'</br>';	
 					}
 					else 
 					{
-						$markup .= UIHelper::getBadge2('OK', $name .'=' . $val).'</br>';	
+						$markup .= UIHelper::getLabel2('OK', $name .'=' . $val).'</br>';	
 					}
 				}
 				
