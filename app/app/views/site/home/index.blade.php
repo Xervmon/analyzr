@@ -62,7 +62,7 @@
         </div>
          <div class="text-center">
 	       	 <!-- You can move inline styles to css file or css block. -->
-	       	 <p><h4><font color="3399FF">Analyzr : Derive intelligence on your spend & deployments.</font></h4></p>
+	       	 <p><h4><font color="3399FF">Analyzr : Derive compliance from your spend & deployments.</font></h4></p>
 		    <div id="slider1_container" style="position: relative; top: 0px; center: 0px; width: 980px; height: 100px; overflow: hidden; ">
 		
 		        <!-- Loading Screen -->
@@ -78,7 +78,15 @@
 		        <!-- Slides Container -->
 		        <div u="slides" style="cursor: move; position: absolute; center: 0px; top: 0px; width: 980px; height: 100px; overflow: hidden;">
 		            <div><img u="image" title="Amazon AWS" alt="Amazon AWS " src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.Amazon AWS'.'.logo')) }}" /></div>
-		            	
+		            <div><img u="image" title="Compliance : Gain insights and customize as per your organization needs." alt="Compliance : Gain insights and customize as per your organization needs." src="{{ asset('/assets/img/providers/fedramp-logo.jpg') }}" /></div>
+		            <div><img u="image" title="Compliance : Gain insights and customize as per your organization needs." alt="Compliance : Gain insights and customize as per your organization needs." src="{{ asset('/assets/img/providers/fips-logo.jpg') }}" /></div>
+		            <div><img u="image" title="Compliance : Gain insights and customize as per your organization needs." alt="Compliance : Gain insights and customize as per your organization needs." src="{{ asset('/assets/img/providers/hipaa-logo.png') }}" /></div>
+		            <div><img u="image" title="Compliance : Gain insights and customize as per your organization needs." alt="Compliance : Gain insights and customize as per your organization needs." src="{{ asset('/assets/img/providers/iso-logo.jpg') }}" /></div>
+		            <div><img u="image" title="Compliance : Gain insights and customize as per your organization needs." alt="Compliance : Gain insights and customize as per your organization needs." src="{{ asset('/assets/img/providers/itar-logo.jpg') }}" /></div>
+		            <div><img u="image" title="Compliance : Gain insights and customize as per your organization needs." alt="Compliance : Gain insights and customize as per your organization needs." src="{{ asset('/assets/img/providers/pci-logo.jpg') }}" /></div>
+		            <div><img u="image" title="Compliance : Gain insights and customize as per your organization needs." alt="Compliance : Gain insights and customize as per your organization needs." src="{{ asset('/assets/img/providers/soc2-logo.jpg') }}" /></div>
+		            <div><img u="image" title="Compliance : Gain insights and customize as per your organization needs." alt="Compliance : Gain insights and customize as per your organization needs." src="{{ asset('/assets/img/providers/SOCLogoSOs.jpg') }}" /></div>    	
+		           	
 		           
 		        </div>
 	     	</div>
