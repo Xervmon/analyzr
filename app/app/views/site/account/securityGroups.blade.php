@@ -19,9 +19,7 @@
 
 {{-- Scripts --}}
 @section('scripts')
-    <script src="{{asset('bower_components/DataTables/media/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('assets/js/datatables-bootstrap.js')}}"></script>
-    <script src="{{asset('assets/js/datatables.fnReloadAjax.js')}}"></script>
+    <script src="{{asset('assets/js/xervmon/utils.js')}}"></script>
 	<script type="text/javascript">
 		
 		$(document).ready(function() {
