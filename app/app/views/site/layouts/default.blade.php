@@ -33,6 +33,9 @@
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 		<script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
+		<script src="{{asset('bower_components/jquery/dist/jquery.tablesorter.js')}}"></script>
+		<script src="{{asset('bower_components/jquery/dist/jquery.tablesorter.pager.js')}}"></script>
+		<script src="{{asset('bower_components/jquery/dist/jquery.tablesorter.widgets.js')}}"></script>
         
 		
 		<!-- Favicons
