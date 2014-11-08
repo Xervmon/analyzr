@@ -78,19 +78,19 @@ Inverse	<span class="label label-inverse">Inverse</span>
 		
 	}
 
-	public static function getBadge2($status, $val)
+	public static function getLabel2($status, $val)
 	{
 		switch($status)
 		{
-			case 'OK' 	: return '<span class="badge alert-success">'.$val.'</span>'; break;
+			case 'OK' 	: return '<span class="label alert-success">'.$val.'</span>'; break;
 			
-			case 'info' 		: return '<span class="badge alert-info">'.$val.'</span>'; break;
+			case 'info' 		: return '<span class="label alert-info">'.$val.'</span>'; break;
 			
-			case 'default' 		: return '<span class="badge alert-warning">'.$val.'</span>'; break;
+			case 'default' 		: return '<span class="label alert-warning">'.$val.'</span>'; break;
 			
-			case 'danger' 		: return '<span class="badge alert-danger">'.$val.'</span>'; break;
+			case 'danger' 		: return '<span class="label alert-danger">'.$val.'</span>'; break;
 			
-			default:			  return '<span class="badge alert-danger">'.$val.'</span>'; break;
+			default:			  return '<span class="label alert-danger">'.$val.'</span>'; break;
 								
 		}
 	}
