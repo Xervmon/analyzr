@@ -26,7 +26,7 @@
 		
 		$(document).ready(function() {
 			$.ajax({
-			  url:  "{{ URL::to('account/'.$account->id.'/getSecurityGroupsData') }}",
+			  url:  "{{ URL::to('account/'.$account->id.'/SecurityGroupsData') }}",
 			  cache: false
 			})
 			.done(function( response ) {
