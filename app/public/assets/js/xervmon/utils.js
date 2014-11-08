@@ -74,7 +74,7 @@ function setupTableSorterChecked(selector, displayTotalCount, pageSize, customFo
             /*if (!hidePaginationToggleButton) {
              pager += '<div class="clearfix showmoreBtn-wrapper"><div class="showmoreBtn"></div></div>';
              }*/
-            pager += '<input type="hidden" class="pagesize" value="' + (parseInt(pageSize, 10) || 5) + '" />';
+            pager += '<input type="hidden" class="pagesize" value="' + (parseInt(pageSize, 10) || 10) + '" />';
             pager += '<div class="nav nav-tabs" style="border:none;">';
             if (displayTotalCount == true) {
                 pager += ('<div class="totalAmnt pull-left totalCost"><i class="cashicon    icons"></i>Total Cost of visible items:<span class="total-visible-amount">0</span></div>');
