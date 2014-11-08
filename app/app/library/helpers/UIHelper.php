@@ -82,15 +82,15 @@ Inverse	<span class="label label-inverse">Inverse</span>
 	{
 		switch($status)
 		{
-			case 'OK' 	: return '<span class="label alert-success">'.$val.'</span>'; break;
+			case 'OK' 	: return '<span title="Status"><span class="label alert-success">'.$val.'</span></span>'; break;
 			
-			case 'info' 		: return '<span class="label alert-info">'.$val.'</span>'; break;
+			case 'info' 		: return '<span title="Status"><span class="label alert-info">'.$val.'</span></span>'; break;
 			
-			case 'default' 		: return '<span class="label alert-warning">'.$val.'</span>'; break;
+			case 'default' 		: return '<span title="Status"><span class="label alert-warning">'.$val.'</span></span>'; break;
 			
-			case 'danger' 		: return '<span class="label alert-danger">'.$val.'</span>'; break;
+			case 'danger' 		: return '<span title="Status"><span class="label alert-danger">'.$val.'</span></span>'; break;
 			
-			default:			  return '<span class="label alert-danger">'.$val.'</span>'; break;
+			default:			  return '<span title="Status"><span class="label alert-danger">'.$val.'</span></span>'; break;
 								
 		}
 	}
