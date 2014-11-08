@@ -156,6 +156,13 @@
 		<script src="{{asset('bower_components/jquery/dist/jquery.tablesorter.widgets.js')}}"></script>
         <script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
         <script src="{{asset('assets/js/jquery.fileDownload.js')}}"></script>
+        
+        <?php if(!Auth::check()) : ?>
+	        <script src="{{asset('assets/js/jquery-plugins/jssor.js')}}"></script>
+	        <script src="{{asset('assets/js/jquery-plugins/jssor.slider.mini.js')}}"></script>
+	        <script src="{{asset('assets/js/jquery-plugins/prettify.js')}}"></script>
+        @include('site.home.jsPartial')
+        <?php  endif; ?>
 
         @yield('scripts')
 
