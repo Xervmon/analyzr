@@ -13,7 +13,7 @@
   		<h4>Support</h4>
   		<p>
 		 Customers have the choice of using the popular open source Cost management tool such as Netflix Ice or flexible and MSP friendly
-		 AWSUsageAnalyzr. We offer flexible packages to support 99.9999 availability of your cloud foundation solutions.
+		 Analyzr. We offer flexible packages to support 99.9999 availability of your cloud foundation solutions.
 		 We leverage <a href="https://www.xervmon.com">Xervmon Platform</a> to support and monitor the services, there by delivering
 		 better quality of service at extremely affordable costs.
 		</p>
