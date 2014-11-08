@@ -6,9 +6,7 @@ window.ucfirst = function (str) {
     return f + str.substr(1);
 };
 function setupTableSorterChecked(selector, displayTotalCount, pageSize, customFooterMarkup, hidePaginationToggleButton, themeOptions, sorterOptions, pagerOptions) {
-    // Setup table sorter over the given element
-    //  master table generator/sorter
-    // Author: Sathvik, Doers' Guild
+    pageSize = 10;
     var $this = $($(selector || this)
         .get(0));
     setTimeout(function () {
