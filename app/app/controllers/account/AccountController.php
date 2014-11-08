@@ -344,16 +344,16 @@ class AccountController extends BaseController {
 				$markup .= '<td>';
 				if(is_array($val))
 				{
-					$markup .= $name .'=' . json_encode($val);
+					$markup .= $name .' = ' . json_encode($val);
 				}
 				else {
 					if(in_array($val, array(22, 80)))
 					{
-						$markup .= UIHelper::getLabel2('danger', $name .'=' . $val);	
+						$markup .= UIHelper::getLabel2('danger', $name .' = ' . $val);	
 					}
 					else 
 					{
-						$markup .= UIHelper::getLabel2('OK', $name .'=' . $val);	
+						$markup .= UIHelper::getLabel2('OK', $name .' = ' . $val);	
 					}
 				}
 				$markup .= '</td>';
