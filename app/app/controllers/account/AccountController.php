@@ -314,18 +314,34 @@ class AccountController extends BaseController {
 	{
 		$this->check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
-		$securityGroups = CloudProvider::getSecurityGroups('getSecurityGroups', $id, '');
+		
 		
 		return View::make('site/account/securityGroups', array(
-            	'account' => $account, 'securityGroups' =>$securityGroups ));
+            	'account' => $account ));
+	}
+
+	private function flatten($securityGroups)
+	{
+		$arr = '';
+		foreach($securityGroups as $group)
+		{
+			$stdClass = new stdClass();
+			$stdClass-> Group = $group['GroupId'] .'-'.$group['GroupName'] . '-'.$group['Description'];
+			$stdClass-> IpPermissions = json_encode($group['IpPermissions']) ;
+			$arr[] = $stdClass;
+		}
+		return $arr;
 	}
 	
 	public function getSecurityGroupsData($id)
 	{
 		$this->check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
+		$securityGroups = CloudProvider::getSecurityGroups('getSecurityGroups', $id, '');
 		
-		print json_encode($securityGroups);
+		$groups = $this->flatten($securityGroups);
+		
+		print json_encode($groups);
 	}
      
 	 /** 
