@@ -323,11 +323,7 @@ class AccountController extends BaseController {
 		$this->check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
 		$securityGroups = CloudProvider::getSecurityGroups('getSecurityGroups', $id, '');
-		return Datatables::of($securityGroups)
-
-		->remove_column('id')
-
-        ->make();
+		print json_encode($securityGroups);
 	}
      
 	 /** 
