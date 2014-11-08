@@ -314,15 +314,17 @@ class AccountController extends BaseController {
 	{
 		$this->check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
+		$securityGroups = CloudProvider::getSecurityGroups('getSecurityGroups', $id, '');
+		
 		return View::make('site/account/securityGroups', array(
-            	'account' => $account));
+            	'account' => $account, 'securityGroups' =>$securityGroups ));
 	}
 	
 	public function getSecurityGroupsData($id)
 	{
 		$this->check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
-		$securityGroups = CloudProvider::getSecurityGroups('getSecurityGroups', $id, '');
+		
 		print json_encode($securityGroups);
 	}
      
