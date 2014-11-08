@@ -338,9 +338,19 @@ class AccountController extends BaseController {
 	private function getTable($ipPermissions)
 	{
 		 $markup = '<table id="exportTableid" class="table table-striped table-bordered">';
-		foreach($ipPermissions as $name => $val)
+		foreach($ipPermissions as $row)
 		{
-			$markup .= $name .'=' . $val.'</br>';
+			foreach($row as $name => $val)
+			{
+				if(is_array($val))
+				{
+					$markup .= $name .'=' . json_encode($val).'</br>';
+				}
+				else {
+					$markup .= $name .'=' . $val.'</br>';	
+				}
+				
+			}
 		}
 		return $mark .= '</table>';
 	}
