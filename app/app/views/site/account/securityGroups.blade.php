@@ -30,7 +30,7 @@
 			  cache: false
 			})
 			.done(function( response ) {
-			    $('#securityGroups').append(convertJsonToTableSecurityGroups(response);
+			    $('#securityGroups').append(convertJsonToTableSecurityGroups(response));
 			});
 			
 		});
