@@ -337,7 +337,7 @@ class AccountController extends BaseController {
 
 	private function getTable($ipPermissions)
 	{
-		 $markup = '<table id="exportTableid" class="table table-striped table-bordered">';
+	 	$markup = '<table id="exportTableid" class="table table-striped table-bordered">';
 		foreach($ipPermissions as $row)
 		{
 			foreach($row as $name => $val)
@@ -352,7 +352,7 @@ class AccountController extends BaseController {
 				
 			}
 		}
-		return $mark .= '</table>';
+		return $markup .= '</table>';
 	}
 	
 	public function getSecurityGroupsData($id)
