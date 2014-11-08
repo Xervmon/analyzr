@@ -328,9 +328,21 @@ class AccountController extends BaseController {
 			$stdClass = new stdClass();
 			$stdClass-> Group = $group['GroupId'] .'-'.$group['GroupName'] . '-'.$group['Description'];
 			$stdClass-> IpPermissions = json_encode($group['IpPermissions']) ;
+			$table = $this->getTable($group['IpPermissions']);
+			$stdClass -> table = $table;
 			$arr[] = $stdClass;
 		}
 		return $arr;
+	}
+
+	private function getTable($ipPermissions)
+	{
+		 $markup = '<table id="exportTableid" class="table table-striped table-bordered">';
+		foreach($ipPermissions as $name => $val)
+		{
+			$markup .= $name .'=' . $val.'</br>';
+		}
+		return $mark .= '</table>';
 	}
 	
 	public function getSecurityGroupsData($id)
