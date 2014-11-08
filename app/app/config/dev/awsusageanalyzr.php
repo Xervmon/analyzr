@@ -14,13 +14,14 @@
  
  
 return array(
-	'endpoint_ip'  		  => 'http://104.131.38.159:5050',
-	'register'	   		  => '/register',
-	'authenticate' 		  => '/authenticate',
-	'create_billing' 		   		  => '/create_billing',
-	'getDeploymentStatus' 			  => '/getDeploymentStatus',
-	'GetCurrentCost' 	   		  => '/GetCurrentCost',
-	'Collection' 	   		  => '/Collection',
-	'removeUsername'  		  => '/removeUsername'
+	'endpoint_ip'  		  		=> 'http://104.131.38.159:5050',
+	'register'	   		  		=> '/register',
+	'authenticate' 		  		=> '/authenticate',
+	'create_billing' 		   	=> '/create_billing',
+	'getDeploymentStatus' 		=> '/getDeploymentStatus',
+	'GetCurrentCost' 	   		=> '/GetCurrentCost',
+	'Collection' 	   		  	=> '/Collection',
+	'GetCost' 					=> '/GetCost',
+	'removeUsername'  		  	=> '/removeUsername'
 	);
 
