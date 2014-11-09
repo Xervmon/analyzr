@@ -327,7 +327,7 @@ class AccountController extends BaseController {
 														   'limit' => $limit, 
 														   'offset' => $offset)
 													);
-			print(json_decode($response));
+			print $response;
 		}
 	}
 	
