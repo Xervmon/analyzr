@@ -42,15 +42,11 @@ class AccountController extends BaseController {
         $accounts = $this->accounts->where('user_id', Auth::id())->orderBy('created_at', 'DESC')->paginate(10);
 		
 		$data= '';
-		foreach($accounts as $account)
-		{
-			$account -> currentCost  = CloudAccountHelper::findCurrentCost($account);
-			$data[] = $account;
-		}
+		
         // var_dump($accounts, $this->accounts, $this->accounts->owner);
         // Show the page
         return View::make('site/account/index', array(
-            'accounts' => $data
+            'accounts' => $accounts
         ));
     }
     /**

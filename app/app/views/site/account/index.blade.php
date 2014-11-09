@@ -45,7 +45,7 @@
 								
 							</p>
 							<p>
-								{{UIHelper::displayCurrentCost($account->id, $account->currentCost)}}
+								{{UIHelper::displayCurrentCost($account->id, CloudAccountHelper::findCurrentCost($account))}}
 							</p>
 						</div>
 					</div>
