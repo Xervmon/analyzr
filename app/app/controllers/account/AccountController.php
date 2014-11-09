@@ -403,7 +403,7 @@ class AccountController extends BaseController {
 		$arr[] = $obj;
 	  }
 	  
-	  print json_encode ($obj);
+	  print json_encode ($arr);
 	  
 	}
      
