@@ -71,12 +71,13 @@
 var accounts = '<?=json_encode($accArr)?>';
 $( document ).ready(function() {
 	alert('sudhi');
-	foreach(accounts as account)
-	{
-		var url= $urlTemp.replace('%ID%', account);
-		renderChartData(account, url);
+	
+	for (index = 0; index < accounts.length; ++index) {
+    	//console.log(a[index]);
+    	var url= $urlTemp.replace('%ID%', accounts[index]);
+		renderChartData(accounts[index], url);
 	}
-
+	
 	alert('Dashboard loaded');
 	//Donut chart example
 
