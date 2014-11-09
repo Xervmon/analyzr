@@ -36,7 +36,7 @@
 									
 								</p>
 								<p class="chart{{$account->id}}">
-									<svg style="height:500px;width:400px">
+									<svg style="height:500px;width:800px">
 										
 									</svg>
 									

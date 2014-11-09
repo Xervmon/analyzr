@@ -15,6 +15,10 @@
 	       	.datum(data)
 	        .transition().duration(350)
 	        .call(chart);
+			d3.select(".nv-legendWrap")
+			.attr('transform', 'translate(-140,-30)');
+			d3.select(".nv-pieWrap")
+			.attr('transform', 'translate(235,-20)');
 		  	return chart;
 		});
 }
