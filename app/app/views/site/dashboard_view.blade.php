@@ -79,7 +79,7 @@ $( document ).ready(function() {
 	for (index = 0; index < accounts.length; ++index) {
     	//console.log(a[index]);
     	var url= urlTemp.replace('%ID%', accounts[index]);
-    	var selector = 'chart'+accounts[index] + ' svg';
+    	var selector = '.chart'+accounts[index] + ' svg';
     	alert(selector);
     	pieOrDonut(url, selector, true, 'percent');
 	}
