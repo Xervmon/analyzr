@@ -29,8 +29,7 @@
 									<a alt="{{ $account->name }}" title="{{ $account->name }}" href="{{ URL::to('account/'.$account->id.'/edit') }}" class="pull-left" href="#">
 									{{ String::title($account->name) }}
 									</a> 
-								</h4>
-								<span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
+								</h4> | <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
 								<p class="chart{{$account->id}}">
 									<svg style="height:500px;width:400px">
 										
