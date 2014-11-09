@@ -1,4 +1,4 @@
-;pieOrDonut = function(account, url, selector, donut, labelType)
+;pieOrDonut = function(url, selector, donut, labelType)
 {
 	$.ajax({
 		url:  url,

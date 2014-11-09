@@ -80,7 +80,8 @@ $( document ).ready(function() {
     	//console.log(a[index]);
     	var url= urlTemp.replace('%ID%', accounts[index]);
     	var selector = 'chart'+accounts[index] + ' ' + svg;
-    	pieOrDonut(accounts[index], url, selector,, true, 'percent');
+    	alert(selector);
+    	pieOrDonut(url, selector, true, 'percent');
 	}
 });
 </script>
