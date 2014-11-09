@@ -25,7 +25,11 @@
 							</form>
 							<div class="media-body">
 								
-								<h4 class="media-heading">{{ String::title($account->name) }} </h4> <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
+								<h4 class="media-heading"> 
+									<a alt="{{ $account->name }}" title="{{ $account->name }}" href="{{ URL::to('account/'.$account->id.'/edit') }}" class="pull-left" href="#">
+									</a> 
+								{{ String::title($account->name) }} </h4>
+								<span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
 								<p class="chart{{$account->id}}">
 									<svg style="height:500px;width:400px">
 										
