@@ -63,6 +63,7 @@
 $( document ).ready(function() {
 	//Donut chart example
 	var accounts = '{{json_encode($accounts)}}';
+	
 	nv.addGraph(function() {
   	var chart = nv.models.pieChart()
       .x(function(d) { return d.label })
