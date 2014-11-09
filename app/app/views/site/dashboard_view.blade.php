@@ -102,11 +102,12 @@ renderChartData = function(account, url)
 	});
 }
 $( document ).ready(function() {
-	alert('sudhi');
+	//alert('sudhi');
 	
 	for (index = 0; index < accounts.length; ++index) {
     	//console.log(a[index]);
     	var url= urlTemp.replace('%ID%', accounts[index]);
+    	alert(url);
 		renderChartData(accounts[index], url);
 	}
 	
