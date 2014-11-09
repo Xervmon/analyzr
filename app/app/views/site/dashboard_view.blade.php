@@ -83,7 +83,7 @@ $( document ).ready(function() {
 	//Donut chart example
 
 
-getChartData = function(account, url)
+renderChartData = function(account, url)
 {
 	$.ajax({
 		url:  url,
