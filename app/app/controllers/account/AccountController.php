@@ -226,10 +226,17 @@ class AccountController extends BaseController {
 			}
 			else  if(!empty($obj2) && $obj2->status == 'error')
 			 {
+			 	$account->status = $obj2->job_status;
+				$account -> wsResults = '';
+				$success = $account->save();
+				 if (!$success) {
+		        	Log::error('Error while saving Account : '.json_encode( $dep->errors()));
+					return Redirect::to('account')->with('error', 'Error saving Account!' );
+		        }
 				 // There was a problem deleting the user
 				 Log::error($responseJson);
 				Log::error('Request to check status of account failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
-				return Redirect::to('account')->with('error', $obj2->fail_message );
+				return Redirect::to('account')->with('error', 'Error while checking for status of account' );
 			 }	
 			else
 			{
