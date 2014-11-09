@@ -69,12 +69,13 @@
 	$urlTemp = URL::to('account/%ID%/ChartData');
 ?>
 var accounts = '<?=json_encode($accArr)?>';
+var urlTemp = '<?=$urlTemp;?>';
 $( document ).ready(function() {
 	alert('sudhi');
 	
 	for (index = 0; index < accounts.length; ++index) {
     	//console.log(a[index]);
-    	var url= $urlTemp.replace('%ID%', accounts[index]);
+    	var url= urlTemp.replace('%ID%', accounts[index]);
 		renderChartData(accounts[index], url);
 	}
 	
