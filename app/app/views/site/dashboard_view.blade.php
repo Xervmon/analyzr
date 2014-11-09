@@ -58,11 +58,7 @@
 <script src="{{asset('assets/js/nvd3/lib/stream_layers.js')}}"></script>
 <script src="{{asset('assets/js/xervmon/charts.js')}}"></script>
 <link rel="stylesheet" href="{{asset('assets/css/nvd3/nv.d3.min.css')}}">
-	
-	
-
 <script>
-
 <?php
 	$accArr = '';
 	foreach($accounts as $account)
@@ -79,25 +75,21 @@ $( document ).ready(function() {
     	accounts = JSON.parse(accounts);
     }
 	for (index = 0; index < accounts.length; ++index) {
-    	//console.log(a[index]);
     	var url= urlTemp.replace('%ID%', accounts[index]);
     	var selector = '.chart'+accounts[index] + ' svg';
     	$.ajax({
 		url:  url,
 		cache: false
-	}).done(function( response ) {
-		console.log(response);
-		if (!$.isArray(response)) {
-        	response = JSON.parse(response);
-        }
-        console.log(response.chart);
-        str =   ' Last Updated :' + response.data['lastUpdated'] 
-        	    + '| Month :' + response.data['month'] 
-        	    + '| Total :' + response.data['total'] 
-        	 $('.summary').append(str);
-		pieOrDonut(response.chart, selector, true, 'percent');
-	});
-    	
-	}
+		}).done(function( response ) {
+			if (!$.isArray(response)) {
+	        	response = JSON.parse(response);
+	        }
+	        str =   ' Last Updated :' + response.data['lastUpdated'] 
+	        	    + '| Month :' + response.data['month'] 
+	        	    + '| Total :' + response.data['total'] 
+	        	 $('.summary').append(str);
+			pieOrDonut(response.chart, selector, true, 'percent');
+		});
+   }
 });
 </script>

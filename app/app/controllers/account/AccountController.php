@@ -308,7 +308,8 @@ class AccountController extends BaseController {
 		if(!empty($obj) && $obj->status == 'OK')
 		{
 			$response = AWSBillingEngine::Collection(array('token' => $obj->token, 'service_names' => $serviceNames));
-			print_r($response);
+			echo '<pre>';
+			print_r(json_decode($response));
 		}
 	}
 	
