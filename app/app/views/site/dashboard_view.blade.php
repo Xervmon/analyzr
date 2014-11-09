@@ -27,7 +27,7 @@
 								
 								<h4 class="media-heading">{{ String::title($account->name) }} </h4> <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
 								<p class="chart{{$account->id}}">
-									<svg>
+									<svg style="height:500px;width:400px">
 										
 									</svg>
 									
@@ -80,7 +80,6 @@ $( document ).ready(function() {
     	//console.log(a[index]);
     	var url= urlTemp.replace('%ID%', accounts[index]);
     	var selector = '.chart'+accounts[index] + ' svg';
-    	alert(selector);
     	pieOrDonut(url, selector, true, 'percent');
 	}
 });
