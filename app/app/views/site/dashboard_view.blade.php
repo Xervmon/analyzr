@@ -70,11 +70,14 @@
 var accounts = '<?=json_encode($accArr)?>';
 var urlTemp = '<?=$urlTemp;?>';
 
-$( document ).ready(function() {
-	if (!$.isArray(accounts)) {
+$( document ).ready(function() 
+{
+	if (!$.isArray(accounts)) 
+	{
     	accounts = JSON.parse(accounts);
     }
-	for (index = 0; index < accounts.length; ++index) {
+	for (index = 0; index < accounts.length; ++index) 
+	{
     	var url= urlTemp.replace('%ID%', accounts[index]);
     	var selector = '.chart'+accounts[index] + ' svg';
     	$.ajax({
@@ -87,7 +90,7 @@ $( document ).ready(function() {
 	        str =   ' Last Updated :' + response.data['lastUpdated'] 
 	        	    + '| Month :' + response.data['month'] 
 	        	    + '| Total :' + response.data['total'] 
-	        	 $('.summary').append(str);
+	        $('.summary').append(str);
 			pieOrDonut(response.chart, selector, true, 'percent');
 		});
    }

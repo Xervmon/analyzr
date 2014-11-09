@@ -299,17 +299,35 @@ class AccountController extends BaseController {
 	public function Collection($id)
 	{
 		$this->check();
-		$servicesConf = Config::get('aws_services');
-		$serviceNames = array_keys($servicesConf);
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
+		return View::make('site/account/collection', array(
+            	'account' => $account ));
+		
+	}
+
+	public function getCollectionData($id)
+	{
+		$account = CloudAccount::where('user_id', Auth::id())->find($id);
+		
+		$servicesConf = Config::get('aws_services');
+		$limit  = Input::get('limit');
+		$offset = Input::get('offset');
+		
+		if(empty($limit)) $limit = 10;
+		if(empty($offset)) $offset = 0;
+		
+		$serviceNames = array_keys($servicesConf);
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
-		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
+		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - Collection', 'return' => $responseJson));
 		$obj = json_decode($responseJson);
 		if(!empty($obj) && $obj->status == 'OK')
 		{
-			$response = AWSBillingEngine::Collection(array('token' => $obj->token, 'service_names' => $serviceNames));
-			echo '<pre>';
-			print_r(json_decode($response));
+			$response = AWSBillingEngine::Collection(array('token' => $obj->token, 
+														   'service_names' => $serviceNames, 
+														   'limit' => $limit, 
+														   'offset' => $offset)
+													);
+			print(json_decode($response));
 		}
 	}
 	

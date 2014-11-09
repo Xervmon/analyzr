@@ -21,4 +21,4 @@
 			.attr('transform', 'translate(235,-20)');
 		  	return chart;
 		});
-}
+};
