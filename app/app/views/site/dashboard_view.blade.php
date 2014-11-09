@@ -32,6 +32,9 @@
 								</h4> | <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
 								| <span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
 								| <a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
+								<p class="summary">
+									
+								</p>
 								<p class="chart{{$account->id}}">
 									<svg style="height:500px;width:400px">
 										
@@ -79,7 +82,21 @@ $( document ).ready(function() {
     	//console.log(a[index]);
     	var url= urlTemp.replace('%ID%', accounts[index]);
     	var selector = '.chart'+accounts[index] + ' svg';
-    	pieOrDonut(url, selector, true, 'percent');
+    	$.ajax({
+		url:  url,
+		cache: false
+	}).done(function( response ) {
+		console.log(response);
+		if (!$.isArray(response)) {
+        	response = JSON.parse(response);
+        }
+        str =   ' Last Updated :' + response.data['lastUpdated'] 
+        	    + '| Month :' + response.data['month'] 
+        	    + '| Total :' + response.data['total'] 
+        	 $('.summary').append(str);
+		pieOrDonut(response.charts, selector, true, 'percent');
+	});
+    	
 	}
 });
 </script>

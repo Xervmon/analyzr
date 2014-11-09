@@ -1,15 +1,6 @@
-;pieOrDonut = function(url, selector, donut, labelType)
+;pieOrDonut = function(chart, selector, donut, labelType)
 {
-	$.ajax({
-		url:  url,
-		cache: false
-	}).done(function( response ) {
-		console.log(response);
-		if (!$.isArray(response)) {
-        	response = JSON.parse(response);
-        }
-		
-		nv.addGraph(function() 
+	nv.addGraph(function() 
 		{
 	  		var chart = nv.models.pieChart()
 	        .x(function(d) { return d.label })
@@ -21,10 +12,9 @@
 	        .donutRatio(0.5);     //Configure how big you want the donut hole size to be.
 
 	    	d3.select(selector)
-	       	.datum(response)
+	       	.datum(chart)
 	        .transition().duration(350)
 	        .call(chart);
 		  	return chart;
 		});
-	});
 }

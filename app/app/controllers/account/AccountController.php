@@ -403,7 +403,7 @@ class AccountController extends BaseController {
 		$arr[] = $obj;
 	  }
 	  
-	  print json_encode ($arr);
+	  print json_encode (array('chart' =>$arr, 'data' => array('lastUpdated' => $data['lastUpdate'], 'total' => $data['total'], 'month' => $data['month'])));
 	  
 	}
      
