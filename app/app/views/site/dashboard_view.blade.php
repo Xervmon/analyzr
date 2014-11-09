@@ -27,7 +27,7 @@
 								
 								<h4 class="media-heading">{{ String::title($account->name) }} </h4> <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
 								<p class="chart{{$account->id}}">
-									<svg>
+									<svg style="height:500px;width:400px">
 										
 									</svg>
 									
