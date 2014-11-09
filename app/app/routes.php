@@ -181,6 +181,7 @@ Route::group(array(
 	Route::get('account/{account}/log', 'AccountController@getLogs');
 	Route::get('account/{account}/Collection', 'AccountController@Collection');
 	Route::any('account/{account}/SecurityGroupsData', 'AccountController@getSecurityGroupsData');
+	Route::get('account/{account}/ChartData', 'AccountController@getChartData');
 	Route::get('ServiceStatus/', 'WebserviceController@getIndex');
 	
 	

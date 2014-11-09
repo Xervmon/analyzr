@@ -229,12 +229,12 @@ class AccountController extends BaseController {
 			 	$account->status = $obj2->job_status;
 				$account -> wsResults = '';
 				$success = $account->save();
-				 if (!$success) {
+				if (!$success) {
 		        	Log::error('Error while saving Account : '.json_encode( $dep->errors()));
 					return Redirect::to('account')->with('error', 'Error saving Account!' );
 		        }
 				 // There was a problem deleting the user
-				 Log::error($responseJson);
+				Log::error($responseJson);
 				Log::error('Request to check status of account failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
 				return Redirect::to('account')->with('error', 'Error while checking for status of account' );
 			 }	
@@ -376,6 +376,35 @@ class AccountController extends BaseController {
 		$groups = $this->flatten($securityGroups);
 		
 		print json_encode($groups);
+	}
+	
+	public function getChartData($id)
+	{
+		$account = CloudAccount::where('user_id', Auth::id())->find($id);
+		Log::debug('Chart data for '. $account -> name);
+		
+		//var accountData = '{"cost_data":{"AWS Data Transfer":0.38,"Amazon Elastic Compute Cloud":96.67,"Amazon Simple Email Service":0.01,
+		//"Amazon Simple Notification Service":0,"Amazon Simple Queue Service":0,"Amazon Simple Storage Service":105.68,"Amazon SimpleDB":0,
+		//"Amazon Virtual Private Cloud":20.64},"lastUpdate":1415541555,"month":"Nov 2014","status":"OK","total":223.38}';
+		
+		$data = CloudAccountHelper::findCurrentCost($account);
+		/*
+		 *  { 
+        "label": "One",
+        "value" : 29.765957771107
+      	} , */ 
+      
+	  $costData = $data['cost_data'];
+	  $arr = '';
+	  foreach($costData as $key => $value)
+	  {
+	  	$obj['label'] = $key;
+		$obj['value'] = $value;
+		$arr[] = $obj;
+	  }
+	  
+	  print json_encode ($obj);
+	  
 	}
      
 	 /** 

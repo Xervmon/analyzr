@@ -26,7 +26,7 @@
 							<div class="media-body">
 								
 								<h4 class="media-heading">{{ String::title($account->name) }} </h4> <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
-								<p class="chart">
+								<p class="chart".{{$account->id}}>
 									<svg>
 										
 									</svg>
@@ -59,28 +59,47 @@
 	
 
 <script>
-var accountData = '{{ json_encode(CloudAccountHelper::findCurrentCost($account)) }}';
+
 $( document ).ready(function() {
+	var accounts = '{{json_encode($accounts)}}';
+	foreach(accounts as account)
+	{
+		renderChartData(account, "{{ URL::to('account/'.$account->id.'/ChartData') }}");
+	}
+
 	alert('Dashboard loaded');
 	//Donut chart example
-nv.addGraph(function() {
-  var chart = nv.models.pieChart()
-      .x(function(d) { return d.label })
-      .y(function(d) { return d.value })
-      .showLabels(true)     //Display pie labels
-      .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
-      .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
-      .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
-      .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
-      ;
 
-    d3.select(".chart svg")
-        .datum(exampleData())
+
+getChartData = function(account, url)
+{
+	$.ajax({
+			url:  url,
+			cache: false
+	}).done(function( response ) {
+		console.log(response);
+		if (!$.isArray(response)) {
+        	response = JSON.parse(response);
+        }
+		nv.addGraph(function() {
+	  		var chart = nv.models.pieChart()
+	      .x(function(d) { return d.label })
+	      .y(function(d) { return d.value })
+	      .showLabels(true)     //Display pie labels
+	      .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+	      .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+	      .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+	      .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+	      ;
+
+    	d3.select(".chart svg")
+        .datum(response)
         .transition().duration(350)
         .call(chart);
-
-  return chart;
-});
+	  	return chart;
+		});
+	});
+}
 
 function exampleData() {
   return  [
