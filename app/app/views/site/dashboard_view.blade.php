@@ -103,7 +103,9 @@ renderChartData = function(account, url)
 }
 $( document ).ready(function() {
 	//alert('sudhi');
-	
+	if (!$.isArray(accounts)) {
+    	accounts = JSON.parse(accounts);
+    }
 	for (index = 0; index < accounts.length; ++index) {
     	//console.log(a[index]);
     	var url= urlTemp.replace('%ID%', accounts[index]);
