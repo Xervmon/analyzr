@@ -18,7 +18,7 @@
 	        .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
 	        .labelType(labelType) //Configure what type of data to show in the label. Can be "key", "value" or "percent"
 	        .donut(donut)          //Turn on Donut mode. Makes pie chart look tasty!
-	        .donutRatio(1);     //Configure how big you want the donut hole size to be.
+	        .donutRatio(0.5);     //Configure how big you want the donut hole size to be.
 
 	    	d3.select(selector)
 	       	.datum(response)
