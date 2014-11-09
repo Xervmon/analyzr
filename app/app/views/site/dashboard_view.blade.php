@@ -59,10 +59,9 @@
 	
 
 <script>
-
+var accountData = '{{ json_encode(CloudAccountHelper::findCurrentCost($account)) }}';
 $( document ).ready(function() {
-	//Donut chart example
-	
+	alert('Dashboard loaded');
 	//Donut chart example
 nv.addGraph(function() {
   var chart = nv.models.pieChart()
@@ -75,7 +74,7 @@ nv.addGraph(function() {
       .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
       ;
 
-    d3.select(".chart2 svg")
+    d3.select(".chart svg")
         .datum(exampleData())
         .transition().duration(350)
         .call(chart);
@@ -83,13 +82,6 @@ nv.addGraph(function() {
   return chart;
 });
 
-   
-
-
-});
-
-
-//Pie chart example data. Note how there is only a single array of key-value pairs.
 function exampleData() {
   return  [
       { 
@@ -128,5 +120,5 @@ function exampleData() {
 }
 	
 	
-
+});
 </script>
