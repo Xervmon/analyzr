@@ -30,6 +30,8 @@
 									{{ String::title($account->name) }}
 									</a> 
 								</h4> | <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
+								| <span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
+								| <a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
 								<p class="chart{{$account->id}}">
 									<svg style="height:500px;width:400px">
 										
@@ -37,13 +39,6 @@
 									
 								</p>
 								
-								
-								<p>
-									<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
-									| 
-									<a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
-								
-								</p>
 							</div>
 						</div>
 					</li>	
