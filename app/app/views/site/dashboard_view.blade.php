@@ -26,7 +26,7 @@
 							<div class="media-body">
 								
 								<h4 class="media-heading">{{ String::title($account->name) }} </h4> <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
-								<p class="chart">
+								<p class="chart".{{$account->id}}>
 									<svg>
 										
 									</svg>
@@ -59,26 +59,12 @@
 	
 
 <script>
-var accountData = '{{ json_encode(CloudAccountHelper::findCurrentCost($account)) }}';
+
 $( document ).ready(function() {
-	//Regular pie chart example
-nv.addGraph(function() {
-  var chart = nv.models.pieChart()
-      .x(function(d) { return d.label })
-      .y(function(d) { return d.value })
-      .showLabels(true);
-
-    d3.select("#chart svg")
-        .datum(exampleData())
-        .transition().duration(350)
-        .call(chart);
-
-  return chart;
-});
-
-//Donut chart example
-nv.addGraph(function() {
-  var chart = nv.models.pieChart()
+	//Donut chart example
+	var accounts = '{{json_encode($accounts)}}';
+	nv.addGraph(function() {
+  	var chart = nv.models.pieChart()
       .x(function(d) { return d.label })
       .y(function(d) { return d.value })
       .showLabels(true)     //Display pie labels
