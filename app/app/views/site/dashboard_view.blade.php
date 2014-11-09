@@ -90,6 +90,7 @@ $( document ).ready(function() {
 		if (!$.isArray(response)) {
         	response = JSON.parse(response);
         }
+        console.log(response.chart);
         str =   ' Last Updated :' + response.data['lastUpdated'] 
         	    + '| Month :' + response.data['month'] 
         	    + '| Total :' + response.data['total'] 
