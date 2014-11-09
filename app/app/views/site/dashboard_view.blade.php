@@ -27,8 +27,9 @@
 								
 								<h4 class="media-heading"> 
 									<a alt="{{ $account->name }}" title="{{ $account->name }}" href="{{ URL::to('account/'.$account->id.'/edit') }}" class="pull-left" href="#">
+									{{ String::title($account->name) }}
 									</a> 
-								{{ String::title($account->name) }} </h4>
+								</h4>
 								<span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
 								<p class="chart{{$account->id}}">
 									<svg style="height:500px;width:400px">
