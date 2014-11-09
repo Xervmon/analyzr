@@ -70,18 +70,6 @@
 ?>
 var accounts = '<?=json_encode($accArr)?>';
 var urlTemp = '<?=$urlTemp;?>';
-$( document ).ready(function() {
-	alert('sudhi');
-	
-	for (index = 0; index < accounts.length; ++index) {
-    	//console.log(a[index]);
-    	var url= urlTemp.replace('%ID%', accounts[index]);
-		renderChartData(accounts[index], url);
-	}
-	
-	alert('Dashboard loaded');
-	//Donut chart example
-
 
 renderChartData = function(account, url)
 {
@@ -113,6 +101,20 @@ renderChartData = function(account, url)
 		});
 	});
 }
+$( document ).ready(function() {
+	alert('sudhi');
+	
+	for (index = 0; index < accounts.length; ++index) {
+    	//console.log(a[index]);
+    	var url= urlTemp.replace('%ID%', accounts[index]);
+		renderChartData(accounts[index], url);
+	}
+	
+	alert('Dashboard loaded');
+	//Donut chart example
+
+
+
 
 function exampleData() {
   return  [
