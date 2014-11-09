@@ -227,6 +227,7 @@ class AccountController extends BaseController {
 			else  if(!empty($obj2) && $obj2->status == 'error')
 			 {
 				 // There was a problem deleting the user
+				 Log::error($responseJson);
 				Log::error('Request to check status of account failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
 				return Redirect::to('account')->with('error', $obj2->fail_message );
 			 }	
