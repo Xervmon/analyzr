@@ -26,7 +26,7 @@
 							<div class="media-body">
 								
 								<h4 class="media-heading">{{ String::title($account->name) }} </h4> <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
-								<p class="chart".{{$account->id}}>
+								<p class="chart{{$account->id}}">
 									<svg>
 										
 									</svg>
@@ -54,6 +54,7 @@
 <script src="{{asset('assets/js/nvd3/lib/d3.v2.min.js')}}"></script>
 <script src="{{asset('assets/js/nvd3/nv.d3.min.js')}}"></script>
 <script src="{{asset('assets/js/nvd3/lib/stream_layers.js')}}"></script>
+<script src="{{asset('assets/js/xervmon/charts.js')}}"></script>
 <link rel="stylesheet" href="{{asset('assets/css/nvd3/nv.d3.min.css')}}">
 	
 	
@@ -71,91 +72,15 @@
 var accounts = '<?=json_encode($accArr)?>';
 var urlTemp = '<?=$urlTemp;?>';
 
-renderChartData = function(account, url)
-{
-	$.ajax({
-		url:  url,
-		cache: false
-	}).done(function( response ) {
-		console.log(response);
-		if (!$.isArray(response)) {
-        	response = JSON.parse(response);
-        }
-		
-		nv.addGraph(function() 
-		{
-	  		var chart = nv.models.pieChart()
-	        .x(function(d) { return d.label })
-	        .y(function(d) { return d.value })
-	        .showLabels(true)     //Display pie labels
-	        .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
-	        .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
-	        .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
-	        .donutRatio(0.35);     //Configure how big you want the donut hole size to be.
-
-	    	d3.select(".chart svg")
-	       	.datum(response)
-	        .transition().duration(350)
-	        .call(chart);
-		  	return chart;
-		});
-	});
-}
 $( document ).ready(function() {
-	//alert('sudhi');
 	if (!$.isArray(accounts)) {
     	accounts = JSON.parse(accounts);
     }
 	for (index = 0; index < accounts.length; ++index) {
     	//console.log(a[index]);
     	var url= urlTemp.replace('%ID%', accounts[index]);
-    	alert(url);
-		renderChartData(accounts[index], url);
+    	var selector = 'chart'+accounts[index] + ' ' + svg;
+    	pieOrDonut(accounts[index], url, selector,, true, 'percent');
 	}
-	
-	alert('Dashboard loaded');
-	//Donut chart example
-
-
-
-
-function exampleData() {
-  return  [
-      { 
-        "label": "One",
-        "value" : 29.765957771107
-      } , 
-      { 
-        "label": "Two",
-        "value" : 0
-      } , 
-      { 
-        "label": "Three",
-        "value" : 32.807804682612
-      } , 
-      { 
-        "label": "Four",
-        "value" : 196.45946739256
-      } , 
-      { 
-        "label": "Five",
-        "value" : 0.19434030906893
-      } , 
-      { 
-        "label": "Six",
-        "value" : 98.079782601442
-      } , 
-      { 
-        "label": "Seven",
-        "value" : 13.925743130903
-      } , 
-      { 
-        "label": "Eight",
-        "value" : 5.1387322875705
-      }
-    ];
-}
-	
-	
 });
 </script>
