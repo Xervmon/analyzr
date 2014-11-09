@@ -61,10 +61,10 @@
 <script>
 
 $( document ).ready(function() {
-	var accounts = '{{json_encode($accounts)}}';
+	var accounts = '<?=json_encode($accounts)?>';
 	foreach(accounts as account)
 	{
-		renderChartData(account, "{{ URL::to('account/'.$account->id.'/ChartData') }}");
+		renderChartData(account, "<?=URL::to('account/'.$account->id.'/ChartData') ?>");
 	}
 
 	alert('Dashboard loaded');
