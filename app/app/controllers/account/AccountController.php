@@ -331,7 +331,7 @@ class AccountController extends BaseController {
 			$result = json_decode($response);
 			if(!empty($result) && $result->status == 'OK')
 			{
-				$billingData = $result -> billingData;
+				$billingData = $result -> billing_data;
 				echo '<pre>';
 				print_r($billingData);
 				foreach($billingData as $key => $value)
