@@ -60,6 +60,8 @@
 
 <script>
 var accountData = '{{ json_encode(CloudAccountHelper::findCurrentCost($account)) }}';
+$( document ).ready(function() {
+	//Regular pie chart example
 nv.addGraph(function() {
   var chart = nv.models.pieChart()
       .x(function(d) { return d.label })
@@ -93,6 +95,9 @@ nv.addGraph(function() {
 
   return chart;
 });
+
+
+
 
 //Pie chart example data. Note how there is only a single array of key-value pairs.
 function exampleData() {
