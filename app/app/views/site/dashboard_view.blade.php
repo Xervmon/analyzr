@@ -59,9 +59,9 @@
 	
 
 <script>
-
+var accounts = '<?=json_encode($accounts)?>';
 $( document ).ready(function() {
-	var accounts = '<?=json_encode($accounts)?>';
+	
 	foreach(accounts as account)
 	{
 		renderChartData(account, "<?=URL::to('account/'.$account->id.'/ChartData') ?>");
