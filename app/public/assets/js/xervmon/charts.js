@@ -1,4 +1,4 @@
-;pieOrDonut = function(chart, selector, donut, labelType)
+;pieOrDonut = function(data, selector, donut, labelType)
 {
 	nv.addGraph(function() 
 		{
@@ -12,7 +12,7 @@
 	        .donutRatio(0.5);     //Configure how big you want the donut hole size to be.
 
 	    	d3.select(selector)
-	       	.datum(chart)
+	       	.datum(data)
 	        .transition().duration(350)
 	        .call(chart);
 		  	return chart;
