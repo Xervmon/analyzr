@@ -96,7 +96,7 @@ nv.addGraph(function() {
   return chart;
 });
 
-
+});
 
 
 //Pie chart example data. Note how there is only a single array of key-value pairs.
@@ -138,5 +138,5 @@ function exampleData() {
 }
 	
 	
-});
+
 </script>
