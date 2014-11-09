@@ -327,7 +327,19 @@ class AccountController extends BaseController {
 														   'limit' => $limit, 
 														   'offset' => $offset)
 													);
-			print $response;
+													
+			$result = json_decode($response);
+			if(!empty($result) && $result->status == 'OK')
+			{
+				$billingData = $result -> billingData;
+				echo '<pre>';
+				print_r($billingData);
+				foreach($billingData as $key => $value)
+				{
+					
+				}
+			}
+			//print $response;
 		}
 	}
 	
