@@ -6,7 +6,7 @@
 <div class="page-header">
 	<div class="row">
 		<div class="col-md-9">
-			<h5> {{{ Lang::get('account/account.securityGroups') }}}</h5>
+			<h5> {{{ Lang::get('site.ec2Products') }}}</h5>
 		</div>
 	</div>
 </div>
@@ -24,7 +24,9 @@
 	<script type="text/javascript">
 	var data ='<?=json_encode($ec2Products) ?>';
 	$(document).ready(function() {
-		console.log('<?php json_encode($ec2Products) ?>')
+		if (!$.isArray(data)) {
+        	data = JSON.parse(data);
+        }
 		$('#ec2Products').append(convertJsonToTableSecurityGroups(data));
 		
 	});
