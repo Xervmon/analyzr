@@ -89,6 +89,9 @@
 	    								<li><a href="{{{ URL::to('Ondemand') }}}"><span class="glyphicon glyphicon-tag"></span> {{{ Lang::get('site.Ondemand') }}}</a></li>
 
 	    								<li class="divider"></li>
+	    								<li><a href="{{{ URL::to('EC2Products') }}}"><span class="glyphicon glyphicon-tag"></span> {{{ Lang::get('site.EC2Products') }}}</a></li>
+
+	    								<li class="divider"></li>
 	    								<li><a href="{{{ URL::to('enginelog') }}}"><span class="glyphicon glyphicon-inbox"></span> {{{ Lang::get('site.enginelog') }}}</a></li>
 	    								<li class="divider"></li>
 	    								<li><a href="{{{ URL::to('ServiceStatus') }}}"><span class="glyphicon glyphicon-signal"></span> {{{ Lang::get('site.webservice_status') }}}</a></li>

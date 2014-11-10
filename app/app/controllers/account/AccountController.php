@@ -439,6 +439,15 @@ class AccountController extends BaseController {
 	  														   'month' => $data['month'])));
 	  
 	}
+
+	public function EC2Products()
+	{
+		$data = Congig::get('ec2Products');
+		
+		return View::make('site/account/EC2Products', array(
+            	'ec2Products' => $data ));
+		
+	}
      
 	 /** 
 	 *//* 
