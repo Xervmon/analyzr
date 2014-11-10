@@ -23,9 +23,9 @@
 		</ul>
 		</p>
 		 <script src="{{asset('assets/js/jquery-plugins/jssor.js')}}"></script>
-	        <script src="{{asset('assets/js/jquery-plugins/jssor.slider.mini.js')}}"></script>
-	        <script src="{{asset('assets/js/jquery-plugins/prettify.js')}}"></script>
-        @include('site.home.jsPartial')
+	     <script src="{{asset('assets/js/jquery-plugins/jssor.slider.mini.js')}}"></script>
+	     <script src="{{asset('assets/js/jquery-plugins/prettify.js')}}"></script>
+         @include('site.home.jsPartial')
 		<div class="text-center">
 	       	 <!-- You can move inline styles to css file or css block. -->
 	       	 <p><h4><font color="3399FF">Coming soon - To support more providers</font></h4></p>
