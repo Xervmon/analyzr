@@ -6,7 +6,7 @@
 <div class="page-header">
 	<div class="row">
 		<div class="col-md-9">
-			<h5> {{{ Lang::get('site.ec2Products') }}}</h5>
+			<h5> {{{ Lang::get('site.EC2Products') }}}</h5>
 		</div>
 	</div>
 </div>
