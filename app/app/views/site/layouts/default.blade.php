@@ -87,7 +87,7 @@
 	    								<li><a href="{{{ URL::to('Ondemand') }}}"><span class="glyphicon glyphicon-tag"></span> {{{ Lang::get('site.Ondemand') }}}</a></li>
 
 	    								<li class="divider"></li>
-	    								<li><a href="{{{ URL::to('EC2Products') }}}"><span class="glyphicon glyphicon-.glyphicon-italic"></span> {{{ Lang::get('site.EC2Products') }}}</a></li>
+	    								<li><a href="{{{ URL::to('EC2Products') }}}"><span class="glyphicon glyphicon-italic"></span> {{{ Lang::get('site.EC2Products') }}}</a></li>
 	    								
 	    							</ul>
 		                        </li>
