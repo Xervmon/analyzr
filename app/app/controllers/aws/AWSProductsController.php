@@ -26,7 +26,7 @@ class AWSProductsController extends BaseController {
 		$arr = '';
 		foreach($final as $key => $value)
 		{
-			$value['type'] = $key;
+			$value['name'] = $value['name'] .'-' .$key;
 			$arr[] = $value;
 		}
 		
