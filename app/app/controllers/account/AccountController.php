@@ -141,7 +141,7 @@ class AccountController extends BaseController {
 				$ret = json_decode($json);
 				if($ret->status == 'OK')
 				{
-					$account ->status =' In process';
+					$account ->status ='In process';
 					$account->job_id = $ret->job_id;
 					Log::info('Job Id:'.$ret->job_id);
 					return 'SUCCESS';
