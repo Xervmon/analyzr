@@ -22,8 +22,16 @@ class AWSProductsController extends BaseController {
 	{
 		$data = Config::get('ec2Products');
 		
+		$final = json_decode($data[0], true);
+		$arr = '';
+		foreach($final as $key => $value)
+		{
+			$value['type'] = $key;
+			$arr[] = $value;
+		}
+		
 		return View::make('site/aws/ec2products', array(
-            	'ec2Products' => $data ));
+            	'ec2Products' => $arr ));
 		
 	}
      

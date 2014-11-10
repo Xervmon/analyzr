@@ -14,9 +14,7 @@
 <div id="ec2Products">
 </div>
 
-<?php
-print_r(ec2Products);
-?>
+
 @stop
 
 
@@ -24,9 +22,10 @@ print_r(ec2Products);
 @section('scripts')
     <script src="{{asset('assets/js/xervmon/utils.js')}}"></script>
 	<script type="text/javascript">
+	var data ='<?=json_encode($ec2Products) ?>';
 	$(document).ready(function() {
 		console.log('<?php json_encode($ec2Products) ?>')
-		//$('#securityGroups').append(convertJsonToTableSecurityGroups(response));
+		$('#ec2Products').append(convertJsonToTableSecurityGroups(data));
 		
 	});
 	</script>
