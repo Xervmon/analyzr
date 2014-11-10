@@ -15,7 +15,7 @@
 		While our roadmap items will be defined by our service users, the following are a gist of items that we would cover in next few releses.
 		<ul>
 			<li>Collaborate and Integrate with <a href="https://www.aws.amazon.com">Amazon AWS</a> eco system</li>
-			<li>Security Port and Vulnerability Scans</li>
+			<li>Security Audits (This is currently under heavy testing)</li>
 			<li>MSP specific requirements</li>
 			<li>Billing and Chargebacks</li>
 			<li>More coming soon!</li>
