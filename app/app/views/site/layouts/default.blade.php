@@ -68,8 +68,7 @@
 	                		<li{{ (Request::is('data-security') ? ' class="active"' : '') }}><a href="{{{ URL::to('data-security') }}}"><span class="glyphicon glyphicon-lock"></span> {{{ Lang::get('site.data_security') }}}</a></li>
     						<li{{ (Request::is('roadmap') ? ' class="active"' : '') }}><a href="{{{ URL::to('roadmap') }}}"><span class="glyphicon glyphicon-list-alt"></span> {{{ Lang::get('site.roadmap') }}}</a></li>
 	                		<li{{ (Request::is('billingExperts') ? ' class="active"' : '') }}><a href="{{{ URL::to('billingExperts') }}}"><span class="glyphicon glyphicon-plane"></span> {{{ Lang::get('site.billingExperts') }}}</a></li>
-							<li{{ (Request::is('videos') ? ' class="active"' : '') }}><a href="{{{ URL::to('videos') }}}"><span class="glyphicon glyphicon-hd-video"></span> {{{ Lang::get('site.videos') }}}</a></li>
-					
+							
 	                	</ul>
 	                    <ul class="nav navbar-nav pull-right">
 	                        @if (Auth::check())
