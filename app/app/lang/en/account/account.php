@@ -23,6 +23,8 @@ return array(
 	'table.GroupId' => 'GroupId',
 	'table.Description' => 'Description',
 	'table.Misc' => 'Misc',
-	'securityGroups' => 'SecurityGroups'
+	'securityGroups' => 'SecurityGroups',
+	'STATUS_IN_PROCESS' => 'In process',
+	'STATUS_COMPLETED' => 'Completed'
 	
 );

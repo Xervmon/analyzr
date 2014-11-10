@@ -24,9 +24,9 @@ Inverse	<span class="label label-inverse">Inverse</span>
 		{
 			case 'running' :
 			case 'OK' :	
-			case 'Completed' 	: return '<span class="label label-success">'.$status.'</span>'; break;
+			case Lang::get('account/account.STATUS_COMPLETED') 	: return '<span class="label label-success">'.$status.'</span>'; break;
 				
-			case 'In Progress'  : 
+			case Lang::get('account/account.STATUS_IN_PROCESS')  : 
 			case 'start' 		: 
 			case 'started' 		: return '<span class="label label-info">'.$status.'</span>'; break;
 			case 'stop' 		: return '<span class="label label-warning">'.$status.'</span>'; break;

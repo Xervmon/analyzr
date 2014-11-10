@@ -20,7 +20,7 @@
 						<span class="pull-left" href="#">
 						    <img class="media-object img-responsive" src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.'.$account->cloudProvider.'.logo')) }}" alt="{{ $account->cloudProvider }}" />
 						</span>
-						@if($account->status == 'In process')
+						@if($account->status == Lang::get('account/account.STATUS_IN_PROCESS'))
 							<form class="pull-right" method="post" action="{{ URL::to('account/' . $account->id . '/refresh') }}">
 									<!-- CSRF Token -->
 									<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
