@@ -11,7 +11,7 @@
 	</div>
 </div>
 
-<div id="securityGroups">
+<div id="ec2Products">
 </div>
 
 @stop
@@ -22,17 +22,9 @@
     <script src="{{asset('assets/js/xervmon/utils.js')}}"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
-		$.ajax({
-			url:  "{{ URL::to('account/'.$account->id.'/SecurityGroupsData') }}",
-			cache: false
-		})
-		.done(function( response ) {
-			console.log(response);
-			if (!$.isArray(response)) {
-            	response = JSON.parse(response);
-            }
-		$('#securityGroups').append(convertJsonToTableSecurityGroups(response));
-		});
+		console.log('<?php json_encode($ec2Products) ?>')
+		//$('#securityGroups').append(convertJsonToTableSecurityGroups(response));
+		
 	});
 	</script>
 @stop
