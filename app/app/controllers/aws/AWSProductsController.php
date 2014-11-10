@@ -20,7 +20,7 @@ class AWSProductsController extends BaseController {
    
    public function getEC2Products()
 	{
-		$data = Congig::get('ec2Products');
+		$data = Config::get('ec2Products');
 		
 		return View::make('site/aws/EC2Products', array(
             	'ec2Products' => $data ));
