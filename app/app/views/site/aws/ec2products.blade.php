@@ -14,6 +14,9 @@
 <div id="ec2Products">
 </div>
 
+<?php
+print_r(ec2Products);
+?>
 @stop
 
 
