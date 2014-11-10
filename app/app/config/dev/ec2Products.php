@@ -1,5 +1,5 @@
 <?php
-return  '{
+return array('{
     "t1.micro"  : { "name": "T1 Micro",
                     "description": "32-bit or 64-bit, 613 MB RAM, Up to 2 EC2 Compute Units, EBS Storage Only, I/O : Low",
                     "compute_units": 1,
@@ -228,4 +228,4 @@ return  '{
                     "virtual_cores": 32,
                     "memory": 244,
                     "storage": 6400}
-		}';
+		}');

@@ -22,7 +22,7 @@ class AWSProductsController extends BaseController {
 	{
 		$data = Config::get('ec2Products');
 		
-		return View::make('site/aws/EC2Products', array(
+		return View::make('site/aws/ec2products', array(
             	'ec2Products' => $data ));
 		
 	}
