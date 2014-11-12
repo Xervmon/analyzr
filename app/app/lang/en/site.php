@@ -50,5 +50,6 @@ But when you are vetting a service, as to how it looks and works, you may need t
 	'Reserved' => 'Reserved Instances Costs',
 	'Ondemand' => 'Ondemand Instances Costs',
 	'EC2Products' => 'EC2Products',
-	'metadata' => 'Metadata'
+	'metadata' => 'Metadata',
+	'security_accounts' => 'Security Audit Account'
 );
