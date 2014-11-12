@@ -11,22 +11,22 @@ return array(
         'credentials[apiKey]' => array(
             'type' => 'string',
             'title' => 'API Key',
-            'required' => true
+            'required' => TRUE
         ) ,
         'credentials[secretKey]' => array(
             'type' => 'string',
             'title' => 'Secret Key',
-            'required' => true
+            'required' => TRUE
         ) ,
         'credentials[assumedRole]' => array(
             'type' => 'string',
             'title' => 'Assumed Role',
-            'required' => true
+            'required' => FALSE
         ) ,
          'credentials[securityToken]' => array(
             'type' => 'string',
             'title' => 'Security Token',
-            'required' => true
+            'required' => FALSE
         ) ,
     ) ,
 );
