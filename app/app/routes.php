@@ -170,6 +170,7 @@ Route::group(array(
 	Route::any('account/{account}/refresh', 'AccountController@checkStatus');
     Route::get('account/{account}/SecurityGroups', 'AccountController@SecurityGroups');
 	
+	Route::any('security_account/', 'SecurityAccountController@getIndex'); 
 	Route::get('security_account/create', 'SecurityAccountController@getCreate');
     Route::get('security_account/{security_account}/edit', 'SecurityAccountController@getCreate');
 	Route::any('security_account/{security_account}/refresh', 'SecurityAccountController@checkStatus');

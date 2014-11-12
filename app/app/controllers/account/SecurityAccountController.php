@@ -56,7 +56,7 @@ class SecurityAccountController extends BaseController {
     public function getCreate($id = false) {
         $mode = $id !== false ? 'edit' : 'create';
 		$account =  $id !== false ? SecurityAccountHelper::findAndDecrypt($id) : null;
-		$providers = Config::get('account_schema');
+		$providers = Config::get('security_account_schema');
         return View::make('site/security_account/create_edit', compact('mode', 'account', 'providers'));
     }
     /**
@@ -89,12 +89,12 @@ class SecurityAccountController extends BaseController {
 				return $this->redirect($ret);
             	//return Redirect::intended('account')->with('success', Lang::get('account/account.account_updated'));
             } else {
-                return Redirect::to('account')->with('error', Lang::get('account/account.account_auth_failed'));
+                return Redirect::to('security_account')->with('error', Lang::get('account/account.account_auth_failed'));
             }
         }
         catch(Exception $e) {
             Log::error($e);
-            return Redirect::to('account')->with('error', $e->getMessage());
+            return Redirect::to('security_account')->with('error', $e->getMessage());
         }
     }
 
@@ -104,11 +104,11 @@ class SecurityAccountController extends BaseController {
 		$ret = '';
 		switch ($state)
 		{
-			case 'SUCCESS': $ret = Redirect::intended('account')->with('success', Lang::get('account/account.account_updated')); break;
+			case 'SUCCESS': $ret = Redirect::intended('security_account')->with('success', Lang::get('security_account/account.account_updated')); break;
 			case 'BAD_CREDENTIALS':
-			case 'FAILURE' : $ret = Redirect::to('account')->with('error', 'Check Account Credentials!'); break;
-			case 'ENGINE_FAILURE' : $ret =  Redirect::to('account')->with('error', 'Check if AWS Usage Processing engine is up!'); break;
-			case 'ENGINE_CREDENTIALS_FAILURE' : $ret =  Redirect::to('account')->with('error', 'Engine credentials mis-match. Contact support team.'); break;
+			case 'FAILURE' : $ret = Redirect::to('security_account')->with('error', 'Check Account Credentials!'); break;
+			case 'ENGINE_FAILURE' : $ret =  Redirect::to('security_account')->with('error', 'Check if Security Audit Processing engine is up!'); break;
+			case 'ENGINE_CREDENTIALS_FAILURE' : $ret =  Redirect::to('security_account')->with('error', 'Engine credentials mis-match. Contact support team.'); break;
 		}	
 		return $ret;
 	}
@@ -141,7 +141,7 @@ class SecurityAccountController extends BaseController {
 				$ret = json_decode($json);
 				if($ret->status == 'OK')
 				{
-					$account ->status = Lang::get('account/account.STATUS_IN_PROCESS');
+					$account ->status = Lang::get('security_account/account.STATUS_IN_PROCESS');
 					$account->job_id = $ret->job_id;
 					Log::info('Job Id:'.$ret->job_id);
 					return 'SUCCESS';
@@ -171,8 +171,8 @@ class SecurityAccountController extends BaseController {
 		{
 			if(AWSBillingEngine::getServiceStatus() == 'error')
 			{
-				Log::error(Lang::get('account/account.awsbilling_service_down'));
-				print json_encode(array('status' => 'error', 'message' => Lang::get('account/account.awsbilling_service_down')));
+				Log::error(Lang::get('security_account/account.awsbilling_service_down'));
+				print json_encode(array('status' => 'error', 'message' => Lang::get('security_account/account.awsbilling_service_down')));
 				return;
 			}
 		}
@@ -181,8 +181,8 @@ class SecurityAccountController extends BaseController {
 			
 			if(AWSBillingEngine::getServiceStatus() == 'error')
 			{
-				Log::error(Lang::get('account/account.awsbilling_service_down'));
-				print json_encode(array('status' => 'error', 'message' => Lang::get('account/account.awsbilling_service_down')));
+				Log::error(Lang::get('security_account/account.awsbilling_service_down'));
+				print json_encode(array('status' => 'error', 'message' => Lang::get('security_account/account.awsbilling_service_down')));
 				return;
 			}
 		}
@@ -195,7 +195,7 @@ class SecurityAccountController extends BaseController {
 		$account = SecurityAccount::where('user_id', Auth::id())->find($id);
 		if(empty($account))
 		{
-			return Redirect::to('account')->with('info', 'Selected Account do not need refresh!');
+			return Redirect::to('security_account')->with('info', 'Selected Account do not need refresh!');
 		}
 		$user = Auth::user();
 		$responseJson = AWSBillingEngine::authenticate(array('username' => $user->username, 'password' => md5($user->engine_key)));
@@ -220,9 +220,9 @@ class SecurityAccountController extends BaseController {
 				$success = $account->save();
 		        if (!$success) {
 		        	Log::error('Error while saving Account : '.json_encode( $dep->errors()));
-					return Redirect::to('account')->with('error', 'Error saving Account!' );
+					return Redirect::to('security_account')->with('error', 'Error saving Account!' );
 		        }
-				return Redirect::to('account')->with('success', $account->name .' is refreshed' );
+				return Redirect::to('security_account')->with('success', $account->name .' is refreshed' );
 			}
 			else  if(!empty($obj2) && $obj2->status == 'error')
 			 {
@@ -231,12 +231,12 @@ class SecurityAccountController extends BaseController {
 				$success = $account->save();
 				if (!$success) {
 		        	Log::error('Error while saving Account : '.json_encode( $dep->errors()));
-					return Redirect::to('account')->with('error', 'Error saving Account!' );
+					return Redirect::to('security_account')->with('error', 'Error saving Account!' );
 		        }
 				 // There was a problem deleting the user
 				Log::error($responseJson);
 				Log::error('Request to check status of account failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
-				return Redirect::to('account')->with('error', 'Error while checking for status of account' );
+				return Redirect::to('security_account')->with('error', 'Error while checking for status of account' );
 			 }	
 			else
 			{
@@ -249,7 +249,7 @@ class SecurityAccountController extends BaseController {
 			 // There was a problem deleting the user
 			Log::error('Request to check status of account failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
 			Log::error('Log :' . implode(' ', $obj2->job_log));
-            return Redirect::to('account')->with('error', $obj->fail_message );
+            return Redirect::to('security_account')->with('error', $obj->fail_message );
 		 }	
 		 else
 		 {
@@ -280,7 +280,7 @@ class SecurityAccountController extends BaseController {
 			{
 				Log::error('Request to Account logs failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
 				Log::error('Log :' . implode(' ', $obj2->job_log));
-            	return Redirect::to('account')->with('error', $obj->fail_message );
+            	return Redirect::to('security_account')->with('error', $obj->fail_message );
 			}
 			else
 				{
@@ -288,10 +288,10 @@ class SecurityAccountController extends BaseController {
 				}
 		}
 		else if(empty($account)) {
-			 return Redirect::to('account')->with('info', 'No Account Logs found! ' );
+			 return Redirect::to('security_account')->with('info', 'No Account Logs found! ' );
 		}
 		else {
-			 return Redirect::to('account')->with('info', 'No logs found! ' );
+			 return Redirect::to('security_account')->with('info', 'No logs found! ' );
 		}
 		
 	}
@@ -427,10 +427,10 @@ class SecurityAccountController extends BaseController {
         $account = SecurityAccount::where('user_id', Auth::id())->find($id);
         if (empty($account)) {
             // TODO needs to delete all of that user's content
-            return Redirect::to('account')->with('success', 'Removed Account Successfully');
+            return Redirect::to('security_account')->with('success', 'Removed Account Successfully');
         } else {
             // There was a problem deleting the user
-            return Redirect::to('account/' . $account->id . '/edit')->with('error', 'Error while deleting');
+            return Redirect::to('security_account/' . $account->id . '/edit')->with('error', 'Error while deleting');
         }
     }
 	
