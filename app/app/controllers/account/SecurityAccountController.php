@@ -78,18 +78,18 @@ class SecurityAccountController extends BaseController {
             $account->credentials = json_encode(Input::get('credentials'));
             $account->user_id = Auth::id(); // logged in user id
             
-            $conStatus = CloudProvider::authenticate($account);
+            $conStatus = CloudProvider::authenticate($security_account);
             
             
             if ($conStatus == 1) {
             	Log::info('Credentials are encrypted before saving to DB.');
 				$ret = $this->process($account);
-				SecurityAccountHelper::save($account);
+				SecurityAccountHelper::save($security_account);
 				
 				return $this->redirect($ret);
-            	//return Redirect::intended('account')->with('success', Lang::get('account/account.account_updated'));
+            	//return Redirect::intended('security_account')->with('success', Lang::get('security_account/security_account.security_account_updated'));
             } else {
-                return Redirect::to('security_account')->with('error', Lang::get('account/account.account_auth_failed'));
+                return Redirect::to('security_account')->with('error', Lang::get('security_account/security_account.security_account_auth_failed'));
             }
         }
         catch(Exception $e) {
