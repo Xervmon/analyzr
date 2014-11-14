@@ -97,8 +97,6 @@
 		                        	<ul class="dropdown-menu">
 	    								<li><a href="{{{ URL::to('account') }}}"><span class="glyphicon glyphicon-wrench"></span> {{{ Lang::get('site.accounts') }}}</a></li>
 	    								<li class="divider"></li>
-	    								<li><a href="{{{ URL::to('security_account') }}}"><span class="glyphicon glyphicon-lock"></span> {{{ Lang::get('site.security_accounts') }}}</a></li>
-	    								<li class="divider"></li>
 	    								<li><a href="{{{ URL::to('enginelog') }}}"><span class="glyphicon glyphicon-inbox"></span> {{{ Lang::get('site.enginelog') }}}</a></li>
 	    								<li class="divider"></li>
 	    								<li><a href="{{{ URL::to('ServiceStatus') }}}"><span class="glyphicon glyphicon-signal"></span> {{{ Lang::get('site.webservice_status') }}}</a></li>
