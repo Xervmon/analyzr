@@ -14,7 +14,7 @@
 
 class Constants 
 {
-	const AWS_CLOUD 						= 'Amazon Cloud';
+	const AWS_CLOUD 						= 'Amazon AWS';
 	const RACKSPACE_CLOUD 					= 'Rackspace Cloud';
 	
  	const HP_CLOUD 			  				= 'HP Cloud';
