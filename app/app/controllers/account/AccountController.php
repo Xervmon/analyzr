@@ -118,11 +118,13 @@ class AccountController extends BaseController {
 	private function process(& $account)
 	{
 		Log::info('Processing ..' . $account->cloudProvider. '..');
+		$response = '';
 		switch($account->profileType)
 		{
-			case Constants::BILLING_PROFILE  : $this->billingProcess($account); break;
-			case Constants::SECURITY_PROFILE : $this->securityProcess($account); break;
+			case Constants::BILLING_PROFILE  : $response = $this->billingProcess($account); break;
+			case Constants::SECURITY_PROFILE : $response = $this->securityProcess($account); break;
 		}
+		return $response;
 	}
 
 	private function securityProcess(& $account)
