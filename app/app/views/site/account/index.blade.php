@@ -18,7 +18,8 @@
 	  			<li class="list-group-item">
 					<div class="media">
 						<span class="pull-left" href="#">
-						    <img class="media-object img-responsive" src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.'.$account->cloudProvider.'.logo')) }}" alt="{{ $account->cloudProvider }}" />
+						    <img class="media-object img-responsive" 
+						    	src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.'.$account->cloudProvider.'.logo')) }}" alt="{{ $account->cloudProvider }}" />
 						</span>
 						@if($account->status == Lang::get('account/account.STATUS_IN_PROCESS'))
 							<form class="pull-right" method="post" action="{{ URL::to('account/' . $account->id . '/refresh') }}">

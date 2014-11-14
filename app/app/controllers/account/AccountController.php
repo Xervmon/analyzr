@@ -74,7 +74,9 @@ class AccountController extends BaseController {
             }
 		    
             $account->name = Input::get('name');
-            $account->cloudProvider = Input::get('cloudProvider');
+			$providerProfile = explode(':', Input::get('cloudProvider'));
+            $account->cloudProvider = $providerProfile[0];
+			$account->profileType = $providerProfile[1];
             $account->credentials = json_encode(Input::get('credentials'));
             $account->user_id = Auth::id(); // logged in user id
             
@@ -114,6 +116,21 @@ class AccountController extends BaseController {
 	}
 	
 	private function process(& $account)
+	{
+		Log::info('Processing ..' . $account->cloudProvider. '..');
+		switch($account->profileType)
+		{
+			case Constants::BILLING_PROFILE  : $this->billingProcess($account); break;
+			case Constants::SECURITY_PROFILE : $this->securityProcess($account); break;
+		}
+	}
+
+	private function securityProcess(& $account)
+	{
+			
+	}
+	
+	private function billingProcess(& $account)
 	{
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));

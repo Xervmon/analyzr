@@ -52,8 +52,8 @@ class CloudProvider {
     
     public static function getDriver($account) {
         $iProvider = '';
-        switch ($account->cloudProvider) {
-            case 'Amazon AWS':
+		switch ($account->cloudProvider) {
+            case Constants::AWS_CLOUD:
                 $iProvider = new AWSPRoviderImpl($account);
                 return $iProvider;
             break;
