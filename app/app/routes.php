@@ -187,7 +187,7 @@ Route::group(array(
 	Route::get('account/{account}/Collection', 'AccountController@Collection');
 	Route::any('account/{account}/SecurityGroupsData', 'AccountController@getSecurityGroupsData');
 	Route::any('account/{account}/ChartData', 'AccountController@getChartData');
-	//Route::any('account/{account}/CollectionData', 'AccountController@getCollectionData');
+	Route::any('account/{account}/CollectionData', 'AccountController@getCollectionData');
 	Route::any('EC2Products/', 'AWSProductsController@getEC2Products');
 	Route::get('ServiceStatus/', 'WebserviceController@getIndex');
 	
