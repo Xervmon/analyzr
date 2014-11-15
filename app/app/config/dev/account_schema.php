@@ -12,25 +12,25 @@ return array(
             'type' => 'string',
             'title' => 'Account ID',
             'required' => true,
-            'comment' => 'AWS Account Id is required field'
+            'placeholder' => 'AWS Account Id is required field'
         ) ,
         'credentials[apiKey]' => array(
             'type' => 'string',
             'title' => 'API Key',
             'required' => true,
-            'comment' => 'AWS Account Id is required field'
+            'placeholder' => 'AWS Account Id is required field'
         ) ,
         'credentials[secretKey]' => array(
             'type' => 'string',
             'title' => 'Secret Key',
             'required' => true,
-            'comment' => 'AWS Account Id is required field'
+            'placeholder' => 'AWS Account Id is required field'
         ) ,
         'credentials[billingBucket]' => array(
             'type' => 'string',
             'title' => 'Billing Bucket',
             'required' => true,
-            'comment' => 'AWS Account Id is required field'
+            'placeholder' => 'AWS Account Id is required field'
         ) ,
     ) ,
      'Amazon AWS:Security Profile' => array(
