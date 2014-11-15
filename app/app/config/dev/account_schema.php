@@ -12,25 +12,25 @@ return array(
             'type' => 'string',
             'title' => 'Account ID',
             'required' => true,
-            'description' => 'AWS Account Id is required field'
+            'description' => 'AWS Account Id is required field.'
         ) ,
         'credentials[apiKey]' => array(
             'type' => 'string',
             'title' => 'API Key',
             'required' => true,
-            'description' => 'AWS Account Id is required field'
+            'description' => 'API Key that you create within AWS IAM UI.'
         ) ,
         'credentials[secretKey]' => array(
             'type' => 'string',
             'title' => 'Secret Key',
             'required' => true,
-            'description' => 'AWS Account Id is required field'
+            'description' => 'Secret Key that you create within AWS IAM UI.'
         ) ,
         'credentials[billingBucket]' => array(
             'type' => 'string',
             'title' => 'Billing Bucket',
             'required' => true,
-            'description' => 'AWS Account Id is required field'
+            'description' => 'The bucket configured to host aws usage data'
         ) ,
     ) ,
      'Amazon AWS:Security Profile' => array(
