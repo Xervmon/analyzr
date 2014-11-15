@@ -75,7 +75,7 @@ class PortPreferencesController extends BaseController {
             $portPreference->preferences = json_encode(Input::get('preferences'));
             $portPreference->user_id = Auth::id(); // logged in user id
             Log::info('Saving the Port preferences.');
-			return Redirect::intended('security/portPreferences')->with('success', Lang::get('security/portPreference.portPreference_updated'));
+			return Redirect::intended('security/portPreferences')->with('success', Lang::get('security/portPreferences.portPreference_updated'));
          }
         catch(Exception $e) {
             Log::error($e);
