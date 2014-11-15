@@ -15,14 +15,14 @@ return array(
             'default' => '20, 21, 1433, 1434, 3306, 3389, 4333, 5432, 5500',
         ) ,
         'preferences[warning_ports]' => array(
-            'type' => 'string',
+            'type' => 'textarea',
             'title' => 'Warning Ports',
             'required' => true,
             'description' => 'Yellow: Access to any other port is unrestricted.',
             'default' => '27017, 27018'
         ) ,
         'preferences[safe_ports]' => array(
-            'type' => 'string',
+            'type' => 'textarea',
             'title' => 'Safe Ports',
             'required' => true,
             'description' => 'Green: Access to port 80, 25, 443, or 465 is unrestricted.',
