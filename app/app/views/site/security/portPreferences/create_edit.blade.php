@@ -11,13 +11,13 @@
 	<div class="page-header">
 		<div class="row">
 			<div class="col-md-9">
-				<h5>{{isset($account->id)?'Edit':'Create'}} Account:</h5>
+				<h5>{{isset($portPreference->id)?'Edit':'Create'}} Port Preference:</h5>
 			</div>
 		</div>
 	</div>
 
 	{{-- Create/Edit cloud account Form --}}
-	<form id="portPreferencesForm" class="form-horizontal" method="post" action="@if (isset($portPreference->id)){{ URL::to('security/portPreference/' . $portPreference->id . '/edit') }}@endif" autocomplete="off">
+	<form id="portPreferencesForm" class="form-horizontal" method="post" action="@if (isset($portPreference->id)){{ URL::to('security/portPreferences/' . $portPreference->id . '/edit') }}@endif" autocomplete="off">
 		<!-- CSRF Token -->
 		<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 		<!-- ./ csrf token -->
@@ -57,7 +57,6 @@
 		var SAVED_PREFERENCES = {{ !empty($portPreference -> preferences) ? $portPreference -> preferences : 'null' }};
 		$(function(){
 			var $additionalPortPreferencesFields = $('#additionalPortPreferencesFields');
-			var $cloudProvider = $('#cloudProvider');
 			var schema = PORTSCHEMA;
 			var values = {};
 				for(var credentialKey in SAVED_PREFERENCES) {

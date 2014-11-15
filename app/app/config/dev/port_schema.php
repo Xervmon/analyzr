@@ -8,11 +8,11 @@
 
 return array(
     'preferences[danger_ports]' => array(
-            'type' => 'string',
+            'type' => 'textarea',
             'title' => 'Danger Ports',
             'required' => true,
             'description' => 'Access to port 20, 21, 1433, 1434, 3306, 3389, 4333, 5432, or 5500 is unrestricted.',
-            'default' => '20, 21, 1433, 1434, 3306, 3389, 4333, 5432, 5500'
+            'default' => '20, 21, 1433, 1434, 3306, 3389, 4333, 5432, 5500',
         ) ,
         'preferences[warning_ports]' => array(
             'type' => 'string',
