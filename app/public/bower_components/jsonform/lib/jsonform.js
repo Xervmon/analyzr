@@ -239,7 +239,7 @@ var inputFieldTemplate = function (type) {
       '<%= (node.schemaElement && node.schemaElement.maxLength ? " maxlength=\'" + node.schemaElement.maxLength + "\'" : "") %>' +
       '<%= (node.schemaElement && node.schemaElement.required && (node.schemaElement.type !== "boolean") ? " required=\'required\'" : "") %>' +
       '<%= (node.placeholder? "placeholder=" + \'"\' + escape(node.placeholder) + \'"\' : "")%>' +
-      ' />',
+      ' /> <%= (node.comment? "comment=" + \'"\' + escape(node.comment) + \'"\' : "")%>',
     'fieldtemplate': true,
     'inputfield': true
   }
