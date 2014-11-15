@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\SoftDeletingTrait;
 * Classes list:
 * - CloudAccount extends \
 */
-class SecurityAccount extends \Eloquent 
+class PortPreference extends \Eloquent 
 {
 	use SoftDeletingTrait;
     protected $fillable = [];
 	protected $softDelete = true;
-	protected $table = 'securityAccounts';
+	protected $table = 'portPreferences';
     /**
      * Get the account's owner.
      *

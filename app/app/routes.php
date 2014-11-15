@@ -170,11 +170,10 @@ Route::group(array(
 	Route::any('account/{account}/refresh', 'AccountController@checkStatus');
     Route::get('account/{account}/SecurityGroups', 'AccountController@SecurityGroups');
 	
-	Route::any('security_account/', 'SecurityAccountController@getIndex'); 
-	Route::get('security_account/create', 'SecurityAccountController@getCreate');
-    Route::get('security_account/{security_account}/edit', 'SecurityAccountController@getCreate');
-	Route::any('security_account/{security_account}/refresh', 'SecurityAccountController@checkStatus');
-    
+	Route::any('security/portPreferences/', 'PortPreferencesController@getIndex'); 
+	Route::get('security/portPreferences/create', 'PortPreferencesController@getCreate');
+    Route::get('security/portPreferences/{portPreference}/edit', 'PortPreferencesController@getCreate');
+	 
 	
 	Route::any('ticket/', 'TicketController@getIndex'); 
 	Route::get('ticket/create', 'TicketController@getCreate');
@@ -203,9 +202,9 @@ Route::group(array(
         Route::post('account/{account}/edit', 'AccountController@postEdit');
         Route::post('account/{account}/delete', 'AccountController@postDelete');
 		
-		Route::post('security_account/create', 'SecurityAccountController@postEdit');
-        Route::post('security_account/{security_account}/edit', 'SecurityAccountController@postEdit');
-        Route::post('security_account/{security_account}/delete', 'SecurityAccountController@postDelete');
+		Route::post('security/portPreferences/create', 'PortPreferencesController@postEdit');
+        Route::post('security/portPreferences/{portPreference}/edit', 'PortPreferencesController@postEdit');
+        Route::post('security/portPreferences/{portPreference}/delete', 'PortPreferencesController@postDelete');
 		
         Route::post('ticket/create', 'TicketController@postEdit');
         Route::post('ticket/{ticket}/edit', 'TicketController@postEdit');
