@@ -62,7 +62,6 @@
 
 @section('scripts')
 <script src="{{asset('bower_components/jsonform/deps/underscore.js')}}"></script>
-<script src="{{asset('assets/js/jquery-plugins/jquery.crypt.js')}}"></script>
 <script src="{{asset('bower_components/jsonform/lib/jsonform.js')}}"></script>
 <script type="text/javascript">
 	(function($){
