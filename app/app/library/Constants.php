@@ -24,6 +24,12 @@ class Constants
 	const BILLING_PROFILE					= 'Billing Profile';
 	const SECURITY_PROFILE					= 'Security Profile';
 	
+	const SUCCESS = 'SUCCESS';
+	const BAD_CREDENTIALS = 'BAD_CREDENTIALS';
+	const FAILURE = 'FAILURE' ;
+	const ENGINE_FAILURE  = 'ENGINE_FAILURE' ;
+	const ENGINE_CREDENTIALS_FAILURE='ENGINE_CREDENTIALS_FAILURE';
+	
 }
 
 	

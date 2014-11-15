@@ -106,11 +106,11 @@ class AccountController extends BaseController {
 		$ret = '';
 		switch ($state)
 		{
-			case 'SUCCESS': $ret = Redirect::intended('account')->with('success', Lang::get('account/account.account_updated')); break;
-			case 'BAD_CREDENTIALS':
-			case 'FAILURE' : $ret = Redirect::to('account')->with('error', 'Check Account Credentials!'); break;
-			case 'ENGINE_FAILURE' : $ret =  Redirect::to('account')->with('error', 'Check if AWS Usage Processing engine is up!'); break;
-			case 'ENGINE_CREDENTIALS_FAILURE' : $ret =  Redirect::to('account')->with('error', 'Engine credentials mis-match. Contact support team.'); break;
+			case Constants::SUCCESS: $ret = Redirect::intended('account')->with('success', Lang::get('account/account.account_updated')); break;
+			case Constants::BAD_CREDENTIALS:
+			case Constants::FAILURE : $ret = Redirect::to('account')->with('error', 'Check Account Credentials!'); break;
+			case Constants::ENGINE_FAILURE : $ret =  Redirect::to('account')->with('error', 'Check if AWS Usage Processing engine is up!'); break;
+			case Constants::ENGINE_CREDENTIALS_FAILURE : $ret =  Redirect::to('account')->with('error', 'Engine credentials mis-match. Contact support team.'); break;
 		}	
 		return $ret;
 	}
@@ -140,7 +140,7 @@ class AccountController extends BaseController {
 		
 		if(!StringHelper::isJson($responseJson))
 		{
-			return 'ENGINE_CREDENTIALS_FAILURE';
+			return Constants::ENGINE_CREDENTIALS_FAILURE;
 		}
 				
 		if($obj->status == 'OK')
@@ -163,24 +163,24 @@ class AccountController extends BaseController {
 					$account ->status = Lang::get('account/account.STATUS_IN_PROCESS');
 					$account->job_id = $ret->job_id;
 					Log::info('Job Id:'.$ret->job_id);
-					return 'SUCCESS';
+					return Constants::SUCCESS;
 				}
 				else if($ret->status == 'error')
 				{
 					$account ->status = $ret->status;
 					$account->job_id = '';
 					Log::error($ret->message.' '.json_encode($account));
-					return 'FAILURE';
+					return Constants::FAILURE;
 				}
 			}
 			else {
 				Log::error('Failed to add to billing queue'.json_encode($account));
-				return 'BAD_CREDENTIALS';
+				return Constants::BAD_CREDENTIALS;
 			}
 		}
 		else
 			{
-				return 'ENGINE_CREDENTIALS_FAILURE';
+				return Constants::ENGINE_CREDENTIALS_FAILURE;
 			}
 	}
 
