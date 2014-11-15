@@ -27,7 +27,7 @@
 						<div class="media-body">
 							<h4 class="media-heading">{{ String::title($portPreference->project) }}</h4>
 							<p>
-								<span class="glyphicon glyphicon-calendar"></span> <!--Sept 16th, 2012-->{{{ $account->created_at }}}
+								<span class="glyphicon glyphicon-calendar"></span> <!--Sept 16th, 2012-->{{{ $portPreference->created_at }}}
 							</p>
 							
 						</div>
@@ -37,11 +37,11 @@
 		@endif
 	</ul>
 	@if(empty($portPreferences) || count($portPreferences) === 0) 
-		<div class="alert alert-info"> {{{ Lang::get('security/portPreference.empty_no_preferences') }}}</div>
+		<div class="alert alert-info"> {{{ Lang::get('security/portPreferences.empty_no_preferences') }}}</div>
 	@endif
 </div>
 <div>
-<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
+<a href="{{ URL::to('security/portPreferences/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('security/portPreferences.portPreference_add') }}}</a>
 </div>
 
 @stop

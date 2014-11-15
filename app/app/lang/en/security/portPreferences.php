@@ -12,6 +12,7 @@ return array(
 
 	'preferences'            => 'Preferences',
 	'portPreference_updated' => 'Port Preferences updated',
-	'empty_no_preferences' => 'No preferences'
+	'empty_no_preferences' => 'No preferences',
+	'portPreference_add' => 'Add Port preference'
 	
 	);
