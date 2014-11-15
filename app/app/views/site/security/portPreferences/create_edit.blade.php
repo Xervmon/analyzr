@@ -59,6 +59,7 @@
 			var $additionalPortPreferencesFields = $('#additionalPortPreferencesFields');
 			var $cloudProvider = $('#cloudProvider');
 			var schema = PORTSCHEMA;
+			var values = {};
 				for(var credentialKey in SAVED_PREFERENCES) {
 					if(!SAVED_PREFERENCES.hasOwnProperty(credentialKey) ){
 						continue;
