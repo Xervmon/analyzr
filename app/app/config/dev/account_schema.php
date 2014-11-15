@@ -18,7 +18,7 @@ return array(
             'type' => 'string',
             'title' => 'API Key',
             'required' => true,
-            'description' => 'API Key that you create within AWS IAM UI.'
+            'description' => 'API Key that you create within AWS IAM UI. <a href="https://console.aws.amazon.com/iam/home?region=us-east-1#home"> Identity and Access Management</a>'
         ) ,
         'credentials[secretKey]' => array(
             'type' => 'string',
