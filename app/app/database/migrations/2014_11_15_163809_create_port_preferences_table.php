@@ -11,7 +11,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreatePortsPreferencesTable extends Migration {
+class CreatePortPreferencesTable extends Migration {
     /**
      * Run the migrations.
      *
