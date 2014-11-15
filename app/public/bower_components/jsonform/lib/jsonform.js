@@ -239,10 +239,34 @@ var inputFieldTemplate = function (type) {
       '<%= (node.schemaElement && node.schemaElement.maxLength ? " maxlength=\'" + node.schemaElement.maxLength + "\'" : "") %>' +
       '<%= (node.schemaElement && node.schemaElement.required && (node.schemaElement.type !== "boolean") ? " required=\'required\'" : "") %>' +
       '<%= (node.placeholder? "placeholder=" + \'"\' + escape(node.placeholder) + \'"\' : "")%>' +
-      ' /> <%= (node.comment? node.comment : "")%>',
+      ' />',
     'fieldtemplate': true,
     'inputfield': true
   }
+};
+
+var inputFieldTemplate2 = function (type, val) {
+	val= $().crypt({method:"b64enc",source:val}); 
+  return {
+    'template': '<input type="' + type + '" ' +
+      '<%= (fieldHtmlClass ? "class=\'" + fieldHtmlClass + "\' " : "") %>' +
+      'name="<%= node.name %>" value="' + val + '" id="<%= id %>"' +
+      '<%= (node.disabled? " disabled" : "")%>' +
+      '<%= (node.readOnly ? " readonly=\'readonly\'" : "") %>' +
+      '<%= (node.schemaElement && node.schemaElement.maxLength ? " maxlength=\'" + node.schemaElement.maxLength + "\'" : "") %>' +
+      '<%= (node.schemaElement && node.schemaElement.required && (node.schemaElement.type !== "boolean") ? " required=\'required\'" : "") %>' +
+      '<%= (node.placeholder? "placeholder=" + \'"\' + escape(node.placeholder) + \'"\' : "")%>' +
+      ' />',
+    'fieldtemplate': true,
+    'inputfield': true
+  }
+};
+
+var jsonObjectId = function () {
+    var timestamp = (new Date().getTime() / 1000 | 0).toString(16);
+    return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, function() {
+        return (Math.random() * 16 | 0).toString(16);
+    }).toLowerCase();
 };
 
 jsonform.elementTypes = {
@@ -254,6 +278,7 @@ jsonform.elementTypes = {
   },
   'text': inputFieldTemplate('text'),
   'password': inputFieldTemplate('password'),
+  'auto_generate': inputFieldTemplate2('text', jsonObjectId()),
   'date': inputFieldTemplate('date'),
   'datetime': inputFieldTemplate('datetime'),
   'datetime-local': inputFieldTemplate('datetime-local'),
