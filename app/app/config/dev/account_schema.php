@@ -12,7 +12,7 @@ return array(
             'type' => 'string',
             'title' => 'Account ID',
             'required' => true,
-            'description' => 'AWS Account Id is required field.'
+            'description' => 'Your AWS Account Id is required field. We just need set up ReadOnly policy for credentials'
         ) ,
         'credentials[apiKey]' => array(
             'type' => 'string',
@@ -24,25 +24,28 @@ return array(
             'type' => 'string',
             'title' => 'Secret Key',
             'required' => true,
-            'description' => 'Secret Key that you create within AWS IAM UI.'
+            'description' => 'Secret Key that you create within AWS IAM UI. <a href="https://console.aws.amazon.com/iam/home?region=us-east-1#home"> Identity and Access Management</a>'
         ) ,
         'credentials[billingBucket]' => array(
             'type' => 'string',
             'title' => 'Billing Bucket',
             'required' => true,
-            'description' => 'The bucket configured to host aws usage data'
+            'description' => 'The bucket configured to host aws usage data. <a href="https://console.aws.amazon.com/billing/home?#/preferences">Billing Preferences</a>'
         ) ,
     ) ,
      'Amazon AWS:Security Profile' => array(
         'credentials[apiKey]' => array(
             'type' => 'string',
             'title' => 'API Key',
-            'required' => true
+            'required' => true,
+            'description' => 'API Key that you create within AWS IAM UI. <a href="https://console.aws.amazon.com/iam/home?region=us-east-1#home"> Identity and Access Management</a>'
+			
         ) ,
         'credentials[secretKey]' => array(
             'type' => 'string',
             'title' => 'Secret Key',
-            'required' => true
+            'required' => true,
+            'description' => 'Secret Key that you create within AWS IAM UI. <a href="https://console.aws.amazon.com/iam/home?region=us-east-1#home"> Identity and Access Management</a>'
         ) ,
         'credentials[assumedRole]' => array(
             'type' => 'string',
