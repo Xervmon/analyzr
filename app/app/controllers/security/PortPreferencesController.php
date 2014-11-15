@@ -70,7 +70,7 @@ class PortPreferencesController extends BaseController {
                 throw new Exception('general.access_denied');
             }
 		    
-            $portPreference->name = Input::get('name');
+            $portPreference->project = Input::get('project');
 			
             $portPreference->preferences = json_encode(Input::get('preferences'));
             $portPreference->user_id = Auth::id(); // logged in user id
