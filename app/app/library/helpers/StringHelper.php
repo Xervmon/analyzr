@@ -295,5 +295,4 @@ class StringHelper
 	{
 		return !empty($str) ? ucwords(str_replace('_', ' ', $str)) : ''	;
 	}
-	}
 }
