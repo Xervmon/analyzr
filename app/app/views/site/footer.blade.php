@@ -5,7 +5,9 @@
 			<div class="col-md-4 col-md-offset-4 column">
 				<p class="muted credit text-center">
 					<img src="{{{ asset('assets/ico/favicon.ico') }}}" alt="{{{ Lang::get('site.footertitle') }}}"/>
-					<a href="https://www.xervmon.com">{{{ Lang::get('site.footertitle') }}}</a>
+					<!--
+					<a href="https://www.xervmon.com"> Lang::get('site.footertitle') </a>
+					-->
 				</p>
 			</div>
 			<div class="col-md-4 column footer-social">
