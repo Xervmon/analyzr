@@ -290,4 +290,10 @@ class StringHelper
 	{
 		return $cleanAccountName = str_ireplace(" ", "_", $str);
 	}
+	
+	public static function removeUnderscoreUCWords($str)
+	{
+		return !empty($str) ? ucwords(str_replace('_', ' ', $str)) : ''	;
+	}
+	}
 }

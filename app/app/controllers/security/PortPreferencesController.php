@@ -95,7 +95,7 @@ class PortPreferencesController extends BaseController {
 			$ret = array_filter($array, 'is_numeric') === $array;
 			if(!$ret)
 			{
-				$errors[] = ucwords(str_replace('_', ' ', $prefernce)) . ' should have all integer values separated by commas';
+				$errors[] = StringHelper::removeUnderscoreUCWords($prefernce) . ' should have all numeric values separated by commas';
 			}
 		}
 	
