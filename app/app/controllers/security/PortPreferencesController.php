@@ -91,17 +91,21 @@ class PortPreferencesController extends BaseController {
 		foreach($preferences as $prefernce => $ports)
 		{
 			$array = explode(',', $ports);
-			$ret = array_filter($array, 'is_int') === $array;
-			if(!$ret)
+			foreach($array as $i)
 			{
-				$errors[] = $prefernce .' should contain integer ports separated by commas';
+				if(!is_int($i))
+				{
+					$errors[] = $prefernce . ' should have all integer values separated by commas';
+				}
 			}
+			
 		}
 		if(!empty($errors))
 		{
 			 Log::error(json_encode($errors));
            	 return Redirect::to('security/portPreferences')->with('error', implode('<br/>', $errors));
 		}
+		return;
 	}
 
 	 /** 
