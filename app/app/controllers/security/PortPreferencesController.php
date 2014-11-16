@@ -91,7 +91,8 @@ class PortPreferencesController extends BaseController {
 		foreach($preferences as $prefernce => $ports)
 		{
 			$array = explode(',', $ports);
-			if(!array_filter($array, 'is_int') === $array)
+			$ret = array_filter($array, 'is_int') === $array;
+			if(!$ret)
 			{
 				$errors[] = $prefernce .' should contain integer ports separated by commas';
 			}
