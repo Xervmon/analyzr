@@ -1,13 +1,13 @@
 @extends('site.layouts.default')
 {{-- Web site Title --}}
 @section('title')
-{{{ Lang::get('site.billingExperts') }}} ::
+{{{ Lang::get('site.cloudExperts') }}} ::
 @parent
 @stop
 
 {{-- Content --}}
 @section('content')
-<h4>{{{ Lang::get('site.billingExperts') }}}</h4>
+<h4>{{{ Lang::get('site.cloudExperts') }}}</h4>
 <div class="row">
 	<div class="col-md-12">
   		<h4>Support</h4>
