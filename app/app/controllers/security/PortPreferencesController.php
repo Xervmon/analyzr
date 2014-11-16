@@ -72,7 +72,7 @@ class PortPreferencesController extends BaseController {
 		    
             $portPreference->project = Input::get('project');
 			$preferences = Input::get('preferences');
-			$this->validatePreferences($preferences);
+			$this->validatePreferences($preferences, $id);
             $portPreference->preferences = json_encode($preferences);
             $portPreference->user_id = Auth::id(); // logged in user id
             $portPreference->save();
@@ -81,7 +81,7 @@ class PortPreferencesController extends BaseController {
          }
         catch(Exception $e) {
             Log::error($e);
-            return Redirect::to('security/portPreferences')->with('error', $e->getMessage());
+            return Redirect::to('security/portPreferences/'.$id.'/edit')->with('error', $e->getMessage());
         }
     }
 
@@ -101,7 +101,7 @@ class PortPreferencesController extends BaseController {
 		if(!empty($errors))
 		{
 			 Log::error(json_encode($errors));
-           	 return Redirect::to('security/portPreferences')->with('error', implode('<br/>', $errors));
+           	 return Redirect::to('security/portPreferences/'.$id.'/edit')->with('error', implode('<br/>', $errors));
 		}
 		return;
 	}
