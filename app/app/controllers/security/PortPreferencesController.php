@@ -93,9 +93,10 @@ class PortPreferencesController extends BaseController {
 			$array = explode(',', $ports);
 			foreach($array as $i)
 			{
+				echo is_int($i) .'<br/>';
 				if(!is_int($i))
 				{
-					$errors[] = $prefernce . ' should have all integer values separated by commas';
+					//$errors[] = $prefernce . ' should have all integer values separated by commas';
 				}
 			}
 			
