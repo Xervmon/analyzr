@@ -139,10 +139,10 @@ Route::get('data-security', function () {
     return View::make('site/static/data-security');
 });
 
-Route::when('billingExperts', 'detectLang');
-Route::get('billingExperts', function () {
+Route::when('cloudExperts', 'detectLang');
+Route::get('cloudExperts', function () {
     // Return about us page
-    return View::make('site/static/billingExperts');
+    return View::make('site/static/cloudExperts');
 });
 
 Route::when('videos', 'detectLang');
