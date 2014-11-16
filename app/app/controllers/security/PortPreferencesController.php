@@ -63,21 +63,22 @@ class PortPreferencesController extends BaseController {
     public function postEdit($id = false) {
     	if($id !== false)
     		$portPreference = PortPreference::where('user_id', Auth::id())->findOrFail($id);
+        
         try {
-            if (empty($portPreference)) {
+            	if (empty($portPreference)) {
                 $portPreference = new PortPreference;
-            } else if ($portPreference->user_id !== Auth::id()) {
-                throw new Exception('general.access_denied');
-            }
+            	} else if ($portPreference->user_id !== Auth::id()) {
+                	throw new Exception('general.access_denied');
+            	}
 		    
-            $portPreference->project = Input::get('project');
-			$preferences = Input::get('preferences');
-			$this->validatePreferences($preferences, $id);
-            $portPreference->preferences = json_encode($preferences);
-            $portPreference->user_id = Auth::id(); // logged in user id
-            $portPreference->save();
-            Log::info('Saving the Port preferences.');
-			return Redirect::intended('security/portPreferences')->with('success', Lang::get('security/portPreferences.portPreference_updated'));
+	            $portPreference->project = Input::get('project');
+				$preferences = Input::get('preferences');
+				$this->validatePreferences($preferences, $id);
+	            $portPreference->preferences = json_encode($preferences);
+	            $portPreference->user_id = Auth::id(); // logged in user id
+	            $portPreference->save();
+	            Log::info('Saving the Port preferences.');
+				return Redirect::intended('security/portPreferences')->with('success', Lang::get('security/portPreferences.portPreference_updated'));
          }
         catch(Exception $e) {
             Log::error($e);
@@ -101,7 +102,7 @@ class PortPreferencesController extends BaseController {
 		if(!empty($errors))
 		{
 			 Log::error(json_encode($errors));
-           	 return Redirect::to('security/portPreferences')->with('error', implode('<br/>', $errors));
+           	 throw new Exception(implode('<br/>', $errors));
 		}
 		return;
 	}
