@@ -91,7 +91,7 @@ $( document ).ready(function()
 	        	    + '| Month :' + response.data['month'] 
 	        	    + '| Total :' + response.data['total'] 
 	        $('.summary').append(str);
-			discreteBarchart(response.chart, selector, true, 'percent');
+			pieOrDonut(response.chart, selector, true, 'percent');
 		});
    }
 });
