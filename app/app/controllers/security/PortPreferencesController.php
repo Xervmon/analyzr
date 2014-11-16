@@ -71,8 +71,9 @@ class PortPreferencesController extends BaseController {
             }
 		    
             $portPreference->project = Input::get('project');
-			
-            $portPreference->preferences = json_encode(Input::get('preferences'));
+			$preferences = Input::get('preferences');
+			$this->validatePreferences($preferences);
+            $portPreference->preferences = json_encode($preferences);
             $portPreference->user_id = Auth::id(); // logged in user id
             $portPreference->save();
             Log::info('Saving the Port preferences.');
@@ -83,6 +84,24 @@ class PortPreferencesController extends BaseController {
             return Redirect::to('security/portPreferences')->with('error', $e->getMessage());
         }
     }
+
+	private function validatePreferences($preferences)
+	{
+		$errors = '';
+		foreach($preferences as $prefernce => $ports)
+		{
+			$array = explode(',', $ports);
+			if(!array_filter($array, 'is_int') === $array)
+			{
+				$errors[] = $prefernce .' should contain integer ports separated by commas';
+			}
+		}
+		if(!empty($errors))
+		{
+			 Log::error(json_encode($errors));
+           	 return Redirect::to('security/portPreferences')->with('error', implode('<br/>', $errors));
+		}
+	}
 
 	 /** 
 	 * 
