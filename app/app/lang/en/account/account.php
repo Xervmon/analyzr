@@ -25,6 +25,7 @@ return array(
 	'table.Misc' => 'Misc',
 	'securityGroups' => 'SecurityGroups',
 	'STATUS_IN_PROCESS' => 'In process',
+	'STATUS_STARTED' => 'started',
 	'STATUS_COMPLETED' => 'Completed'
 	
 );
