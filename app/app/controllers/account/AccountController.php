@@ -443,7 +443,11 @@ class AccountController extends BaseController {
         "label": "One",
         "value" : 29.765957771107
       	} , */ 
-      
+      if(!isset($data['cost_data']))
+	  {
+	  	print json_encode(array('status' => 'error', 'message' => 'No Cost data found for the '.$account -> name));
+	  	return;
+	  }
 	  $costData = $data['cost_data'];
 	  $arr = '';
 	  foreach($costData as $key => $value)
