@@ -33,32 +33,13 @@ class CloudAccountHelper
 		}
 		if(!empty($account))
 		{
-			if($account->status == 'Completed')
+			switch($account->status)
 			{
-				$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
-			 	EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
-			 	$obj = json_decode($responseJson);
-				
-				if(!empty($obj) && $obj->status == 'OK')
-			 	{
-					$response = AWSBillingEngine::GetCurrentCost(array('token' => $obj->token));
-					return StringHelper::isJson($response) ? json_decode($response, true) : array('status' => 'error', 'message' => 'Invalid response from processing engine') ;
-				}
-				else if(!empty($obj) && $obj->status == 'error')
-				{
-					Log::error('Request to Account logs failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
-					Log::error('Log :' . implode(' ', $obj2->job_log));
-	            	return array('status' => 'error', 'message' => $obj2->fail_message);
-				}
-				else
-					{
-						return array('status' => 'error', 'message' => 'Backend API is down, please try again later!');
-					}
-			 }
-			 else
-			 	{
-			 		return array('status' => 'error', 'message' => 'Please wait..account in '. $account->status);
-			 	}
+				case Lang::get('account/account.STATUS_COMPLETED'): self::processCompletedState(); break;
+				case Lang::get('account/account.STATUS_FAILED'): return array('status' => 'error', 'message' => 'Account '. $account->status .' Contact support!');	break;
+				default:return array('status' => 'error', 'message' => 'Please wait..account in '. $account->status);
+						break;
+			}
 		}
 		else if(empty($account)) 
 		{
@@ -67,6 +48,29 @@ class CloudAccountHelper
 		else 
 		{
 			return array('status' => 'error', 'message' => 'Unexpected error. Contacted support.');	
+		}
+	}
+
+	private static function processCompletedState()
+	{
+		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
+		$obj = json_decode($responseJson);
+				
+		if(!empty($obj) && $obj->status == 'OK')
+		{
+			$response = AWSBillingEngine::GetCurrentCost(array('token' => $obj->token));
+			return StringHelper::isJson($response) ? json_decode($response, true) : array('status' => 'error', 'message' => 'Invalid response from processing engine') ;
+		}
+		else if(!empty($obj) && $obj->status == 'error')
+		{
+			Log::error('Request to Account logs failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
+			Log::error('Log :' . implode(' ', $obj2->job_log));
+	        return array('status' => 'error', 'message' => $obj2->fail_message);
+		}
+		else
+		{
+			return array('status' => 'error', 'message' => 'Backend API is down, please try again later!');
 		}
 	}
 	
