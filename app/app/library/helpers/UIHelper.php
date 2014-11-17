@@ -241,7 +241,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 		$str = '';
 		$str = '<h5><span class="glyphicon glyphicon-tag"> </span> Cost Data</h5>';
 		$data = (object) $data;
-		if($data->status == 'OK')
+		if(isset($data->status) && $data->status == 'OK')
 		{
 			$costData = (array) $data->cost_data;
 			foreach($costData as $row => $val)
