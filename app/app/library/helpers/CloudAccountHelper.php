@@ -35,7 +35,7 @@ class CloudAccountHelper
 		{
 			switch($account->status)
 			{
-				case Lang::get('account/account.STATUS_COMPLETED'): self::processCompletedState(); break;
+				case Lang::get('account/account.STATUS_COMPLETED'): return self::processCompletedState(); break;
 				case Lang::get('account/account.STATUS_FAILED'): return array('status' => 'error', 'message' => 'Account '. $account->status .' Contact support!');	break;
 				default:return array('status' => 'error', 'message' => 'Please wait..account in '. $account->status);
 						break;
