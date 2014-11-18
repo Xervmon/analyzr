@@ -30,6 +30,32 @@ class Constants
 	const ENGINE_FAILURE  = 'ENGINE_FAILURE' ;
 	const ENGINE_CREDENTIALS_FAILURE='ENGINE_CREDENTIALS_FAILURE';
 	
+	const describeAccountAttributes = 'describeAccountAttributes';
+	const describeAddresses = 'describeAddresses';
+	const describeAvailabilityZones = 'describeAvailabilityZones';
+    const describeCustomerGateways = 'describeCustomerGateways';
+    const describeDhcpOptions = 'describeDhcpOptions';
+    const describeImages = 'describeImages';
+    const describeInstances = 'describeInstances';
+    const describeInternetGateways = 'describeInternetGateways';
+    const describeKeyPairs = 'describeKeyPairs';
+    const describeNetworkAcls = 'describeNetworkAcls';
+    const describeNetworkInterfaces = 'describeNetworkInterfaces';
+    const  describePlacementGroups= 'describePlacementGroups';
+    const describeReservedInstances =  'describeReservedInstances';
+    const describeRouteTables = 'describeRouteTables';
+    const describeSecurityGroups = 'describeSecurityGroups';
+    const describeSnapshots = 'describeSnapshots';
+    const describeSubnets = 'describeSubnets';
+    const describeTags = 'describeTags';
+    const describeVolumes = 'describeVolumes'; 
+    const describeVpcPeeringConnections = 'describeVpcPeeringConnections';
+    const describeVpcs = 'describeVpcs';
+    const describeVpnConnections = 'describeVpnConnections';
+    const describeVpnGateways =  'describeVpnGateways';
+    
+	
+	
 }
 
 	

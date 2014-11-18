@@ -31,6 +31,7 @@ class AccountController extends BaseController {
         $this->accounts = $accounts;
         $this->user = $user;
     }
+	
     /**
      * Returns all the Accounts for logged in user.
      *
@@ -49,6 +50,7 @@ class AccountController extends BaseController {
             'accounts' => $accounts
         ));
     }
+    
     /**
      * Displays the form for cloud account creation
      *
@@ -59,14 +61,17 @@ class AccountController extends BaseController {
 		$providers = Config::get('account_schema');
         return View::make('site/account/create_edit', compact('mode', 'account', 'providers'));
     }
+	
     /**
      * Saves/Edits an account
      *
      */
-    public function postEdit($id = false) {
+    public function postEdit($id = false) 
+    {
     	if($id !== false)
     		$account = CloudAccount::where('user_id', Auth::id())->findOrFail($id);
-        try {
+    
+	    try {
             if (empty($account)) {
                 $account = new CloudAccount;
             } else if ($account->user_id !== Auth::id()) {

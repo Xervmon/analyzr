@@ -12,7 +12,8 @@
  * - CloudProvider
  */
 
-class CloudProvider {
+class CloudProvider 
+{
     private static $aws;
     private static $ec2Compute;
     private static function AWSAuth($account) {
@@ -171,4 +172,9 @@ class CloudProvider {
             return array();
         }
     }
+	
+	public static function getSummary($account)
+	{
+		return self::getDriver($account)->getSummary();
+	}
 }
