@@ -67,319 +67,319 @@ class AWSService
 	
 	private static function describeAccountAttributes($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeAccountAttributes();
+			$result = self::$connection->describeAccountAttributes();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeAccountAttributes($params);
+			$result = self::$connection->describeAccountAttributes($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeAddresses($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeAddresses();
+			$result = self::$connection->describeAddresses();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeAddresses($params);
+			$result = self::$connection->describeAddresses($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeAvailabilityZones($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeAvailabilityZones();
+			$result = self::$connection->describeAvailabilityZones();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeAvailabilityZones($params);
+			$result = self::$connection->describeAvailabilityZones($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeCustomerGateways($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeCustomerGateways();
+			$result = self::$connection->describeCustomerGateways();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeCustomerGateways($params);
+			$result = self::$connection->describeCustomerGateways($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeDhcpOptions($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeDhcpOptions();
+			$result = self::$connection->describeDhcpOptions();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeDhcpOptions($params);
+			$result = self::$connection->describeDhcpOptions($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeImages($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeImages();
+			$result = self::$connection->describeImages();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeImages($params);
+			$result = self::$connection->describeImages($params);
 		}
 		return $result->toArray();
 	}
 	private static function describeInstances($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeInstances();
+			$result = self::$connection->describeInstances();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeInstances($params);
+			$result = self::$connection->describeInstances($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeInternetGateways($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeInternetGateways();
+			$result = self::$connection->describeInternetGateways();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeInternetGateways($params);
+			$result = self::$connection->describeInternetGateways($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeKeyPairs($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeKeyPairs();
+			$result = self::$connection->describeKeyPairs();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeKeyPairs($params);
+			$result = self::$connection->describeKeyPairs($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeNetworkAcls($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeNetworkAcls();
+			$result = self::$connection->describeNetworkAcls();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeNetworkAcls($params);
+			$result = self::$connection->describeNetworkAcls($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeNetworkInterfaces($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeNetworkInterfaces();
+			$result = self::$connection->describeNetworkInterfaces();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeNetworkInterfaces($params);
+			$result = self::$connection->describeNetworkInterfaces($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describePlacementGroups($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describePlacementGroups();
+			$result = self::$connection->describePlacementGroups();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describePlacementGroups($params);
+			$result = self::$connection->describePlacementGroups($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeReservedInstances($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeReservedInstances();
+			$result = self::$connection->describeReservedInstances();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeReservedInstances($params);
+			$result = self::$connection->describeReservedInstances($params);
 		}
 		return $result->toArray();
 	}
 	private static function describeRouteTables($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeRouteTables();
+			$result = self::$connection->describeRouteTables();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeRouteTables($params);
+			$result = self::$connection->describeRouteTables($params);
 		}
 		return $result->toArray();
 	}
 	private static function describeSecurityGroups($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeSecurityGroups();
+			$result = self::$connection->describeSecurityGroups();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeSecurityGroups($params);
+			$result = self::$connection->describeSecurityGroups($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeSnapshots($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeSnapshots();
+			$result = self::$connection->describeSnapshots();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeSnapshots($params);
+			$result = self::$connection->describeSnapshots($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeSubnets($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeSubnets();
+			$result = self::$connection->describeSubnets();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeSubnets($params);
+			$result = self::$connection->describeSubnets($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeTags($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeTags();
+			$result = self::$connection->describeTags();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeTags($params);
+			$result = self::$connection->describeTags($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeVolumes($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeVolumes();
+			$result = self::$connection->describeVolumes();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeVolumes($params);
+			$result = self::$connection->describeVolumes($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeVpcPeeringConnections($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeVpcPeeringConnections();
+			$result = self::$connection->describeVpcPeeringConnections();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeVpcPeeringConnections($params);
+			$result = self::$connection->describeVpcPeeringConnections($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeVpcs($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeVpcs();
+			$result = self::$connection->describeVpcs();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeVpcs($params);
+			$result = self::$connection->describeVpcs($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeVpnConnections($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeVpnConnections();
+			$result = self::$connection->describeVpnConnections();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeVpnConnections($params);
+			$result = self::$connection->describeVpnConnections($params);
 		}
 		return $result->toArray();
 	}
 	
 	private static function describeVpnGateways($config, $params=array('DryRun' => true))
 	{
-		$this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
 		{
-			$result = $this->ec2Client->describeVpnGateways();
+			$result = self::$connection->describeVpnGateways();
 		}
 		else {
 			//@TODO massage $params for filtering
-			$result = $this->ec2Client->describeVpnGateways($params);
+			$result = self::$connection->describeVpnGateways($params);
 		}
 		return $result->toArray();
 	}
