@@ -33,27 +33,8 @@ class AWSPRoviderImpl implements IProvider
         $config['secret'] = $credentials->secretKey;
         $config['region'] = empty($credentials -> instanceRegion) ? 'us-east-1' : $credentials->instanceRegion;
 		$conStatus = FALSE;
-        try 
-        {
-            $this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
-			$result = $this->ec2Client->DescribeInstances(array(
-		        'Filters' => array(
-		                array('Name' => 'instance-type', 'Values' => array('m1.small')),
-		        )
-			));
-		
-			$reservations = $result->toArray();
-			if(isset($reservations['requestId'])) $conStatus = TRUE; else $conStatus = FALSE;
-        }
-        catch(Exception $ex) {
-            $conStatus = FALSE;
-            Log::error($ex);
-       }
-        return $conStatus;
+        $conStatus = $this->checkCreds($config);
     }
-	
-	
-	 
 	
 	public function startInstances($params)
 	{
@@ -251,5 +232,26 @@ class AWSPRoviderImpl implements IProvider
 		{
 			return AWSService::get($config, $service);
 		}
+	}
+
+	private function checkCreds($config)
+	{
+		try 
+        {
+            $this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+			$result = $this->ec2Client->DescribeInstances(array(
+		        'Filters' => array(
+		                array('Name' => 'instance-type', 'Values' => array('m1.small')),
+		        )
+			));
+		
+			$reservations = $result->toArray();
+			if(isset($reservations['requestId'])) $conStatus = TRUE; else $conStatus = FALSE;
+        }
+        catch(Exception $ex) {
+            $conStatus = FALSE;
+            Log::error($ex);
+       }
+        return $conStatus;
 	}
 }
