@@ -27,8 +27,7 @@ class CreateCloudAccountLogsTable extends Migration {
 			$table->text('result');
 			$table->integer('user_id')->unsigned()->index();
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-			$table->integer('cloudAccountId')->unsigned()->index();
-            $table->foreign('cloudAccountId')->references('id')->on('cloudAccounts')->onDelete('cascade');
+		    $table->foreign('cloudAccountId')->references('id')->on('cloudAccounts')->onDelete('cascade');
 			
 			$table->softDeletes();
             $table->timestamps();
