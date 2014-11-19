@@ -264,8 +264,8 @@ class AccountController extends BaseController {
 				$success = $accountLog->save();
 				
 				$account->status = $obj2->job_status;
-				$accountLog -> wsResult = json_encode($obj2 -> result);
-				$success = $accountLog->save();
+				$account -> wsResult = json_encode($obj2 -> result);
+				$success = $account->save();
 				
 		        if (!$success) {
 		        	Log::error('Error while saving Account Log : '.json_encode( $accountLog->errors()));
@@ -280,8 +280,8 @@ class AccountController extends BaseController {
 				$success = $accountLog->save();
 				
 				$account->status = $obj2->job_status;
-				$accountLog -> wsResult = json_encode($obj2 -> result);
-				$success = $accountLog->save();
+				$account -> wsResult = json_encode($obj2 -> result);
+				$success = $account->save();
 				
 				if (!$success) {
 		        	Log::error('Error while saving Account : '.json_encode( $accountLog->errors()));
