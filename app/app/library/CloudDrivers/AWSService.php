@@ -26,7 +26,7 @@ class AWSService
 		catch(Exception $ex)
 		{
 			Log::error($ex);
-			return array('status' => 'error', 'message' => 'error While getting the summar info '. $service);
+			return array('status' => 'error', 'message' => 'error While getting the summar info '. $service . ' '.$ex->getMessage());
 		}
 	}
 	
