@@ -91,7 +91,7 @@ class AccountController extends BaseController {
 				return $this->redirect($ret);
             	//return Redirect::intended('account')->with('success', Lang::get('account/account.account_updated'));
             } else {
-                return Redirect::to('account')->with('error', Lang::get('account/account.account_auth_failed'));
+                return Redirect::to('account/create')->with('error', Lang::get('account/account.account_auth_failed'));
             }
         }
         catch(Exception $e) {
@@ -108,9 +108,9 @@ class AccountController extends BaseController {
 		{
 			case Constants::SUCCESS: $ret = Redirect::intended('account')->with('success', Lang::get('account/account.account_updated')); break;
 			case Constants::BAD_CREDENTIALS:
-			case Constants::FAILURE : $ret = Redirect::to('account')->with('error', 'Check Account Credentials!'); break;
-			case Constants::ENGINE_FAILURE : $ret =  Redirect::to('account')->with('error', 'Check if AWS Usage Processing engine is up!'); break;
-			case Constants::ENGINE_CREDENTIALS_FAILURE : $ret =  Redirect::to('account')->with('error', 'Engine credentials mis-match. Contact support team.'); break;
+			case Constants::FAILURE : $ret = Redirect::to('account/create')->with('error', 'Check Account Credentials!'); break;
+			case Constants::ENGINE_FAILURE : $ret =  Redirect::to('account/create')->with('error', 'Check if AWS Usage Processing engine is up!'); break;
+			case Constants::ENGINE_CREDENTIALS_FAILURE : $ret =  Redirect::to('account/create')->with('error', 'Engine credentials mis-match. Contact support team.'); break;
 		}	
 		return $ret;
 	}
