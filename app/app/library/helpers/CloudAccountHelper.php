@@ -35,7 +35,7 @@ class CloudAccountHelper
 		{
 			switch($account->status)
 			{
-				case Lang::get('account/account.STATUS_COMPLETED'): return self::processCompletedState(); break;
+				case Lang::get('account/account.STATUS_COMPLETED'): return self::processCompletedState($account); break;
 				case Lang::get('account/account.STATUS_FAILED'): return array('status' => 'error', 'message' => 'Account '. $account->status .' Contact support!');	break;
 				default:return array('status' => 'error', 'message' => 'Please wait..account in '. $account->status);
 						break;
@@ -51,22 +51,23 @@ class CloudAccountHelper
 		}
 	}
 
-	private static function processCompletedState()
+	private static function processCompletedState($account)
 	{
+		$cred = json_decode($account);
+		
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
 		$obj = json_decode($responseJson);
 				
 		if(!empty($obj) && $obj->status == 'OK')
 		{
-			$response = AWSBillingEngine::GetCurrentCost(array('token' => $obj->token));
+			$response = AWSBillingEngine::GetCurrentCost(array('token' => $obj->token, 'accountId' => $cred->accountId));
 			return StringHelper::isJson($response) ? json_decode($response, true) : array('status' => 'error', 'message' => 'Invalid response from processing engine') ;
 		}
 		else if(!empty($obj) && $obj->status == 'error')
 		{
-			Log::error('Request to Account logs failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
-			Log::error('Log :' . implode(' ', $obj2->job_log));
-	        return array('status' => 'error', 'message' => $obj2->fail_message);
+			Log::error('Request to Account logs failed :' . $obj->fail_code . ':' . $obj->fail_message);
+			return array('status' => 'error', 'message' => $obj->fail_message);
 		}
 		else
 		{
