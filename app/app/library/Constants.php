@@ -21,7 +21,7 @@ class Constants
  	const OPENSTACK							= 'OpenStack';
 	const DIGITAL_OCEAN						= 'DigitalOcean';
 	
-	const BILLING_PROFILE					= 'Billing Profile';
+	const READONLY_PROFILE					= 'ReadOnly Profile';
 	const SECURITY_PROFILE					= 'Security Profile';
 	
 	const SUCCESS = 'SUCCESS';

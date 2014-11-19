@@ -7,7 +7,7 @@
 // Schema for the CloudAccount specific fields, will be converted into JSON and used on the front-end with https://github.com/joshfire/jsonform
 
 return array(
-    'Amazon AWS:Billing Profile' => array(
+    'Amazon AWS:ReadOnly Profile' => array(
         'credentials[accountId]' => array(
             'type' => 'string',
             'title' => 'Account ID',

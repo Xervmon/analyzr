@@ -126,7 +126,7 @@ class AccountController extends BaseController {
 		$response = '';
 		switch($account->profileType)
 		{
-			case Constants::BILLING_PROFILE  : $response = $this->billingProcess($account); break;
+			case Constants::READONLY_PROFILE  : $response = $this->billingProcess($account); break;
 			case Constants::SECURITY_PROFILE : $response = $this->securityProcess($account); break;
 		}
 		return $response;

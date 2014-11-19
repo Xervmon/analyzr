@@ -31,6 +31,21 @@
 			</div>
 		</div>
 
+		<!-- name -->
+		<div class="form-group {{{ $errors->has('username') ? 'error' : '' }}}">
+			<label class="col-md-2 control-label" for="name">Accounts <font color="red">*</font></label>
+			<div class="col-md-6">
+			
+				<select class="form-control" name="accountIds[]" id="accountIds[]" required="" multiple>
+					@foreach($accounts as $account)
+						<option value="{{$account->id}}">{{$account->name}}</option>
+					@endforeach
+				</select>
+				<input class="form-control" type="text" name="project" id="project" value="{{{ Input::old('project', isset($portPreference->project) ? $portPreference->project : null) }}}" required />
+			
+			</div>
+		</div>
+		
 		<!-- ./ username -->
 		<div id="additionalPortPreferencesFields">
 			
