@@ -65,7 +65,7 @@ class AWSService
 		return $data ;
 	}
 	
-	private static function describeAccountAttributes($config, $params=array('DryRun' => true))
+	private static function describeAccountAttributes($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -79,7 +79,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeAddresses($config, $params=array('DryRun' => true))
+	private static function describeAddresses($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -93,7 +93,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeAvailabilityZones($config, $params=array('DryRun' => true))
+	private static function describeAvailabilityZones($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -107,7 +107,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeCustomerGateways($config, $params=array('DryRun' => true))
+	private static function describeCustomerGateways($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -121,7 +121,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeDhcpOptions($config, $params=array('DryRun' => true))
+	private static function describeDhcpOptions($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -135,7 +135,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeImages($config, $params=array('DryRun' => true))
+	private static function describeImages($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -148,7 +148,7 @@ class AWSService
 		}
 		return $result->toArray();
 	}
-	private static function describeInstances($config, $params=array('DryRun' => true))
+	private static function describeInstances($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -162,7 +162,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeInternetGateways($config, $params=array('DryRun' => true))
+	private static function describeInternetGateways($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -176,7 +176,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeKeyPairs($config, $params=array('DryRun' => true))
+	private static function describeKeyPairs($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -190,7 +190,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeNetworkAcls($config, $params=array('DryRun' => true))
+	private static function describeNetworkAcls($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -204,7 +204,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeNetworkInterfaces($config, $params=array('DryRun' => true))
+	private static function describeNetworkInterfaces($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -218,7 +218,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describePlacementGroups($config, $params=array('DryRun' => true))
+	private static function describePlacementGroups($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -232,7 +232,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeReservedInstances($config, $params=array('DryRun' => true))
+	private static function describeReservedInstances($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -245,7 +245,7 @@ class AWSService
 		}
 		return $result->toArray();
 	}
-	private static function describeRouteTables($config, $params=array('DryRun' => true))
+	private static function describeRouteTables($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -258,7 +258,7 @@ class AWSService
 		}
 		return $result->toArray();
 	}
-	private static function describeSecurityGroups($config, $params=array('DryRun' => true))
+	private static function describeSecurityGroups($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -272,7 +272,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeSnapshots($config, $params=array('DryRun' => true))
+	private static function describeSnapshots($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -286,7 +286,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeSubnets($config, $params=array('DryRun' => true))
+	private static function describeSubnets($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -300,7 +300,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeTags($config, $params=array('DryRun' => true))
+	private static function describeTags($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -314,7 +314,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeVolumes($config, $params=array('DryRun' => true))
+	private static function describeVolumes($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -328,7 +328,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeVpcPeeringConnections($config, $params=array('DryRun' => true))
+	private static function describeVpcPeeringConnections($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -342,7 +342,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeVpcs($config, $params=array('DryRun' => true))
+	private static function describeVpcs($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -356,7 +356,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeVpnConnections($config, $params=array('DryRun' => true))
+	private static function describeVpnConnections($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
@@ -370,7 +370,7 @@ class AWSService
 		return $result->toArray();
 	}
 	
-	private static function describeVpnGateways($config, $params=array('DryRun' => true))
+	private static function describeVpnGateways($config, $params=array('DryRun' => false))
 	{
 		self::$connection = \Aws\Ec2\Ec2Client::factory($config);
 		if(empty($params))
