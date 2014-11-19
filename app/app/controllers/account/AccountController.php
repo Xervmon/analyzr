@@ -163,17 +163,32 @@ class AccountController extends BaseController {
 			if(StringHelper::isJson($json))
 			{
 				$ret = json_decode($json);
+				$accountLog = new CloudAccountLog();
+				$accountLog ->cloudAccountId = $account->id;
+				$accountLog ->params = json_encode($data);
+				$accountLog->user_id = Auth::id();
+				$accountLog ->result = $json;
+				
 				if($ret->status == 'OK')
 				{
+					$accountLog ->status = Lang::get('account/account.STATUS_IN_PROCESS');
+					$accountLog->job_id = $ret->job_id;
+					$accountLog->save();
 					$account ->status = Lang::get('account/account.STATUS_IN_PROCESS');
 					$account->job_id = $ret->job_id;
+					$account->save();
 					Log::info('Job Id:'.$ret->job_id);
 					return Constants::SUCCESS;
 				}
 				else if($ret->status == 'error')
 				{
+					$accountLog ->status = $ret->status;
+					$accountLog->job_id = '';
+					$accountLog->save();
+					
 					$account ->status = $ret->status;
 					$account->job_id = '';
+					$account->save();
 					Log::error($ret->message.' '.json_encode($account));
 					return Constants::FAILURE;
 				}
@@ -217,7 +232,11 @@ class AccountController extends BaseController {
 	{
 		$this->check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
-		if(empty($account))
+		$accountLog = CloudAccountLog::where(array('user_id'=> Auth::id(), cloudAccountId=>$id) )
+					  ->whereIn('status', array(Lang::get('account/account.STATUS_IN_PROCESS'), Lang::get('account/account.STATUS_STARTED')))
+					  ->orderBy('created_at', 'desc')->first();
+		
+		if(empty($accountLog))
 		{
 			return Redirect::to('account')->with('info', 'Selected Account do not need refresh!');
 		}
@@ -228,7 +247,7 @@ class AccountController extends BaseController {
 		
 		if(!empty($obj) && $obj->status == 'OK')
 		{
-			$responseJson = AWSBillingEngine::getDeploymentStatus(array('token' => $obj->token, 'job_id' => $account->job_id));
+			$responseJson = AWSBillingEngine::getDeploymentStatus(array('token' => $obj->token, 'job_id' => $accountLog->job_id));
 			EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'getDeploymentStatus', 'return' => $responseJson));
 		
 			$obj2 = json_decode($responseJson);
@@ -239,22 +258,33 @@ class AccountController extends BaseController {
 					Log::error('No Result in the checkStatus Request to be saved!');
 					$obj2 -> result ='';
 				} 
+				
+				$accountLog->status = $obj2->job_status;
+				$accountLog -> result = json_encode($obj2 -> result);
+				$success = $accountLog->save();
+				
 				$account->status = $obj2->job_status;
-				$account -> wsResults = json_encode($obj2 -> result);
-				$success = $account->save();
+				$accountLog -> wsResult = json_encode($obj2 -> result);
+				$success = $accountLog->save();
+				
 		        if (!$success) {
-		        	Log::error('Error while saving Account : '.json_encode( $dep->errors()));
+		        	Log::error('Error while saving Account Log : '.json_encode( $accountLog->errors()));
 					return Redirect::to('account')->with('error', 'Error saving Account!' );
 		        }
 				return Redirect::to('account')->with('success', $account->name .' is refreshed' );
 			}
 			else  if(!empty($obj2) && $obj2->status == 'error')
 			 {
-			 	$account->status = $obj2->job_status;
-				$account -> wsResults = '';
-				$success = $account->save();
+			 	$accountLog->status = $obj2->job_status;
+				$accountLog -> result = $obj2->fail_code .':'. $obj2->fail_message;
+				$success = $accountLog->save();
+				
+				$account->status = $obj2->job_status;
+				$accountLog -> wsResult = json_encode($obj2 -> result);
+				$success = $accountLog->save();
+				
 				if (!$success) {
-		        	Log::error('Error while saving Account : '.json_encode( $dep->errors()));
+		        	Log::error('Error while saving Account : '.json_encode( $accountLog->errors()));
 					return Redirect::to('account')->with('error', 'Error saving Account!' );
 		        }
 				 // There was a problem deleting the user
@@ -270,10 +300,8 @@ class AccountController extends BaseController {
 		 }	
 		 else if(!empty($obj) && $obj->status == 'error')
 		 {
-			 // There was a problem deleting the user
-			Log::error('Request to check status of account failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
-			Log::error('Log :' . implode(' ', $obj2->job_log));
-            return Redirect::to('account')->with('error', $obj->fail_message );
+			Log::error('Request to check status of account failed :' . $obj->fail_code . ':' . $obj->fail_message);
+			return Redirect::to('account')->with('error', $obj->fail_message );
 		 }	
 		 else
 		 {
