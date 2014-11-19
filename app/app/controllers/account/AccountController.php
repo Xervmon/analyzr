@@ -264,7 +264,7 @@ class AccountController extends BaseController {
 				$success = $accountLog->save();
 				
 				$account->status = $obj2->job_status;
-				$account -> wsResult = json_encode($obj2 -> result);
+				$account -> wsResults = json_encode($obj2 -> result);
 				$success = $account->save();
 				
 		        if (!$success) {
@@ -280,7 +280,7 @@ class AccountController extends BaseController {
 				$success = $accountLog->save();
 				
 				$account->status = $obj2->job_status;
-				$account -> wsResult = json_encode($obj2 -> result);
+				$account -> wsResults = json_encode($obj2 -> result);
 				$success = $account->save();
 				
 				if (!$success) {
