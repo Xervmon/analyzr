@@ -34,6 +34,7 @@ class AWSPRoviderImpl implements IProvider
         $config['region'] = empty($credentials -> instanceRegion) ? 'us-east-1' : $credentials->instanceRegion;
 		$conStatus = FALSE;
         $conStatus = $this->checkCreds($config);
+		return $conStatus;
     }
 	
 	public function startInstances($params)
