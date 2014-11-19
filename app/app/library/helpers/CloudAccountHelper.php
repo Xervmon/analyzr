@@ -53,7 +53,8 @@ class CloudAccountHelper
 
 	private static function processCompletedState($account)
 	{
-		$cred = json_decode($account);
+		$account->credentials = StringHelper::decrypt($account->credentials, md5(Auth::user()->username));
+		$cred = json_decode($account->credentials);
 		
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
