@@ -36,7 +36,7 @@ class AWSService
 		switch($service)
 		{
 			case Constants::describeAccountAttributes : $data = self::describeAccountAttributes($config); break;
-			case Constants::describeAddresses : $data = self::describeAddresses($config); break;
+			/*case Constants::describeAddresses : $data = self::describeAddresses($config); break;
 			case Constants::describeAvailabilityZones : $data = self::describeAvailabilityZones($config); break;
 			case Constants::describeCustomerGateways : $data = self::describeCustomerGateways($config); break;
 			case Constants::describeDhcpOptions : $data = self::describeDhcpOptions($config); break;
@@ -60,7 +60,7 @@ class AWSService
 			case Constants::describeVpcs : $data = self::describeVpcs($config); break;
 			case Constants::describeVpnConnections : $data = self::describeVpnConnections($config); break;
 			case Constants::describeVpnGateways : $data = self::describeVpnGateways($config); break;
-		
+			*/
 		}
 		return $data ;
 	}
