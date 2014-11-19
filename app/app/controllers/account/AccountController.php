@@ -232,7 +232,7 @@ class AccountController extends BaseController {
 	{
 		$this->check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
-		$accountLog = CloudAccountLog::where(array('user_id'=> Auth::id(), cloudAccountId=>$id) )
+		$accountLog = CloudAccountLog::where(array('user_id'=> Auth::id(), 'cloudAccountId'=>$id) )
 					  ->whereIn('status', array(Lang::get('account/account.STATUS_IN_PROCESS'), Lang::get('account/account.STATUS_STARTED')))
 					  ->orderBy('created_at', 'desc')->first();
 		
