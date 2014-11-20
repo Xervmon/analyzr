@@ -17,7 +17,8 @@
 			@foreach ($portPreferences as $portPreference)
 			<li class="list-group-item">
 					<div class="media">
-						@if($portPreference->status == Lang::get('account/account.STATUS_IN_PROCESS'))
+						@if(in_array($account->status, array(Lang::get('account/account.STATUS_IN_PROCESS'), 
+															Lang::get('account/account.STATUS_STARTED'))))
 							<form class="pull-right" method="post" action="{{ URL::to('security/portPreferences/' . $portPreference->id . '/refresh') }}">
 									<!-- CSRF Token -->
 									<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
@@ -33,7 +34,7 @@
 						</form>
 						<a href="{{ URL::to('security/portPreferences/' . $portPreference->id . '/edit') }}" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-edit"></span></a>
 						<div class="media-body">
-							<h4 class="media-heading">{{ String::title($portPreference->project) }}</h4>
+							<h4 class="media-heading">{{ String::title($portPreference->project) }} | {{ UIHelper::getAccount(CloudAccountHelper:find($portPreference->cloudAccountId)) }}</h4>
 							<p>
 								<span class="glyphicon glyphicon-calendar"></span> <!--Sept 16th, 2012-->{{{ $portPreference->created_at }}}
 							</p>

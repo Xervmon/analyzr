@@ -18,6 +18,12 @@ class CloudAccountHelper
 		return $account;
 	}
 	
+	public static function find($id)
+	{
+		$account = CloudAccount::where('user_id', Auth::id())->findOrFail($id) ;
+		return $account;
+	}
+	
 	public static function save($account)
 	{
 		$account->credentials = StringHelper::encrypt($account->credentials, md5(Auth::user()->username));

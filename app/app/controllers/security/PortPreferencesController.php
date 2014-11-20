@@ -42,8 +42,6 @@ class PortPreferencesController extends BaseController {
         //Auth::id() : gives the logged in userid
         $portPreferences = $this->portPreference->where('user_id', Auth::id())->orderBy('created_at', 'DESC')->paginate(10);
 		
-		//$accounts = CloudAccount::where('user_id', Auth::id()) -> where('profileType', Constants::READONLY_PROFILE);
-		
 		return View::make('site/security/portPreferences/index', array(
             'portPreferences' => $portPreferences
         ));
@@ -363,7 +361,8 @@ class PortPreferencesController extends BaseController {
 					echo '<pre>';
 					print_r($ret);
 					die();
-					return View::make('site/security/portPreferences/portInfo', array('account' => $account,'instanceDetails'=> $getInstancesAll));
+					return View::make('site/security/portPreferences/portInfo', array('account' => $account,
+											'instanceDetails'=> $getInstancesAll));
 			    }
 				else if($ret->status == 'error')
 				{
