@@ -99,4 +99,3 @@ App::down(function()
 */
 
 require __DIR__.'/../filters.php';
-require __DIR__.'/../helpers.php';
