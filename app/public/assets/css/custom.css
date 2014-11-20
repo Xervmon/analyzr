@@ -172,3 +172,15 @@ div#footer  .container > .row > div.column:first-child{
    }
 }
 
+.dataTables_paginate .paginate_button, .page_navigation a {
+    border: 1px solid #1B9BC7;
+    border-radius: 2px;
+    background-color: #36B6E2;
+    width: 25px;
+    height: 10px;
+    overflow: hidden;
+   /* background-image: url('./images/sprite.png');
+    background-repeat: no-repeat;*/
+    margin: 0px 1px;
+    cursor: pointer;
+}
