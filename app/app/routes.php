@@ -169,11 +169,14 @@ Route::group(array(
     Route::get('account/{account}/edit', 'AccountController@getCreate');
 	Route::any('account/{account}/refresh', 'AccountController@checkStatus');
     Route::get('account/{account}/SecurityGroups', 'AccountController@SecurityGroups');
+    Route::get('account/{account}/AwsInfo', 'AccountController@AwsInfo');
+    Route::get('account/{account}/instanceInfo', 'AccountController@instanceInfo');
 	
 	Route::any('security/portPreferences/', 'PortPreferencesController@getIndex'); 
 	Route::get('security/portPreferences/create', 'PortPreferencesController@getCreate');
     Route::get('security/portPreferences/{portPreference}/edit', 'PortPreferencesController@getCreate');
-	 
+    Route::any('security/portPreferences/{portPreference}/refresh', 'PortPreferencesController@checkStatus');
+	Route::get('security/portPreferences/{portPreference}/portInfo', 'PortPreferencesController@portInfo'); 
 	
 	Route::any('ticket/', 'TicketController@getIndex'); 
 	Route::get('ticket/create', 'TicketController@getCreate');
