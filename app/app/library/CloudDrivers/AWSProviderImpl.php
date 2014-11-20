@@ -17,41 +17,25 @@ class AWSPRoviderImpl implements IProvider
 	private $ec2Client;
 	private $account;
 	
+	public function __construct($acct) 
+	{
+	   $this->account = $acct;
+    }
+	 
+	public function authenticate() 
+	{
+       	return $this->init();
+    }
+	
 	private function init() {
 	 	$credentials = json_decode($this->account->credentials);
         $config['key'] = $credentials->apiKey;
         $config['secret'] = $credentials->secretKey;
         $config['region'] = empty($credentials -> instanceRegion) ? 'us-east-1' : $credentials->instanceRegion;
 		$conStatus = FALSE;
-        try 
-        {
-            $this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
-			$result = $this->ec2Client->DescribeInstances(array(
-		        'Filters' => array(
-		                array('Name' => 'instance-type', 'Values' => array('m1.small')),
-		        )
-			));
-		
-			$reservations = $result->toArray();
-			if(isset($reservations['requestId'])) $conStatus = TRUE; else $conStatus = FALSE;
-        }
-        catch(Exception $ex) {
-            $conStatus = FALSE;
-            Log::error($ex);
-       }
-        return $conStatus;
+        $conStatus = $this->checkCreds($config);
+		return $conStatus;
     }
-	
-	public function __construct($acct) 
-	{
-	   $this->account = $acct;
-    }
-	 
-	 public function authenticate() 
-	 {
-       	return $this->init();
-    }
-	 
 	
 	public function startInstances($params)
 	{
@@ -211,5 +195,64 @@ class AWSPRoviderImpl implements IProvider
 			Log::error('describeSecurityGroups Authentication failure! API key and secret key for account is not correct');
 			return array('status' => 'error', 'message' => 'Authentication failure! API key and secret key for account is not correct');
 		}
+	}
+	
+	public function getSummary()
+	{
+		$services = Config::get('services');
+		$regServcies = $services [Constants::AWS_CLOUD];
+		
+		$regions = $regServcies['regions'];
+		$services = $regServcies['services'];
+		
+		
+		$credentials = json_decode($this->account->credentials);
+        $config['key'] = $credentials->apiKey;
+        $config['secret'] = $credentials->secretKey;
+		$summary = '';
+       	foreach($regions as $region)
+		{
+			$config['region'] = $region;
+			
+			$this->processSummary($config, $services, $summary);
+		}
+	}
+	
+	private function processSummary($config, $services, & $summary)
+	{
+		foreach($services as $service)
+		{
+			$summary[$config['region']] = $this->processService($config, $service);
+		}
+	}
+	
+	private function processService($config, $service)
+	{
+		$serviceSummary = '';
+		if($this->checkCreds($config))
+		{
+			return AWSService::get($config, $service);
+		}
+	}
+
+	private function checkCreds($config)
+	{
+		try 
+        {
+            $this->ec2Client = \Aws\Ec2\Ec2Client::factory($config);
+			$result = $this->ec2Client->DescribeInstances(array(
+		        'Filters' => array(
+		                array('Name' => 'instance-type', 'Values' => array('m1.small')),
+		        )
+			));
+		
+			$reservations = $result->toArray();
+			if(isset($reservations['requestId'])) $conStatus = TRUE; else $conStatus = FALSE;
+        }
+        catch(Exception $ex) {
+            $conStatus = FALSE;
+            Log::error($ex);
+       }
+        return $conStatus;
 	}
 }

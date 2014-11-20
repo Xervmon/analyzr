@@ -14,7 +14,7 @@
 			<div class="col-md-4 column footer-social">
 				<p> <strong>{{{ Lang::get('site.follow_us') }}}</strong></p>
 				<p class=" footer-social-icons">
-					<a href="https://github.com/Xervmon/awsusageanalyzr"><img width="32px" height="32px" src="{{{ asset('assets/img/providers/GitHub-Mark-32px.png') }}}" alt="{{{ Lang::get('site.footertitle') }}}"/></a>
+					<a href="https://github.com/Xervmon/analyzr"><img width="32px" height="32px" src="{{{ asset('assets/img/providers/GitHub-Mark-32px.png') }}}" alt="{{{ Lang::get('site.footertitle') }}}"/></a>
 					<a href="https://www.twitter.com/analyzrio"><img width="32px" height="32px" src="{{{ asset('assets/img/providers/Twitter_logo.png') }}}" alt="{{{ Lang::get('site.footertitle') }}}"/></a>
 				</p>
 			</div>

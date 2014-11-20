@@ -31,6 +31,7 @@ class AccountController extends BaseController {
         $this->accounts = $accounts;
         $this->user = $user;
     }
+	
     /**
      * Returns all the Accounts for logged in user.
      *
@@ -49,6 +50,7 @@ class AccountController extends BaseController {
             'accounts' => $accounts
         ));
     }
+    
     /**
      * Displays the form for cloud account creation
      *
@@ -59,14 +61,17 @@ class AccountController extends BaseController {
 		$providers = Config::get('account_schema');
         return View::make('site/account/create_edit', compact('mode', 'account', 'providers'));
     }
+	
     /**
      * Saves/Edits an account
      *
      */
-    public function postEdit($id = false) {
+    public function postEdit($id = false) 
+    {
     	if($id !== false)
     		$account = CloudAccount::where('user_id', Auth::id())->findOrFail($id);
-        try {
+    
+	    try {
             if (empty($account)) {
                 $account = new CloudAccount;
             } else if ($account->user_id !== Auth::id()) {
@@ -121,7 +126,7 @@ class AccountController extends BaseController {
 		$response = '';
 		switch($account->profileType)
 		{
-			case Constants::BILLING_PROFILE  : $response = $this->billingProcess($account); break;
+			case Constants::READONLY_PROFILE  : $response = $this->billingProcess($account); break;
 			case Constants::SECURITY_PROFILE : $response = $this->securityProcess($account); break;
 		}
 		return $response;
@@ -129,7 +134,14 @@ class AccountController extends BaseController {
 
 	private function securityProcess(& $account)
 	{
-			
+		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
+		$obj = json_decode($responseJson);
+		
+		if(!StringHelper::isJson($responseJson))
+		{
+			return Constants::ENGINE_CREDENTIALS_FAILURE;
+		}
 	}
 	
 	private function billingProcess(& $account)
@@ -152,7 +164,9 @@ class AccountController extends BaseController {
 			$data['secretKey'] 	= StringHelper::encrypt($credentials ->secretKey, md5(Auth::user()->username));
 			$data['accountId'] 	= $credentials->accountId;
 			$data['billingBucket'] = $credentials->billingBucket;
+			
 			$json = AWSBillingEngine::create_billing($data);
+			
 			Log::info('Adding the job to billing queue for processing..'.$json);
 			
 			if(StringHelper::isJson($json))
@@ -162,6 +176,7 @@ class AccountController extends BaseController {
 				{
 					$account ->status = Lang::get('account/account.STATUS_IN_PROCESS');
 					$account->job_id = $ret->job_id;
+					$account->save();
 					Log::info('Job Id:'.$ret->job_id);
 					return Constants::SUCCESS;
 				}
@@ -169,6 +184,7 @@ class AccountController extends BaseController {
 				{
 					$account ->status = $ret->status;
 					$account->job_id = '';
+					$account->save();
 					Log::error($ret->message.' '.json_encode($account));
 					return Constants::FAILURE;
 				}
@@ -212,6 +228,7 @@ class AccountController extends BaseController {
 	{
 		$this->check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
+		
 		if(empty($account))
 		{
 			return Redirect::to('account')->with('info', 'Selected Account do not need refresh!');
@@ -234,11 +251,13 @@ class AccountController extends BaseController {
 					Log::error('No Result in the checkStatus Request to be saved!');
 					$obj2 -> result ='';
 				} 
+				
 				$account->status = $obj2->job_status;
 				$account -> wsResults = json_encode($obj2 -> result);
 				$success = $account->save();
+				
 		        if (!$success) {
-		        	Log::error('Error while saving Account : '.json_encode( $dep->errors()));
+		        	Log::error('Error while saving Account Log : '.json_encode( $account->errors()));
 					return Redirect::to('account')->with('error', 'Error saving Account!' );
 		        }
 				return Redirect::to('account')->with('success', $account->name .' is refreshed' );
@@ -246,10 +265,11 @@ class AccountController extends BaseController {
 			else  if(!empty($obj2) && $obj2->status == 'error')
 			 {
 			 	$account->status = $obj2->job_status;
-				$account -> wsResults = '';
+				$account -> wsResults = json_encode($obj2 -> result);
 				$success = $account->save();
+				
 				if (!$success) {
-		        	Log::error('Error while saving Account : '.json_encode( $dep->errors()));
+		        	Log::error('Error while saving Account : '.json_encode( $account->errors()));
 					return Redirect::to('account')->with('error', 'Error saving Account!' );
 		        }
 				 // There was a problem deleting the user
@@ -265,10 +285,8 @@ class AccountController extends BaseController {
 		 }	
 		 else if(!empty($obj) && $obj->status == 'error')
 		 {
-			 // There was a problem deleting the user
-			Log::error('Request to check status of account failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
-			Log::error('Log :' . implode(' ', $obj2->job_log));
-            return Redirect::to('account')->with('error', $obj->fail_message );
+			Log::error('Request to check status of account failed :' . $obj->fail_code . ':' . $obj->fail_message);
+			return Redirect::to('account')->with('error', $obj->fail_message );
 		 }	
 		 else
 		 {
@@ -443,7 +461,11 @@ class AccountController extends BaseController {
         "label": "One",
         "value" : 29.765957771107
       	} , */ 
-      
+      if(!isset($data['cost_data']))
+	  {
+	  	print json_encode(array('status' => 'error', 'message' => 'No Cost data found for the '.$account -> name));
+	  	return;
+	  }
 	  $costData = $data['cost_data'];
 	  $arr = '';
 	  foreach($costData as $key => $value)
