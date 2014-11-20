@@ -22,7 +22,6 @@
         <link rel="stylesheet" href="{{asset('bower_components/bootswatch/paper/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
         <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
-        <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
         
         <style>
 		@section('styles')

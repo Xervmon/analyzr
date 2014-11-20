@@ -186,32 +186,6 @@ class AWSPRoviderImpl implements IProvider
 		}
 	}
 
-	public function describeInstancesall($params)
-	{
-		if($this->init())
-		{
-			try
-			{	
-				$nstanceResult = $this->ec2Client->DescribeInstances(array());
-				if (!empty($nstanceResult))
-				{
-					return array('status' => 'OK', 'message'  => $nstanceResult-> toArray());
-				} 
-			}
-			catch(Exception $ex)
-			{
-				Log::error($ex);
-				return array('status' => 'error', 'message' => 'Error occured during describeInstances - '.json_encode($params['InstanceIds']));
-			}
-		} 
-		else
-		{
-			Log::error(Auth::check() ? Auth::user()->username : '__Guest__');
-			Log::error('describeInstances Authentication failure! API key and secret key for account is not correct');
-			return array('status' => 'error', 'message' => 'Authentication failure! API key and secret key for account is not correct');
-		}
-	}
-
 	public function describeSecurityGroups($params)
 	{
 		if($this->init())

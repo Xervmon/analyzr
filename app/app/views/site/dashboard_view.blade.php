@@ -32,7 +32,6 @@
 								</h4> | <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
 								| <span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
 								| <a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
-								| <a href="{{ URL::to('account/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
 								<p class="summary">
 									
 								</p>

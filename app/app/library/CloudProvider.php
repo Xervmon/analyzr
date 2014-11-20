@@ -171,21 +171,4 @@ class CloudProvider {
             return array();
         }
     }
-
-
-    public static function getInstances($cloudAccountId)
-    {
-        $account = CloudAccountHelper::findAndDecrypt($cloudAccountId);
-
-         $response = self::getDriver($account)->describeInstancesall(array(
-                    'DryRun' => false,
-                    'InstanceIds' => array('')));//'i-651fda89','i-5c579e0f'
-
-        if (!empty($response) && $response['status'] === 'OK') {
-            return $response['message'];
-        } else {
-            return array();
-       }
-
-    }
 }
