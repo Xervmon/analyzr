@@ -97,7 +97,7 @@ $( document ).ready(function()
 	        str =   ' Last Updated :' + response.data['lastUpdated'] 
 	        	    + '| Month :' + response.data['month'] 
 	        	    + '| Total :' + response.data['total'] 
-	        $('.summary'++accounts[index]).append(str);
+	        $('.summary'+accounts[index]).append(str);
 			pieOrDonut(response.chart, selector, true, 'percent');
 		});
    }
