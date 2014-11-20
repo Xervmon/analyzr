@@ -36,13 +36,12 @@
 			<label class="col-md-2 control-label" for="name">Accounts <font color="red">*</font></label>
 			<div class="col-md-6">
 			
-				<select class="form-control" name="accountIds[]" id="accountIds[]" required="" multiple>
+				<select class="form-control" name="accountId" id="accountId" required="">
 					@foreach($accounts as $account)
 						<option value="{{$account->id}}">{{$account->name}}</option>
 					@endforeach
 				</select>
-				<input class="form-control" type="text" name="project" id="project" value="{{{ Input::old('project', isset($portPreference->project) ? $portPreference->project : null) }}}" required />
-			
+				
 			</div>
 		</div>
 		

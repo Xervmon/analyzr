@@ -55,7 +55,7 @@ class PortPreferencesController extends BaseController {
     public function getCreate($id = false) {
         $mode = $id !== false ? 'edit' : 'create';
 		$portPreference =  $id !== false ? PortPreference::where('user_id', Auth::id()) ->find($id) : null;
-		$accounts = CloudAccount::where('user_id', Auth::id()) -> where('profileType', Constants::READONLY_PROFILE);
+		$accounts = CloudAccount::where('user_id', Auth::id()) -> where('profileType', Constants::READONLY_PROFILE)->get();
 		$portSchema = Config::get('port_schema');
         return View::make('site/security/portPreferences/create_edit', compact('mode', 'accounts', 'portPreference', 'portSchema'));
     }
