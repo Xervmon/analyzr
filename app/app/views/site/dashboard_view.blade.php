@@ -87,6 +87,10 @@ $( document ).ready(function()
 			if (!$.isArray(response)) {
 	        	response = JSON.parse(response);
 	        }
+	        if(response.status == 'error')
+	        {
+	        	selector.append(response.message); return;
+	        }
 	        str =   ' Last Updated :' + response.data['lastUpdated'] 
 	        	    + '| Month :' + response.data['month'] 
 	        	    + '| Total :' + response.data['total'] 
