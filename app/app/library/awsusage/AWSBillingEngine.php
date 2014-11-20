@@ -95,6 +95,12 @@ class AWSBillingEngine {
         return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['removeUsername'], $data);
     }
 	
+	public static function create_secgroup($data) {
+        self::init();
+		Log::info('Debug :' . json_encode($data));
+        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['create_secgroup'], $data);
+    }
+	
 	public static function getServiceStatus()
 	{
 		$responseJson = self::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));

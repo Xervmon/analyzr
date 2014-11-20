@@ -21,6 +21,7 @@ return array(
 	'getDeploymentStatus' 			  => '/getDeploymentStatus',
 	'GetCurrentCost' 	   		  => '/GetCurrentCost',
 	'Collection' 	   		  => '/Collection',
-	'removeUsername'  		  => '/removeUsername'
+	'removeUsername'  		  => '/removeUsername',
+	'create_secgroup' => '/create_secgroup'
 	);
 
