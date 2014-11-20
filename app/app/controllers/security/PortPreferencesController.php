@@ -44,10 +44,17 @@ class PortPreferencesController extends BaseController {
         $portPreferences = $this->portPreference
         						-> where('portPreferences.user_id', Auth::id())
         						-> join('cloudAccounts', 'cloudAccounts.id', '=', 'portPreferences.cloudAccountId')
-								-> select('portPreferences.id, portPreferences.name, portPreferences.status, cloudAccounts.name as "AccountName", cloudAccounts.cloudProvider, cloudAccounts.profileType')
+								-> select('cloudAccounts.name as "AccountName"', 'cloudAccounts.cloudProvider', 'cloudAccounts.profileType')
         						-> orderBy('created_at', 'DESC')
         						-> paginate(10);
 		
+		/*DB::table('portPreferences')
+            ->join('portPreferences', 'users.id', '=', 'portPreferences.user_id')
+            ->join('cloudAccounts', 'cloudAccounts.id', '=', 'portPreferences.cloudAccountId')
+            ->select('portPreferences.id', 'portPreferences.name', 'cloudAccounts.name as Account')
+           -> orderBy('created_at', 'DESC')
+           -> paginate(10);
+		*/
 		return View::make('site/security/portPreferences/index', array(
             'portPreferences' => $portPreferences
         ));
