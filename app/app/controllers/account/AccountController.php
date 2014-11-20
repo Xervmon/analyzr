@@ -142,6 +142,58 @@ class AccountController extends BaseController {
 		{
 			return Constants::ENGINE_CREDENTIALS_FAILURE;
 		}
+		
+		if($obj->status == 'OK')
+		{
+			/*
+			 *   "token": "<token>",
+    "apiKey": "<api key>",
+    "accountId": "<accountId>",
+    "secretKey": "<api secret>",
+    "assumedRole": "<assumedRole>",
+    "securityToken": "<securityToken>"
+			 * */
+			Log::info('Preparing the account for processing..');
+			$credentials 	 	= json_decode($account->credentials);
+			$data['token'] 	 	= $obj->token;
+			$data['apiKey'] 	= StringHelper::encrypt($credentials ->apiKey, md5(Auth::user()->username));
+			$data['secretKey'] 	= StringHelper::encrypt($credentials ->secretKey, md5(Auth::user()->username));
+			$data['accountId'] 	= $account->id;
+			$data['assumedRole'] = $credentials->assumedRole;
+			
+			$json = AWSBillingEngine::create_audit($data);
+			
+			Log::info('Adding the job to Security Audit for processing..'.$json);
+			
+			if(StringHelper::isJson($json))
+			{
+				$ret = json_decode($json);
+				if($ret->status == 'OK')
+				{
+					$account ->status = Lang::get('account/account.STATUS_IN_PROCESS');
+					$account->job_id = $ret->job_id;
+					$account->save();
+					Log::info('Job Id:'.$ret->job_id);
+					return Constants::SUCCESS;
+				}
+				else if($ret->status == 'error')
+				{
+					$account ->status = $ret->status;
+					$account->job_id = '';
+					$account->save();
+					Log::error($ret->message.' '.json_encode($account));
+					return Constants::FAILURE;
+				}
+			}
+			else {
+				Log::error('Failed to add to Audit queue'.json_encode($account));
+				return Constants::BAD_CREDENTIALS;
+			}
+		}
+		else
+		{
+			return Constants::ENGINE_CREDENTIALS_FAILURE;
+		}
 	}
 	
 	private function billingProcess(& $account)
