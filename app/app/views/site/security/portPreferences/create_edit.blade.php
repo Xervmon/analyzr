@@ -31,6 +31,20 @@
 			</div>
 		</div>
 
+		<!-- name -->
+		<div class="form-group {{{ $errors->has('username') ? 'error' : '' }}}">
+			<label class="col-md-2 control-label" for="name">Accounts <font color="red">*</font></label>
+			<div class="col-md-6">
+			
+				<select class="form-control" name="cloudAccountId" id="cloudAccountId" required="">
+					@foreach($accounts as $account)
+						<option value="{{$account->id}}">{{$account->name}}</option>
+					@endforeach
+				</select>
+				
+			</div>
+		</div>
+		
 		<!-- ./ username -->
 		<div id="additionalPortPreferencesFields">
 			

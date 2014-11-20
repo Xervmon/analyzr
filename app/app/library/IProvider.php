@@ -25,4 +25,6 @@ interface IProvider
 	public function terminateInstances($params);
 	
 	public function describeInstances($params);
+	
+	public function getSummary();
 }
