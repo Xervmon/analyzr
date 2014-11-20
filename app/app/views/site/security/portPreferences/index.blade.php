@@ -10,7 +10,6 @@
 		</div>
 	</div>
 </div>
-
 <div class="media-block">
 	<ul class="list-group">
 		@if(!empty($portPreferences)) 
