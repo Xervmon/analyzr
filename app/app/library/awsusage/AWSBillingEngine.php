@@ -107,7 +107,17 @@ class AWSBillingEngine {
         return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['SecgroupReport'], $data);
     }
 	
+	public static function create_audit($data) {
+        self::init();
+		Log::info('Debug :' . json_encode($data));
+        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['create_audit'], $data);
+    }
 	
+	public static function auditReports($data) {
+        self::init();
+		Log::info('Debug :' . json_encode($data));
+        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['auditReports'], $data);
+    }
 	
 	public static function getServiceStatus()
 	{
