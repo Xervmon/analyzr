@@ -40,7 +40,11 @@ class PortPreferencesController extends BaseController {
     public function getIndex() {
         // Get all the user's accounts
         //Auth::id() : gives the logged in userid
-        $portPreferences = $this->portPreference->where('user_id', Auth::id())->orderBy('created_at', 'DESC')->paginate(10);
+        $portPreferences = $this->portPreference->where('user_id', Auth::id())->
+        					    join('cloudAccounts', 'cloudAccounts.id', '=', 'portPreferences.cloudAccountId')
+								->select('portPreferences.*, cloudAccounts.name as "AccountName", 
+									cloudAccounts.cloudProvider, cloudAccounts.profileType')
+        					->orderBy('created_at', 'DESC')->paginate(10);
 		
 		return View::make('site/security/portPreferences/index', array(
             'portPreferences' => $portPreferences
