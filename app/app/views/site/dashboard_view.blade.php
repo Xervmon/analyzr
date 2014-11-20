@@ -52,7 +52,9 @@
 		<div class="alert alert-info"> {{{ Lang::get('account/account.empty_accounts') }}}</div>
 	@endif
 </div>
-
+<div>
+<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
+</div>
 <script src="{{asset('assets/js/nvd3/lib/d3.v2.min.js')}}"></script>
 <script src="{{asset('assets/js/nvd3/nv.d3.min.js')}}"></script>
 <script src="{{asset('assets/js/nvd3/lib/stream_layers.js')}}"></script>
