@@ -23,6 +23,7 @@ return array(
 	'Collection' 	   		  	=> '/Collection',
 	'GetCost' 					=> '/GetCost',
 	'removeUsername'  		  	=> '/removeUsername',
-	'create_secgroup' => '/create_secgroup'
+	'create_secgroup' => '/create_secgroup',
+	'SecgroupReport'  => '/SecgroupReport'
 	);
 

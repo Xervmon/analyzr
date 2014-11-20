@@ -22,6 +22,7 @@ return array(
 	'GetCurrentCost' 	   		  => '/GetCurrentCost',
 	'Collection' 	   		  => '/Collection',
 	'removeUsername'  		  => '/removeUsername',
-	'create_secgroup' => '/create_secgroup'
+	'create_secgroup' => '/create_secgroup',
+	'SecgroupReport'  => '/SecgroupReport'
 	);
 

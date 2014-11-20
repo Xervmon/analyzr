@@ -101,6 +101,14 @@ class AWSBillingEngine {
         return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['create_secgroup'], $data);
     }
 	
+	public static function SecgroupReport($data) {
+        self::init();
+		Log::info('Debug :' . json_encode($data));
+        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['SecgroupReport'], $data);
+    }
+	
+	
+	
 	public static function getServiceStatus()
 	{
 		$responseJson = self::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
