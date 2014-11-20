@@ -77,8 +77,11 @@ class PortPreferencesController extends BaseController {
 	            $portPreference->project = Input::get('project');
 				$preferences = Input::get('preferences');
 				$this->validatePreferences($preferences, $id);
+				$portPreference -> cloudAccountId = Input::get('cloudAccountId');
 	            $portPreference->preferences = json_encode($preferences);
 	            $portPreference->user_id = Auth::id(); // logged in user id
+	            
+	            
 	            $portPreference->save();
 	            Log::info('Saving the Port preferences.');
 				return Redirect::intended('security/portPreferences')->with('success', Lang::get('security/portPreferences.portPreference_updated'));

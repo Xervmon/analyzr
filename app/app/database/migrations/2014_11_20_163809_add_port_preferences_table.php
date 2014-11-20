@@ -20,6 +20,8 @@ class AddPortPreferencesTable extends Migration {
     public function up() {
         Schema::table('portPreferences', function(Blueprint $table)
 		{
+			$table->integer('cloudAccountId')->unsigned()->index();
+            $table->foreign('cloudAccountId')->references('id')->on('cloudAccounts')->onDelete('cascade');
 			$table->string('job_id');
 			$table->string('status');
 			$table->string('wsResults');

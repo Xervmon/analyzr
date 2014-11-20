@@ -36,7 +36,7 @@
 			<label class="col-md-2 control-label" for="name">Accounts <font color="red">*</font></label>
 			<div class="col-md-6">
 			
-				<select class="form-control" name="accountId" id="accountId" required="">
+				<select class="form-control" name="cloudAccountId" id="cloudAccountId" required="">
 					@foreach($accounts as $account)
 						<option value="{{$account->id}}">{{$account->name}}</option>
 					@endforeach
