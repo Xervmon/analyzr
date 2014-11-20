@@ -24,7 +24,7 @@ class AddPortPreferencesTable extends Migration {
             $table->foreign('cloudAccountId')->references('id')->on('cloudAccounts')->onDelete('cascade');
 			$table->string('job_id');
 			$table->string('status');
-			$table->string('wsResults');
+			$table->text('wsResults');
 		});
     }
     /**
