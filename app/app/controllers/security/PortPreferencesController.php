@@ -230,5 +230,157 @@ class PortPreferencesController extends BaseController {
             return Redirect::to('security/portPreferences/' . $portPreference->id . '/edit')->with('error', 'Error while deleting');
         }
     }
+
+    private function check($json = false)
+	{
+		if($json)
+		{
+			if(AWSBillingEngine::getServiceStatus() == 'error')
+			{
+				Log::error(Lang::get('account/account.awsbilling_service_down'));
+				print json_encode(array('status' => 'error', 'message' => Lang::get('account/account.awsbilling_service_down')));
+				return;
+			}
+		}
+		else 
+		{
+			
+			if(AWSBillingEngine::getServiceStatus() == 'error')
+			{
+				Log::error(Lang::get('account/account.awsbilling_service_down'));
+				print json_encode(array('status' => 'error', 'message' => Lang::get('account/account.awsbilling_service_down')));
+				return;
+			}
+		}
+	}
+
+    public function checkStatus($id)
+	{
+		$this->check();
+		$portPreference = PortPreference::where('user_id', Auth::id())->find($id);
+
+
+
+		if(empty($portPreference))
+		{
+			return Redirect::to('security/portPreferences')->with('info', 'Selected portPreference do not need refresh!');
+		}
+		$user = Auth::user();
+
+		$responseJson = AWSBillingEngine::authenticate(array('username' => $user->username, 'password' => md5($user->engine_key)));
+		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
+		$obj = json_decode($responseJson);
+
+		if(!empty($obj) && $obj->status == 'OK')
+		{
+			$responseJson = AWSBillingEngine::getDeploymentStatus(array('token' => $obj->token, 'job_id' => $portPreference->job_id));
+			EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'getDeploymentStatus', 'return' => $responseJson));
+		
+			$obj2 = json_decode($responseJson);
+
+			if(!empty($obj2) && $obj2->status == 'OK')
+			{
+				if(!isset($obj2 -> result))
+				{
+					Log::error('No Result in the checkStatus Request to be saved!');
+					$obj2 -> result ='';
+				} 
+				
+				$portPreference->status = $obj2->job_status;
+				$portPreference -> wsResults = json_encode($obj2 -> result);
+				$success = $portPreference->save();
+				
+		        if (!$success) {
+		        	Log::error('Error while saving portPreference Log : '.json_encode( $portPreference->errors()));
+					return Redirect::to('security/portPreferences')->with('error', 'Error saving portPreference!' );
+		        }
+				return Redirect::to('security/portPreferences')->with('success', $portPreference->name .' is refreshed' );
+			}
+			else  if(!empty($obj2) && $obj2->status == 'error')
+			 {
+			 	$portPreference->status = $obj2->job_status;
+				$portPreference -> wsResults = json_encode($obj2 -> result);
+				$success = $portPreference->save();
+				
+				if (!$success) {
+		        	Log::error('Error while saving portPreference : '.json_encode( $portPreference->errors()));
+					return Redirect::to('security/portPreferences')->with('error', 'Error saving portPreference!' );
+		        }
+				 // There was a problem deleting the user
+				Log::error($responseJson);
+				Log::error('Request to check status of portPreference failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
+				return Redirect::to('security/portPreferences')->with('error', 'Error while checking for status of portPreference' );
+			 }	
+			else
+			{
+				  return Redirect::to('ServiceStatus')->with('error', 'Backend API is down, please try again later!');			
+			}
+			
+		 }	
+		 else if(!empty($obj) && $obj->status == 'error')
+		 {
+			Log::error('Request to check status of portPreference failed :' . $obj->fail_code . ':' . $obj->fail_message);
+			return Redirect::to('security/portPreferences')->with('error', $obj->fail_message );
+		 }	
+		 else
+		 {
+			return Redirect::to('ServiceStatus')->with('error', 'Backend API is down, please try again later!');			
+		 }	
+	}
+
+
+	public function portInfo($id)
+	{
+			$this->check();
+		  	$account = CloudAccountHelper::findAndDecrypt($id);
+
+		  	$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+			EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - portScan', 'return' => $responseJson));
+			$obj = json_decode($responseJson);
+
+			if($obj->status == 'OK')
+			{
+				Log::info('Preparing the Port Info for processing..');
+				$credentials 	 	= json_decode($account->credentials);
+				
+				$data['token'] 	 	= $obj->token;
+				$data['accountId'] 	= $credentials->accountId;
+				echo '<pre>';
+					print_r($data);
+				
+				$json = AWSBillingEngine::SecgroupReport($data);
+				Log::info('Adding the job to port Pref queue for processing..'.$json);
+				$ret = json_decode($json);
+
+				echo '<pre>';
+					print_r($ret);
+					die();
+			if(StringHelper::isJson($json))
+			{
+				$ret = json_decode($json);
+				if($ret->status == 'OK')
+				{
+					echo '<pre>';
+					print_r($ret);
+					die();
+					return View::make('site/security/portPreferences/portInfo', array('account' => $account,'instanceDetails'=> $getInstancesAll));
+			    }
+				else if($ret->status == 'error')
+				{
+					echo $ret->status;
+					die();
+				}
+			}
+			else {
+				Log::error('Failed to add to billing queue'.json_encode($account));
+				return Constants::BAD_CREDENTIALS;
+			}
+		}
+		else
+			{
+				return Constants::ENGINE_CREDENTIALS_FAILURE;
+			}	
+		
+	}
 	
 }
