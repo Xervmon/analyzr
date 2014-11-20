@@ -55,7 +55,7 @@ return array(
         'credentials[securityToken]' => array(
             'type' => 'string',
             'title' => 'SecurityToken',
-            'required' => true
+            'required' => false
         ) ,
     ) ,
 );
