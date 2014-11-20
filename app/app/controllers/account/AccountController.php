@@ -134,7 +134,14 @@ class AccountController extends BaseController {
 
 	private function securityProcess(& $account)
 	{
-			
+		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
+		$obj = json_decode($responseJson);
+		
+		if(!StringHelper::isJson($responseJson))
+		{
+			return Constants::ENGINE_CREDENTIALS_FAILURE;
+		}
 	}
 	
 	private function billingProcess(& $account)
