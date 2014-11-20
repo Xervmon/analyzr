@@ -96,12 +96,12 @@ class AccountController extends BaseController {
 				return $this->redirect($ret);
             	//return Redirect::intended('account')->with('success', Lang::get('account/account.account_updated'));
             } else {
-                return Redirect::to('account')->with('error', Lang::get('account/account.account_auth_failed'));
+                return Redirect::to('account/create')->with('error', Lang::get('account/account.account_auth_failed'));
             }
         }
         catch(Exception $e) {
             Log::error($e);
-            return Redirect::to('account')->with('error', $e->getMessage());
+            return Redirect::to('account/create')->with('error', $e->getMessage());
         }
     }
 
@@ -113,9 +113,9 @@ class AccountController extends BaseController {
 		{
 			case Constants::SUCCESS: $ret = Redirect::intended('account')->with('success', Lang::get('account/account.account_updated')); break;
 			case Constants::BAD_CREDENTIALS:
-			case Constants::FAILURE : $ret = Redirect::to('account')->with('error', 'Check Account Credentials!'); break;
-			case Constants::ENGINE_FAILURE : $ret =  Redirect::to('account')->with('error', 'Check if AWS Usage Processing engine is up!'); break;
-			case Constants::ENGINE_CREDENTIALS_FAILURE : $ret =  Redirect::to('account')->with('error', 'Engine credentials mis-match. Contact support team.'); break;
+			case Constants::FAILURE : $ret = Redirect::to('account/create')->with('error', 'Check Account Credentials!'); break;
+			case Constants::ENGINE_FAILURE : $ret =  Redirect::to('account/create')->with('error', 'Check if AWS Usage Processing engine is up!'); break;
+			case Constants::ENGINE_CREDENTIALS_FAILURE : $ret =  Redirect::to('account/create')->with('error', 'Engine credentials mis-match. Contact support team.'); break;
 		}	
 		return $ret;
 	}
@@ -389,6 +389,39 @@ class AccountController extends BaseController {
 		
 		return View::make('site/account/securityGroups', array(
             	'account' => $account ));
+	}
+
+	public function AwsInfo($id)
+	{
+			$this->check();
+		  	$account = CloudAccount::where('user_id', Auth::id())->find($id);
+     	  	$getInstancesAll = CloudProvider::getInstances($id);
+	  
+			return View::make('site/account/awsInfo', array('account' => $account,'instanceDetails'=> $getInstancesAll));
+	}
+
+	public function instanceInfo($id)
+	{
+			$this->check();
+		  	$account = CloudAccount::where('user_id', Auth::id())->find($id);
+     	  	$getInstancesAll = CloudProvider::getInstances($id);
+			$arr = array();$i=0;
+			if(!empty($getInstancesAll['Reservations']))
+			{
+				foreach($getInstancesAll['Reservations'] as $key => $value)
+				{
+					$arr[$i]['InstanceId']=$value['Instances'][0]['InstanceId'];
+					$arr[$i]['KeyName']=$value['Instances'][0]['KeyName'];
+					$arr[$i]['PublicDnsName']=$value['Instances'][0]['PublicDnsName'];
+					$arr[$i]['ImageId']=$value['Instances'][0]['ImageId'];
+					$arr[$i]['LaunchTime']=$value['Instances'][0]['LaunchTime'];
+					$arr[$i]['State']=$value['Instances'][0]['State']['Name'];
+					$i++;
+				}
+			}	
+
+     	  	
+	  		return View::make('site/account/instanceInfo', array('account' => $account,'instanceDetails'=> $arr));
 	}
 
 	private function flatten($securityGroups)
