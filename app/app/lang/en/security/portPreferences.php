@@ -12,7 +12,8 @@ return array(
 
 	'preferences'            => 'Your Security Port Policies',
 	'portPreference_updated' => 'Port Policy updated',
-	'empty_no_preferences' => 'You do not have any port policies. Create one by clicking on "Add Port Policy" below',
-	'portPreference_add' => 'Add Port policy'
+	'empty_no_preferences'   => 'You do not have any port policies. Create one by clicking on "Add Port Policy" below',
+	'portPreference_add'     => 'Add Port policy',
+	'portPreference_list'    => 'Security Port Details'
 	
 	);

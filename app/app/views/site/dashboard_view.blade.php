@@ -32,7 +32,8 @@
 								</h4> | <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
 								| <span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
 								| <a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
-								<p class="summary">
+								| <a href="{{ URL::to('account/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
+								<p class="summary{{$account->id}}">
 									
 								</p>
 								<p class="chart{{$account->id}}">
@@ -44,7 +45,7 @@
 								
 							</div>
 						</div>
-					</li>	
+					</li>
 			@endforeach
 		@endif
 	</ul>
@@ -96,7 +97,7 @@ $( document ).ready(function()
 	        str =   ' Last Updated :' + response.data['lastUpdated'] 
 	        	    + '| Month :' + response.data['month'] 
 	        	    + '| Total :' + response.data['total'] 
-	        $('.summary').append(str);
+	        $('.summary'+accounts[index]).append(str);
 			pieOrDonut(response.chart, selector, true, 'percent');
 		});
    }
