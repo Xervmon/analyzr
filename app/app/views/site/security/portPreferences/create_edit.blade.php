@@ -11,7 +11,7 @@
 	<div class="page-header">
 		<div class="row">
 			<div class="col-md-9">
-				<h5>{{isset($portPreference->id)?'Edit':'Create'}} Port Preference:</h5>
+				<h5>@if(isset($portPreference->id)&& $mode=='edit'){{'Edit'.' '.'Port Preference:'}}@else{{'Create'.' '.'Port Preference:'}}@endif</h5>
 			</div>
 		</div>
 	</div>
