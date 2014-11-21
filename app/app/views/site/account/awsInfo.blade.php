@@ -30,7 +30,7 @@
 							</div>
 							<div class="media-body bs-callout-danger">
 								<ul class="list-group list-group-horizontal">
-									<li class="list-group-item panel panel-status panel-success">
+									<li class="list-group-item panel panel-status panel-primary">
 										<div class="panel-heading">
 											<h1 class="panel-title text-center">{{{ count($instanceDetails['Reservations'][$i]['Instances']) }}}</h1>
 										</div>
@@ -38,11 +38,148 @@
 											<strong>{{{ Lang::get('account/account.total_instances') }}}</strong>
 										</div>
 									</li>
+									<li class="list-group-item panel panel-status panel-success">
+										<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ count($instanceDetails['Reservations'][$i]['Instances']) }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ Lang::get('account/account.active_instances') }}}</strong>
+										</div>
+									</li>
+								</ul>
+							</div>
+
+						</div>
+					</div>
+						<!--<h3><img alt="300x200" src="{{{ asset('assets/img/aws/ebs.png') }}}" />{{{ Lang::get('account/account.aws_ebs') }}}</h3>-->
+						<div class="bs-callout bs-callout-default">
+						<div class="media">
+							<div class="media-left pull-left text-center" href="#">
+								<h4 class="media-heading">{{{ 'Details Available:'.count($instanceDetails) }}}</h4>
+									<p style="text-align:center">
+										<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+									</p>
+									<p style="text-align:center">
+									<h4 class="media-heading">{{{ 'EBS '. $instanceDetails['Reservations'][0]['Instances'][0]['Placement']['AvailabilityZone'] }}}</h4>
+							</div>
+							<div class="media-body bs-callout-danger">
+								<ul class="list-group list-group-horizontal">
 								</ul>
 							</div>
 						</div>
 					</div>
-						<h3><!--<img alt="300x200" src="{{{ asset('assets/img/aws/ebs.png') }}}" />-->{{{ Lang::get('account/account.aws_ebs') }}}</h3>
+						<div class="bs-callout bs-callout-default">
+						<div class="media">
+							<div class="media-left pull-left text-center" href="#">
+								<h4 class="media-heading">{{{ 'Details Available:'.count($instanceDetails) }}}</h4>
+									<p style="text-align:center">
+										<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+									</p>
+									<p style="text-align:center">
+									<h4 class="media-heading">{{{ 'EBS '. $instanceDetails['Reservations'][0]['Instances'][0]['Placement']['AvailabilityZone'] }}}</h4>
+							</div>
+							<div class="media-body bs-callout-danger">
+								<ul class="list-group list-group-horizontal">
+								</ul>
+							</div>
+						</div>
+					</div>
+						<div class="bs-callout bs-callout-default">
+						<div class="media">
+							<div class="media-left pull-left text-center" href="#">
+								<h4 class="media-heading">{{{ 'Details Available:'.count($instanceDetails) }}}</h4>
+									<p style="text-align:center">
+										<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+									</p>
+									<p style="text-align:center">
+									<h4 class="media-heading">{{{ 'EBS '. $instanceDetails['Reservations'][0]['Instances'][0]['Placement']['AvailabilityZone'] }}}</h4>
+							</div>
+							<div class="media-body bs-callout-danger">
+								<ul class="list-group list-group-horizontal">
+								</ul>
+							</div>
+						</div>
+					</div>
+						<div class="bs-callout bs-callout-default">
+						<div class="media">
+							<div class="media-left pull-left text-center" href="#">
+								<h4 class="media-heading">{{{ 'Details Available:'.count($instanceDetails) }}}</h4>
+									<p style="text-align:center">
+										<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+									</p>
+									<p style="text-align:center">
+									<h4 class="media-heading">{{{ 'EBS '. $instanceDetails['Reservations'][0]['Instances'][0]['Placement']['AvailabilityZone'] }}}</h4>
+							</div>
+							<div class="media-body bs-callout-danger">
+								<ul class="list-group list-group-horizontal">
+								</ul>
+							</div>
+						</div>
+					</div>
+						<div class="bs-callout bs-callout-default">
+						<div class="media">
+							<div class="media-left pull-left text-center" href="#">
+								<h4 class="media-heading">{{{ 'Details Available:'.count($instanceDetails) }}}</h4>
+									<p style="text-align:center">
+										<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+									</p>
+									<p style="text-align:center">
+									<h4 class="media-heading">{{{ 'EBS '. $instanceDetails['Reservations'][0]['Instances'][0]['Placement']['AvailabilityZone'] }}}</h4>
+							</div>
+							<div class="media-body bs-callout-danger">
+								<ul class="list-group list-group-horizontal">
+								</ul>
+							</div>
+						</div>
+					</div>
+						<div class="bs-callout bs-callout-default">
+						<div class="media">
+							<div class="media-left pull-left text-center" href="#">
+								<h4 class="media-heading">{{{ 'Details Available:'.count($instanceDetails) }}}</h4>
+									<p style="text-align:center">
+										<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+									</p>
+									<p style="text-align:center">
+									<h4 class="media-heading">{{{ 'EBS '. $instanceDetails['Reservations'][0]['Instances'][0]['Placement']['AvailabilityZone'] }}}</h4>
+							</div>
+							<div class="media-body bs-callout-danger">
+								<ul class="list-group list-group-horizontal">
+								</ul>
+							</div>
+						</div>
+					</div>
+						<div class="bs-callout bs-callout-default">
+						<div class="media">
+							<div class="media-left pull-left text-center" href="#">
+								<h4 class="media-heading">{{{ 'Details Available:'.count($instanceDetails) }}}</h4>
+									<p style="text-align:center">
+										<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+									</p>
+									<p style="text-align:center">
+									<h4 class="media-heading">{{{ 'EBS '. $instanceDetails['Reservations'][0]['Instances'][0]['Placement']['AvailabilityZone'] }}}</h4>
+							</div>
+							<div class="media-body bs-callout-danger">
+								<ul class="list-group list-group-horizontal">
+								</ul>
+							</div>
+						</div>
+					</div>
+						<div class="bs-callout bs-callout-default">
+						<div class="media">
+							<div class="media-left pull-left text-center" href="#">
+								<h4 class="media-heading">{{{ 'Details Available:'.count($instanceDetails) }}}</h4>
+									<p style="text-align:center">
+										<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+									</p>
+									<p style="text-align:center">
+									<h4 class="media-heading">{{{ 'EBS '. $instanceDetails['Reservations'][0]['Instances'][0]['Placement']['AvailabilityZone'] }}}</h4>
+							</div>
+							<div class="media-body bs-callout-danger">
+								<ul class="list-group list-group-horizontal">
+								</ul>
+							</div>
+						</div>
+					</div>
 						<div class="bs-callout bs-callout-default">
 						<div class="media">
 							<div class="media-left pull-left text-center" href="#">
@@ -97,7 +234,7 @@
 					</div>
 		</div>
 
-			<div class="col-md-12 column">
+		<!--	<div class="col-md-12 column">
 			<div class="row">
 				<div class="col-md-3">
 					<div class="thumbnail">
@@ -238,7 +375,7 @@
 				</div>
 													
 			</div>
-		</div>	
+		</div>	-->
 	</div>
 	</div>
 @endfor

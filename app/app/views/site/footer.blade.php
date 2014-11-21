@@ -64,7 +64,7 @@
 			<div class="col-md-4 column pull-left" style="margin-top: 3%;">
 				<p class="muted credit text-center pull-left">
 					<img src="http://analyzr.io/assets/ico/favicon.ico" alt="Powered By Xervmon">
-					<a href="https://www.xervmon.com">Copyright ©2013-2014 | Powered By Xervmon</a>
+					<a href="https://www.xervmon.com">Copyright <i class="fa fa-copyright"></i> 2014-2015 | Powered By Xervmon</a>
 					<!--
 					<img src="{{{ asset('assets/ico/favicon.ico') }}}" alt="{{{ Lang::get('site.footertitle') }}}"/>
 					

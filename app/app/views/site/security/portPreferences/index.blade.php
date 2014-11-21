@@ -16,6 +16,10 @@
 			@foreach ($portPreferences as $portPreference)
 			<li class="list-group-item">
 					<div class="media">
+						<span class="pull-left" href="#">
+						    <img class="media-object img-responsive" 
+						    	src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.'.$portPreference->cloudProvider.'.logo')) }}" alt="{{ $portPreference->cloudProvider }}" />
+						</span>
 						@if(in_array($portPreference->status, array(Lang::get('account/account.STATUS_IN_PROCESS'), 
 															Lang::get('account/account.STATUS_STARTED'))))
 							<form class="pull-right" method="post" action="{{ URL::to('security/portPreferences/' . $portPreference->id . '/refresh') }}">
@@ -33,7 +37,7 @@
 						</form>
 						<a href="{{ URL::to('security/portPreferences/' . $portPreference->id . '/edit') }}" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-edit"></span></a>
 						<div class="media-body">
-							<h4 class="media-heading">{{ String::title($portPreference->project) }} : {{ String::title($portPreference->name) . '-' .$portPreference->profileType }}</h4>
+							<h4 class="media-heading">{{ String::title($portPreference->project) }} : <a href="{{ URL::to('account/') }}"> {{ String::title($portPreference->name) . '-' .$portPreference->profileType }} </a> </h4>
 							<p>
 								<span class="glyphicon glyphicon-calendar"></span> <!--Sept 16th, 2012-->{{{ $portPreference->created_at }}}
 							</p>
