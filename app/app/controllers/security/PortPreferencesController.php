@@ -32,6 +32,7 @@ class PortPreferencesController extends BaseController {
         $this->portPreference = $portPreference;
         $this->user = $user;
     }
+	
     /**
      * Returns all the Accounts for logged in user.
      *
@@ -40,10 +41,19 @@ class PortPreferencesController extends BaseController {
     public function getIndex() {
         // Get all the user's accounts
         //Auth::id() : gives the logged in userid
-        $portPreferences = $this->portPreference->where('user_id', Auth::id())->orderBy('created_at', 'DESC')->paginate(10);
+        $portPreferences = $this->portPreference
+        						-> where('portPreferences.user_id', Auth::id())
+        						-> join('cloudAccounts', 'cloudAccounts.id', '=', 'portPreferences.cloudAccountId')
+								-> orderBy('portPreferences.created_at', 'DESC')
+        						-> paginate(10);
 		
-		//$accounts = CloudAccount::where('user_id', Auth::id()) -> where('profileType', Constants::READONLY_PROFILE);
-		
+		/*DB::table('portPreferences')
+            ->join('portPreferences', 'users.id', '=', 'portPreferences.user_id')
+            ->join('cloudAccounts', 'cloudAccounts.id', '=', 'portPreferences.cloudAccountId')
+            ->select('portPreferences.id', 'portPreferences.name', 'cloudAccounts.name as Account')
+           -> orderBy('created_at', 'DESC')
+           -> paginate(10);
+		*/
 		return View::make('site/security/portPreferences/index', array(
             'portPreferences' => $portPreferences
         ));
@@ -363,7 +373,8 @@ class PortPreferencesController extends BaseController {
 					echo '<pre>';
 					print_r($ret);
 					die();
-					return View::make('site/security/portPreferences/portInfo', array('account' => $account,'instanceDetails'=> $getInstancesAll));
+					return View::make('site/security/portPreferences/portInfo', array('account' => $account,
+											'instanceDetails'=> $getInstancesAll));
 			    }
 				else if($ret->status == 'error')
 				{

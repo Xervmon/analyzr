@@ -33,7 +33,7 @@
 								| <span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
 								| <a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
 								| <a href="{{ URL::to('account/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
-								<p class="summary">
+								<p class="summary{{$account->id}}">
 									
 								</p>
 								<p class="chart{{$account->id}}">
@@ -53,7 +53,9 @@
 		<div class="alert alert-info"> {{{ Lang::get('account/account.empty_accounts') }}}</div>
 	@endif
 </div>
-
+<div>
+<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
+</div>
 <script src="{{asset('assets/js/nvd3/lib/d3.v2.min.js')}}"></script>
 <script src="{{asset('assets/js/nvd3/nv.d3.min.js')}}"></script>
 <script src="{{asset('assets/js/nvd3/lib/stream_layers.js')}}"></script>
@@ -95,7 +97,7 @@ $( document ).ready(function()
 	        str =   ' Last Updated :' + response.data['lastUpdated'] 
 	        	    + '| Month :' + response.data['month'] 
 	        	    + '| Total :' + response.data['total'] 
-	        $('.summary').append(str);
+	        $('.summary'+accounts[index]).append(str);
 			pieOrDonut(response.chart, selector, true, 'percent');
 		});
    }
