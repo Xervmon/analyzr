@@ -273,22 +273,22 @@ class AdminUsersController extends AdminController {
         $id = $user->id;
 		$username = $user->username;
 		
-		$responseJson = xDockerEngine::authenticate(array('username' => $user->username, 'password' => md5($user->engine_key)));
+		$responseJson = AWSBillingEngine::authenticate(array('username' => $user->username, 'password' => md5($user->engine_key)));
 		 EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
 		 $obj = json_decode($responseJson);
 			
 		if(!empty($obj) && $obj->status == 'OK')
 		{
-			$response = xDockerEngine::removeUsername(array('token' => $obj->token));
-			Log::info('xDocker Engine user is deleted!');
+			$response = AWSBillingEngine::removeUsername(array('token' => $obj->token));
+			Log::info('AWSBillingEngine Engine user is deleted!');
 		}
 		if(!empty($obj) && $obj->status == 'error')
 	 	{
-			Log::error('xDocker Engine user deletion : Failed in authentication');
+			Log::error('AWSBillingEngine Engine user deletion : Failed in authentication');
 		}
 		else
 		{
-			Log::error('xDocker Engine user deletion - Unexpected error');
+			Log::error('AWSBillingEngine Engine user deletion - Unexpected error');
 		}
 			
 		$user->delete();

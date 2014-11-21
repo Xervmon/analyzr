@@ -259,5 +259,10 @@ Inverse	<span class="label label-inverse">Inverse</span>
 		return $str;
 	}
 	
+	public static function getAccount($account)
+	{
+		return $account->name .':' . $account->profileType;
+	}
+	
 
 }
