@@ -172,6 +172,76 @@ div#footer  .container > .row > div.column:first-child{
    }
 }
 
+#exportTableid_first {
+    border: 1px solid #36B6E2;
+    border-radius: 25px;
+    background-color: #36B6E2;
+    width: 20px;
+    height: 12px;
+    overflow: hidden;
+    background-image: url('./images/A.jpg');
+    background-size: 18px 10px;
+    background-repeat: no-repeat;
+    margin: 0px 1px;
+    cursor: pointer;
+}
+
+#exportTableid_previous {
+    border: 1px solid #36B6E2;
+    border-radius: 30px;
+    background-color: #36B6E2;
+    width: 20px;
+    height: 12px;
+    overflow: hidden;
+    background-image: url('./images/B.jpg');
+    background-size: 18px 10px;
+    background-repeat: no-repeat;
+    margin: 0px 1px;
+    cursor: pointer;
+}
+
+#exportTableid_next {
+    border: 1px solid #36B6E2;
+    border-radius: 25px;
+    background-color: #36B6E2;
+    width: 20px;
+    height: 12px;
+    overflow: hidden;
+    background-image: url('./images/C.jpg');
+    background-size: 18px 10px;
+    background-repeat: no-repeat;
+    margin: 0px 1px;
+    cursor: pointer;
+}
+
+#exportTableid_last {
+    border: 1px solid #36B6E2;
+    border-radius: 30px;
+    background-color: #36B6E2;
+    width: 20px;
+    height: 12px;
+    overflow: hidden;
+    background-image: url('./images/D.jpg');
+    background-size: 18px 10px;
+    background-repeat: no-repeat;
+    margin: 0px 1px;
+    cursor: pointer;
+}
+
+/*#exportTableid_next {
+    border: 1px solid #1B9BC7;
+    border-radius: 2px;
+    background-color: #36B6E2;
+    width: 25px;
+    height: 12px;
+    overflow: hidden;
+    background-image: url('./images/A.jpg');
+    background-size: 24px 10px;
+    background-repeat: no-repeat;
+    margin: 0px 1px;
+    cursor: pointer;
+}
+
 .dataTables_paginate .paginate_button, .page_navigation a {
     border: 1px solid #1B9BC7;
     border-radius: 2px;
@@ -179,8 +249,8 @@ div#footer  .container > .row > div.column:first-child{
     width: 25px;
     height: 10px;
     overflow: hidden;
-   /* background-image: url('./images/sprite.png');
-    background-repeat: no-repeat;*/
+    background-image: url('./images/sprite.png');
+    background-repeat: no-repeat;
     margin: 0px 1px;
     cursor: pointer;
-}
+}*/

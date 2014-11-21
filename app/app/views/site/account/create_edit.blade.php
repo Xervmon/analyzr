@@ -11,7 +11,7 @@
 	<div class="page-header">
 		<div class="row">
 			<div class="col-md-9">
-				<h5>{{isset($account->id)?'Edit':'Create'}} Account:</h5>
+				<h5>@if(isset($account->id)&& $mode=='edit'){{'Edit'.' '.'Account:'}}@else{{'Create'.' '.'Account:'}}@endif</h5>
 			</div>
 		</div>
 	</div>
@@ -29,7 +29,7 @@
 			<div class="col-md-6">
 				<select class="form-control" name="cloudProvider" id="cloudProvider" required>
 					@foreach ($providers as $key => $value)
-						<option value="{{$key}}" {{{ Input::old('cloudProvider', isset($account->cloudProvider) && ($account->cloudProvider == $key) ? 'selected="selected"' : '') }}}>{{{ $key }}}</option>
+						<option value="{{$key}}" {{{ Input::old('profileType', isset($account->profileType) && ($account->profileType == 'Security Profile') ? 'selected="selected"' : '') }}}>{{{ $key }}}</option>
 					@endforeach
 				</select>
 			</div>
