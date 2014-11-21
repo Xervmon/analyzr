@@ -11,7 +11,7 @@
 	</div>
 </div>
 
-<div id="instanceDetails">
+<div id="portDetails">
 </div>
 
 
@@ -27,7 +27,7 @@
 		if (!$.isArray(data)) {
         	data = JSON.parse(data);
         }
-		$('#instanceDetails').append(convertJsonToTableSecurityGroups(data));
+		$('#portDetails').append(convertJsonToTableSecurityGroups(data));
 		
 	});
 	</script>
