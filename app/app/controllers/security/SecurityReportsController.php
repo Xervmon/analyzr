@@ -33,7 +33,7 @@ class SecurityReportsController extends BaseController {
         $this->user = $user;
     }
     
-	public function getAuditReport($id)
+	public function getAuditReports($id)
 	{
 		$this->account = CloudAccountHelper::findAndDecrypt($id);
 		
@@ -43,13 +43,26 @@ class SecurityReportsController extends BaseController {
 		
 		if(!StringHelper::isJson($responseJson))
 		{
-			return ;
+			//Redirect::intended('account/'.$id.'/edit')->with($obj->status , 'Error retrieving security audit report for '.$account->name); break;
+
 		}
 		if($obj->status == 'OK')
 		{
 			$return = AWSBillingEngine::auditReports(array('token' => $obj->token, 'accountId' => $this->account->id));
+			$table = UIHelper::getAuditTable($account, $return);
+			if($table['status'] == 'error')
+			{
+				Redirect::intended('account/'.$id.'/edit')->with('reports' , $table); break;
+			}
+			else 
+			{
+				return View::make('site/security/auditReports', array('table' =>$table ));	
+			}
 			
-			print_r($return);
+		}
+		else if($obj->status == 'error')
+		{
+			Redirect::intended('account/'.$id.'/edit')->with($obj->status , 'Error retrieving security audit report for '.$account->name); break;
 		}
 	}
 	

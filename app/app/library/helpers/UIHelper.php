@@ -82,12 +82,14 @@ Inverse	<span class="label label-inverse">Inverse</span>
 	{
 		switch($status)
 		{
+			case true :
 			case 'OK' 	: return '<span title="Status"><span class="label label-success">'.$val.'</span></span>'; break;
 			
 			case 'info' 		: return '<span title="Status"><span class="label label-info">'.$val.'</span></span>'; break;
 			
 			case 'default' 		: return '<span title="Status"><span class="label label-warning">'.$val.'</span></span>'; break;
 			
+			case false:
 			case 'danger' 		: return '<span title="Status"><span class="label label-danger">'.$val.'</span></span>'; break;
 			
 			default:			  return '<span title="Status"><span class="label label-danger">'.$val.'</span></span>'; break;
@@ -264,5 +266,33 @@ Inverse	<span class="label label-inverse">Inverse</span>
 		return $account->name .':' . $account->profileType;
 	}
 	
+	public static function getAuditTable($account, $reports)
+	{
+		if(!StringHelper::isJson($reports))
+		{
+			return  array('status' => 'error', 'message' => 'Error retrieving security audit report for '.$account->name);
+		}
+		else 
+		{
+			$reportsObj = json_decode($reports);
+			if($reportsObj -> status == 'error')
+			{
+				return  array('status' => 'error', 'message' => 'Error retrieving security audit report for '.$account->name);
+			}
+			$reportsArr = $reportsObj->reports();
+			$table = new stdClass();
+			$arr = '';
+			foreach($reportsArr as $row)
+			{
+				$table ->name = $account->name;
+				$table -> report = 	'<a href="'.URL::to('security/'.$row->oid.'auditReport').'" >'.$account->name.'</a>';
+				$table -> Time = StringHelper::timeAgo($row->report_time);	
+				$table -> Changed = self::getLabel2($table->changed, $table->changed);
+				$arr[] = $table;
+			}
+			return $arr;
+			
+		}
+	}	
 
 }
