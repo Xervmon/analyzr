@@ -159,7 +159,7 @@ class AccountController extends BaseController {
 			$data['apiKey'] 	= StringHelper::encrypt($credentials ->apiKey, md5(Auth::user()->username));
 			$data['secretKey'] 	= StringHelper::encrypt($credentials ->secretKey, md5(Auth::user()->username));
 			$data['accountId'] 	= $account->id;
-			$data['assumedRole'] = $credentials->assumedRole;
+			$data['assumedRole'] = StringHelper::encrypt($credentials ->assumedRole, md5(Auth::user()->username));
 			
 			$json = AWSBillingEngine::create_audit($data);
 			

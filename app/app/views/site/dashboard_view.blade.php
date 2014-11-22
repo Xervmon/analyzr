@@ -6,34 +6,55 @@
 	</div>
 </div>
 
-<div class="row">
-	@if(!empty($accounts)) 
-		@foreach ($accounts as $account)
-	<div class="col-md-9">
-		<p>
-			<a alt="{{ $account->name }}" title="{{ $account->name }}" href="{{ URL::to('account/'.$account->id.'/edit') }}" class="pull-left" href="#">
-				<img title="{{ $account->name }}" class="media-object img-responsive" src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.'.$account->cloudProvider.'.logo')) }}" alt="{{ $account->name }}" />
-			</a> 
-		</p>
-		<h4 class="media-heading"> 
-			<a alt="{{ $account->name }}" title="{{ $account->name }}" href="{{ URL::to('account/'.$account->id.'/edit') }}" class="pull-left" href="#">
-				{{ String::title($account->name) }}
+<div class="media-block">
+	<ul class="list-group">
+		@if(!empty($accounts)) 
+			@foreach ($accounts as $account)
+		  			<li class="list-group-item">
+						<div class="media">
+							<p>
+								<a alt="{{ $account->name }}" title="{{ $account->name }}" href="{{ URL::to('account/'.$account->id.'/edit') }}" class="pull-left" href="#">
+								    <img title="{{ $account->name }}" class="media-object img-responsive" src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.'.$account->cloudProvider.'.logo')) }}" alt="{{ $account->name }}" />
+								</a> 
+							</p>
+							<form class="pull-right" method="post" action="{{ URL::to('account/' . $account->id . '/refresh') }}">
+								<!-- CSRF Token -->
+								<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+								<!-- ./ csrf token -->
+								<button type="submit" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-refresh"></span></button>
+							</form>
+							<div class="media-body">
+								
+								<h4 class="media-heading"> 
+									<a alt="{{ $account->name }}" title="{{ $account->name }}" href="{{ URL::to('account/'.$account->id.'/edit') }}" class="pull-left" href="#">
+									{{ String::title($account->name) }}
 									</a> 
-		</h4> | <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
-			  | <span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
-			  | <a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
-			  | <a href="{{ URL::to('account/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
-		<p class="summary{{$account->id}}"> </p>
-		<p class="chart{{$account->id}}">
-			<svg style="height:500px;width:800px"></svg>
-		</p>
-	</div>
-		@endforeach
-	@endif
-	
+								</h4> | <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
+								| <span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
+								| <a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
+								| <a href="{{ URL::to('account/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
+								<p class="summary{{$account->id}}">
+									
+								</p>
+								<p class="chart{{$account->id}}">
+									<svg style="height:500px;width:800px">
+										
+									</svg>
+									
+								</p>
+								
+							</div>
+						</div>
+					</li>
+			@endforeach
+		@endif
+	</ul>
 	@if(empty($accounts) || count($accounts) === 0) 
 		<div class="alert alert-info"> {{{ Lang::get('account/account.empty_accounts') }}}</div>
 	@endif
+</div>
+<div>
+<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
 </div>
 <script src="{{asset('assets/js/nvd3/lib/d3.v2.min.js')}}"></script>
 <script src="{{asset('assets/js/nvd3/nv.d3.min.js')}}"></script>
@@ -47,7 +68,7 @@
 	{
 		if($account->profileType == Constants::READONLY_PROFILE)
 		{
-			$accArr[] = $account->id;
+			$accArr[] = $account;
 		}
 	}
 	$urlTemp = URL::to('account/%ID%/ChartData');
@@ -63,8 +84,8 @@ $( document ).ready(function()
     }
 	for (index = 0; index < accounts.length; ++index) 
 	{
-    	var url= urlTemp.replace('%ID%', accounts[index]);
-    	var selector = '.chart'+accounts[index] + ' svg';
+    	var url= urlTemp.replace('%ID%', accounts[index].id);
+    	var selector = '.chart'+accounts[index].id + ' svg';
     	$.ajax({
 		url:  url,
 		cache: false
