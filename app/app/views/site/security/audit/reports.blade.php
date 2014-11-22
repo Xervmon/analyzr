@@ -27,6 +27,7 @@
 		if (!$.isArray(data)) {
         	data = JSON.parse(data);
         }
+        console.log(data);
 		$('#auditReports').append(convertJsonToTableSecurityGroups(data));
 		
 	});
