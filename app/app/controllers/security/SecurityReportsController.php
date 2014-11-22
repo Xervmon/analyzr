@@ -50,7 +50,7 @@ class SecurityReportsController extends BaseController {
 		{
 			$return = AWSBillingEngine::auditReports(array('token' => $obj->token, 'accountId' => $this->account->id));
 			$table = UIHelper::getAuditTable($this->account, $return);
-			if($table['status'] == 'error')
+			if(is_array($table) && isset($table['status']) && $table['status'] == 'error')
 			{
 				Redirect::intended('account/'.$id.'/edit')->with('reports' , $table); break;
 			}
