@@ -287,7 +287,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 				$table ->name = $account->name;
 				$table -> report = 	'<a href="'.URL::to('security/'.$row->oid.'auditReport').'" >'.$account->name.'</a>';
 				$table -> Time = StringHelper::timeAgo($row->report_time);	
-				$table -> Changed = self::getLabel2($table->changed, $row->changed);
+				$table -> Changed = $row->changed;
 				$arr[] = $table;
 			}
 			return $arr;
