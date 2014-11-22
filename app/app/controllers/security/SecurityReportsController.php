@@ -56,7 +56,7 @@ class SecurityReportsController extends BaseController {
 			}
 			else 
 			{
-				return View::make('site/security/auditReports', array('table' =>$table ));	
+				return View::make('site/security/reports', array('table' =>$table ));	
 			}
 			
 		}
