@@ -178,6 +178,9 @@ Route::group(array(
     Route::any('security/portPreferences/{portPreference}/refresh', 'PortPreferencesController@checkStatus');
 	Route::get('security/portPreferences/{portPreference}/portInfo', 'PortPreferencesController@portInfo'); 
 	
+	Route::any('security/{account}/auditReport', 'SecurityReportsController@checkStatus');
+	
+	
 	Route::any('ticket/', 'TicketController@getIndex'); 
 	Route::get('ticket/create', 'TicketController@getCreate');
     Route::get('ticket/{ticket}/edit', 'TicketController@getCreate');
