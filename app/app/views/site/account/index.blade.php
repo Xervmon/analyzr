@@ -51,7 +51,7 @@
 						
 							</p>
 							<p>
-								@if($account -> profileType == Constants::BILLING_PROFILE)
+								@if($account -> profileType == Constants::READONLY_PROFILE)
 									{{UIHelper::displayCurrentCost($account->id, CloudAccountHelper::findCurrentCost($account))}}
 								@endif
 							</p>
