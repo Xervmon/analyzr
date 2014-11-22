@@ -27,16 +27,16 @@ return array(
 	'awsDetails'                  => 'AWS Account Details',
 	'awsInstanceDetails'          => 'AWS Instance Details',
 	'STATUS_IN_PROCESS'           => 'In process',
-	'STATUS_FAILED' 	      => 'failed',
+	'STATUS_FAILED'               => 'failed',
 	'STATUS_STARTED'              => 'started',
 	'STATUS_COMPLETED'            => 'Completed',
-	'aws_ec2'            => 'EC2',
-	'region_lang'            => 'Region-wise Instances:',
-	'total_instances'            => 'Total Instances',
+	'aws_ec2'                     => 'EC2',
+	'region_lang'                 => 'Region-wise Instances:',
+	'total_instances'             => 'Total Instances',
 	'active_instances'            => 'Active Instances',
-	'aws_ebs'    => 'EBS',
-	'aws_sg'    => 'Security Group',
-	'aws_kp'    => 'Key Pair',
+	'aws_ebs'                     => 'EBS',
+	'aws_sg'                      => 'Security Group',
+	'aws_kp'                      => 'Key Pair',
 	
 	
 );

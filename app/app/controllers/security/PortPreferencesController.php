@@ -40,10 +40,20 @@ class PortPreferencesController extends BaseController {
     public function getIndex() {
         // Get all the user's accounts
         //Auth::id() : gives the logged in userid
-        $portPreferences = $this->portPreference->where('user_id', Auth::id())->orderBy('created_at', 'DESC')->paginate(10);
+        $portPreferences = $this->portPreference
+        						-> where('portPreferences.user_id', Auth::id())
+        						-> join('cloudAccounts', 'cloudAccounts.id', '=', 'portPreferences.cloudAccountId')
+        						->select('portPreferences.*', 'cloudAccounts.name','cloudAccounts.cloudProvider','cloudAccounts.status','cloudAccounts.profileType')
+								-> orderBy('portPreferences.created_at', 'DESC')
+        						-> paginate(10);
 		
-		//$accounts = CloudAccount::where('user_id', Auth::id()) -> where('profileType', Constants::READONLY_PROFILE);
-		
+		/*DB::table('portPreferences')
+            ->join('portPreferences', 'users.id', '=', 'portPreferences.user_id')
+            ->join('cloudAccounts', 'cloudAccounts.id', '=', 'portPreferences.cloudAccountId')
+            ->select('portPreferences.id', 'portPreferences.name', 'cloudAccounts.name as Account')
+           -> orderBy('created_at', 'DESC')
+           -> paginate(10);
+		*/
 		return View::make('site/security/portPreferences/index', array(
             'portPreferences' => $portPreferences
         ));
@@ -331,6 +341,7 @@ class PortPreferencesController extends BaseController {
 
 	public function portInfo($id)
 	{
+
 			$this->check();
 		  	$account = CloudAccountHelper::findAndDecrypt($id);
 
@@ -345,40 +356,52 @@ class PortPreferencesController extends BaseController {
 				
 				$data['token'] 	 	= $obj->token;
 				$data['accountId'] 	= $credentials->accountId;
-				echo '<pre>';
-					print_r($data);
+				
 				
 				$json = AWSBillingEngine::SecgroupReport($data);
 				Log::info('Adding the job to port Pref queue for processing..'.$json);
-				$ret = json_decode($json);
-
-				echo '<pre>';
-					print_r($ret);
-					die();
+								
 			if(StringHelper::isJson($json))
 			{
 				$ret = json_decode($json);
 				if($ret->status == 'OK')
 				{
-					echo '<pre>';
-					print_r($ret);
-					die();
-					return View::make('site/security/portPreferences/portInfo', array('account' => $account,'instanceDetails'=> $getInstancesAll));
+										
+					if(!empty($ret->report->sec_groups))
+					{
+						$arr = array();$i=0;
+						foreach ($ret->report->sec_groups as $key => $value) {
+						
+
+						$arr[$i]['Security Group Name']                            =$key;
+						if(empty($value->safe_ports)) $arr[$i]['Safe Ports']       = ''; else  $arr[$i]['Safe Ports'] = implode(" | ",$value->safe_ports); 
+						if(empty($value->warning_ports)) $arr[$i]['Warning Ports'] = ''; else  $arr[$i]['Warning Ports'] = implode(" | ",$value->safe_ports); 
+						if(empty($value->danger_ports)) $arr[$i]['Danger Ports']   = ''; else  $arr[$i]['Danger Ports'] = implode(" | ",$value->danger_ports); 
+						if(empty($value->instances)) $arr[$i]['Instance']          = ''; else  $arr[$i]['Instance'] = $value->instances; 
+
+						$i++;
+							
+						}
+					}
+					return View::make('site/security/portPreferences/portInfo', array('account' => $account,
+											'portDetails'=> $arr));
 			    }
 				else if($ret->status == 'error')
 				{
-					echo $ret->status;
-					die();
+					Log::error('Failed to return security group'.$ret->status);
+					Redirect::to('security/portPreferences')->with('error', $ret->status);
 				}
 			}
 			else {
-				Log::error('Failed to add to billing queue'.json_encode($account));
-				return Constants::BAD_CREDENTIALS;
+				Log::error('Failed could not add to queue');
+				Redirect::to('security/portPreferences')->with('error', 'Invalid Json returned');
 			}
 		}
 		else
 			{
-				return Constants::ENGINE_CREDENTIALS_FAILURE;
+				Log::error('Engine credentials mis-match. Contact support team.');
+				Redirect::to('security/portPreferences')->with('error', 'Engine credentials mis-match. Contact support team.');
+	
 			}	
 		
 	}
