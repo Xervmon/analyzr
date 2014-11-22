@@ -66,7 +66,10 @@
 	$accArr = '';
 	foreach($accounts as $account)
 	{
-		$accArr[] = $account->id;
+		if($account->profileType == Constants::READONLY_PROFILE)
+		{
+			$accArr[] = $account->id;
+		}
 	}
 	$urlTemp = URL::to('account/%ID%/ChartData');
 ?>
