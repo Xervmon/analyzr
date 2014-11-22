@@ -22,8 +22,10 @@
 @section('scripts')
     <script src="{{asset('assets/js/xervmon/utils.js')}}"></script>
 	<script type="text/javascript">
+	
 	var data ='<?=json_encode($reports) ?>';
 	$(document).ready(function() {
+		console.log(data);
 		if (!$.isArray(data)) {
         	data = JSON.parse(data);
         }
