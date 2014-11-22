@@ -279,7 +279,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 			{
 				return  array('status' => 'error', 'message' => 'Error retrieving security audit report for '.$account->name);
 			}
-			$reportsArr = $reportsObj->reports();
+			$reportsArr = $reportsObj->reports;
 			$table = new stdClass();
 			$arr = '';
 			foreach($reportsArr as $row)
@@ -287,7 +287,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 				$table ->name = $account->name;
 				$table -> report = 	'<a href="'.URL::to('security/'.$row->oid.'auditReport').'" >'.$account->name.'</a>';
 				$table -> Time = StringHelper::timeAgo($row->report_time);	
-				$table -> Changed = self::getLabel2($table->changed, $table->changed);
+				$table -> Changed = self::getLabel2($table->changed, $row->changed);
 				$arr[] = $table;
 			}
 			return $arr;
