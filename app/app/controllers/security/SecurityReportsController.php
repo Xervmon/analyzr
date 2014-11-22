@@ -52,11 +52,11 @@ class SecurityReportsController extends BaseController {
 			$table = UIHelper::getAuditTable($this->account, $return);
 			if(is_array($table) && isset($table['status']) && $table['status'] == 'error')
 			{
-				Redirect::intended('account/'.$id.'/edit')->with('reports' , $table); break;
+				Redirect::intended('account/'.$id.'/edit')->with('error' , $table['message'] ); break;
 			}
 			else 
 			{
-				return View::make('site/security/audit/reports', array('table' =>$table ));	
+				return View::make('site/security/audit/reports', array('reports' =>$table ));	
 			}
 			
 		}
