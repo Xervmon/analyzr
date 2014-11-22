@@ -36,7 +36,7 @@ class SecurityReportsController extends BaseController {
 	public function getAuditReport($id)
 	{
 		$this->account = CloudAccountHelper::findAndDecrypt($id);
-		$cred = json_decode($this->account->credentials);
+		
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
 		$obj = json_decode($responseJson);
@@ -47,7 +47,7 @@ class SecurityReportsController extends BaseController {
 		}
 		if($obj->status == 'OK')
 		{
-			$return = AWSBillingEngine::auditReports(array('token' => $obj->token, 'accountId' => $cred->accountId));
+			$return = AWSBillingEngine::auditReports(array('token' => $obj->token, 'accountId' => $this->account->id));
 			
 			print_r($return);
 		}
