@@ -145,14 +145,6 @@ class AccountController extends BaseController {
 		
 		if($obj->status == 'OK')
 		{
-			/*
-			 *   "token": "<token>",
-    "apiKey": "<api key>",
-    "accountId": "<accountId>",
-    "secretKey": "<api secret>",
-    "assumedRole": "<assumedRole>",
-    "securityToken": "<securityToken>"
-			 * */
 			Log::info('Preparing the account for processing..');
 			$credentials 	 	= json_decode($account->credentials);
 			$data['token'] 	 	= $obj->token;
