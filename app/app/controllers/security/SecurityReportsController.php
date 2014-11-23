@@ -70,7 +70,7 @@ class SecurityReportsController extends BaseController {
 	{
 		echo $accountId;
 		$oid = Input::get('oid');
-		
+		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
 		$obj = json_decode($responseJson);
 		
