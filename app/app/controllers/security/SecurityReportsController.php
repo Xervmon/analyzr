@@ -66,17 +66,10 @@ class SecurityReportsController extends BaseController {
 		}
 	}
 
-	public function getAuditReport($id)
+	public function getAuditReport($oid, $id)
 	{
-		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
-		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
-		$obj = json_decode($responseJson);
-		
-		if(!StringHelper::isJson($responseJson))
-		{
-			//Redirect::intended('account/'.$id.'/edit')->with($obj->status , 'Error retrieving security audit report for '.$account->name); break;
-
-		}
+		echo $oid;
+		echo '<br/>'.$id;
 		//$return = AWSBillingEngine::auditReports(array('token' => $obj->token, 'accountId' => ));
 			
 		
