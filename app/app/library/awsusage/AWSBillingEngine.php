@@ -119,6 +119,15 @@ class AWSBillingEngine {
         return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['auditReports'], $data);
     }
 	
+	public static function auditReport($data) 
+	{
+		Log::info('Debug :' . json_encode($data));
+        return self::request(self::$orchestrationParams['endpoint_ip'] 
+        					. self::$orchestrationParams['auditReport'] . '/' .$data['oid'],
+        					 $data);
+    }
+	
+	
 	public static function getServiceStatus()
 	{
 		$responseJson = self::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));

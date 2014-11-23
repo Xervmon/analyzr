@@ -211,24 +211,31 @@ class StringHelper
 
 	public static function timeAgo($time)
 	{
-		$timestamp = $time;
-	        $difference = time() - $timestamp;
-	        $periods = array("sec", "min", "hour", "day", "week", "month", "years", "decade");
-	        $lengths = array("60", "60", "24", "7", "4.35", "12", "10");
-	 
-	        if ($difference > 0) { // this was in the past time
-	            $ending = "ago";
-	        } else { // this was in the future time
-	            $difference = -$difference;
-	            $ending = "to go";
-	        }
-	        for ($j = 0; $difference >= $lengths[$j]; $j++)
-	            $difference /= $lengths[$j];
-	        $difference = round($difference);
-	        if ($difference != 1)
-	            $periods[$j].= "s";
-	        $text = "$difference $periods[$j] $ending";
-	        return $text;
+		$time = (!is_int($time)) ? strtotime($time) : $time;
+		
+		$now = time();
+		
+		$remainder = $now - $time;
+		
+		if($remainder < 60) 
+		{
+			return $remainder . ' seconds ago';
+		} else if($remainder < 3600) 
+		{
+			$number = ceil($remainder / 60);
+			$suffix = ($number > 1) ? 's' : '';
+			return $number . ' minute' . $suffix . ' ago';
+		} else if($remainder < 86400) 
+		{
+			$number = floor($remainder / 3600);
+			$suffix = ($number > 1) ? 's' : '';
+			return $number . ' hour' . $suffix . ' ago';
+		} else 
+		{
+			$number = floor($remainder / 86400);
+			$suffix = ($number > 1) ? 's' : '';
+			return $number . ' day' . $suffix . ' ago';
+		}
 	}
 	
 	public static function getOperationStatus($status)

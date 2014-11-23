@@ -272,11 +272,10 @@ convertJsonToTableAuditReports = function(data) {
     if (data.length > 0) {
         var mediaClass = '';
         for (var i = 0; i < data.length; i++) {
-            data[i]["actions"] = '<div>' + '<a href class="viewAuditReport" id="viewAuditReport" onclick="viewAuditReport(\'' + data[i]['accountId'] + '\', \'' + data[i]['oid'] + '\'); return false;" name="viewAuditReport">View Audit Report</a></div>';
+        	
+            data[i]["actions"] = '<div>' + '<a href class="viewAuditReport" id="viewAuditReport" onclick="viewAuditReport(\'' + data[i]['report'] + '\', \'' + data[i]['accountId'] + '\', \'' + data[i]['oid'] + '\'); return false;" name="viewAuditReport">View Audit Report</a></div>';
 
-            data[i]['report'] = '<a href ="' + data[i]['report'] + '" >' +data[i]['name'] +'</a>'; 
-
-     		delete data[i]['accountId'];
+            delete data[i]['accountId'];
      		delete data[i]['oid'];
             delete data[i]['name'];
         }
@@ -305,8 +304,15 @@ convertJsonToTableAuditReports = function(data) {
 
 };
 
-viewAuditReport = function (accountId, oid)
+viewAuditReport = function (url, accountId, oid)
 {
-	alert (accountId);
-	alert(oid);
-}
+	var jqxhr = $.post(url, {
+                    'accountId' : accountId,
+                    'oid' : oid
+                }).done(function(response) {
+                    if (!$.isArray(response)) {
+                    	response = JSON.parse(response);
+                    alert(response);
+                	}
+                });
+};
