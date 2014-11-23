@@ -308,5 +308,5 @@ convertJsonToTableAuditReports = function(data) {
 viewAuditReport = function (accountId, oid)
 {
 	alert (accountId);
-	alert(data[i]['accountId']);
+	alert(oid);
 }

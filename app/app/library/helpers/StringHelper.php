@@ -211,7 +211,9 @@ class StringHelper
 
 	public static function timeAgo($time)
 	{
-		$time = (!is_int($time)) ? strtotime($time) : $time;
+		/*
+		 * 
+		 $time = (!is_int($time)) ? strtotime($time) : $time;
 		
 		$now = time();
 		
@@ -236,6 +238,11 @@ class StringHelper
 			$suffix = ($number > 1) ? 's' : '';
 			return $number . ' day' . $suffix . ' ago';
 		}
+		 * 
+		 */
+		 
+		 $timeAgo = new TimeAgo();
+  		 return $timeAgo->inWords($time);
 	}
 	
 	public static function getOperationStatus($status)
