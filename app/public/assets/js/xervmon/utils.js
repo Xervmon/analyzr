@@ -305,10 +305,8 @@ convertJsonToTableAuditReports = function(data) {
 
 };
 
-viewAuditReport = function (data)
+viewAuditReport = function (accountId, oid)
 {
-	var accountId = data['accountId'];
-	var reportId = data['oid'];
-	//alert (accountId);
-	//alert(reportId);
+	alert (accountId);
+	alert(data[i]['accountId']);
 }
