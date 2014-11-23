@@ -311,6 +311,6 @@ viewAuditReport = function (data)
 {
 	var accountId = data['accountId'];
 	var reportId = data['oid'];
-	alert (accountId);
-	alert(reportId);
+	//alert (accountId);
+	//alert(reportId);
 }
