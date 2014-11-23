@@ -179,7 +179,7 @@ Route::group(array(
 	Route::get('security/portPreferences/{portPreference}/portInfo', 'PortPreferencesController@portInfo'); 
 	
 	Route::any('security/{account}/auditReports', 'SecurityReportsController@getAuditReports');
-	Route::any('security/{account}/auditReport', 'SecurityReportsController@getAuditReport');
+	Route::any('security/auditReport', 'SecurityReportsController@getAuditReport');
 	
 	
 	Route::any('ticket/', 'TicketController@getIndex'); 

@@ -301,7 +301,6 @@ convertJsonToTableAuditReports = function(data) {
 viewAuditReport = function (url, accountId, oid)
 {
 	var jqxhr = $.ajax(url, {
-                    'accountId' : accountId,
                     'oid' : oid
                 }).done(function(response) {
                 	console.log(response);
