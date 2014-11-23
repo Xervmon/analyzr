@@ -287,7 +287,6 @@ Inverse	<span class="label label-inverse">Inverse</span>
 				$table ->name = $account->name;
 				$table ->accountId = $account->id;
 				$table ->oid = $row->oid;
-				$table -> report = 	URL::to('security/'.$row->oid.'/auditReport/'.$account->id);
 				$table -> Time = StringHelper::timeAgo($row->report_time);	
 				$table -> Changed = $row->changed;
 				$arr[] = $table;

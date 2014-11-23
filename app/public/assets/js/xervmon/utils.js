@@ -268,18 +268,14 @@ convertJsonToTableSecurityGroups = function(data) {
 
 convertJsonToTableAuditReports = function(data) {
     var pageSize = 10;
-    //alert(cloudAccountId);
     if (data.length > 0) {
         var mediaClass = '';
-        for (var i = 0; i < data.length; i++) {
-        	
-            data[i]["actions"] = '<div>' + '<a href class="viewAuditReport" id="viewAuditReport" onclick="viewAuditReport(\'' + data[i]['report'] + '\', \'' + data[i]['accountId'] + '\', \'' + data[i]['oid'] + '\'); return false;" name="viewAuditReport">View Audit Report</a></div>';
-
+        for (var i = 0; i < data.length; i++) 
+        {
+        	data[i]["actions"] = '<div>' + '<a href class="viewAuditReport" id="viewAuditReport" onclick="viewAuditReport(\'' + data[i]['report'] + '\', \'' + data[i]['accountId'] + '\', \'' + data[i]['oid'] + '\'); return false;" name="viewAuditReport">View Audit Report</a></div>';
             delete data[i]['accountId'];
      		delete data[i]['oid'];
-            delete data[i]['name'];
         }
-
         mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {
              "name" : " filter-select filter-exact "
         }), $table = $(mediaClass);
@@ -295,13 +291,10 @@ convertJsonToTableAuditReports = function(data) {
 
             });
         })
-
         return $table;
     } else {
         return '<div class="no_data">No Data</div>';
-
     }
-
 };
 
 viewAuditReport = function (url, accountId, oid)
