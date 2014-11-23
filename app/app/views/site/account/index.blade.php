@@ -58,7 +58,7 @@
 								<p>
 									<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
 									| 
-									<a href="{{ URL::to('security/' . $account->id . '/auditReport') }}"><span class="glyphicon glyphicon-lock"></span></a>
+									<a href="{{ URL::to('security/' . $account->id . '/auditReports') }}"><span class="glyphicon glyphicon-lock"></span></a>
 									
 								</p>
 								
