@@ -277,7 +277,9 @@ convertJsonToTableAuditReports = function(data) {
             //delete data[i]['IpPermissionsEgress'];
             //delete data[i]['OwnerId'];
             data[i]['report'] = '<a href ="' + data[i]['report'] + '" >' +data[i]['name'] +'</a>'; 
-            data[i]["actions"] = '<div>' + '<span style="padding-right:8px; cursor: pointer;" title="View Audit Report">' +viewAuditReport(data[i]) + '</span></div>';
+//            data[i]["actions"] = '<div>' + '<span style="padding-right:8px; cursor: pointer;" title="View Audit Report">viewAuditReport' +viewAuditReport(data[i]) + '</span></div>';
+            data[i]["actions"] = '<div>' + '<span style="padding-right:8px; cursor: pointer;" title="Delete Inbound">' + viewAuditReport(data[i]) + '</span></div>';
+
      		delete data[i]['accountId'];
      		delete data[i]['oid'];
             delete data[i]['name'];
