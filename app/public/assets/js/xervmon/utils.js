@@ -272,7 +272,7 @@ convertJsonToTableAuditReports = function(data) {
     if (data.length > 0) {
         var mediaClass = '';
         for (var i = 0; i < data.length; i++) {
-            data[i]["actions"] = '<div>' + '<span class="viewAuditReport" id="viewAuditReport" onclick="viewAuditReport(\'' + data[i]['accountId'] + '\', \'' + data[i]['oid'] + '\');" name="viewAuditReport"></span>' + '</div>';
+            data[i]["actions"] = '<div>' + '<span class="viewAuditReport" id="viewAuditReport" onclick="viewAuditReport(\'' + data[i]['accountId'] + '\', \'' + data[i]['oid'] + '\');" name="viewAuditReport">View Audit Report</span></div>';
 
             data[i]['report'] = '<a href ="' + data[i]['report'] + '" >' +data[i]['name'] +'</a>'; 
 
