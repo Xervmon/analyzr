@@ -66,10 +66,10 @@ class SecurityReportsController extends BaseController {
 		}
 	}
 
-	public function getAuditReport($oid, $id)
+	public function getAuditReport($oid)
 	{
 		echo $oid;
-		echo '<br/>'.$id;
+		
 		//$return = AWSBillingEngine::auditReports(array('token' => $obj->token, 'accountId' => ));
 			
 		

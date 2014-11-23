@@ -272,10 +272,8 @@ convertJsonToTableAuditReports = function(data) {
     if (data.length > 0) {
         var mediaClass = '';
         for (var i = 0; i < data.length; i++) {
-            //data[i]["actions"] = '<div>' + '<span style="padding-right:8px; cursor: pointer;" title="View Details of the Security Group">' + getSGViewDetail(cloudAccountId, data[i]) + '</span>' + '<span style="padding-right:8px; cursor: pointer;" title="Delete Security Group">' + getDeleteSG(cloudAccountId, data[i]) + '</span>' + '</div>';
-            //delete data[i]['IpPermissions'];
-            //delete data[i]['IpPermissionsEgress'];
-            //delete data[i]['OwnerId'];
+            data[i]["actions"] = '<div>' + '<span class="viewAuditReport" id="viewAuditReport" onclick="viewAuditReport(\'' + data[i]['accountId'] + '\', \'' + data[i]['oid'] + '\');" name="viewAuditReport"></span>' + '</div>';
+
             data[i]['report'] = '<a href ="' + data[i]['report'] + '" >' +data[i]['name'] +'</a>'; 
 
      		delete data[i]['accountId'];
