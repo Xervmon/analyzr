@@ -211,9 +211,7 @@ class StringHelper
 
 	public static function timeAgo($time)
 	{
-		 $is_valid = StringHelper::is_date_time_valid($date);
-	     if ($is_valid) {
-	        $timestamp = strtotime($date);
+		$timestamp = $time;
 	        $difference = time() - $timestamp;
 	        $periods = array("sec", "min", "hour", "day", "week", "month", "years", "decade");
 	        $lengths = array("60", "60", "24", "7", "4.35", "12", "10");
@@ -231,20 +229,6 @@ class StringHelper
 	            $periods[$j].= "s";
 	        $text = "$difference $periods[$j] $ending";
 	        return $text;
-	    }else {
-	        return 'Date Time must be in "yyyy-mm-dd hh:mm:ss" format';
-	    }
-	}
-	
-	private static function is_date_time_valid($date) 
-	{
-	    if (date('Y-m-d H:i:s', strtotime($date)) == $date) 
-	    {
-	        return TRUE;
-	    } else 
-	    {
-	        return FALSE;
-	    }
 	}
 	
 	public static function getOperationStatus($status)
