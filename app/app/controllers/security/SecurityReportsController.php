@@ -82,6 +82,7 @@ class SecurityReportsController extends BaseController {
 		if($obj->status == 'OK')
 		{
 			$return = AWSBillingEngine::auditReport(array('token' => $obj->token, 'accountId' => $accountId, 'oid' => $oid));
+			Log::info('Return:' . $return);
 			print $return;
 		}
 		//$return = AWSBillingEngine::auditReports(array('token' => $obj->token, 'accountId' => ));
