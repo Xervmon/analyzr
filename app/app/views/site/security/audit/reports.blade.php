@@ -12,8 +12,7 @@
 </div>
 
 <div id="auditReports">
-	<table class=""
-	</table>
+	
 </div>
 
 

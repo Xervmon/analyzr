@@ -265,3 +265,41 @@ convertJsonToTableSecurityGroups = function(data) {
     }
 
 };
+
+convertJsonToTableAuditReports = function(data) {
+    var pageSize = 10;
+    //alert(cloudAccountId);
+    if (data.length > 0) {
+        var mediaClass = '';
+        for (var i = 0; i < data.length; i++) {
+            //data[i]["actions"] = '<div>' + '<span style="padding-right:8px; cursor: pointer;" title="View Details of the Security Group">' + getSGViewDetail(cloudAccountId, data[i]) + '</span>' + '<span style="padding-right:8px; cursor: pointer;" title="Delete Security Group">' + getDeleteSG(cloudAccountId, data[i]) + '</span>' + '</div>';
+            //delete data[i]['IpPermissions'];
+            //delete data[i]['IpPermissionsEgress'];
+            //delete data[i]['OwnerId'];
+            data[i]['report'] = '<a href =' + data[i]['report'] + '" >' +data[i]['name'] +'</a>'; 
+            delete data[i][name];
+        }
+
+        mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {
+             "name" : " filter-select filter-exact "
+        }), $table = $(mediaClass);
+        mediaClass += setupTableSorterChecked($table, false, pageSize);
+        $table.find('td[data-title="id"]').each(function() {
+            var $td = $(this);
+            var $parent = $td.parent();
+            //$td = $this.parent();
+            $td.addClass("btn-link").on("click", function(e) {
+                e.preventDefault();
+
+                var $selectedLink = this.dataset.title;
+
+            });
+        })
+
+        return $table;
+    } else {
+        return '<div class="no_data">No Data</div>';
+
+    }
+
+};
