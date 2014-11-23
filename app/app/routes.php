@@ -171,6 +171,9 @@ Route::group(array(
     Route::get('account/{account}/SecurityGroups', 'AccountController@SecurityGroups');
     Route::get('account/{account}/AwsInfo', 'AccountController@AwsInfo');
     Route::get('account/{account}/instanceInfo', 'AccountController@instanceInfo');
+    Route::get('account/{account}/ebsInfo', 'AccountController@ebsInfo');
+    Route::get('account/{account}/sgInfo', 'AccountController@sgInfo');
+    Route::get('account/{account}/kpInfo', 'AccountController@kpInfo');
 	
 	Route::any('security/portPreferences/', 'PortPreferencesController@getIndex'); 
 	Route::get('security/portPreferences/create', 'PortPreferencesController@getCreate');
