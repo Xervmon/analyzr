@@ -304,6 +304,7 @@ viewAuditReport = function (url, accountId, oid)
                     'accountId' : accountId,
                     'oid' : oid
                 }).done(function(response) {
+                	console.log(response);
                     if (!$.isArray(response)) {
                     	response = JSON.parse(response);
                     alert(response);
