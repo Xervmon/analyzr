@@ -66,10 +66,9 @@ class SecurityReportsController extends BaseController {
 		}
 	}
 
-	public function getAuditReport($accountId)
+	public function getAuditReport($oid)
 	{
-		echo $accountId;
-		$oid = Input::get('oid');
+		$accountId = Input::get('accountId');
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
 		$obj = json_decode($responseJson);
