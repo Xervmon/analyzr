@@ -275,6 +275,7 @@ convertJsonToTableAuditReports = function(data) {
         	data[i]["actions"] = '<div>' + '<a href class="viewAuditReport" id="viewAuditReport" onclick="viewAuditReport(\'' + data[i]['report'] + '\', \'' + data[i]['accountId'] + '\', \'' + data[i]['oid'] + '\'); return false;" name="viewAuditReport">View Audit Report</a></div>';
             delete data[i]['accountId'];
      		delete data[i]['oid'];
+     		delete data[i]['report'];
         }
         mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {
              "name" : " filter-select filter-exact "
