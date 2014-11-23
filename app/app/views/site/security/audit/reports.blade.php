@@ -31,7 +31,7 @@
         	data = JSON.parse(data);
         }
         console.log(data);
-		$('#auditReports').append(convertJsonToTableSecurityGroups(data));
+		$('#auditReports').append(convertJsonToTableAuditReports(data));
 		
 	});
 	</script>
