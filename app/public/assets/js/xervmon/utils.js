@@ -277,7 +277,10 @@ convertJsonToTableAuditReports = function(data) {
             //delete data[i]['IpPermissionsEgress'];
             //delete data[i]['OwnerId'];
             data[i]['report'] = '<a href =' + data[i]['report'] + '" >' +data[i]['name'] +'</a>'; 
-            delete data[i][name];
+            data[i]["actions"] = '<div>' + '<span style="padding-right:8px; cursor: pointer;" title="View Audit Report">' +viewAuditReport(data[i]) + '</span>' + '<span style="padding-right:8px; cursor: pointer;" title="view Audit Report">' + viewAuditReport(data[i]) + '</span>' + '</div>';
+     		delete data[i]['accountId'];
+     		delete data[i]['oid'];
+            delete data[i]['name'];
         }
 
         mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {
@@ -303,3 +306,11 @@ convertJsonToTableAuditReports = function(data) {
     }
 
 };
+
+viewAuditReport = function (data)
+{
+	var accountId = data['accountId'];
+	var reportId = data['oid'];
+	alert (accountId);
+	alert(reportId);
+}

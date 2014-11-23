@@ -285,6 +285,8 @@ Inverse	<span class="label label-inverse">Inverse</span>
 			foreach($reportsArr as $row)
 			{
 				$table ->name = $account->name;
+				$table ->accountId = $account->id;
+				$table ->oid = $row->oid;
 				$table -> report = 	URL::to('security/'.$row->oid.'/auditReport');
 				$table -> Time = StringHelper::timeAgo($row->report_time);	
 				$table -> Changed = $row->changed;
