@@ -42,17 +42,27 @@
 							<p>
 								<span class="glyphicon glyphicon-calendar"></span> <!--Sept 16th, 2012-->{{{ $account->created_at }}}
 							</p>
-							<p>
-								<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
-								| 
-								<a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
-								| 
-								<a href="{{ URL::to('account/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
-						
-							</p>
+							@if($account -> profileType == Constants::READONLY_PROFILE)
+								<p>
+									<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
+									| 
+									<a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
+									| 
+									<a href="{{ URL::to('account/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
+							
+								</p>
 							<p>
 								{{UIHelper::displayCurrentCost($account->id, CloudAccountHelper::findCurrentCost($account))}}
 							</p>
+							@else
+								<p>
+									<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
+									| 
+									<a href="{{ URL::to('security/' . $account->id . '/auditReports') }}"><span class="glyphicon glyphicon-lock"></span></a>
+									
+								</p>
+								
+							@endif
 						</div>
 					</div>
 				</li>
