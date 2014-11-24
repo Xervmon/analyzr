@@ -189,6 +189,54 @@ class CloudProvider
        }
 
     }
+
+    public static function getEBS($cloudAccountId)
+    {
+        $account = CloudAccountHelper::findAndDecrypt($cloudAccountId);
+
+         $response = self::getDriver($account)->describeVolumesall(array(
+                    'DryRun' => false, 
+                    'InstanceIds' => array('')));
+
+        if (!empty($response) && $response['status'] === 'OK') {
+            return $response['message'];
+        } else {
+            return array();
+       }
+
+    }
+
+    public static function getSG($cloudAccountId)
+    {
+        $account = CloudAccountHelper::findAndDecrypt($cloudAccountId);
+
+         $response = self::getDriver($account)->describeSGall(array(
+                    'DryRun' => false, 
+                    'InstanceIds' => array('')));
+
+        if (!empty($response) && $response['status'] === 'OK') {
+            return $response['message'];
+        } else {
+            return array();
+       }
+
+    }
+
+    public static function getKP($cloudAccountId)
+    {
+        $account = CloudAccountHelper::findAndDecrypt($cloudAccountId);
+
+         $response = self::getDriver($account)->describeKPall(array(
+                    'DryRun' => false, 
+                    'InstanceIds' => array('')));
+
+        if (!empty($response) && $response['status'] === 'OK') {
+            return $response['message'];
+        } else {
+            return array();
+       }
+
+    }
     
     public static function getSummary($account)
 	{

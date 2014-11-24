@@ -468,6 +468,67 @@ class AccountController extends BaseController {
 	  		return View::make('site/account/instanceInfo', array('account' => $account,'instanceDetails'=> $arr));
 	}
 
+	public function ebsInfo($id)
+	{
+			$this->check();
+		  	$account = CloudAccount::where('user_id', Auth::id())->find($id);
+     	  	$getEBSAll = CloudProvider::getEBS($id);
+			$arr = array();$i=0;
+			if(!empty($getEBSAll['Volumes']))
+			{
+				foreach($getEBSAll['Volumes'] as $key => $value)
+				{
+					$arr[$i]['VolumeId']=$value['VolumeId'];
+					$arr[$i]['SnapshotId']=$value['SnapshotId'];
+					$arr[$i]['AvailabilityZone']=$value['AvailabilityZone'];
+					$i++;
+				}
+			}	
+
+     	  	
+	  		return View::make('site/account/ebsInfo', array('account' => $account,'instanceDetails'=> $arr));
+	}
+	
+	public function sgInfo($id)
+	{
+			$this->check();
+		  	$account = CloudAccount::where('user_id', Auth::id())->find($id);
+     	  	$getSGAll = CloudProvider::getSG($id);
+			$arr = array();$i=0;
+			if(!empty($getSGAll['SecurityGroups']))
+			{
+				foreach($getSGAll['SecurityGroups'] as $key => $value)
+				{
+					$arr[$i]['GroupId']=$value['GroupId'];
+					$arr[$i]['GroupName']=$value['GroupName'];
+					$arr[$i]['Description']=$value['Description'];
+					$i++;
+				}
+			}	
+
+     	  	
+	  		return View::make('site/account/sgInfo', array('account' => $account,'instanceDetails'=> $arr));
+	}
+	
+	public function kpInfo($id)
+	{
+			$this->check();
+		  	$account = CloudAccount::where('user_id', Auth::id())->find($id);
+     	  	$getKPall = CloudProvider::getKP($id);
+			$arr = array();$i=0;
+			if(!empty($getKPall['KeyPairs']))
+			{
+				foreach($getKPall['KeyPairs'] as $key => $value)
+				{
+					$arr[$i]['KeyName']=$value['KeyName'];
+					$i++;
+				}
+			}	
+
+     	  	
+	  		return View::make('site/account/kpInfo', array('account' => $account,'instanceDetails'=> $arr));
+	}
+
 	private function flatten($securityGroups)
 	{
 		$arr = '';
