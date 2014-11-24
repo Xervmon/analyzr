@@ -26,6 +26,7 @@ return array(
 	'create_secgroup' => '/create_secgroup',
 	'SecgroupReport'  => '/SecgroupReport',
 	'create_audit' => '/create_audit',
-	'auditReports' => '/auditReports'
+	'auditReports' => '/auditReports',
+	'auditReport' => '/auditReport'
 	);
 

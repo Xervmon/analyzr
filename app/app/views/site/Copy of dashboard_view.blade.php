@@ -68,7 +68,7 @@
 	{
 		if($account->profileType == Constants::READONLY_PROFILE)
 		{
-			$accArr[] = $account;
+			$accArr[] = $account->id;
 		}
 	}
 	$urlTemp = URL::to('account/%ID%/ChartData');
@@ -84,8 +84,8 @@ $( document ).ready(function()
     }
 	for (index = 0; index < accounts.length; ++index) 
 	{
-    	var url= urlTemp.replace('%ID%', accounts[index].id);
-    	var selector = '.chart'+accounts[index].id + ' svg';
+    	var url= urlTemp.replace('%ID%', accounts[index]);
+    	var selector = '.chart'+accounts[index] + ' svg';
     	$.ajax({
 		url:  url,
 		cache: false
