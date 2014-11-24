@@ -26,9 +26,6 @@ return array(
 	'securityGroups'              => 'SecurityGroups',
 	'awsDetails'                  => 'AWS Account Details',
 	'awsInstanceDetails'          => 'AWS Instance Details',
-	'awsEBSDetails'          	  => 'AWS EBS Details',
-	'awsSGDetails'          	  => 'AWS Security Groups Details',
-	'awsKPDetails'          	  => 'AWS Key Pairs Details',
 	'STATUS_IN_PROCESS'           => 'In process',
 	'STATUS_FAILED'               => 'failed',
 	'STATUS_STARTED'              => 'started',
@@ -40,6 +37,9 @@ return array(
 	'aws_ebs'                     => 'EBS',
 	'aws_sg'                      => 'Security Group',
 	'aws_kp'                      => 'Key Pair',
+	'account_delete'              => 'Are You Sure  Want To Delete This Account ?',
+	'portpreference_delete'       => 'Are You Sure  Want To Delete This PortPreference ?',
+
 	
 	
 );
