@@ -77,11 +77,11 @@ function setupTableSorterChecked(selector, displayTotalCount, pageSize, customFo
             if (displayTotalCount == true) {
                 pager += ('<div class="totalAmnt pull-left totalCost"><i class="cashicon    icons"></i>Total Cost of visible items:<span class="total-visible-amount">0</span></div>');
             }
-            pager += ('<div class="dataTables_paginate paging_full_numbers" id="' + id + '_paginate"><button type="button" class="first paginate_button" id="' + id + '_first"></button>');
-            pager += ('<button type="button" class="prev previous paginate_button" id="' + id + '_previous" ></button>');
+            pager += ('<div class="dataTables_paginate paging_full_numbers" id="' + id + '_paginate"><button type="button" class="first paginate_button" id="' + id + '_first"><span class="glyphicon glyphicon-step-backward"></span></button>');
+            pager += ('<button type="button" class="prev previous paginate_button" id="' + id + '_previous" ><span class="glyphicon glyphicon-chevron-left"></span></button>');
             pager += ('<span class="pagedisplay" ></span>');
-            pager += ('<button type="button" class="next paginate_button" id="' + id + '_next"></button>');
-            pager += ('<button type="button" class="last paginate_button" id="' + id + '_last"></button></div>');
+            pager += ('<button type="button" class="next paginate_button" id="' + id + '_next"><span class="glyphicon glyphicon-chevron-right"></span></button>');
+            pager += ('<button type="button" class="last paginate_button" id="' + id + '_last"><span class="glyphicon glyphicon-step-forward"></span></button></div>');
             pager += '</div>';
             $pager.html(pager);
         }
