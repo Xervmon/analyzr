@@ -375,7 +375,7 @@ class PortPreferencesController extends BaseController {
 
 						$arr[$i]['Security Group Name']                            =$key;
 						if(empty($value->safe_ports)) $arr[$i]['Safe Ports']       = ''; else  $arr[$i]['Safe Ports'] = implode(" | ",$value->safe_ports); 
-						if(empty($value->warning_ports)) $arr[$i]['Warning Ports'] = ''; else  $arr[$i]['Warning Ports'] = implode(" | ",$value->safe_ports); 
+						if(empty($value->warning_ports)) $arr[$i]['Warning Ports'] = ''; else  $arr[$i]['Warning Ports'] = implode(" | ",$value->warning_ports); 
 						if(empty($value->danger_ports)) $arr[$i]['Danger Ports']   = ''; else  $arr[$i]['Danger Ports'] = implode(" | ",$value->danger_ports); 
 						if(empty($value->instances)) $arr[$i]['Instance']          = ''; else  $arr[$i]['Instance'] = $value->instances; 
 
