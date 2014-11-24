@@ -34,7 +34,7 @@
 							<!-- CSRF Token -->
 							<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 							<!-- ./ csrf token -->
-                            <button type="button" class="btn btn-warning pull-right" role="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Account" data-message='Are You Sure  Want To Delete This Account ?'><span class="glyphicon glyphicon-trash"></span></button>
+                            <button type="button" class="btn btn-warning pull-right" role="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Account" data-message="{{ Lang::get('account/account.account_delete') }}"><span class="glyphicon glyphicon-trash"></span></button>
 
 				        </form>
 						<a href="{{ URL::to('account/' . $account->id . '/edit') }}" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-edit"></span></a>
