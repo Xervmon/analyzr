@@ -11,7 +11,7 @@ class WSObj
 {
 	public static function getObject($response)
 	{
-		if(StringHelper::isJson($responseJson))
+		if(StringHelper::isJson($response))
 		{
 			return json_decode($response);
 		}
