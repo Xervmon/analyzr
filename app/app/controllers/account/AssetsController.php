@@ -46,7 +46,7 @@ class AssetsController extends BaseController {
 	
 	public function SecurityGroups($id)
 	{
-		$this->check();
+		UtilHelper::check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
 		
 		
@@ -57,7 +57,7 @@ class AssetsController extends BaseController {
 	
 	public function AwsInfo($id)
     {    
-            $this->check();
+            UtilHelper::check();
             $account = CloudAccountHelper::findAndDecrypt($id);
 
 			
@@ -126,7 +126,7 @@ class AssetsController extends BaseController {
 
     public function instanceInfo($id)
     {
-            $this->check();
+            UtilHelper::check();
             $account = CloudAccount::where('user_id', Auth::id())->find($id);
             $getInstancesAll = CloudProvider::getInstances($id);
             $arr = array();$i=0;
@@ -148,7 +148,7 @@ class AssetsController extends BaseController {
 
     public function ebsInfo($id)
     {
-            $this->check();
+            UtilHelper::check();
             $account = CloudAccount::where('user_id', Auth::id())->find($id);
             $getEBSAll = CloudProvider::getEBS($id);
             $arr = array();$i=0;
@@ -167,7 +167,7 @@ class AssetsController extends BaseController {
     
     public function sgInfo($id)
     {
-            $this->check();
+            UtilHelper::check();
             $account = CloudAccount::where('user_id', Auth::id())->find($id);
             $getSGAll = CloudProvider::getSG($id);
             $arr = array();$i=0;
@@ -188,7 +188,7 @@ class AssetsController extends BaseController {
     
     public function kpInfo($id)
     {
-            $this->check();
+            UtilHelper::check();
             $account = CloudAccount::where('user_id', Auth::id())->find($id);
             $getKPall = CloudProvider::getKP($id);
             $arr = array();$i=0;

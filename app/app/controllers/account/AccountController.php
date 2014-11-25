@@ -290,37 +290,9 @@ class AccountController extends BaseController {
 	}
 
 
-
-
-
-
-	private function check($json = false)
-	{
-		if($json)
-		{
-			if(AWSBillingEngine::getServiceStatus() == 'error')
-			{
-				Log::error(Lang::get('account/account.awsbilling_service_down'));
-				print json_encode(array('status' => 'error', 'message' => Lang::get('account/account.awsbilling_service_down')));
-				return;
-			}
-		}
-		else 
-		{
-			
-			if(AWSBillingEngine::getServiceStatus() == 'error')
-			{
-				Log::error(Lang::get('account/account.awsbilling_service_down'));
-				print json_encode(array('status' => 'error', 'message' => Lang::get('account/account.awsbilling_service_down')));
-				return;
-			}
-		}
-	}
-
-
 	public function checkStatus($id)
 	{
-		$this->check();
+		UtilHelper::check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
 		
 		if(empty($account))
@@ -390,7 +362,7 @@ class AccountController extends BaseController {
 
 	public function getLogs($id)
 	{
-		$this->check();
+		UtilHelper::check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
 		
 		if(!empty($account) && isset($account->job_id))
@@ -429,7 +401,7 @@ class AccountController extends BaseController {
 
 	public function Collection($id)
 	{
-		$this->check();
+		UtilHelper::check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
 		return View::make('site/account/collection', array(
             	'account' => $account ));
@@ -521,7 +493,7 @@ class AccountController extends BaseController {
 	
 	public function getSecurityGroupsData($id)
 	{
-		$this->check();
+		UtilHelper::check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
 		$securityGroups = CloudProvider::getSecurityGroups('getSecurityGroups', $id, '');
 		
