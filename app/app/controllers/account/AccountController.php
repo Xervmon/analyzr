@@ -47,12 +47,12 @@ class AccountController extends BaseController {
         //Auth::id() : gives the logged in userid
         $accounts = $this->accounts->where('user_id', Auth::id())->orderBy('created_at', 'DESC')->paginate(10);
 		
-		$data= '';
+		$data= CloudAccountHelper::getAccountStatus();
 		
         // var_dump($accounts, $this->accounts, $this->accounts->owner);
         // Show the page
         return View::make('site/account/index', array(
-            'accounts' => $accounts
+            'accounts' => $data
         ));
     }
     

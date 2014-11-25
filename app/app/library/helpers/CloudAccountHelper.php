@@ -39,11 +39,11 @@ class CloudAccountHelper
 		}
 		if(!empty($account))
 		{
-			switch($account->status)
+			switch($account->processStatus)
 			{
 				case Lang::get('account/account.STATUS_COMPLETED'): return self::processCompletedState($account); break;
-				case Lang::get('account/account.STATUS_FAILED'): return array('status' => 'error', 'message' => 'Account '. $account->status .' Contact support!');	break;
-				default:return array('status' => 'error', 'message' => 'Please wait..account in '. $account->status);
+				case Lang::get('account/account.STATUS_FAILED'): return array('status' => 'error', 'message' => 'Account '. $account->processStatus .' Contact support!');	break;
+				default:return array('status' => 'error', 'message' => 'Please wait..account in '. $account->processStatus);
 						break;
 			}
 		}
@@ -80,6 +80,18 @@ class CloudAccountHelper
 		{
 			return array('status' => 'error', 'message' => 'Backend API is down, please try again later!');
 		}
+	}
+
+	public static function getAccountStatus()
+	{
+		return DB::table('cloudAccounts')
+            ->join('processJob', 'cloudAccounts.id', '=', 'processJob.cloudAccountId')
+            ->join('users', 'users.id', '=', 'cloudAccounts.user_id')
+			->join('users', 'users.id', '=', 'processJob.user_id')
+			-> where('cloudAccounts.user_id', Auth::user()->id)
+            ->select('cloudAccounts.*', 'processJob.id as pid', 'processJob.input',  
+            		'processJob.operation', 'processJob.output', 'processJob.status as processStatus')
+            ->get();
 	}
 	
 }
