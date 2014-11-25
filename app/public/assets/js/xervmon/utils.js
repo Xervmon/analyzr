@@ -77,11 +77,11 @@ function setupTableSorterChecked(selector, displayTotalCount, pageSize, customFo
             if (displayTotalCount == true) {
                 pager += ('<div class="totalAmnt pull-left totalCost"><i class="cashicon    icons"></i>Total Cost of visible items:<span class="total-visible-amount">0</span></div>');
             }
-            pager += ('<div class="dataTables_paginate paging_full_numbers" id="' + id + '_paginate"><button type="button" class="first paginate_button" id="' + id + '_first"></button>');
-            pager += ('<button type="button" class="prev previous paginate_button" id="' + id + '_previous" ></button>');
+            pager += ('<div class="dataTables_paginate paging_full_numbers" id="' + id + '_paginate"><button type="button" class="first paginate_button" id="' + id + '_first"><span class="glyphicon glyphicon-step-backward"></span></button>');
+            pager += ('<button type="button" class="prev previous paginate_button" id="' + id + '_previous" ><span class="glyphicon glyphicon-chevron-left"></span></button>');
             pager += ('<span class="pagedisplay" ></span>');
-            pager += ('<button type="button" class="next paginate_button" id="' + id + '_next"></button>');
-            pager += ('<button type="button" class="last paginate_button" id="' + id + '_last"></button></div>');
+            pager += ('<button type="button" class="next paginate_button" id="' + id + '_next"><span class="glyphicon glyphicon-chevron-right"></span></button>');
+            pager += ('<button type="button" class="last paginate_button" id="' + id + '_last"><span class="glyphicon glyphicon-step-forward"></span></button></div>');
             pager += '</div>';
             $pager.html(pager);
         }
@@ -264,4 +264,49 @@ convertJsonToTableSecurityGroups = function(data) {
 
     }
 
+};
+
+convertJsonToTableAuditReports = function(data) {
+    var pageSize = 10;
+    if (data.length > 0) {
+        var mediaClass = '';
+        for (var i = 0; i < data.length; i++) 
+        {
+        	data[i]["actions"] = '<div>' + '<a href class="viewAuditReport" id="viewAuditReport" onclick="viewAuditReport(\'' + data[i]['report'] + '\', \'' + data[i]['accountId'] + '\', \'' + data[i]['oid'] + '\'); return false;" name="viewAuditReport">View Audit Report</a></div>';
+            delete data[i]['accountId'];
+     		delete data[i]['oid'];
+     		delete data[i]['report'];
+        }
+        mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {
+             "name" : " filter-select filter-exact "
+        }), $table = $(mediaClass);
+        mediaClass += setupTableSorterChecked($table, false, pageSize);
+        $table.find('td[data-title="id"]').each(function() {
+            var $td = $(this);
+            var $parent = $td.parent();
+            //$td = $this.parent();
+            $td.addClass("btn-link").on("click", function(e) {
+                e.preventDefault();
+
+                var $selectedLink = this.dataset.title;
+
+            });
+        })
+        return $table;
+    } else {
+        return '<div class="no_data">No Data</div>';
+    }
+};
+
+viewAuditReport = function (url, accountId, oid)
+{
+	var jqxhr = $.ajax(url, {
+                    'oid' : oid
+                }).done(function(response) {
+                	console.log(response);
+                    if (!$.isArray(response)) {
+                    	response = JSON.parse(response);
+                    alert(response);
+                	}
+                });
 };

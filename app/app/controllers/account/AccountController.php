@@ -145,21 +145,13 @@ class AccountController extends BaseController {
 		
 		if($obj->status == 'OK')
 		{
-			/*
-			 *   "token": "<token>",
-    "apiKey": "<api key>",
-    "accountId": "<accountId>",
-    "secretKey": "<api secret>",
-    "assumedRole": "<assumedRole>",
-    "securityToken": "<securityToken>"
-			 * */
 			Log::info('Preparing the account for processing..');
 			$credentials 	 	= json_decode($account->credentials);
 			$data['token'] 	 	= $obj->token;
 			$data['apiKey'] 	= StringHelper::encrypt($credentials ->apiKey, md5(Auth::user()->username));
 			$data['secretKey'] 	= StringHelper::encrypt($credentials ->secretKey, md5(Auth::user()->username));
 			$data['accountId'] 	= $account->id;
-			$data['assumedRole'] = $credentials->assumedRole;
+			$data['assumedRole'] = StringHelper::encrypt($credentials ->assumedRole, md5(Auth::user()->username));
 			
 			$json = AWSBillingEngine::create_audit($data);
 			

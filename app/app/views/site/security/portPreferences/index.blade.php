@@ -33,7 +33,7 @@
 							<!-- CSRF Token -->
 							<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 							<!-- ./ csrf token -->
-							<button type="submit" class="btn btn-warning pull-right" role="button"><span class="glyphicon glyphicon-trash"></span></button>
+                            <button type="button" class="btn btn-warning pull-right" role="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Account" data-message="{{ Lang::get('account/account.portpreference_delete') }}"><span class="glyphicon glyphicon-trash"></span></button>
 						</form>
 						<a href="{{ URL::to('security/portPreferences/' . $portPreference->id . '/edit') }}" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-edit"></span></a>
 						<div class="media-body">
@@ -61,5 +61,5 @@
 <div>
 <a href="{{ URL::to('security/portPreferences/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('security/portPreferences.portPreference_add') }}}</a>
 </div>
-
+@include('deletemodal')
 @stop

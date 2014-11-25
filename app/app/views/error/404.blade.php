@@ -1,4 +1,4 @@
-<!doctype html>
+<!--doctype html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -100,9 +100,9 @@
 	<div class="wrapper">
 		<div class="error-spacer"></div>
 		<div role="main" class="main">
-			<?php $messages = array('We need a map.', 'I think we\'re lost.', 'We took a wrong turn.'); ?>
+<?php $messages = array('We need a map.', 'I think we\'re lost.', 'We took a wrong turn.');?>
 
-			<h1><?php echo $messages[mt_rand(0, 2)]; ?></h1>
+			<h1><?php echo $messages[mt_rand(0, 2)];?></h1>
 
 			<h2>Server Error: 404 (Not Found)</h2>
 
@@ -122,4 +122,28 @@
 		</div>
 	</div>
 </body>
-</html>
+</html-->
+@extends('site.layouts.default')
+
+{{-- Content --}}
+@section('content')
+
+<div class="page-header">
+ <div class="row">
+  <div class="col-md-9">
+   <h5>{{{ Lang::get('error/error.title') }}}</h5>
+  </div>
+ </div>
+</div>
+
+<div class="container">
+ <div class="row clearfix">
+  <div class="col-md-12 column text-center">
+   <img alt="500x327" src="{{{ asset('assets/img/errors/error-404.png') }}}" />
+
+  </div>
+  <h4 class="text-center">
+   <span style="color:red">{{{ Lang::get('error/error.title1') }}}</span>{{{ Lang::get('error/error.title2') }}}
+   </h4>
+ </div>
+</div>

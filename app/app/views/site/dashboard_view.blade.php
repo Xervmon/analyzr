@@ -29,11 +29,19 @@
 									<a alt="{{ $account->name }}" title="{{ $account->name }}" href="{{ URL::to('account/'.$account->id.'/edit') }}" class="pull-left" href="#">
 									{{ String::title($account->name) }}
 									</a> 
-								</h4> | <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
+								</h4> 
+								| <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
+								@if($account -> profileType == Constants::READONLY_PROFILE)
 								| <span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
 								| <a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
 								| <a href="{{ URL::to('account/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
-								<p class="summary{{$account->id}}">
+
+								@else
+								<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
+								| 
+								<a href="{{ URL::to('security/' . $account->id . '/auditReports') }}"><span class="glyphicon glyphicon-lock"></span></a>
+                                @endif
+                                <p class="summary{{$account->id}}">
 									
 								</p>
 								<p class="chart{{$account->id}}">
@@ -66,7 +74,10 @@
 	$accArr = '';
 	foreach($accounts as $account)
 	{
-		$accArr[] = $account->id;
+		if($account->profileType == Constants::READONLY_PROFILE)
+		{
+			$accArr[] = $account;
+		}
 	}
 	$urlTemp = URL::to('account/%ID%/ChartData');
 ?>
@@ -81,8 +92,8 @@ $( document ).ready(function()
     }
 	for (index = 0; index < accounts.length; ++index) 
 	{
-    	var url= urlTemp.replace('%ID%', accounts[index]);
-    	var selector = '.chart'+accounts[index] + ' svg';
+    	var url= urlTemp.replace('%ID%', accounts[index].id);
+    	var selector = '.chart'+accounts[index].id + ' svg';
     	$.ajax({
 		url:  url,
 		cache: false

@@ -34,25 +34,36 @@
 							<!-- CSRF Token -->
 							<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 							<!-- ./ csrf token -->
-							<button type="submit" class="btn btn-warning pull-right" role="button"><span class="glyphicon glyphicon-trash"></span></button>
-						</form>
+                            <button type="button" class="btn btn-warning pull-right" role="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Account" data-message="{{ Lang::get('account/account.account_delete') }}"><span class="glyphicon glyphicon-trash"></span></button>
+
+				        </form>
 						<a href="{{ URL::to('account/' . $account->id . '/edit') }}" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-edit"></span></a>
 						<div class="media-body">
 							<h4 class="media-heading">{{ String::title($account->name) }} : {{ String::title($account->profileType) }}</h4>
 							<p>
 								<span class="glyphicon glyphicon-calendar"></span> <!--Sept 16th, 2012-->{{{ $account->created_at }}}
 							</p>
-							<p>
-								<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
-								| 
-								<a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
-								| 
-								<a href="{{ URL::to('account/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
-						
-							</p>
+							@if($account -> profileType == Constants::READONLY_PROFILE)
+								<p>
+									<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
+									| 
+									<a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
+									| 
+									<a href="{{ URL::to('account/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
+							
+								</p>
 							<p>
 								{{UIHelper::displayCurrentCost($account->id, CloudAccountHelper::findCurrentCost($account))}}
 							</p>
+							@else
+								<p>
+									<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
+									| 
+									<a href="{{ URL::to('security/' . $account->id . '/auditReports') }}"><span class="glyphicon glyphicon-lock"></span></a>
+									
+								</p>
+								
+							@endif
 						</div>
 					</div>
 				</li>
@@ -66,5 +77,5 @@
 <div>
 <a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
 </div>
-
+@include('deletemodal')
 @stop
