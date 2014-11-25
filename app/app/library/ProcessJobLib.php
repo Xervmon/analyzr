@@ -91,7 +91,7 @@ class ProcessJobLib
 		}
 	}
 
-	private function pushToProcessJobTable($account, $data, $pjob)
+	private function pushToProcessJobTable($account, $data, $pJob)
 	{
 		$processJob = new ProcessJob();
 		$processJob -> input = json_encode($data);
