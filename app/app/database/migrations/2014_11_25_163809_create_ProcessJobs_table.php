@@ -20,7 +20,7 @@ class CreateProcessJobsTable extends Migration {
     public function up() {
         Schema::create('processJobs', function (Blueprint $table) {
             $table->string('id');
-			$table->integer('cloudAccountId');
+			$table->integer('cloudAccountId')->unsigned()->index();
             $table->string('operation');
 			$table->text('input');
             $table->text('output');
@@ -28,16 +28,11 @@ class CreateProcessJobsTable extends Migration {
 			$table->string('status');
 			$table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+			$table->foreign('cloudAccountId')->references('id')->on('cloudAccounts')->onDelete('cascade');
 			$table->softDeletes();
             $table->timestamps();
         });
-		Schema::table('processJobs', function($table)
-		{
-		    $table->foreign('cloudAccountId')
-		        ->references('id')->on('cloudAccounts')
-		        ->onDelete('cascade');
-			});
-    	}
+    }
     /**
      * Reverse the migrations.
      *
