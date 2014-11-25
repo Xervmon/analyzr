@@ -272,6 +272,7 @@ convertJsonToTableAuditReports = function(data) {
         var mediaClass = '';
         for (var i = 0; i < data.length; i++) 
         {
+            console.log(data[i]['report']);
         	data[i]["actions"] = '<div>' + '<a href class="viewAuditReport" id="viewAuditReport" onclick="viewAuditReport(\'' + data[i]['report'] + '\', \'' + data[i]['accountId'] + '\', \'' + data[i]['oid'] + '\'); return false;" name="viewAuditReport">View Audit Report</a></div>';
             delete data[i]['accountId'];
      		delete data[i]['oid'];
@@ -300,13 +301,32 @@ convertJsonToTableAuditReports = function(data) {
 
 viewAuditReport = function (url, accountId, oid)
 {
-	var jqxhr = $.ajax(url, {
-                    'oid' : oid
-                }).done(function(response) {
-                	console.log(response);
+    console.log(url);console.log(accountId);console.log(oid);
+    // var jqxhr=$.ajax(url,{'accountId':accountId},function(response){
+    //     alert(response);
+    // });
+	// var jqxhr = $.ajax(url, {
+ //                     'accountId':'vas',
+ //                     'oid' : 'me'
+ //                }).done(function(response) {
+ //                     alert(response);
+ //                	console.log(response);
+ //                 //    if (!$.isArray(response)) {
+ //                 //    	response = JSON.parse(response);
+ //                 //    alert(response);
+ //                	// }
+ //                });
+
+  $.ajax({
+    url :url,
+    data:{'accountId':accountId,'oid' : oid},
+    success:function(response){
+        alert(response);
                     if (!$.isArray(response)) {
-                    	response = JSON.parse(response);
-                    alert(response);
-                	}
-                });
+                      response = JSON.parse(response);
+                    //alert(response);
+                    console.log(response);
+                 }
+    }
+});
 };

@@ -36,11 +36,11 @@ class SecurityReportsController extends BaseController {
 	public function getAuditReports($id)
 	{
 		$this->account = CloudAccountHelper::findAndDecrypt($id);
-		
+		 
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
 		$obj = json_decode($responseJson);
-		
+		//echo '<pre>';print_r($return);die();
 		if(!StringHelper::isJson($responseJson))
 		{
 			//Redirect::intended('account/'.$id.'/edit')->with($obj->status , 'Error retrieving security audit report for '.$account->name); break;
@@ -49,10 +49,11 @@ class SecurityReportsController extends BaseController {
 		if($obj->status == 'OK')
 		{
 			$return = AWSBillingEngine::auditReports(array('token' => $obj->token, 'accountId' => $this->account->id));
+			//echo '<pre>';print_r($return);die();
 			$table = UIHelper::getAuditTable($this->account, $return);
 			if(is_array($table) && isset($table['status']) && $table['status'] == 'error')
 			{
-				Redirect::intended('account/'.$id.'/edit')->with('error' , $table['message'] ); break;
+				Redirect::intended('account/'.$id.'/edit')->with('error' , $table['message'] );
 			}
 			else 
 			{
@@ -69,7 +70,7 @@ class SecurityReportsController extends BaseController {
 	public function getAuditReport()
 	{
 		$accountId = Input::get('accountId');
-		
+		//echo '<pre>';print_r($accountId);die();
 		$oid = Input::get('oid');
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
@@ -84,6 +85,7 @@ class SecurityReportsController extends BaseController {
 		if($obj->status == 'OK')
 		{
 			$return = AWSBillingEngine::auditReport(array('token' => $obj->token, 'accountId' => $accountId, 'oid' => $oid));
+
 			Log::info('Return:' . $return);
 			print $return;
 		}
