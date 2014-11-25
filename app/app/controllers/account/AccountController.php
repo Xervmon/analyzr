@@ -11,16 +11,21 @@
  * - AccountController extends BaseController
  */
 class AccountController extends BaseController {
-    /**
+    
+	 /** 
+	 *
      * CloudAccount Model
      * @var accounts
      */
     protected $accounts;
-    /**
+    
+	 /** 
+	 *
      * User Model
      * @var User
      */
     protected $user;
+	
     /**
      * Inject the models.
      * @param Account $account
@@ -72,11 +77,11 @@ class AccountController extends BaseController {
     		$account = CloudAccount::where('user_id', Auth::id())->findOrFail($id);
     
 	    try {
-            if (empty($account)) {
-                $account = new CloudAccount;
-            } else if ($account->user_id !== Auth::id()) {
-                throw new Exception('general.access_denied');
-            }
+            	if (empty($account)) {
+                	$account = new CloudAccount;
+            	} else if ($account->user_id !== Auth::id()) {
+                	throw new Exception('general.access_denied');
+            	}
 		    
             $account->name = Input::get('name');
 			$providerProfile = explode(':', Input::get('cloudProvider'));
@@ -86,15 +91,14 @@ class AccountController extends BaseController {
             $account->user_id = Auth::id(); // logged in user id
             
             $conStatus = CloudProvider::authenticate($account);
-            
-            
             if ($conStatus == 1) {
             	Log::info('Credentials are encrypted before saving to DB.');
-				$ret = $this->process($account);
-				CloudAccountHelper::save($account);
 				
-				return RedirectHelper::redirectAccount($ret);
-            	//return Redirect::intended('account')->with('success', Lang::get('account/account.account_updated'));
+				$processJobLib = new ProcessJobLib();
+				$ret = $processJobLib->process($account);
+				
+				CloudAccountHelper::save($account);
+				 return Redirect::to('account/')->with('success', Lang::get('account/account.account_updated'));
             } else {
                 return Redirect::to('account/create')->with('error', Lang::get('account/account.account_auth_failed'));
             }
@@ -105,192 +109,33 @@ class AccountController extends BaseController {
         }
     }
 
-
-	private function process(& $account)
-	{
-		Log::info('Processing ..' . $account->cloudProvider. '..');
-		$response = '';
-		switch($account->profileType)
-		{
-			case Constants::READONLY_PROFILE  : $response = $this->billingProcess($account); 
-												$response_create = $this->create_services($account); 
-												break;
-			case Constants::SECURITY_PROFILE  :  $response = $this->securityProcess($account); break;
-		}
-		return $response;
-	}
-
-	private function securityProcess(& $account)
-	{
-		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
-		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
-		$obj = json_decode($responseJson);
-		
-		if(!StringHelper::isJson($responseJson))
-		{
-			return Constants::ENGINE_CREDENTIALS_FAILURE;
-		}
-		
-		if($obj->status == 'OK')
-		{
-			Log::info('Preparing the account for processing..');
-			$credentials 	 	= json_decode($account->credentials);
-			$data['token'] 	 	= $obj->token;
-			$data['apiKey'] 	= StringHelper::encrypt($credentials ->apiKey, md5(Auth::user()->username));
-			$data['secretKey'] 	= StringHelper::encrypt($credentials ->secretKey, md5(Auth::user()->username));
-			$data['accountId'] 	= $account->id;
-			$data['assumedRole'] = StringHelper::encrypt($credentials ->assumedRole, md5(Auth::user()->username));
-			
-			$json = AWSBillingEngine::create_audit($data);
-			
-			Log::info('Adding the job to Security Audit for processing..'.$json);
-			
-			if(StringHelper::isJson($json))
-			{
-				$ret = json_decode($json);
-				if($ret->status == 'OK')
-				{
-					$account ->status = Lang::get('account/account.STATUS_IN_PROCESS');
-					$account->job_id = $ret->job_id;
-					$account->save();
-					Log::info('Job Id:'.$ret->job_id);
-					return Constants::SUCCESS;
-				}
-				else if($ret->status == 'error')
-				{
-					$account ->status = $ret->status;
-					$account->job_id = '';
-					$account->save();
-					Log::error($ret->message.' '.json_encode($account));
-					return Constants::FAILURE;
-				}
-			}
-			else {
-				Log::error('Failed to add to Audit queue'.json_encode($account));
-				return Constants::BAD_CREDENTIALS;
-			}
-		}
-		else
-		{
-			return Constants::ENGINE_CREDENTIALS_FAILURE;
-		}
-	}
-	
-	private function billingProcess(& $account)
-	{
-		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
-		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
-		$obj = json_decode($responseJson);
-		
-		if(!StringHelper::isJson($responseJson))
-		{
-			return Constants::ENGINE_CREDENTIALS_FAILURE;
-		}
-				
-		if($obj->status == 'OK')
-		{
-			Log::info('Preparing the account for processing..');
-			$credentials 	 	= json_decode($account->credentials);
-			$data['token'] 	 	= $obj->token;
-			$data['apiKey'] 	= StringHelper::encrypt($credentials ->apiKey, md5(Auth::user()->username));
-			$data['secretKey'] 	= StringHelper::encrypt($credentials ->secretKey, md5(Auth::user()->username));
-			$data['accountId'] 	= $credentials->accountId;
-			$data['billingBucket'] = $credentials->billingBucket;
-			
-			$json = AWSBillingEngine::create_billing($data);
-			
-			Log::info('Adding the job to billing queue for processing..'.$json);
-			
-			if(StringHelper::isJson($json))
-			{
-				$ret = json_decode($json);
-				if($ret->status == 'OK')
-				{
-					$account ->status = Lang::get('account/account.STATUS_IN_PROCESS');
-					$account->job_id = $ret->job_id;
-					$account->save();
-					Log::info('Job Id:'.$ret->job_id);
-					return Constants::SUCCESS;
-				}
-				else if($ret->status == 'error')
-				{
-					$account ->status = $ret->status;
-					$account->job_id = '';
-					$account->save();
-					Log::error($ret->message.' '.json_encode($account));
-					return Constants::FAILURE;
-				}
-			}
-			else {
-				Log::error('Failed to add to billing queue'.json_encode($account));
-				return Constants::BAD_CREDENTIALS;
-			}
-		}
-		else
-			{
-				return Constants::ENGINE_CREDENTIALS_FAILURE;
-			}
-	}
-
-
-	private function create_services(& $account)
-	{
-		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
-		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
-		$obj = json_decode($responseJson);
-		
-		if(!StringHelper::isJson($responseJson))
-		{
-			return Constants::ENGINE_CREDENTIALS_FAILURE;
-		}
-				
-		if($obj->status == 'OK')
-		{
-			Log::info('Preparing the account for processing..');
-			$credentials 	 	= json_decode($account->credentials);
-			$data['token'] 	 	= $obj->token;
-			$data['apiKey'] 	= StringHelper::encrypt($credentials ->apiKey, md5(Auth::user()->username));
-			$data['secretKey'] 	= StringHelper::encrypt($credentials ->secretKey, md5(Auth::user()->username));
-			$data['accountId'] 	= $credentials->accountId;
-			$data['billingBucket'] = $credentials->billingBucket;
-			
-			$json = AWSBillingEngine::create_services($data);
-			
-			Log::info('Adding the job to Services queue for processing..'.$json);
-			
-			if(StringHelper::isJson($json))
-			{
-				$ret = json_decode($json);
-				if($ret->status == 'OK')
-				{
-					$account ->status = Lang::get('account/account.STATUS_IN_PROCESS');
-					$account->job_id = $ret->job_id;
-					$account->save();
-					Log::info('Job Id:'.$ret->job_id);
-					return Constants::SUCCESS;
-				}
-				else if($ret->status == 'error')
-				{
-					$account ->status = $ret->status;
-					$account->job_id = '';
-					$account->save();
-					Log::error($ret->message.' '.json_encode($account));
-					return Constants::FAILURE;
-				}
-			}
-			else {
-				Log::error('Failed to add to Services queue'.json_encode($account));
-				return Constants::BAD_CREDENTIALS;
-			}
-		}
-		else
-			{
-				return Constants::ENGINE_CREDENTIALS_FAILURE;
-			}
-	}
-
-
 	public function checkStatus($id)
+	{
+		UtilHelper::check();
+		$account = CloudAccount::where('user_id', Auth::id())->find($id);
+		
+		//most recent job data of user
+		$jobData = ProcessJob::where('user_id', Auth::id())
+						-> where('cloudAccountId', $id) 
+						-> whereIn('status', array(Lang::get('account/account.STATUS_IN_PROCESS'), 
+												  Lang::get('account/account.STATUS_STARTED')))
+						-> orderBy('created_at', 'desc')
+						-> get();
+		$processJobLib = new ProcessJobLib();
+		$return = $processJobLib->getStatus($account, $jobData);	
+		
+		if(empty($return))
+		{
+			return Redirect::to('account')->with('error', $account->name . ' could not be refreshed. Try again later!' );
+		}			
+		else 
+		{
+			return Redirect::to('account')->with('success', $account->name . ' refreshed and status updated!' );
+		}
+		
+	}
+
+	public function checkStatus2($id)
 	{
 		UtilHelper::check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
@@ -522,6 +367,7 @@ class AccountController extends BaseController {
 	  	print json_encode(array('status' => 'error', 'message' => 'No Cost data found for the '.$account -> name));
 	  	return;
 	  }
+	  
 	  $costData = $data['cost_data'];
 	  $arr = '';
 	  foreach($costData as $key => $value)

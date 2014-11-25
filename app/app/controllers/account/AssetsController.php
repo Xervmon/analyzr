@@ -57,19 +57,15 @@ class AssetsController extends BaseController {
 	
 	public function AwsInfo($id)
     {    
-            UtilHelper::check();
-            $account = CloudAccountHelper::findAndDecrypt($id);
-
-			
-			$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
-			EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
-			$obj = json_decode($responseJson);
-
-		
-			if(!StringHelper::isJson($responseJson))
-			{
-				RedirectHelper::redirectAccount(Constants::ENGINE_CREDENTIALS_FAILURE);
-			}
+   		UtilHelper::check();
+        $account = CloudAccountHelper::findAndDecrypt($id);
+		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
+		$obj = json_decode($responseJson);
+		if(!StringHelper::isJson($responseJson))
+		{
+			RedirectHelper::redirectAccount(Constants::ENGINE_CREDENTIALS_FAILURE);
+		}
 				
 			if($obj->status == 'OK')
 			{

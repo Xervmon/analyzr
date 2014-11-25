@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\SoftDeletingTrait;
 * Function list:
 * - author()
 * Classes list:
-* - CloudAccount extends \
+* - ProcessJob extends \
 */
-class CloudAccountLog extends \Eloquent 
+class ProcessJob extends \Eloquent 
 {
 	use SoftDeletingTrait;
     protected $fillable = [];
 	protected $softDelete = true;
-	protected $table = 'cloudAccountLogs';
+	protected $table = 'processJobs';
     /**
      * Get the account's owner.
      *
