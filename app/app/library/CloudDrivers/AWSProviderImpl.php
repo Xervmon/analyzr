@@ -176,10 +176,88 @@ class AWSPRoviderImpl implements IProvider
 		{
 			try
 			{	
-				$nstanceResult = $this->ec2Client->DescribeInstances(array());
-				if (!empty($nstanceResult))
+				$instanceResult = $this->ec2Client->DescribeInstances(array());
+				if (!empty($instanceResult))
 				{
-					return array('status' => 'OK', 'message'  => $nstanceResult-> toArray());
+					return array('status' => 'OK', 'message'  => $instanceResult-> toArray());
+				} 
+			}
+			catch(Exception $ex)
+			{
+				Log::error($ex);
+				return array('status' => 'error', 'message' => 'Error occured during describeInstances - '.json_encode($params['InstanceIds']));
+			}
+		} 
+		else
+		{
+			Log::error(Auth::check() ? Auth::user()->username : '__Guest__');
+			Log::error('describeInstances Authentication failure! API key and secret key for account is not correct');
+			return array('status' => 'error', 'message' => 'Authentication failure! API key and secret key for account is not correct');
+		}
+	}
+
+	public function describeVolumesall($params)
+	{
+		if($this->init())
+		{
+			try
+			{	
+				$ebsResult = $this->ec2Client->DescribeVolumes(array());
+				if (!empty($ebsResult))
+				{
+					return array('status' => 'OK', 'message'  => $ebsResult-> toArray());
+				} 
+			}
+			catch(Exception $ex)
+			{
+				Log::error($ex);
+				return array('status' => 'error', 'message' => 'Error occured during describeInstances - '.json_encode($params['InstanceIds']));
+			}
+		} 
+		else
+		{
+			Log::error(Auth::check() ? Auth::user()->username : '__Guest__');
+			Log::error('describeInstances Authentication failure! API key and secret key for account is not correct');
+			return array('status' => 'error', 'message' => 'Authentication failure! API key and secret key for account is not correct');
+		}
+	}
+
+	public function describeSGall($params)
+	{
+		if($this->init())
+		{
+			try
+			{	
+				$sgResult = $this->ec2Client->DescribeSecurityGroups(array());
+				if (!empty($sgResult))
+				{
+					return array('status' => 'OK', 'message'  => $sgResult-> toArray());
+				} 
+			}
+			catch(Exception $ex)
+			{
+				Log::error($ex);
+				return array('status' => 'error', 'message' => 'Error occured during describeInstances - '.json_encode($params['InstanceIds']));
+			}
+		} 
+		else
+		{
+			Log::error(Auth::check() ? Auth::user()->username : '__Guest__');
+			Log::error('describeInstances Authentication failure! API key and secret key for account is not correct');
+			return array('status' => 'error', 'message' => 'Authentication failure! API key and secret key for account is not correct');
+		}
+	}
+
+	public function describeKPall($params)
+	{
+		if($this->init())
+		{
+			try
+			{	
+				$kpResult = $this->ec2Client->DescribeKeyPairs(array());
+				if (!empty($kpResult))
+				{
+					return array('status' => 'OK', 'message'  => $kpResult-> toArray());
 				} 
 			}
 			catch(Exception $ex)

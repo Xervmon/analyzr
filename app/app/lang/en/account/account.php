@@ -37,6 +37,9 @@ return array(
 	'aws_ebs'                     => 'EBS',
 	'aws_sg'                      => 'Security Group',
 	'aws_kp'                      => 'Key Pair',
+	'account_delete'              => 'Are You Sure  Want To Delete This Account ?',
+	'portpreference_delete'       => 'Are You Sure  Want To Delete This PortPreference ?',
+
 	
 	
 );

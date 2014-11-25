@@ -27,11 +27,19 @@
 		<div class="form-group {{{ $errors->has('email') ? 'error' : '' }}}">
 			<label class="col-md-2 control-label" for="email">Cloud Provider <font color="red">*</font></label>
 			<div class="col-md-6">
-				<select class="form-control" name="cloudProvider" id="cloudProvider" required>
+			@if(isset($account->id)&& $mode=='edit')
+				<select class="form-control" name="cloudProvider" id="cloudProvider" required disabled>
 					@foreach ($providers as $key => $value)
 						<option value="{{$key}}" {{{ Input::old('profileType', isset($account->profileType) && ($account->profileType == 'Security Profile') ? 'selected="selected"' : '') }}}>{{{ $key }}}</option>
 					@endforeach
 				</select>
+			@else
+			    <select class="form-control" name="cloudProvider" id="cloudProvider" required>
+					@foreach ($providers as $key => $value)
+						<option value="{{$key}}" {{{ Input::old('profileType', isset($account->cloudProvider) && ($account->cloudProvider == $key) ? 'selected="selected"' : '') }}}>{{{ $key }}}</option>
+					@endforeach
+			    </select>
+			@endif    
 			</div>
 		</div>
 		<!-- ./ cloudProvider -->
