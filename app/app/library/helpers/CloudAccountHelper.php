@@ -86,8 +86,8 @@ class CloudAccountHelper
 	{
 		return DB::table('cloudAccounts')
             ->join('processJob', 'cloudAccounts.id', '=', 'processJob.cloudAccountId')
-            ->join('users', 'users.id', '=', 'cloudAccounts.user_id')
-			->join('users', 'users.id', '=', 'processJob.user_id')
+            ->join('users1', 'users1.id', '=', 'cloudAccounts.user_id')
+			->join('users2', 'users2.id', '=', 'processJob.user_id')
 			-> where('cloudAccounts.user_id', Auth::user()->id)
             ->select('cloudAccounts.*', 'processJob.id as pid', 'processJob.input',  
             		'processJob.operation', 'processJob.output', 'processJob.status as processStatus')
