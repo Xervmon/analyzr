@@ -11,7 +11,7 @@
  */
 class RedirectHelper
 {
-	private function redirectAccount($state)
+	public function redirectAccount($state)
 	{
 		$ret = '';
 		switch ($state)
