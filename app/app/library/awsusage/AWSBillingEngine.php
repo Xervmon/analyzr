@@ -148,6 +148,17 @@ class AWSBillingEngine {
 		Log::info('Debug' . json_encode($data));
         return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['getLog'] . '/' . $data['job_id'], $data);
     }
+
+    public static function create_services($data) {
+        self::init();
+        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['create_services'], $data);
+    }
+
+
+    public static function serviceSummary($data) {
+        self::init();
+        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['serviceSummary'], $data);
+    }
     
 	
 }
