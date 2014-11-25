@@ -28,10 +28,19 @@ class CreateProcessJobsTable extends Migration {
 			$table->string('status');
 			$table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-			$table->foreign('cloudAccountId')->references('id')->on('cloudAccounts')->onDelete('cascade');
 			$table->softDeletes();
             $table->timestamps();
         });
+		Schema::table('processJobs', function($table)
+{
+    $table->foreign('cloudAccountId')
+        ->references('id')->on('bands')
+        ->onDelete('cascade');
+
+    $table->foreign('stage_id')
+        ->references('stage_id')->on('stages')
+        ->onDelete('cascade');
+});
     }
     /**
      * Reverse the migrations.
