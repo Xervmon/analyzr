@@ -76,7 +76,7 @@ class ProcessJobLib
 			Log::info('Adding the job to '.'billing'.' queue for processing..'.$json);
 			
 			$pJob = WSObj::getObject($json);
-			$this->pushToProcessJobTable($data, $account, $pjob);
+			$this->pushToProcessJobTable($data, $account, $pJob);
 			
 			$json = $this->executeProcess('services', $data);
 			Log::info('Adding the job to '.'services'.' queue for processing..'.$json);
