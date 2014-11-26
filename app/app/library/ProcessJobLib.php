@@ -64,7 +64,8 @@ class ProcessJobLib
 		if($obj->status == 'OK')
 		{
 			Log::info('Preparing the account for processing..');
-			$credentials 	 	= json_decode($account->credentials);
+			$credentials = StringHelper::decrypt($account->credentials, md5(Auth::user()->username));
+			$credentials 	 	= json_decode($credentials);
 			$data['token'] 	 	= $obj->token;
 			$data['apiKey'] 	= StringHelper::encrypt($credentials ->apiKey, md5(Auth::user()->username));
 			$data['secretKey'] 	= StringHelper::encrypt($credentials ->secretKey, md5(Auth::user()->username));
@@ -109,7 +110,6 @@ class ProcessJobLib
 			$processJob->job_id = 	'';
 			$processJob->status = $pJob->status;
 		}
-		print_r($processJob); die();
 		$this->saveJob($processJob);
 	}
 
