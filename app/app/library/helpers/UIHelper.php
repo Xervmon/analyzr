@@ -306,7 +306,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 		$str = '';				
 		foreach($jobData as $row)
 		{
-			$str .= ucfirst($row->operation) . ':' . self::getLabel($account->status) . '<br/>';
+			$str .= ucfirst($row->operation) . ':' . self::getLabel($row->status) . '<br/>';
 		}				
 		return $str;
 	}
