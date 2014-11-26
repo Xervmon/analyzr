@@ -124,28 +124,6 @@ class ProcessJobLib
 		$this->saveJob($processJob);
 	}
 	
-	private function prepareJobData($row, $obj)
-	{
-		$processJob = new ProcessJob();
-		$processJob->id = $row->pid;
-		if($obj->status == 'OK')
-		{
-			$processJob->status = $obj->job_status;
-			$processJob -> output = json_encode($obj -> result);
-		}
-		else 
-		{
-			$processJob->status = $obj->job_status;
-			$processJob -> output = json_encode($obj->fail_code . ':' . $obj->fail_message);
-		}
-		$success = $processJob->save();
-		if (!$success) 
-		{
-			Log::error('Error while saving Process Job Log : '.json_encode( $processJob->errors()));
-		}
-		return $processJob;
-	}
-
 	public function getStatus($account, $jobdata)
 	{
 		$return = '';
@@ -168,4 +146,30 @@ class ProcessJobLib
 			return '';
 		}
 	}
+	
+	private function prepareJobData($row, $obj)
+	{
+		$processJob = new ProcessJob();
+		$processJob->id = $row->id;
+		$processJob->cloudAccountId = $row->cloudAccountId;
+		$processJob->user_id = Auth::id();
+		if($obj->status == 'OK')
+		{
+			$processJob->status = $obj->job_status;
+			$processJob -> output = json_encode($obj -> result);
+		}
+		else 
+		{
+			$processJob->status = $obj->job_status;
+			$processJob -> output = json_encode($obj->fail_code . ':' . $obj->fail_message);
+		}
+		$success = $processJob->save();
+		if (!$success) 
+		{
+			Log::error('Error while saving Process Job Log : '.json_encode( $processJob->errors()));
+		}
+		return $processJob;
+	}
+
+	
 }
