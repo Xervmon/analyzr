@@ -3,10 +3,7 @@
  * Class and Function List:
  * Function list:
  * - AWSAuth()
- * - authenticate()
- * - getDriver()
- * - executeAction()
- * - getState()
+ * - getStatus()
  * - process()
  * Classes list:
  * - ProcessJobLib
