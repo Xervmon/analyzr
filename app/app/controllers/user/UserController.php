@@ -107,10 +107,11 @@ class UserController extends BaseController {
      * Edits a user
      *
      */
-    public function postEdit($user) {
+    public function postEdit($user) { 
         // Validate the inputs
         $validator = Validator::make(Input::all() , $user->getUpdateRules());
-        
+        $messages = $validator->messages();
+		
         if ($validator->passes()) {
             $oldUser = clone $user;
             // $user->display_name = Input::get('username'); //@TODO: Replace all public username instances with display_name and make it editable
@@ -118,7 +119,6 @@ class UserController extends BaseController {
             
             $password = Input::get('password');
             $passwordConfirmation = Input::get('password_confirmation');
-            
             if (!empty($password)) {
                 if ($password === $passwordConfirmation) {
                     $user->password = $password;
@@ -138,14 +138,16 @@ class UserController extends BaseController {
             $user->prepareRules($oldUser, $user);
             // Save if valid. Password field will be hashed before save
             $user->amend();
-        }
-        // Get validation errors (see Ardent package)
-        $error = $user->errors()->all();
-        
-        if (empty($error)) {
+			// Get validation errors (see Ardent package)
+			$error = $user->errors()->all();
             return Redirect::to('user')->with('success', Lang::get('user/user.user_account_updated'));
         } else {
-            return Redirect::to('user')->withInput(Input::except('password', 'password_confirmation'))->with('error', $error);
+			foreach ($messages->all('<li>:message</li>') as $message)
+			{
+			//	return Redirect::to('user')->with('success', $message);
+				return Redirect::to('user')->withInput(Input::except('password', 'password_confirmation'))->with('error', $message);
+			}
+            
         }
     }
     /**
