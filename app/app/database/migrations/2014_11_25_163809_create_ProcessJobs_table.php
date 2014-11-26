@@ -19,8 +19,7 @@ class CreateProcessJobsTable extends Migration {
      */
     public function up() {
         Schema::create('processJobs', function (Blueprint $table) {
-            $table->string('id');
-			$table->primary('id');
+            $table->increments('id')->unsigned();
 			$table->integer('cloudAccountId')->unsigned()->index();
             $table->string('operation');
 			$table->text('input');

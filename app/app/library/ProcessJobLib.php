@@ -20,12 +20,11 @@ class ProcessJobLib
      */
     public function __construct() 
     {
-       $this->id = StringHelper::gen_uuid();
+      
     }
 
 	public function saveJob($processJob)
 	{
-		$processJob -> id = $this->id;
 		$processJob->save();
 	}
 	
