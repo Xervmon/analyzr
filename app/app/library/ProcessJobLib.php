@@ -7,9 +7,9 @@
  * - getDriver()
  * - executeAction()
  * - getState()
- * - getSecurityGroups()
+ * - process()
  * Classes list:
- * - CloudProvider
+ * - ProcessJobLib
  */
 
 class ProcessJobLib 
