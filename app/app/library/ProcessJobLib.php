@@ -87,8 +87,19 @@ class ProcessJobLib
 		}
 		else 
 		{
-			throw new Exception('Unexpected error: Billing process job submission failed!');
+			throw new Exception('Unexpected error: process job submission failed!');
 		}
+	}
+
+	private function executeProcess($method, $data)
+	{
+		$response = '';
+		switch($method)
+		{
+			case 'billing' : $response = AWSBillingEngine::create_billing($data); break;
+			case 'services' : $response = AWSBillingEngine::create_services($data); break;
+		}
+		return $response;
 	}
 
 	private function pushToProcessJobTable($account, $data, $pJob)
@@ -112,18 +123,29 @@ class ProcessJobLib
 		}
 		$this->saveJob($processJob);
 	}
-
-	private function executeProcess($method, $data)
-	{
-		$response = '';
-		switch($method)
-		{
-			case 'billing' : $response = AWSBillingEngine::create_billing($data); break;
-			case 'services' : $response = AWSBillingEngine::create_services($data); break;
-		}
-		return $response;
-	}
 	
+	private function prepareJobData($row, $obj)
+	{
+		$processJob = new ProcessJob();
+		$processJob->id = $row->pid;
+		if($obj->status == 'OK')
+		{
+			$processJob->status = $obj->job_status;
+			$processJob -> output = json_encode($obj -> result);
+		}
+		else 
+		{
+			$processJob->status = $obj->job_status;
+			$processJob -> output = json_encode($obj->fail_code . ':' . $obj->fail_message);
+		}
+		$success = $processJob->save();
+		if (!$success) 
+		{
+			Log::error('Error while saving Process Job Log : '.json_encode( $processJob->errors()));
+		}
+		return $processJob;
+	}
+
 	public function getStatus($account, $jobdata)
 	{
 		$return = '';
@@ -138,23 +160,7 @@ class ProcessJobLib
 				$depStatusJson = AWSBillingEngine::getDeploymentStatus(array('token' => $obj->token, 'job_id' => $row->job_id));
 				EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'getDeploymentStatus', 'return' => $depStatusJson));
 				$obj2 = WSObj::getObject($depStatusJson);
-				if($obj2->status == 'OK')
-				{
-					$jobdata->status = $obj2->job_status;
-					$jobdata -> output = json_encode($obj2 -> result);
-					
-				}
-				else {
-					$jobdata->status = $obj2->job_status;
-					$jobdata -> output = json_encode($obj2->fail_code . ':' . $obj2->fail_message);
-				}
-				
-				$success = $row->save();
-				if (!$success) 
-			    {
-			    	Log::error('Error while saving Process Job Log : '.json_encode( $row->errors()));
-				}
-				$return[] = $row;
+				$return[] = $this->prepareJobData($row, $obj2);
 			}
 			return $return;
 		}
@@ -162,12 +168,4 @@ class ProcessJobLib
 			return '';
 		}
 	}
-	
-	
 }
-
-
-
-
-
-	

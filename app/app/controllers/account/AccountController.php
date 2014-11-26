@@ -119,7 +119,7 @@ class AccountController extends BaseController {
 						-> whereIn('status', array(Lang::get('account/account.STATUS_IN_PROCESS'), 
 												  Lang::get('account/account.STATUS_STARTED')))
 						-> orderBy('created_at', 'desc')
-						-> first();
+						-> get();
 		
 						
 		$processJobLib = new ProcessJobLib();
