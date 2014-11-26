@@ -11,264 +11,467 @@
 	</div>
 </div>
 
-<!-- <div id="securityGroups">
-</div> -->
-@for ($i = 0; $i < count($instanceDetails['Reservations']); $i++)
 <div class="container">
 	<div class="row clearfix">
 		<div class="col-md-12 column">
-						<h3><!--<img alt="300x200" src="{{{ asset('assets/img/aws/ec2.png') }}}" />-->{{{ Lang::get('account/account.aws_ec2') }}}</h3>
+						<h3><img alt="300x200" src="{{{ asset('assets/img/aws/ec2.png') }}}" />{{{ Lang::get('account/account.aws_ec2') }}}</h3>
+						<?php foreach ($instances as $key_i => $value_i) { 
+						$instances_sum = array_sum((array)$value_i); 
+						if($instances_sum!=0)
+						{ ?>
 						<div class="bs-callout bs-callout-default">
+
 						<div class="media">
+							
 							<div class="media-left pull-left text-center" href="#">
-								<h4 class="media-heading">{{{ 'Details Available:'.count($instanceDetails) }}}</h4>
+								<h5 class="media-heading">{{{ 'EC2 '. $key_i }}}</h5>
+								
+									
 									<p style="text-align:center">
-										<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
-									</p>
-									<p style="text-align:center">
-									<h4 class="media-heading">{{{ 'EC2 '. $instanceDetails['Reservations'][$i]['Instances'][0]['Placement']['AvailabilityZone'] }}}</h4>
+								<h4 class="media-heading">{{{ 'Details Available:' . $instances_sum }}}</h4>
+									
 							</div>
 							<div class="media-body bs-callout-danger">
 								<ul class="list-group list-group-horizontal">
 									<li class="list-group-item panel panel-status panel-primary">
 										<div class="panel-heading">
-											<h1 class="panel-title text-center">{{{ count($instanceDetails['Reservations']) }}}</h1>
+											<h1 class="panel-title text-center">{{{ $instances_sum }}}</h1>
 										</div>
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_instances') }}}</strong>
+											<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+											</p>
 										</div>
 									</li>
-									<li class="list-group-item panel panel-status panel-success">
-										<div class="panel-heading">
-											<h1 class="panel-title text-center">{{{ count($instanceDetails['Reservations'][$i]['Instances']) }}}</h1>
+									<?php if (!empty($value_i)) { 
+										$i =0 ;
+									foreach ($value_i as $key_is => $value_is) { ?>
+									@if ($i == 0)
+    									<li class="list-group-item panel panel-status panel-success">
+									@elseif ($i == 1)
+    									<li class="list-group-item panel panel-status panel-danger">								
+									@elseif ($i == 2)
+   										<li class="list-group-item panel panel-status panel-default">
+									@else
+										<li class="list-group-item panel panel-status panel-info">
+									@endif
+								
+ 									<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $value_is }}}</h1>
 										</div>
 										<div class="panel-body text-center">
-											<strong>{{{ Lang::get('account/account.active_instances') }}}</strong>
+											<strong>{{{ ucfirst ( $key_is ) . ' Instances' }}}</strong>
+											<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+											</p>
 										</div>
 									</li>
+									<?php $i++; } } ?>
 								</ul>
 							</div>
-						</div>
-						</div>
-						<h3><!--<img alt="300x200" src="{{{ asset('assets/img/aws/ebs.png') }}}" />-->{{{ Lang::get('account/account.aws_ebs') }}}</h3>
-						<div class="bs-callout bs-callout-default">
-						<div class="media">
-							<div class="media-left pull-left text-center" href="#">
-								<h4 class="media-heading">{{{ 'Details Available:'.count($instanceDetails) }}}</h4>
-									<p style="text-align:center">
-										<a class="btn" href="{{ URL::to('account/' . $account->id . '/ebsInfo') }}">Details</a>
-									</p>
-									<p style="text-align:center">
-									<h4 class="media-heading">{{{ 'EBS '. $instanceDetails['Reservations'][$i]['Instances'][0]['Placement']['AvailabilityZone'] }}}</h4>
-							</div>
-							<div class="media-body bs-callout-danger">
-								<ul class="list-group list-group-horizontal">
-								</ul>
-							</div>
-						</div>
-						</div>
-						<h3><!--<img alt="300x200" src="{{{ asset('assets/img/aws/sg.png') }}}" />-->{{{ Lang::get('account/account.aws_sg') }}}</h3>
-						<div class="bs-callout bs-callout-default">
-						<div class="media">
-							<div class="media-left pull-left text-center" href="#">
-								<h4 class="media-heading">{{{ 'Details Available:'.count($instanceDetails) }}}</h4>
-									<p style="text-align:center">
-										<a class="btn" href="{{ URL::to('account/' . $account->id . '/sgInfo') }}">Details</a>
-									</p>
-									<p style="text-align:center">
-									<h4 class="media-heading">{{{ 'Security Group '. $instanceDetails['Reservations'][$i]['Instances'][0]['Placement']['AvailabilityZone'] }}}</h4>
-							</div>
-							<div class="media-body bs-callout-danger">
-								<ul class="list-group list-group-horizontal">
-									
-								</ul>
-							</div>
-						</div>
-						</div>
-						<h3><!--<img alt="300x200" src="{{{ asset('assets/img/aws/kp.png') }}}" />-->{{{ Lang::get('account/account.aws_kp') }}}</h3>
-						<div class="bs-callout bs-callout-default">
-						<div class="media">
-							<div class="media-left pull-left text-center" href="#">
-								<h4 class="media-heading">{{{ 'Details Available:'.count($instanceDetails) }}}</h4>
-									<p style="text-align:center">
-										<a class="btn" href="{{ URL::to('account/' . $account->id . '/kpInfo') }}">Details</a>
-									</p>
-									<p style="text-align:center">
-									<h4 class="media-heading">{{{ 'Key Pair '. $instanceDetails['Reservations'][$i]['Instances'][0]['Placement']['AvailabilityZone'] }}}</h4>
-							</div>
-							<div class="media-body bs-callout-danger">
-								<ul class="list-group list-group-horizontal">
-									
-								</ul>
-							</div>
-						</div>
-						</div>
-		</div>
+						
 
-		<!--	<div class="col-md-12 column">
-			<div class="row">
-				<div class="col-md-3">
-					<div class="thumbnail">
-						<img alt="300x200" src="{{{ asset('assets/img/aws/eip.png') }}}" />
-						<div class="caption">
-							<h5 style="text-align:center">
-								No details available..!
-							</h5>
-							
-							<p style="text-align:center">
-								<a class="btn" href="#">Details</a>
-							</p>
 						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="thumbnail">
-						<img alt="300x200" src="{{{ asset('assets/img/aws/ri.png') }}}" />
-						<div class="caption">
-							<h5 style="text-align:center">
-								No details available..!
-							</h5>
-							
-							<p style="text-align:center">
-								<a class="btn" href="#">Details</a>
-							</p>
 						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="thumbnail">
-						<img alt="300x200" src="{{{ asset('assets/img/aws/elb.png') }}}" />
-						<div class="caption">
-							<h5 style="text-align:center">
-								No details available..!
-							</h5>
-							
-							<p style="text-align:center">
-							  <a class="btn" href="#">Details</a>
-							</p>
-						</div>
-					</div>
-				</div>
-					<div class="col-md-3">
-					<div class="thumbnail">
-						<img alt="300x200" src="{{{ asset('assets/img/aws/images.png') }}}" />
-						<div class="caption">
-							<h5 style="text-align:center">
-								No details available..!
-							</h5>
-							
-							<p style="text-align:center">
-								 <a class="btn" href="#">Details</a>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+						<?php } 
+					    } ?> 
 
-				<div class="col-md-12 column">
-			<div class="row">
-				<div class="col-md-3">
-					<div class="thumbnail">
-						<img alt="300x200" src="{{{ asset('assets/img/aws/rds.png') }}}" />
-						<div class="caption">
-							<h5 style="text-align:center">
-								No details available..!
-							</h5>
+</div>
+
+<div class="col-md-12 column">
+						<h3><img alt="300x200" src="{{{ asset('assets/img/aws/ebs.png') }}}" />{{{ Lang::get('account/account.aws_ebs') }}}</h3>
+						<?php foreach ($volumes as $key_i => $value_i) {
+						$volumes_sum = array_sum((array)$value_i);
+						if($volumes_sum!=0) {
+						 ?>
+						<div class="bs-callout bs-callout-default">
+
+						<div class="media">
 							
-							<p style="text-align:center">
-								<a class="btn" href="#">Details</a>
-							</p>
+							<div class="media-left pull-left text-center" href="#">
+									<h5 class="media-heading">{{{ 'EBS '. $key_i }}}</h5>
+									<p style="text-align:center">
+									<h4 class="media-heading">{{{ 'Details Available:' . $volumes_sum }}}</h4>	
+								
+							</div>
+							<div class="media-body bs-callout-danger">
+								<ul class="list-group list-group-horizontal">
+									<li class="list-group-item panel panel-status panel-primary">
+										<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $volumes_sum }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ Lang::get('account/account.total_volumes') }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+											</p>
+										</div>
+									</li>
+									<?php if (!empty($value_i)) { 
+										$i =0 ;
+									foreach ($value_i as $key_is => $value_is) { ?>
+									@if ($i == 0)
+    									<li class="list-group-item panel panel-status panel-success">
+									@elseif ($i == 1)
+    									<li class="list-group-item panel panel-status panel-danger">								
+									@elseif ($i == 2)
+   										<li class="list-group-item panel panel-status panel-default">
+									@else
+										<li class="list-group-item panel panel-status panel-info">
+									@endif
+								
+ 									<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $value_is }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ ucfirst ( $key_is ) . ' Volumes' }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+											</p>
+										</div>
+									</li>
+									<?php $i++; } } ?>
+								</ul>
+							</div>
+						
+
 						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="thumbnail">
-						<img alt="300x200" src="{{{ asset('assets/img/aws/s3.png') }}}" />
-						<div class="caption">
-							<h5 style="text-align:center">
-								No details available..!
-							</h5>
+						</div><?php } 
+					    } ?> 
+
+
+</div>
+
+
+<div class="col-md-12 column">
+						<h3><img alt="300x200" src="{{{ asset('assets/img/providers/aws-big.jpg') }}}" />{{{ Lang::get('account/account.aws_sg') }}}</h3>
+						<?php foreach ($secgroups as $key_i => $value_i) { 
+							$secgroups_sum = array_sum((array)$value_i);
+							if($secgroups_sum!=0) {
+						 ?>
+						<div class="bs-callout bs-callout-default">
+
+						<div class="media">
 							
-							<p style="text-align:center">
-								<a class="btn" href="#">Details</a>
-							</p>
+							<div class="media-left pull-left text-center" href="#">
+									<h5 class="media-heading">{{{ 'SG '. $key_i }}}</h5>
+									<p style="text-align:center">
+									<h4 class="media-heading">{{{ 'Details Available:' . $secgroups_sum }}}</h4>
+								
+							</div>
+							<div class="media-body bs-callout-danger">
+								<ul class="list-group list-group-horizontal">
+									<li class="list-group-item panel panel-status panel-primary">
+										<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $secgroups_sum }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ Lang::get('account/account.total_secgroups') }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+											</p>
+										</div>
+									</li>
+									<?php if (!empty($value_i)) { 
+										$i =0 ;
+									foreach ($value_i as $key_is => $value_is) { ?>
+									@if ($i == 0)
+    									<li class="list-group-item panel panel-status panel-success">
+									@elseif ($i == 1)
+    									<li class="list-group-item panel panel-status panel-danger">								
+									@elseif ($i == 2)
+   										<li class="list-group-item panel panel-status panel-default">
+									@else
+										<li class="list-group-item panel panel-status panel-info">
+									@endif
+								
+ 									<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $value_is }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ ucfirst ( $key_is ) . ' SecGroups' }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+											</p>
+										</div>
+									</li>
+									<?php $i++; } } ?>
+								</ul>
+							</div>
+						
+
 						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="thumbnail">
-						<img alt="300x200" src="{{{ asset('assets/img/aws/vpc.png') }}}" />
-						<div class="caption">
-							<h5 style="text-align:center">
-								No details available..!
-							</h5>
+						</div><?php } 
+					    } ?> 
+
+
+</div>
+
+
+
+<div class="col-md-12 column">
+						<h3><img alt="73x33" src="{{{ asset('assets/img/providers/aws-big.jpg') }}}" />{{{ Lang::get('account/account.aws_kp') }}}</h3>
+						<?php foreach ($key_pairs as $key_i => $value_i) { 
+						$key_pairs_sum = array_sum((array)$value_i); 
+						if($key_pairs_sum!=0)
+						{ ?>
+						<div class="bs-callout bs-callout-default">
+
+						<div class="media">
 							
-							<p style="text-align:center">
-								<a class="btn" href="#">Details</a>
-							</p>
+							<div class="media-left pull-left text-center" href="#">
+								
+									<h5 class="media-heading">{{{ 'KP '. $key_i }}}</h5>
+									<p style="text-align:center">
+									<h4 class="media-heading">{{{ 'Details Available:' . $key_pairs_sum }}}</h4>
+							</div>
+							<div class="media-body bs-callout-danger">
+								<ul class="list-group list-group-horizontal">
+									<li class="list-group-item panel panel-status panel-primary">
+										<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $key_pairs_sum }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ Lang::get('account/account.total_key_pairs') }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+											</p>
+										</div>
+									</li>
+									<?php if (!empty($value_i)) { 
+										$i =0 ;
+									foreach ($value_i as $key_is => $value_is) { ?>
+									@if ($i == 0)
+    									<li class="list-group-item panel panel-status panel-success">
+									@elseif ($i == 1)
+    									<li class="list-group-item panel panel-status panel-danger">								
+									@elseif ($i == 2)
+   										<li class="list-group-item panel panel-status panel-default">
+									@else
+										<li class="list-group-item panel panel-status panel-info">
+									@endif
+								
+ 									<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $value_is }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ ucfirst ( $key_is ) . ' Key Pairs' }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+											</p>
+										</div>
+									</li>
+									<?php $i++; } } ?>
+								</ul>
+							</div>
+						
+
 						</div>
-					</div>
-				</div>
-					<div class="col-md-3">
-					<div class="thumbnail">
-						<img alt="300x200" src="{{{ asset('assets/img/aws/as.png') }}}" />
-						<div class="caption">
-							<h5 style="text-align:center">
-								No details available..!
-							</h5>
+						</div>
+						<?php } 
+					    } ?> 
+
+</div>
+
+
+<div class="col-md-12 column">
+						<h3><img alt="300x200" src="{{{ asset('assets/img/aws/rds.png') }}}" />{{{ Lang::get('account/account.aws_rds') }}}</h3>
+						<?php foreach ($rds as $key_i => $value_i) { 
+							$rds_sum = array_sum((array)$value_i);
+							if($rds_sum!=0)
+						{ ?>
+						<div class="bs-callout bs-callout-default">
+
+						<div class="media">
 							
-							<p style="text-align:center">
-								<a class="btn" href="#">Details</a>
-							</p>
+							<div class="media-left pull-left text-center" href="#">
+								<h5 class="media-heading">{{{ 'RDS '. $key_i }}}</h5>
+								<p style="text-align:center">
+								<h4 class="media-heading">{{{ 'Details Available:' . $rds_sum }}}</h4>	
+							</div>
+							<div class="media-body bs-callout-danger">
+								<ul class="list-group list-group-horizontal">
+									<li class="list-group-item panel panel-status panel-primary">
+										<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $rds_sum }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ Lang::get('account/account.total_rds') }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+											</p>
+										</div>
+									</li>
+									<?php if (!empty($value_i)) { 
+										$i =0 ;
+									foreach ($value_i as $key_is => $value_is) { ?>
+									@if ($i == 0)
+    									<li class="list-group-item panel panel-status panel-success">
+									@elseif ($i == 1)
+    									<li class="list-group-item panel panel-status panel-danger">								
+									@elseif ($i == 2)
+   										<li class="list-group-item panel panel-status panel-default">
+									@else
+										<li class="list-group-item panel panel-status panel-info">
+									@endif
+								
+ 									<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $value_is }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ ucfirst ( $key_is ) . ' RDS' }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+											</p>
+										</div>
+									</li>
+									<?php $i++; } } ?>
+								</ul>
+							</div>
+						
+
 						</div>
-					</div>
-				</div>
-			</div>
+						</div><?php } 
+					    } ?> 
+
+
+</div>
+
+<div class="col-md-12 column">
+						<h3><img alt="300x200" src="{{{ asset('assets/img/aws/subnet.png') }}}" />{{{ Lang::get('account/account.aws_sn') }}}</h3>
+						<?php foreach ($subnets as $key_i => $value_i) { 
+							$subnets_sum = array_sum((array)$value_i);
+							if($subnets_sum!=0)
+						{ ?>
+						<div class="bs-callout bs-callout-default">
+
+						<div class="media">
+							
+							<div class="media-left pull-left text-center" href="#">
+								
+								<h5 class="media-heading">{{{ 'SN '. $key_i }}}</h5>
+									<p style="text-align:center">									
+									<h4 class="media-heading">{{{ 'Details Available:' . $subnets_sum }}}</h4>
+							</div>
+							<div class="media-body bs-callout-danger">
+								<ul class="list-group list-group-horizontal">
+									<li class="list-group-item panel panel-status panel-primary">
+										<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $subnets_sum }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ Lang::get('account/account.total_subnets') }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+											</p>
+										</div>
+									</li>
+									<?php if (!empty($value_i)) { 
+										$i =0 ;
+									foreach ($value_i as $key_is => $value_is) { ?>
+									@if ($i == 0)
+    									<li class="list-group-item panel panel-status panel-success">
+									@elseif ($i == 1)
+    									<li class="list-group-item panel panel-status panel-danger">								
+									@elseif ($i == 2)
+   										<li class="list-group-item panel panel-status panel-default">
+									@else
+										<li class="list-group-item panel panel-status panel-info">
+									@endif
+								
+ 									<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $value_is }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ ucfirst ( $key_is ) . ' Subnets' }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+											</p>
+										</div>
+									</li>
+									<?php $i++; } } ?>
+								</ul>
+							</div>
+						
+
+						</div>
+						</div><?php } 
+					    } ?> 
+ 
+
+</div>
+
+
+<div class="col-md-12 column">
+						<h3><img alt="300x200" src="{{{ asset('assets/img/aws/vpc.png') }}}" />{{{ Lang::get('account/account.aws_vpc') }}}</h3>
+						<?php foreach ($vpc as $key_i => $value_i) { 
+							$vpc_sum = array_sum((array)$value_i);
+							if($vpc_sum!=0)
+						{ ?>
+						<div class="bs-callout bs-callout-default">
+
+						<div class="media">
+							
+							<div class="media-left pull-left text-center" href="#">
+								<h5 class="media-heading">{{{ 'VPC '. $key_i }}}</h5>
+								<p style="text-align:center">
+									<h4 class="media-heading">{{{ 'Details Available:' . $vpc_sum }}}</h4>
+							</div>
+							<div class="media-body bs-callout-danger">
+								<ul class="list-group list-group-horizontal">
+									<li class="list-group-item panel panel-status panel-primary">
+										<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $vpc_sum }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ Lang::get('account/account.total_vpc') }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+											</p>
+										</div>
+									</li>
+									<?php if (!empty($value_i)) { 
+										$i =0 ;
+									foreach ($value_i as $key_is => $value_is) { ?>
+									@if ($i == 0)
+    									<li class="list-group-item panel panel-status panel-success">
+									@elseif ($i == 1)
+    									<li class="list-group-item panel panel-status panel-danger">								
+									@elseif ($i == 2)
+   										<li class="list-group-item panel panel-status panel-default">
+									@else
+										<li class="list-group-item panel panel-status panel-info">
+									@endif
+								
+ 									<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $value_is }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ ucfirst ( $key_is ) . ' VPC' }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+											</p>
+										</div>
+									</li>
+									<?php $i++; } } ?>
+								</ul>
+							</div>
+						
+
+						</div>
+						</div><?php } 
+					    } ?> 
+
+
+</div>
+
+
+
 		</div>	
-
-
-						<div class="col-md-12 column">
-			<div class="row">
-				<div class="col-md-3">
-					<div class="thumbnail">
-						<img alt="300x200" src="{{{ asset('assets/img/aws/lc.png') }}}" />
-						<div class="caption">
-							<h5 style="text-align:center">
-								No details available..!
-							</h5>
-							
-							<p style="text-align:center">
-								<a class="btn" href="#">Details</a>
-							</p>
-						</div>
-					</div>
-				</div>
-													
-			</div>
-		</div>	-->
 	</div>
-	</div>
-@endfor
+
+						
 @stop
 
-
-{{-- Scripts --}}
-@section('scripts')
-    <script src="{{asset('assets/js/xervmon/utils.js')}}"></script>
-	<script type="text/javascript">
-	$(document).ready(function() {
-		$.ajax({
-			url:  "{{ URL::to('account/'.$account->id.'/SecurityGroupsData') }}",
-			cache: false
-		})
-		.done(function( response ) {
-			console.log(response);
-			if (!$.isArray(response)) {
-            	response = JSON.parse(response);
-            }
-		$('#securityGroups').append(convertJsonToTableSecurityGroups(response));
-		});
-	});
-	</script>
 @stop
