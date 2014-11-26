@@ -36,7 +36,7 @@ class ProcessJobLib
 	{
 		UtilHelper::check();
 		$user = Auth::user();
-		
+
 		//@TODO : If user has a subscription, we can control here..
 		Log::info('Processing ..' . $account->cloudProvider. '..');
 		$response = '';
@@ -64,13 +64,16 @@ class ProcessJobLib
 		if($obj->status == 'OK')
 		{
 			Log::info('Preparing the account for processing..');
-			$credentials 	 	= json_decode($account->credentials);
+			$credentials    = StringHelper::decrypt($account->credentials, md5(Auth::user()->username));
+   			$credentials    = json_decode($credentials);
+
 			$data['token'] 	 	= $obj->token;
+
 			$data['apiKey'] 	= StringHelper::encrypt($credentials ->apiKey, md5(Auth::user()->username));
 			$data['secretKey'] 	= StringHelper::encrypt($credentials ->secretKey, md5(Auth::user()->username));
 			$data['accountId'] 	= $credentials->accountId;
 			$data['billingBucket'] = $credentials->billingBucket;
-			
+
 			$json = $this->executeProcess('billing', $data);
 			
 			Log::info('Adding the job to '.'billing'.' queue for processing..'.$json);
@@ -96,7 +99,9 @@ class ProcessJobLib
 		$processJob = new ProcessJob();
 		$processJob -> input = json_encode($data);
 		$processJob->cloudAccountId = $account->id;
-		
+		$processJob->user_id = $account->user_id;
+
+
 		if($pJob->status == 'OK')
 		{
 			$processJob -> output = json_encode($pJob);
@@ -109,7 +114,6 @@ class ProcessJobLib
 			$processJob->job_id = 	'';
 			$processJob->status = $pJob->status;
 		}
-		print_r($processJob); die();
 		$this->saveJob($processJob);
 	}
 

@@ -14,7 +14,7 @@ class ProcessJob extends \Eloquent
     protected $fillable = [];
 	protected $softDelete = true;
 	protected $table = 'processJobs';
-	protected $incrementing = false;
+	//protected $incrementing = false;
     /**
      * Get the account's owner.
      *
