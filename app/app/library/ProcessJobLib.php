@@ -75,13 +75,13 @@ class ProcessJobLib
 			Log::info('Adding the job to '.'billing'.' queue for processing..'.$json);
 			
 			$pJob1 = WSObj::getObject($json);
-			$this->pushToProcessJobTable($account, $data, $pJob1); 
+			$this->pushToProcessJobTable($account, $data, $pJob1 , 'create_billing'); 
 			
 			$json = $this->executeProcess('services', $data);
 			Log::info('Adding the job to '.'services'.' queue for processing..'.$json);
 			
 			$pJob2 = WSObj::getObject($json);
-			$this->pushToProcessJobTable($account, $data, $pJob2);
+			$this->pushToProcessJobTable($account, $data, $pJob2, 'create_services');
 			
 		}
 		else 
@@ -101,9 +101,10 @@ class ProcessJobLib
 		return $response;
 	}
 
-	private function pushToProcessJobTable($account, $data, $pJob)
+	private function pushToProcessJobTable($account, $data, $pJob, $operation)
 	{
 		$processJob = new ProcessJob();
+		$processJob -> operation = $operation;
 		$processJob -> input = json_encode($data);
 		$processJob->cloudAccountId = $account->id;
 		$processJob->user_id = $account->user_id;
@@ -162,7 +163,7 @@ class ProcessJobLib
 			$processJob->status = $obj->job_status;
 			$processJob -> output = json_encode($obj->fail_code . ':' . $obj->fail_message);
 		}
-		$success = $processJob->save();
+		$success = $processJob->update();
 		if (!$success) 
 		{
 			Log::error('Error while saving Process Job Log : '.json_encode( $processJob->errors()));
