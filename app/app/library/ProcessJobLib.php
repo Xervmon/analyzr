@@ -124,7 +124,7 @@ class ProcessJobLib
 		$this->saveJob($processJob);
 	}
 	
-	public function getStatus($account, $jobdata)
+	public function getStatus2($account, $jobdata)
 	{
 		$return = '';
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
@@ -140,6 +140,26 @@ class ProcessJobLib
 				$obj2 = WSObj::getObject($depStatusJson);
 				$return[] = $this->prepareJobData($row, $obj2);
 			}
+			return $return;
+		}
+		else {
+			return '';
+		}
+	}
+	
+	public function getStatus($account, $jobdata)
+	{
+		$return = '';
+		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
+		$obj = WSObj::getObject($responseJson);
+		
+		if($obj->status == 'OK')
+		{
+			$depStatusJson = AWSBillingEngine::getStatusOfAllDeployments(array('token' => $obj->token));
+			EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'getStatusOfAllDeployments', 'return' => $depStatusJson));
+			$obj2 = WSObj::getObject($depStatusJson);
+			$return[] = $this->prepareJobData2($account, $jobdata, $obj2);
 			return $return;
 		}
 		else {
@@ -165,6 +185,59 @@ class ProcessJobLib
 			Log::error('Error while saving Process Job Log ');
 		}
 		return $row;
+	}
+	
+	private function prepareJobData2($account, $jobdata, $obj)
+	{
+		$return = '';
+		$jobs = $obj->jobs;
+		foreach($jobs as $job)
+		{
+			Log:info('Processing Job '.  $job->job_id .' for '.$account -> name);
+			$processJob = $this->getJob($jobdata, $job);
+			if(!empty($processJob))
+			{
+				if($obj->status == 'OK')
+				{
+					Log:debug('Processing Job '.  $job->job_id .' = '.$processJob->job_id);
+					if($job->status == Lang::get('account/account.STATUS_COMPLETED'))
+					{
+						$processJob->status = $job->status;
+						$processJob -> output = json_encode($obj -> result);
+					}
+					elseif($job->status == Lang::get('account/account.STATUS_FAILED')) 
+					{
+						$processJob->status = $job->status;
+						$processJob -> output = $obj -> fail_code .':'.$obj->fail_message;
+					}
+				}
+				else 
+				{
+					$processJob->status = $job->status;
+					$processJob -> output = $obj -> fail_code .':'.$obj->fail_message;
+				}	
+				$processJob->save();
+				if (!$success) 
+				{
+					Log::error('Error while saving Process Job Log ');
+				}
+				$return[] = $processJob;
+			}
+			else return '';
+		}
+		return $return;
+	}
+	
+	private function getJob($jobdata, $job)
+	{
+		foreach($jobdata as $row)
+		{
+			if($row->job_id == $job->job_id)
+			{
+				return $job;
+			}
+		}
+		return '';;
 	}
 
 	
