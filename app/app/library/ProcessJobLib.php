@@ -97,6 +97,7 @@ class ProcessJobLib
 		$processJob = new ProcessJob();
 		$processJob -> input = json_encode($data);
 		$processJob->cloudAccountId = $account->id;
+		$processJob->user_id = $account->user_id;
 		
 		if($pJob->status == 'OK')
 		{
