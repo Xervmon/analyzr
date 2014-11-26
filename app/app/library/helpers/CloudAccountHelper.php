@@ -27,8 +27,7 @@ class CloudAccountHelper
 	public static function save($account)
 	{
 		$account->credentials = StringHelper::encrypt($account->credentials, md5(Auth::user()->username));
-        $account->save();
-		return $account->id;
+        return $account->save();
 	}
 	
 	public static function findCurrentCost($account)
