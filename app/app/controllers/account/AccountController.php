@@ -120,6 +120,8 @@ class AccountController extends BaseController {
 												  Lang::get('account/account.STATUS_STARTED')))
 						-> orderBy('created_at', 'desc')
 						-> get();
+		
+						
 		$processJobLib = new ProcessJobLib();
 		$return = $processJobLib->getStatus($account, $jobData);	
 		
