@@ -109,6 +109,7 @@ class ProcessJobLib
 			$processJob->job_id = 	'';
 			$processJob->status = $pJob->status;
 		}
+		print_r($processJob); die();
 		$this->saveJob($processJob);
 	}
 

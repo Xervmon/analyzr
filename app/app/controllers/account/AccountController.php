@@ -93,12 +93,11 @@ class AccountController extends BaseController {
             $conStatus = CloudProvider::authenticate($account);
             if ($conStatus == 1) {
             	Log::info('Credentials are encrypted before saving to DB.');
-				
+				CloudAccountHelper::save($account);
 				$processJobLib = new ProcessJobLib();
 				$ret = $processJobLib->process($account);
 				
-				CloudAccountHelper::save($account);
-				 return Redirect::to('account/')->with('success', Lang::get('account/account.account_updated'));
+				return Redirect::to('account/')->with('success', Lang::get('account/account.account_updated'));
             } else {
                 return Redirect::to('account/create')->with('error', Lang::get('account/account.account_auth_failed'));
             }
