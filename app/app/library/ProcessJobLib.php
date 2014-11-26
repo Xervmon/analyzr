@@ -149,12 +149,12 @@ class ProcessJobLib
 					$jobdata -> output = json_encode($obj2->fail_code . ':' . $obj2->fail_message);
 				}
 				
-				$success = $jobdata->save();
+				$success = $row->save();
 				if (!$success) 
 			    {
-			    	Log::error('Error while saving Process Job Log : '.json_encode( $jobdata->errors()));
+			    	Log::error('Error while saving Process Job Log : '.json_encode( $row->errors()));
 				}
-				$return[] = $jobdata;
+				$return[] = $row;
 			}
 			return $return;
 		}
