@@ -100,12 +100,7 @@ class ProcessJobLib
 		$processJob -> input = json_encode($data);
 		$processJob->cloudAccountId = $account->id;
 		$processJob->user_id = $account->user_id;
-<<<<<<< HEAD
 
-
-=======
-		
->>>>>>> 44b8d81ca1f7db6e38b3f58248c9f818440594f3
 		if($pJob->status == 'OK')
 		{
 			$processJob -> output = json_encode($pJob);
