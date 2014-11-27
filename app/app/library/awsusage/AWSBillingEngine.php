@@ -61,6 +61,12 @@ class AWSBillingEngine {
         self::init();
         return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['getDeploymentStatus'] . '/' . $data['job_id'], $data);
     }
+	
+	 public static function getStatusOfAllDeployments($data) {
+        self::init();
+        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['getStatusOfAllDeployments'] , $data);
+    }
+	
     
 	public static function GetCurrentCost($data) {
         self::init();

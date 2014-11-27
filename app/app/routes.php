@@ -168,18 +168,23 @@ Route::group(array(
 	Route::get('account/create', 'AccountController@getCreate');
     Route::get('account/{account}/edit', 'AccountController@getCreate');
 	Route::any('account/{account}/refresh', 'AccountController@checkStatus');
-    Route::get('account/{account}/SecurityGroups', 'AccountController@SecurityGroups');
-    Route::get('account/{account}/AwsInfo', 'AccountController@AwsInfo');
-    Route::get('account/{account}/instanceInfo', 'AccountController@instanceInfo');
-    Route::get('account/{account}/ebsInfo', 'AccountController@ebsInfo');
-    Route::get('account/{account}/sgInfo', 'AccountController@sgInfo');
-    Route::get('account/{account}/kpInfo', 'AccountController@kpInfo');
+    
+    
+    
+    Route::get('assets/{account}/SecurityGroups', 'AssetsController@SecurityGroups');
+    Route::get('assets/{account}/AwsInfo', 'AssetsController@AwsInfo');
+    Route::get('assets/{account}/instanceInfo', 'AssetsController@instanceInfo');
+    Route::get('assets/{account}/ebsInfo', 'AssetsController@ebsInfo');
+    Route::get('assets/{account}/sgInfo', 'AssetsController@sgInfo');
+    Route::get('assets/{account}/kpInfo', 'AssetsController@kpInfo');
 	
 	Route::any('security/portPreferences/', 'PortPreferencesController@getIndex'); 
 	Route::get('security/portPreferences/create', 'PortPreferencesController@getCreate');
     Route::get('security/portPreferences/{portPreference}/edit', 'PortPreferencesController@getCreate');
     Route::any('security/portPreferences/{portPreference}/refresh', 'PortPreferencesController@checkStatus');
 	Route::get('security/portPreferences/{portPreference}/portInfo', 'PortPreferencesController@portInfo'); 
+	
+	
 	
 	Route::any('security/{account}/auditReports', 'SecurityReportsController@getAuditReports');
 	Route::any('security/auditReport', 'SecurityReportsController@getAuditReport');
