@@ -88,7 +88,8 @@ class CloudAccountHelper
             ->join('processJobs', 'cloudAccounts.id', '=', 'processJobs.cloudAccountId')
            ->join('users', 'users.id', '=', 'processJobs.user_id')
 			-> where('cloudAccounts.user_id', Auth::user()->id)
-            ->select('cloudAccounts.*', 'processJobs.id as pid', 'processJobs.input',  
+            ->select('DISTINCT cloudAccounts.id', 'cloudAccounts.name', 'cloudAccounts.cloudProvider', 
+            		'cloudAccounts.profileType', 'cloudAccounts.created_at', 'processJobs.id as pid', 'processJobs.input',  
             		'processJobs.operation', 'processJobs.output', 'processJobs.status as processStatus')
             ->get();
 	}
