@@ -36,23 +36,22 @@ class SecurityReportsController extends BaseController {
 	public function getAuditReports($id)
 	{
 		$this->account = CloudAccountHelper::findAndDecrypt($id);
-		
+		 
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
 		$obj = json_decode($responseJson);
-		
-		if(!StringHelper::isJson($responseJson))
-		{
-			//Redirect::intended('account/'.$id.'/edit')->with($obj->status , 'Error retrieving security audit report for '.$account->name); break;
+		// if(!StringHelper::isJson($responseJson))
+		// {
+		// 	//Redirect::intended('account/'.$id.'/edit')->with($obj->status , 'Error retrieving security audit report for '.$account->name); break;
 
-		}
+		// }
 		if($obj->status == 'OK')
 		{
 			$return = AWSBillingEngine::auditReports(array('token' => $obj->token, 'accountId' => $this->account->id));
 			$table = UIHelper::getAuditTable($this->account, $return);
 			if(is_array($table) && isset($table['status']) && $table['status'] == 'error')
 			{
-				Redirect::intended('account/'.$id.'/edit')->with('error' , $table['message'] ); break;
+				Redirect::intended('account/'.$id.'/edit')->with('error' , $table['message'] );
 			}
 			else 
 			{
@@ -68,26 +67,26 @@ class SecurityReportsController extends BaseController {
 
 	public function getAuditReport()
 	{
-		$accountId = Input::get('accountId');
-		
+		$id = Input::get('accountId');
 		$oid = Input::get('oid');
+		$this->account = CloudAccountHelper::findAndDecrypt($id);
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
 		$obj = json_decode($responseJson);
 		
-		if(!StringHelper::isJson($responseJson))
-		{
-			//Redirect::intended('account/'.$id.'/edit')->with($obj->status , 'Error retrieving security audit report for '.$account->name); break;
+		// if(!StringHelper::isJson($responseJson))
+		// {
+		// 	//Redirect::intended('account/'.$id.'/edit')->with($obj->status , 'Error retrieving security audit report for '.$account->name); break;
 
-		}
+		// }
 
 		if($obj->status == 'OK')
 		{
-			$return = AWSBillingEngine::auditReport(array('token' => $obj->token, 'accountId' => $accountId, 'oid' => $oid));
+			$return = AWSBillingEngine::auditReport(array('token' => $obj->token, 'accountId' => $this->account->id, 'oid' => $oid));
+
 			Log::info('Return:' . $return);
 			print $return;
 		}
-		//$return = AWSBillingEngine::auditReports(array('token' => $obj->token, 'accountId' => ));
 			
 		
 	}
