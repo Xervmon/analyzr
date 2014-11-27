@@ -296,5 +296,19 @@ Inverse	<span class="label label-inverse">Inverse</span>
 			
 		}
 	}	
+	
+	public static function getServicesStatus($account)
+	{
+		$jobData = ProcessJob::where('user_id', Auth::id())
+						-> where('cloudAccountId', $account->id) 
+						-> orderBy('created_at', 'desc')
+						-> get();
+		$str = '';				
+		foreach($jobData as $row)
+		{
+			$str .= ucfirst($row->operation) . ':' . self::getLabel($row->status) . '<br/>';
+		}				
+		return $str;
+	}
 
 }

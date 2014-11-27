@@ -19,6 +19,7 @@ return array(
 	'authenticate'        => '/authenticate',
 	'create_billing'      => '/create_billing',
 	'getDeploymentStatus' => '/getDeploymentStatus',
+	'getStatusOfAllDeployments' => '/getStatusOfAllDeployments',
 	'GetCurrentCost'      => '/GetCurrentCost',
 	'Collection'          => '/Collection',
 	'GetCost'             => '/GetCost',
