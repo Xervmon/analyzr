@@ -135,6 +135,36 @@ class AccountController extends BaseController {
 		}
 		
 	}
+	
+	public function checkStatusForAllAccounts()
+	{
+		UtilHelper::check(true);
+		$accounts = CloudAccount::where('user_id', Auth::id());
+		foreach($accounts as $account)
+		{
+			$jobData = ProcessJob::where('user_id', Auth::id())
+						-> where('cloudAccountId', $account->id) 
+						-> whereIn('status', array(Lang::get('account/account.STATUS_IN_PROCESS'), 
+												  Lang::get('account/account.STATUS_STARTED')))
+						-> orderBy('created_at', 'desc')
+						-> get();
+		
+						
+			$processJobLib = new ProcessJobLib();
+			$return = $processJobLib->getStatus($account, $jobData);	
+			if(empty($return))
+			{
+				print json_encode(array('status' => 'error', 'message'=> ' Accounts could not be refreshed. Try again later!'));
+				return;
+			}			
+			else 
+			{
+				print json_encode(array('status' => 'error', 'message'=> ' Accounts are processed and status updated!'));
+				return;
+			}
+		}
+		
+	}
 
 	public function checkStatus2($id)
 	{
