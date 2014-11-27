@@ -6,7 +6,7 @@
 <div class="page-header">
 	<div class="row">
 		<div class="col-md-9">
-			<h5> {{{ Lang::get('account/account.awsInstanceDetails') }}}</h5>
+			<h5>{{ $account->name }} : {{{ Lang::get('account/account.awsInstanceDetails') }}}</h5>
 		</div>
 	</div>
 </div>
@@ -27,7 +27,7 @@
 		if (!$.isArray(data)) {
         	data = JSON.parse(data);
         }
-		$('#instanceDetails').append(convertJsonToTableSecurityGroups(data));
+		$('#instanceDetails').append(convertJsonToTableSecurityGroupsDetails(data));
 		
 	});
 	</script>
