@@ -121,9 +121,12 @@ class AccountController extends BaseController {
 						-> orderBy('created_at', 'desc')
 						-> get();
 		
-						
+		//This is one job at a time and multiple remote calls.				
 		$processJobLib = new ProcessJobLib();
 		$return = $processJobLib->getStatus($account, $jobData);	
+		
+		//Ideal method -- all status for one user is consolidated.
+		//$return = $processJobLib->getStatus2($account, $jobData);
 		
 		if(empty($return))
 		{

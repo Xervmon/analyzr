@@ -124,7 +124,7 @@ class ProcessJobLib
 		$this->saveJob($processJob);
 	}
 	
-	public function getStatus2($account, $jobdata)
+	public function getStatus($account, $jobdata)
 	{
 		$return = '';
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
@@ -147,7 +147,7 @@ class ProcessJobLib
 		}
 	}
 	
-	public function getStatus($account, $jobdata)
+	public function getStatus2($account, $jobdata)
 	{
 		$return = '';
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
