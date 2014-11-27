@@ -739,7 +739,7 @@ class AccountController extends BaseController {
 		$arr[] = $obj;
 	  }
 	  
-	  print json_encode (array('id'=>$id, 'chart' =>$arr, 'data' => array('lastUpdated' => stringHelper::timeAgo($data['lastUpdate']), 
+	  print json_encode (array('chart' =>$arr, 'data' => array('lastUpdated' => stringHelper::timeAgo($data['lastUpdate']), 
 	  														   'total' => $data['total'], 
 	  														   'month' => $data['month'])));
 	  

@@ -230,49 +230,17 @@ window.buildTableFromArray = function (data, excludeKeys, headings, nameChanges,
     return markup;
 };
 
-convertJsonToTableSecurityGroupsDetails = function(data) {
-    var pageSize = 10;
-    if (data.length > 0) {
-        var mediaClass = '';
-        for (var i = 0; i < data.length; i++) {
-            if(data[i]['State']=='running'){
-            data[i]["State"] = '<span class="label label-success" >'+data[i]['State']+'</span>' ;
-        }else if(data[i]['State']=='stop'){
-            data[i]["State"] = '<span class="label label-danger" >'+data[i]['State']+'</span>' ;
-        }else{
-            data[i]["State"] = '<span class="label label-warning" >'+data[i]['State']+'</span>' ;
-        }
-
-        }
-
-        mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {
-             "name" : " filter-select filter-exact "
-        }), $table = $(mediaClass);
-        mediaClass += setupTableSorterChecked($table, false, pageSize);
-        $table.find('td[data-title="id"]').each(function() {
-            var $td = $(this);
-            var $parent = $td.parent();
-            //$td = $this.parent();
-            $td.addClass("btn-link").on("click", function(e) {
-                e.preventDefault();
-
-                var $selectedLink = this.dataset.title;
-
-            });
-        })
-
-        return $table;
-    } else {
-        return '<div class="no_data"><span class="label label-primary">No Data</span></div>';
-
-    }
-
-};
-
 convertJsonToTableSecurityGroups = function(data) {
     var pageSize = 10;
     if (data.length > 0) {
         var mediaClass = '';
+        for (var i = 0; i < data.length; i++) {
+            //data[i]["actions"] = '<div>' + '<span style="padding-right:8px; cursor: pointer;" title="View Details of the Security Group">' + getSGViewDetail(cloudAccountId, data[i]) + '</span>' + '<span style="padding-right:8px; cursor: pointer;" title="Delete Security Group">' + getDeleteSG(cloudAccountId, data[i]) + '</span>' + '</div>';
+            //delete data[i]['IpPermissions'];
+            //delete data[i]['IpPermissionsEgress'];
+            //delete data[i]['OwnerId'];
+        }
+
         mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {
              "name" : " filter-select filter-exact "
         }), $table = $(mediaClass);
@@ -291,7 +259,7 @@ convertJsonToTableSecurityGroups = function(data) {
 
         return $table;
     } else {
-        return '<div class="no_data"><span class="label label-primary">No Data</span></div>';
+        return '<div class="no_data">No Data</div>';
 
     }
 
@@ -372,7 +340,7 @@ function timeAgo(time){
   while (unit = units[i++]) {
     if (diff < unit.limit || !unit.limit){
       var diff =  Math.floor(diff / unit.in_seconds);
-      return diff + " " + unit.name + (diff>1 ? "s ago" : " ago");
+      return diff + " " + unit.name + (diff>1 ? "s ago" : "");
     }
   };
 }

@@ -1,6 +1,5 @@
 ;pieOrDonut = function(data, selector, donut, labelType)
 {
-	//console.log(data);
 	nv.addGraph(function() 
 		{
 	  		var chart = nv.models.pieChart()
@@ -17,16 +16,15 @@
 	        .transition().duration(350)
 	        .call(chart);
 			d3.select(".nv-legendWrap")
-			.attr('transform', 'translate(-60,-120)');
+			.attr('transform', 'translate(-140,-30)');
 			d3.select(".nv-pieWrap")
-			.attr('transform', 'translate()');
+			.attr('transform', 'translate(235,-20)');
 		  	return chart;
 		});
 };
 
 discreteBarchart = function(data, selector, donut, labelType)
 {
-	//console.log(data);
 	nv.addGraph(function() 
 	{
 		var chart = nv.models.discreteBarChart()

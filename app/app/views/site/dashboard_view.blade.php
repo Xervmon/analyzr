@@ -6,14 +6,12 @@
 	</div>
 </div>
 
-<div class="panel panel-default">
-       
+<div class="media-block">
+	<ul class="list-group">
 		@if(!empty($accounts)) 
 			@foreach ($accounts as $account)
-
-			<ul class="list-group">
 		  			<li class="list-group-item">
-						<div class="panel-heading">
+						<div class="media">
 							<p>
 								<a alt="{{ $account->name }}" title="{{ $account->name }}" href="{{ URL::to('account/'.$account->id.'/edit') }}" class="pull-left" href="#">
 								    <img title="{{ $account->name }}" class="media-object img-responsive" src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.'.$account->cloudProvider.'.logo')) }}" alt="{{ $account->name }}" />
@@ -25,8 +23,9 @@
 								<!-- ./ csrf token -->
 								<button type="submit" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-refresh"></span></button>
 							</form>
+							<div class="media-body">
 								
-								<h4> 
+								<h4 class="media-heading"> 
 									<a alt="{{ $account->name }}" title="{{ $account->name }}" href="{{ URL::to('account/'.$account->id.'/edit') }}" class="pull-left" href="#">
 									{{ String::title($account->name) }}
 									</a> 
@@ -42,42 +41,29 @@
 								| 
 								<a href="{{ URL::to('security/' . $account->id . '/auditReports') }}"><span class="glyphicon glyphicon-lock"></span></a>
                                 @endif
-                         </div>      
+                                <p class="summary{{$account->id}}">
+									
+								</p>
+								<p class="chart{{$account->id}}">
+									<svg style="height:500px;width:800px">
+										
+									</svg>
+									
+								</p>
+								
+							</div>
+						</div>
 					</li>
-				</ul>
-					<div class="panel-body">
-                      <div class="col-md-6">
-                       <p class="chart{{$account->id}}">
-							<svg style="height:500px;">
-							</svg>
-						</p>
-					</div>
-                <div class="col-md-2 column" >
-                    <div class="list-group">
-                        <div class="list-group-item" style="margin-top:-15px;height:12em;">
-                              <p class="summary{{$account->id}}">
-				                					
-							  </p>
-                        </div>
-                    </div>
-                </div>   
-                 <div class="col-md-4">
-                      
-                  </div>
-
-              </div>
 			@endforeach
 		@endif
-</div>
-
+	</ul>
 	@if(empty($accounts) || count($accounts) === 0) 
 		<div class="alert alert-info"> {{{ Lang::get('account/account.empty_accounts') }}}</div>
 	@endif
-
+</div>
 <div>
 <a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
 </div>
-
 <script src="{{asset('assets/js/nvd3/lib/d3.v2.min.js')}}"></script>
 <script src="{{asset('assets/js/nvd3/nv.d3.min.js')}}"></script>
 <script src="{{asset('assets/js/nvd3/lib/stream_layers.js')}}"></script>
@@ -113,8 +99,7 @@ $( document ).ready(function()
 		cache: false
 		}).done(function( response ) {
 			if (!$.isArray(response)) {
-				
-	        	response = JSON.parse(response);console.log(response.id);
+	        	response = JSON.parse(response);
 	        }
 	        if(response.status == 'error')
 	        {
@@ -123,8 +108,7 @@ $( document ).ready(function()
 	        str =   ' Last Updated :' + response.data['lastUpdated'] 
 	        	    + '| Month :' + response.data['month'] 
 	        	    + '| Total :' + response.data['total'] 
-	        	    
-	        $('.summary'+response.id).append(str);
+	        $('.summary'+accounts[index]).append(str);
 			pieOrDonut(response.chart, selector, true, 'percent');
 		});
    }
