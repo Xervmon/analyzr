@@ -299,28 +299,33 @@ Inverse	<span class="label label-inverse">Inverse</span>
 	
 	public static function getServicesStatus($account)
 	{
-		$jobs = $account->jobs;
-		$str = '<div class="table-responsive">  <table class="table table-bordered">';
-		foreach($jobs as $job)
+		$jobs = empty($account->jobs) ? '' : $account->jobs;
+		$str = '';
+		if(!empty($jobs))
 		{
-			$str .= '<tr>';
-			$str .= '<td>' . $job -> operation. '</td>';
+			$str = '<div class="table-responsive">  <table class="table table-bordered">';
 			
-			$str .= '<td>' . $job -> job_status. '</td>';
-			
-			if(in_array($job->job_status, array(Lang::get('account/account.STATUS_IN_PROCESS'), 
-															Lang::get('account/account.STATUS_STARTED'))))
+			foreach($jobs as $job)
 			{
-				$str .= '<td> Refresh button here</td>';
+				$str .= '<tr>';
+				$str .= '<td>' . $job -> operation. '</td>';
+				
+				$str .= '<td>' . $job -> job_status. '</td>';
+				
+				if(in_array($job->job_status, array(Lang::get('account/account.STATUS_IN_PROCESS'), 
+																Lang::get('account/account.STATUS_STARTED'))))
+				{
+					$str .= '<td> Refresh button here</td>';
+				}
+				
+				
+				$str .= '</tr>';
+				
 			}
 			
-			
-			$str .= '</tr>';
-			
+			$str .= ' </table> </div>';
 		}
-		
-		$str .= ' </table> </div>';
-		$str;
+		return $str;
 		/*$jobData = ProcessJob::where('user_id', Auth::id())
 						-> where('cloudAccountId', $account->id) 
 						-> orderBy('created_at', 'desc')
