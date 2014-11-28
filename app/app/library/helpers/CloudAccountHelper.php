@@ -85,12 +85,12 @@ class CloudAccountHelper
 	public static function getAccountStatus()
 	{
 		$accounts = CloudAccount::where('user_id', Auth::id())->get() ;
-		echo '<pre>';print_r(accounts); die();
+		
 		$arr = '';
 		foreach($accounts as $account)
 		{
 			$obj = json_decode($account->toJson());
-			$processJobs = ProcessJobs::where('user_id', Auth::id())->where('cloudAccountId', $obj->id) -> orderBy() -> get();
+			$processJobs = ProcessJob::where('user_id', Auth::id())->where('cloudAccountId', $obj->id) -> orderBy('created_at', 'desc') -> get();
 			foreach($processJobs as $job)
 			{
 				$obj->jobs[] = json_decode($job->toJson());
