@@ -334,7 +334,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 				$str .= '<td> <i class="fa fa-cogs"></i> ' . $job -> operation. '</td>';	
 				else
 				$str .= '<td> <i class="fa fa-credit-card"></i> ' . $job -> operation. '</td>';				
-				$str .= '<td>' . $job -> status. '</td>';				
+				$str .= '<td>' . self::getLabel($job -> status). '</td>';				
 				if(in_array($job->status, array(Lang::get('account/account.STATUS_IN_PROCESS'), 
 																Lang::get('account/account.STATUS_STARTED'))))
 				{
