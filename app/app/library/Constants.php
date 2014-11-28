@@ -29,6 +29,10 @@ class Constants
 		const FAILURE                       = 'FAILURE' ;
 		const ENGINE_FAILURE                = 'ENGINE_FAILURE' ;
 		const ENGINE_CREDENTIALS_FAILURE    = 'ENGINE_CREDENTIALS_FAILURE';
+		const BILLING = 'create_billing';
+		const SERVICES = 'create_services';
+		const SECURITY_AUDIT = 'create_audit';
+		
 		
 		const describeAccountAttributes     = 'describeAccountAttributes';
 		const describeAddresses             = 'describeAddresses';

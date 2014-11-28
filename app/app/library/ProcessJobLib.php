@@ -35,13 +35,7 @@ class ProcessJobLib
 
 		//@TODO : If user has a subscription, we can control here..
 		Log::info('Processing ..' . $account->cloudProvider. '..');
-		$response = '';
-		switch($account->profileType)
-		{
-			case Constants::READONLY_PROFILE  : $this->backgroundJob($account); 
-												break;
-			case Constants::SECURITY_PROFILE  :  $this->securityProcess($account); break;
-		}
+		$response = $this->backgroundJob($account);
 		return $response;
 	}
 	
@@ -67,22 +61,28 @@ class ProcessJobLib
 
 			$data['apiKey'] 	= StringHelper::encrypt($credentials ->apiKey, md5(Auth::user()->username));
 			$data['secretKey'] 	= StringHelper::encrypt($credentials ->secretKey, md5(Auth::user()->username));
-			$data['accountId'] 	= $credentials->accountId;
-			$data['billingBucket'] = $credentials->billingBucket;
-
-			$json = $this->executeProcess('billing', $data);
-			
-			Log::info('Adding the job to '.'billing'.' queue for processing..'.$json);
-			
-			$pJob1 = WSObj::getObject($json);
-			$this->pushToProcessJobTable($account, $data, $pJob1 , 'create_billing'); 
-			
-			$json = $this->executeProcess('services', $data);
-			Log::info('Adding the job to '.'services'.' queue for processing..'.$json);
-			
-			$pJob2 = WSObj::getObject($json);
-			$this->pushToProcessJobTable($account, $data, $pJob2, 'create_services');
-			
+			switch($account->profileType)
+			{
+				case Constants::READONLY_PROFILE : 	$data['accountId'] 	= $credentials->accountId;
+													$data['billingBucket'] = $credentials->billingBucket;
+													$json = $this->executeProcess(Constants::BILLING, $data);
+													Log::info('Adding the job to '.$profile.' '.Constants::BILLING.' queue for processing..'.$json);
+													$pJob1 = WSObj::getObject($json);
+													$this->pushToProcessJobTable($account, $data, $pJob1 , 'create_billing'); 
+													$json = $this->executeProcess(Constants::SERVICES, $data);
+													Log::info('Adding the job to '.$profile.' '. Constants::SERVICES.' queue for processing..'.$json);
+													$pJob2 = WSObj::getObject($json);
+													$this->pushToProcessJobTable($account, $data, $pJob2, Constants::SERVICES);
+													break;
+													
+				case Constants::SECURITY_PROFILE : $data['assumedRole'] = $credentials->assumedRole;
+												   $data['securityToken'] = empty($credentials->securityToken) ? '' : $credentials->securityToken;
+												   $json = $this->executeProcess('securityAudit', $data);
+												   Log::info('Adding the job to '.$profile.' securityAudit'.' queue for processing..'.$json);
+												   $pJob1 = WSObj::getObject($json);
+												   $this->pushToProcessJobTable($account, $data, $pJob1 , Constants::SECURITY_AUDIT); 	
+												   break;
+			}
 		}
 		else 
 		{
@@ -95,8 +95,9 @@ class ProcessJobLib
 		$response = '';
 		switch($method)
 		{
-			case 'billing' : $response = AWSBillingEngine::create_billing($data); break;
-			case 'services' : $response = AWSBillingEngine::create_services($data); break;
+			case Constants::BILLING  : $response = AWSBillingEngine::create_billing($data); break;
+			case Constants::SERVICES : $response = AWSBillingEngine::create_services($data); break;
+			case Constants::SECURITY_AUDIT    : $response = AWSBillingEngine::create_audit($data); break;
 		}
 		return $response;
 	}
