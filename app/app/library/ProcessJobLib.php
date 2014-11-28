@@ -58,7 +58,6 @@ class ProcessJobLib
    			$credentials    = json_decode($credentials);
 
 			$data['token'] 	 	= $obj->token;
-
 			$data['apiKey'] 	= StringHelper::encrypt($credentials ->apiKey, md5(Auth::user()->username));
 			$data['secretKey'] 	= StringHelper::encrypt($credentials ->secretKey, md5(Auth::user()->username));
 			switch($account->profileType)
@@ -68,7 +67,7 @@ class ProcessJobLib
 													$json = $this->executeProcess(Constants::BILLING, $data);
 													Log::info('Adding the job to '.Constants::READONLY_PROFILE.' '.Constants::BILLING.' queue for processing..'.$json);
 													$pJob1 = WSObj::getObject($json);
-													$this->pushToProcessJobTable($account, $data, $pJob1 , 'create_billing'); 
+													$this->pushToProcessJobTable($account, $data, $pJob1 , Constants::BILLING); 
 													$json = $this->executeProcess(Constants::SERVICES, $data);
 													Log::info('Adding the job to '.Constants::READONLY_PROFILE.' '. Constants::SERVICES.' queue for processing..'.$json);
 													$pJob2 = WSObj::getObject($json);
@@ -78,7 +77,7 @@ class ProcessJobLib
 				case Constants::SECURITY_PROFILE : $data['assumedRole'] = $credentials->assumedRole;
 												   $data['securityToken'] = empty($credentials->securityToken) ? '' : $credentials->securityToken;
 												   $json = $this->executeProcess('securityAudit', $data);
-												   Log::info('Adding the job to '.Constants::READONLY_PROFILE.' securityAudit'.' queue for processing..'.$json);
+												   Log::info('Adding the job to '.Constants::SECURITY_PROFILE.' '.Constants::SECURITY_AUDIT .' queue for processing..'.$json);
 												   $pJob1 = WSObj::getObject($json);
 												   $this->pushToProcessJobTable($account, $data, $pJob1 , Constants::SECURITY_AUDIT); 	
 												   break;
