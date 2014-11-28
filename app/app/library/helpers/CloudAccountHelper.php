@@ -86,17 +86,19 @@ class CloudAccountHelper
 	{
 		$accounts = CloudAccount::where('user_id', Auth::id())->get() ;
 		echo '<pre>';print_r(accounts); die();
-		/*$arr = '';
+		$arr = '';
 		foreach($accounts as $account)
 		{
-			
-			$processJobs = ProcessJobs::where('user_id', Auth::id())->where('cloudAccountId', $account->id) -> get();
+			$obj = json_decode($account->toJson());
+			$processJobs = ProcessJobs::where('user_id', Auth::id())->where('cloudAccountId', $obj->id) -> orderBy() -> get();
 			foreach($processJobs as $job)
 			{
-				$account->jobs[] = $job;
+				$obj->jobs[] = json_decode($job->toJson());
 			}
+			$arr[] = $obj;
+		}
 
-		}*/
+		return $arr;
 		/*return DB::table('cloudAccounts')
             ->join('processJobs', 'cloudAccounts.id', '=', 'processJobs.cloudAccountId')
            ->join('users', 'users.id', '=', 'cloudAccounts.user_id')
