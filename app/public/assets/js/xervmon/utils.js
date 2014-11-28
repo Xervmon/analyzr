@@ -230,16 +230,19 @@ window.buildTableFromArray = function (data, excludeKeys, headings, nameChanges,
     return markup;
 };
 
-convertJsonToTableSecurityGroups = function(data) {
+convertJsonToTableSecurityGroupsDetails = function(data) {
     var pageSize = 10;
-    //alert(cloudAccountId);
     if (data.length > 0) {
         var mediaClass = '';
         for (var i = 0; i < data.length; i++) {
-            //data[i]["actions"] = '<div>' + '<span style="padding-right:8px; cursor: pointer;" title="View Details of the Security Group">' + getSGViewDetail(cloudAccountId, data[i]) + '</span>' + '<span style="padding-right:8px; cursor: pointer;" title="Delete Security Group">' + getDeleteSG(cloudAccountId, data[i]) + '</span>' + '</div>';
-            //delete data[i]['IpPermissions'];
-            //delete data[i]['IpPermissionsEgress'];
-            //delete data[i]['OwnerId'];
+            if(data[i]['State']=='running'){
+            data[i]["State"] = '<span class="label label-success" >'+data[i]['State']+'</span>' ;
+        }else if(data[i]['State']=='stop'){
+            data[i]["State"] = '<span class="label label-danger" >'+data[i]['State']+'</span>' ;
+        }else{
+            data[i]["State"] = '<span class="label label-warning" >'+data[i]['State']+'</span>' ;
+        }
+
         }
 
         mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {
@@ -260,20 +263,46 @@ convertJsonToTableSecurityGroups = function(data) {
 
         return $table;
     } else {
-        return '<div class="no_data">No Data</div>';
+        return '<div class="no_data"><span class="label label-primary">No Data</span></div>';
 
     }
 
 };
 
+convertJsonToTableSecurityGroups = function(data) {
+    var pageSize = 10;
+    if (data.length > 0) {
+        var mediaClass = '';
+        mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {
+             "name" : " filter-select filter-exact "
+        }), $table = $(mediaClass);
+        mediaClass += setupTableSorterChecked($table, false, pageSize);
+        $table.find('td[data-title="id"]').each(function() {
+            var $td = $(this);
+            var $parent = $td.parent();
+            //$td = $this.parent();
+            $td.addClass("btn-link").on("click", function(e) {
+                e.preventDefault();
+
+                var $selectedLink = this.dataset.title;
+
+            });
+        })
+
+        return $table;
+    } else {
+        return '<div class="no_data"><span class="label label-primary">No Data</span></div>';
+
+    }
+
+};
 convertJsonToTableAuditReports = function(data) {
     var pageSize = 10;
     if (data.length > 0) {
         var mediaClass = '';
         for (var i = 0; i < data.length; i++) 
         {
-            console.log(data[i]['report']);
-        	data[i]["actions"] = '<div>' + '<a href class="viewAuditReport" id="viewAuditReport" onclick="viewAuditReport(\'' + data[i]['report'] + '\', \'' + data[i]['accountId'] + '\', \'' + data[i]['oid'] + '\'); return false;" name="viewAuditReport">View Audit Report</a></div>';
+        	data[i]["actions"] = '<div id="audit_reports">' + '<a href class="viewAuditReport" id="viewAuditReport" onclick="viewAuditReport(\'' + data[i]['report'] + '\', \'' + data[i]['accountId'] + '\', \'' + data[i]['oid'] + '\'); return false;" name="viewAuditReport">View Audit Report</a></div>';
             delete data[i]['accountId'];
      		delete data[i]['oid'];
      		delete data[i]['report'];
@@ -301,32 +330,48 @@ convertJsonToTableAuditReports = function(data) {
 
 viewAuditReport = function (url, accountId, oid)
 {
-    console.log(url);console.log(accountId);console.log(oid);
-    // var jqxhr=$.ajax(url,{'accountId':accountId},function(response){
-    //     alert(response);
-    // });
-	// var jqxhr = $.ajax(url, {
- //                     'accountId':'vas',
- //                     'oid' : 'me'
- //                }).done(function(response) {
- //                     alert(response);
- //                	console.log(response);
- //                 //    if (!$.isArray(response)) {
- //                 //    	response = JSON.parse(response);
- //                 //    alert(response);
- //                	// }
- //                });
-
-  $.ajax({
+   var results="";
+   var jqxhr= $.ajax({
     url :url,
     data:{'accountId':accountId,'oid' : oid},
     success:function(response){
-        alert(response);
                     if (!$.isArray(response)) {
-                      response = JSON.parse(response);
-                    //alert(response);
-                    console.log(response);
+                      result = JSON.parse(response);
+                      if(result.status=='OK'){
+                       results='<ul style="list-style-type:none";>';
+                       results+='<li>User Name : '+result.report.username+'</li>';
+                       results+='<li>Report Time : '+timeAgo(result.report.report_time)+'</li>';
+                       results+='<li> Audit diff from previous report :[( New data : '+result.report.diff.new +' ), ( Deleted data : '+result.report.diff.old + ') ] </li>';
+                       results+='<li> Whether there is diff : '+result.report.changed+'</li>';
+                       results+='<ul>';
+                    $('#audit_reports').html(results);
+                      }else{
+                    $('#audit_reports').html('No Data');
+                      }
+                      
                  }
     }
 });
 };
+
+function timeAgo(time){
+  var units = [
+    { name: "second", limit: 60, in_seconds: 1 },
+    { name: "minute", limit: 3600, in_seconds: 60 },
+    { name: "hour", limit: 86400, in_seconds: 3600  },
+    { name: "day", limit: 604800, in_seconds: 86400 },
+    { name: "week", limit: 2629743, in_seconds: 604800  },
+    { name: "month", limit: 31556926, in_seconds: 2629743 },
+    { name: "year", limit: null, in_seconds: 31556926 }
+  ];
+  var diff = (new Date() - new Date(time*1000)) / 1000;
+  if (diff < 5) return "now";
+  
+  var i = 0;
+  while (unit = units[i++]) {
+    if (diff < unit.limit || !unit.limit){
+      var diff =  Math.floor(diff / unit.in_seconds);
+      return diff + " " + unit.name + (diff>1 ? "s ago" : " ago");
+    }
+  };
+}
