@@ -21,7 +21,8 @@
 						    <img class="media-object img-responsive" 
 						    	src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.'.$account->cloudProvider.'.logo')) }}" alt="{{ $account->cloudProvider }}" />
 						</span>
-						@if(in_array($account->status, array(Lang::get('account/account.STATUS_IN_PROCESS'), 
+					
+						@if(in_array($account->processStatus, array(Lang::get('account/account.STATUS_IN_PROCESS'), 
 															Lang::get('account/account.STATUS_STARTED'))))
 							<form class="pull-right" method="post" action="{{ URL::to('account/' . $account->id . '/refresh') }}">
 									<!-- CSRF Token -->
@@ -45,11 +46,11 @@
 							</p>
 							@if($account -> profileType == Constants::READONLY_PROFILE)
 								<p>
-									<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
-									| 
+									<span title="Status">{{ UIHelper::getServicesStatus($account) }}</span>
+									
 									<a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
 									| 
-									<a href="{{ URL::to('account/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
+									<a href="{{ URL::to('assets/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
 							
 								</p>
 							<p>
