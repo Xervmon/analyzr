@@ -10,7 +10,7 @@
 @section('content')
 <div class="main">
     <div class="page-header">
-        <h4 class="text-center">Login into your account</h4>
+        <h4 class="text-center">{{{ Lang::get('user/user.Login_your_account') }}}</h4>
     </div>
     @include('site.user.social')
     <form method="POST" action="{{ URL::to('user/login') }}" accept-charset="UTF-8">
@@ -23,21 +23,21 @@
             <div class="form-group">
                 <a class="pull-right" href="forgot">{{ Lang::get('confide::confide.login.forgot_password') }}</a>
                 <label class="control-label" for="password">
-                    {{ Lang::get('confide::confide.password') }} 
+                    {{ Lang::get('confide::confide.password') }}
                 </label>
                 <input class="form-control" tabindex="2" placeholder="{{ Lang::get('confide::confide.password') }}" type="password" name="password" id="password">
             </div>
-    
-           
-    
+
+
+
             @if ( Session::get('error') )
             <div class="alert alert-danger">{{ Session::get('error') }}</div>
             @endif
-    
+
             @if ( Session::get('notice') )
             <div class="alert">{{ Session::get('notice') }}</div>
             @endif
-    
+
             <div class="form-group">
                 <div class="checkbox login-checkbox">
                     <label>
@@ -47,7 +47,7 @@
                     </label>
                 </div>
                 <button tabindex="3" type="submit" class="btn btn-success">{{ Lang::get('confide::confide.login.submit') }}</button>
-            </div>      
+            </div>
         </fieldset>
     </form>
 </div>
