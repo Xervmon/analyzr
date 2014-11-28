@@ -66,11 +66,11 @@ class ProcessJobLib
 				case Constants::READONLY_PROFILE : 	$data['accountId'] 	= $credentials->accountId;
 													$data['billingBucket'] = $credentials->billingBucket;
 													$json = $this->executeProcess(Constants::BILLING, $data);
-													Log::info('Adding the job to '.$profile.' '.Constants::BILLING.' queue for processing..'.$json);
+													Log::info('Adding the job to '.Constants::READONLY_PROFILE.' '.Constants::BILLING.' queue for processing..'.$json);
 													$pJob1 = WSObj::getObject($json);
 													$this->pushToProcessJobTable($account, $data, $pJob1 , 'create_billing'); 
 													$json = $this->executeProcess(Constants::SERVICES, $data);
-													Log::info('Adding the job to '.$profile.' '. Constants::SERVICES.' queue for processing..'.$json);
+													Log::info('Adding the job to '.Constants::READONLY_PROFILE.' '. Constants::SERVICES.' queue for processing..'.$json);
 													$pJob2 = WSObj::getObject($json);
 													$this->pushToProcessJobTable($account, $data, $pJob2, Constants::SERVICES);
 													break;
@@ -78,7 +78,7 @@ class ProcessJobLib
 				case Constants::SECURITY_PROFILE : $data['assumedRole'] = $credentials->assumedRole;
 												   $data['securityToken'] = empty($credentials->securityToken) ? '' : $credentials->securityToken;
 												   $json = $this->executeProcess('securityAudit', $data);
-												   Log::info('Adding the job to '.$profile.' securityAudit'.' queue for processing..'.$json);
+												   Log::info('Adding the job to '.Constants::READONLY_PROFILE.' securityAudit'.' queue for processing..'.$json);
 												   $pJob1 = WSObj::getObject($json);
 												   $this->pushToProcessJobTable($account, $data, $pJob1 , Constants::SECURITY_AUDIT); 	
 												   break;
