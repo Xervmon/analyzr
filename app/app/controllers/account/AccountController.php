@@ -383,12 +383,15 @@ class AccountController extends BaseController {
 	{
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
 		Log::debug('Chart data for '. $account -> name);
-		
+		// echo '<pre>';
+		// print_r($account);die();
 		//var accountData = '{"cost_data":{"AWS Data Transfer":0.38,"Amazon Elastic Compute Cloud":96.67,"Amazon Simple Email Service":0.01,
 		//"Amazon Simple Notification Service":0,"Amazon Simple Queue Service":0,"Amazon Simple Storage Service":105.68,"Amazon SimpleDB":0,
 		//"Amazon Virtual Private Cloud":20.64},"lastUpdate":1415541555,"month":"Nov 2014","status":"OK","total":223.38}';
 		
-		$data = CloudAccountHelper::findCurrentCost($account);
+		$data = CloudAccountHelper::findCurrentChartsCost($account);
+        //   echo '<pre>';
+		// print_r($data);die();
 		/*
 		 *  { 
         "label": "One",
@@ -396,7 +399,7 @@ class AccountController extends BaseController {
       	} , */ 
       if(!isset($data['cost_data']))
 	  {
-	  	print json_encode(array('status' => 'error', 'message' => 'No Cost data found for the '.$account -> name));
+	  	print json_encode(array('id'=>$id,'status' => $data['status'], 'message' =>$data['message']));
 	  	return;
 	  }
 	  
