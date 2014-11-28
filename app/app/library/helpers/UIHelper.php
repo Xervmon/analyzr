@@ -299,7 +299,34 @@ Inverse	<span class="label label-inverse">Inverse</span>
 	
 	public static function getServicesStatus($account)
 	{
-		$jobData = ProcessJob::where('user_id', Auth::id())
+		$jobs = empty($account->jobs) ? '' : $account->jobs;
+		$str = '';
+		if(!empty($jobs))
+		{
+			$str = '<div class="table-responsive">  <table class="table table-bordered">';
+			
+			foreach($jobs as $job)
+			{
+				$str .= '<tr>';
+				$str .= '<td>' . $job -> operation. '</td>';
+				
+				$str .= '<td>' . $job -> job_status. '</td>';
+				
+				if(in_array($job->job_status, array(Lang::get('account/account.STATUS_IN_PROCESS'), 
+																Lang::get('account/account.STATUS_STARTED'))))
+				{
+					$str .= '<td> Refresh button here</td>';
+				}
+				
+				
+				$str .= '</tr>';
+				
+			}
+			
+			$str .= ' </table> </div>';
+		}
+		return $str;
+		/*$jobData = ProcessJob::where('user_id', Auth::id())
 						-> where('cloudAccountId', $account->id) 
 						-> orderBy('created_at', 'desc')
 						-> get();
@@ -308,7 +335,8 @@ Inverse	<span class="label label-inverse">Inverse</span>
 		{
 			$str .= ucfirst($row->operation) . ':' . self::getLabel($row->status) . '<br/>';
 		}				
-		return $str;
+		return $str;*/
+		
 	}
 
 }
