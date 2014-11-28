@@ -84,13 +84,26 @@ class CloudAccountHelper
 
 	public static function getAccountStatus()
 	{
-		return DB::table('cloudAccounts')
+		$accounts = CloudAccount::where('user_id', Auth::id())->get() ;
+		echo '<pre>';print_r(accounts); die();
+		/*$arr = '';
+		foreach($accounts as $account)
+		{
+			
+			$processJobs = ProcessJobs::where('user_id', Auth::id())->where('cloudAccountId', $account->id) -> get();
+			foreach($processJobs as $job)
+			{
+				$account->jobs[] = $job;
+			}
+
+		}*/
+		/*return DB::table('cloudAccounts')
             ->join('processJobs', 'cloudAccounts.id', '=', 'processJobs.cloudAccountId')
            ->join('users', 'users.id', '=', 'cloudAccounts.user_id')
 			-> where('cloudAccounts.user_id', Auth::id())
             ->select('cloudAccounts.*', 'processJobs.id as pid', 'processJobs.input',  
             		'processJobs.operation', 'processJobs.output', 'processJobs.status as processStatus')
-            ->distinct()->get();
+            ->distinct()->get();*/
 	}
 	
 }
