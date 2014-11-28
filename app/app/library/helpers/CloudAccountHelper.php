@@ -39,11 +39,12 @@ class CloudAccountHelper
 		}
 		if(!empty($account))
 		{
-			switch($account->processStatus)
+			$account->jobs = self::operationBillingCheck($account->jobs);
+			switch($account->jobs->status)
 			{
 				case Lang::get('account/account.STATUS_COMPLETED'): return self::processCompletedState($account); break;
-				case Lang::get('account/account.STATUS_FAILED'): return array('status' => 'error', 'message' => 'Account '. $account->processStatus .' Contact support!');	break;
-				default:return array('status' => 'error', 'message' => 'Please wait..account in '. $account->processStatus);
+				case Lang::get('account/account.STATUS_FAILED'): return array('status' => 'error', 'message' => 'Account '. $account->jobs->status .' Contact support!');	break;
+				default:return array('status' => 'error', 'message' => 'Please wait..account in '. $account->jobs->status);
 						break;
 			}
 		}
@@ -55,6 +56,20 @@ class CloudAccountHelper
 		{
 			return array('status' => 'error', 'message' => 'Unexpected error. Contacted support.');	
 		}
+	}
+
+	private static function operationBillingCheck($account)
+	{
+
+		foreach ($account as $acc_value )
+		{
+			if($acc_value->operation==Lang::get('account/account.create_billing'))
+			{
+
+				$billing_account = $acc_value;
+			}
+		}
+		return $billing_account;
 	}
 
 	private static function processCompletedState($account)
