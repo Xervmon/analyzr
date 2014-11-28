@@ -18,11 +18,11 @@
 	<div class="tab-pane active" id="Open">
 		<div class="media-block">
 			<ul class="list-group">
-				@if(!empty($open_tickets))
+				@if(!empty($open_tickets)) 
 					@foreach ($open_tickets as $ticket)
 						<li class="list-group-item">
 							<div class="media">
-
+								
 								<form class="pull-right" method="post" action="{{ URL::to('ticket/' . $ticket->id . '/close') }}">
 									<!-- CSRF Token -->
 									<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
@@ -46,7 +46,7 @@
 					@endforeach
 				@endif
 			</ul>
-			@if(empty($open_tickets) || count($open_tickets) === 0)
+			@if(empty($open_tickets) || count($open_tickets) === 0) 
 				<div class="alert alert-info"> {{{ Lang::get('ticket/ticket.empty_tickets') }}}</div>
 			@endif
 		</div>
@@ -54,11 +54,11 @@
 	<div class="tab-pane" id="Closed">
 		<div class="media-block">
 			<ul class="list-group">
-				@if(!empty($closed_tickets))
+				@if(!empty($closed_tickets)) 
 					@foreach ($closed_tickets as $ticket)
 						<li class="list-group-item">
 							<div class="media">
-
+								
 								<form class="pull-right" method="post" action="{{ URL::to('ticket/' . $ticket->id . '/close') }}">
 									<!-- CSRF Token -->
 									<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
@@ -82,7 +82,7 @@
 					@endforeach
 				@endif
 			</ul>
-			@if(empty($closed_tickets) || count($closed_tickets) === 0)
+			@if(empty($closed_tickets) || count($closed_tickets) === 0) 
 				<div class="alert alert-info"> {{{ Lang::get('ticket/ticket.empty_tickets') }}}</div>
 			@endif
 		</div>

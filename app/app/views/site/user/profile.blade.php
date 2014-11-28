@@ -9,7 +9,7 @@
 {{-- Content --}}
 @section('content')
 <div class="page-header">
-	<h1>{{ Lang::get('user/user.User_Profile') }}}</h1>
+	<h1>User Profile</h1>
 </div>
 <table class="table table-striped">
     <thead>
@@ -27,9 +27,4 @@
     </tr>
     </tbody>
 </table>
-
-
-
-
-
 @stop
