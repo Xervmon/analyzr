@@ -22,7 +22,7 @@
 		<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 		<!-- ./ csrf token -->
 
-		
+
 		<!-- cloudProvider -->
 		<div class="form-group {{{ $errors->has('email') ? 'error' : '' }}}">
 			<label class="col-md-2 control-label" for="email">Cloud Provider <font color="red">*</font></label>
@@ -35,7 +35,7 @@
 			</div>
 		</div>
 		<!-- ./ cloudProvider -->
-		
+
 		<!-- name -->
 		<div class="form-group {{{ $errors->has('username') ? 'error' : '' }}}">
 			<label class="col-md-2 control-label" for="name">Name <font color="red">*</font></label>
@@ -46,8 +46,8 @@
 
 		<!-- ./ username -->
 		<div id="additionalCloudProviderFields">
-			
-		</div>				
+
+		</div>
 
 		<!-- Form Actions -->
 		<div class="form-group">

@@ -6,7 +6,7 @@
 	<div class="page-header">
 		<div class="row">
 			<div class="col-md-9">
-				<h5>{{isset($ticket->id)?'Edit':'Create'}} Ticket:</h5>
+				<h5>{{isset($ticket->id)?'Edit':'Create'}} {{{ Lang::get('ticket/ticket.Ticket') }}}</h5>
 			</div>
 		</div>
 	</div>
@@ -17,26 +17,26 @@
 		<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 		<!-- ./ csrf token -->
 
-		
-		
+
+
 		<!-- name -->
 		<div class="form-group {{{ $errors->has('username') ? 'error' : '' }}}">
-			<label class="col-md-2 control-label" for="name">Title <font color="red">*</font></label>
+			<label class="col-md-2 control-label" for="name">{{{ Lang::get('ticket/ticket.Title') }}}<font color="red">*</font></label>
 			<div class="col-md-6">
 				<input class="form-control" type="text" name="title" id="title" value="{{{ Input::old('title', isset($ticket->name) ? $ticket->name : null) }}}" required />
 			</div>
 		</div>
-		
+
 		<div class="form-group {{{ $errors->has('description') ? 'has-error' : '' }}}">
-			<label class="col-md-2 control-label" for="email">Description <font color="red">*</font></label>
+			<label class="col-md-2 control-label" for="email">{{{ Lang::get('ticket/ticket.Description') }}} <font color="red">*</font></label>
 			<div class="col-md-6">
             		<textarea class="form-control full-width wysihtml5" name="description" value="description" rows="5" required>{{{ Input::old('description', isset($post) ? $post->description : null) }}}</textarea>
 					{{{ $errors->first('description', '<span class="help-block">:message</span>') }}}
 			</div>
 		</div>
-		
+
 		<div class="form-group {{{ $errors->has('email') ? 'error' : '' }}}">
-			<label class="col-md-2 control-label" for="email">Deployment </label>
+			<label class="col-md-2 control-label" for="email">{{{ Lang::get('ticket/ticket.Deployment') }}} </label>
 			<div class="col-md-6">
 				<select class="form-control" name="deploymentId" id="deploymentId">
 					@foreach ($deployments as $key )
@@ -45,9 +45,9 @@
 				</select>
 			</div>
 		</div>
-		
+
 		<div class="form-group {{{ $errors->has('email') ? 'error' : '' }}}">
-			<label class="col-md-2 control-label" for="email">Priority </label>
+			<label class="col-md-2 control-label" for="email">{{{ Lang::get('ticket/ticket.Priority') }}}</label>
 			<div class="col-md-6">
 				<select class="form-control" name="priority" id="priority" required>
 					@foreach ($priorities as $key )
