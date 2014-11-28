@@ -39,19 +39,14 @@ class AssetsController extends BaseController {
 		
 		$summary = CloudProvider::getSummary($account);
 		
-		return View::make('site/account/assets/index', array(
-            'summary' => $summary
-        ));
+		return View::make('site/account/assets/index', array('summary' => $summary));
     }
 	
 	public function SecurityGroups($id)
 	{
 		UtilHelper::check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
-		
-		
-		return View::make('site/account/securityGroups', array(
-            	'account' => $account ));
+		return View::make('site/account/assets/securityGroups', array('account' => $account ));
 	}
 
 	
