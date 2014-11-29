@@ -87,7 +87,7 @@ class CloudAccountHelper
 													}
 				//$arr[][Constants::READONLY_PROFILE] = array($account->name =>self::findCurrentCost($account)); break;
 			}
-			$series['series'][] = $obj;
+			$series[] = $obj;
 			
 		}
 		return array('xAxisCategories' => $xAxisCategories, 'series' => $series);
