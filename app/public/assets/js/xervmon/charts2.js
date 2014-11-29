@@ -1,12 +1,15 @@
 ;columnDrilldown = function (selector, columnType, data)
 {
-	hs.showCredits = false;
+	//hs.showCredits = false;
 	console.log(data.series);
 	console.log(data.drilldownSeries);
 	$(selector).highcharts({
                 chart: {
                     type: columnType
                 },
+                credits: {
+			 		enabled : false
+				},
                 title: {
                     text: data.titleText
                 },
