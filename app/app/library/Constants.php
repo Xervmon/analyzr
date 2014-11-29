@@ -32,6 +32,7 @@ class Constants
 		const BILLING = 'create_billing';
 		const SERVICES = 'create_services';
 		const SECURITY_AUDIT = 'create_audit';
+		const PORT_SCANNING = 'create_secgroup';
 		
 		
 		const describeAccountAttributes     = 'describeAccountAttributes';
