@@ -29,6 +29,37 @@ class CloudAccountHelper
 		$account->credentials = StringHelper::encrypt($account->credentials, md5(Auth::user()->username));
         return $account->save();
 	}
+
+	public static function findCurrentChartsCost($account)
+	{
+		if(!empty($account))
+		{
+			return self::processCompletedState($account);
+		}
+		else if(empty($account)) 
+		{
+			return array('status' => 'error', 'message' => 'Empty account, no data found');
+		}
+		else 
+		{
+			return array('status' => 'error', 'message' => 'Unexpected error. Contacted support.');	
+		}
+	}
+	
+	public static function getAccountSummary()
+	{
+		$accounts = self::getAccountStatus();
+		$arr = '';
+		foreach($accounts as $account)
+		{
+			switch($account->profileType)
+			{
+				case Constants::READONLY_PROFILE : $arr[][Constants::READONLY_PROFILE] = array($account->name =>self::findCurrentCost($account)); break;
+			}
+			
+		}
+		return $arr;
+	}
 	
 	public static function findCurrentCost($account)
 	{
@@ -47,6 +78,7 @@ class CloudAccountHelper
 				default:return array('status' => 'error', 'message' => 'Please wait..account in '. $account->jobs->status);
 						break;
 			}
+			return self::processCompletedState($account);
 		}
 		else if(empty($account)) 
 		{

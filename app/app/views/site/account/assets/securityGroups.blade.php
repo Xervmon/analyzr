@@ -23,7 +23,7 @@
 	<script type="text/javascript">
 	$(document).ready(function() {
 		$.ajax({
-			url:  "{{ URL::to('account/'.$account->id.'/SecurityGroupsData') }}",
+			url:  "{{ URL::to('assets/'.$account->id.'/SecurityGroupsData') }}",
 			cache: false
 		})
 		.done(function( response ) {
