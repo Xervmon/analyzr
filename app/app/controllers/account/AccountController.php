@@ -362,6 +362,12 @@ class AccountController extends BaseController {
 	  														   'month' => $data['month'])));
 	  
 	}
+	
+	public function getAccountSummary()
+	{
+		$accounts = $account = CloudAccount::where('user_id', Auth::id())->get();
+		return CloudAccountHelper::getAccountSummary($accounts);
+	}
 
 	
 	 /** 

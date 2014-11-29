@@ -32,11 +32,6 @@ class CloudAccountHelper
 
 	public static function findCurrentChartsCost($account)
 	{
-		if(AWSBillingEngine::getServiceStatus() == 'error')
-		{
-			Log::error(Lang::get('account/account.awsbilling_service_down'));
-			return array('status' => 'error', 'message' => Lang::get('account/account.awsbilling_service_down'));
-		}
 		if(!empty($account))
 		{
 			return self::processCompletedState($account);
@@ -49,6 +44,20 @@ class CloudAccountHelper
 		{
 			return array('status' => 'error', 'message' => 'Unexpected error. Contacted support.');	
 		}
+	}
+	
+	public static function getAccountSummary($accounts)
+	{
+		$arr = '';
+		foreach($accounts as $account)
+		{
+			switch($account->profileType)
+			{
+				case Constants::BILLING : $arr[Constants::BILLING][] = array($account->name =>self::findAllCurrentChartsCost($account)); break;
+			}
+			
+		}
+		return $arr;
 	}
 	
 	public static function findCurrentCost($account)
