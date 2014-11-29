@@ -321,10 +321,20 @@ Inverse	<span class="label label-inverse">Inverse</span>
 	public static function getServicesStatus($account)
 	{
 		$jobs = empty($account->jobs) ? '' : $account->jobs;
-		$str = '';
+		$str = '';	
+		$new_prob = array();
 		if(!empty($jobs))
 		{
+			foreach ($jobs as $array) {
+				if (!array_key_exists($array->operation, $new_prob)) {
+					$new_prob[$array->operation] = $array;
+				}
+			}
+			$jobs = $new_prob;
+
 			$str = '<div class="table-responsive">  <table class="table table-bordered">';
+
+			
 			
 			foreach($jobs as $job)
 			{
@@ -332,8 +342,12 @@ Inverse	<span class="label label-inverse">Inverse</span>
 				$str .= '<tr>';
 				if($job -> operation==Lang::get('account/account.create_billing'))
 				$str .= '<td> <i class="fa fa-cogs"></i> ' . $job -> operation. '</td>';	
+				elseif($job -> operation==Lang::get('account/account.create_services'))
+				 $str .= '<td> <i class="fa fa-credit-card"></i> ' . $job -> operation. '</td>';
 				else
-				$str .= '<td> <i class="fa fa-credit-card"></i> ' . $job -> operation. '</td>';				
+					$str .= '<td> <i class="fa fa-lock"></i> ' . $job -> operation. '</td>';
+
+								
 				$str .= '<td>' . self::getLabel($job -> status). '</td>';				
 				if(in_array($job->status, array(Lang::get('account/account.STATUS_IN_PROCESS'), 
 																Lang::get('account/account.STATUS_STARTED'))))
