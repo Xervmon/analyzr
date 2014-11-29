@@ -370,6 +370,18 @@ class AccountController extends BaseController {
 	}
 
 	
+	public function getMultibar($data)
+	{
+		foreach($data as $row)
+		{
+			switch($row[Constants::READONLY_PROFILE])
+			{
+				//case 
+			}
+		}
+	}
+
+	
 	 /** 
 	 *//* 
 	 *//**
