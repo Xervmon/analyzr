@@ -1,21 +1,23 @@
 
-//stackedColumnChart = function (selector, type, title, xAxisCategories, yAxisCategories, series)
+//stackedColumnChart = function (selector, type, data)
 ;stackedColumnChart = function (selector)
 {
     $(selector).highcharts({
         chart: {
-            type: 'column'
+            type: type
         },
         title: {
-            text: 'Stacked column chart'
+            text: data.titleText
         },
         xAxis: {
-            categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+            categories: data.xAxisCategories
+            //['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
         },
         yAxis: {
             min: 0,
             title: {
-                text: 'Total fruit consumption'
+                text: data.yAxisTitle
+                //'Total fruit consumption'
             },
             stackLabels: {
                 enabled: true,
@@ -55,15 +57,6 @@
                 }
             }
         },
-        series: [{
-            name: 'John',
-            data: [5, 3, 4, 7, 2]
-        }, {
-            name: 'Jane',
-            data: [2, 2, 3, 2, 1]
-        }, {
-            name: 'Joe',
-            data: [3, 4, 4, 2, 5]
-        }]
+        series: data.series
     });
 };

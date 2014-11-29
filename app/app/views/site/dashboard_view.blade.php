@@ -35,6 +35,6 @@ var data = '{{json_encode($accounts)}}';
 		{
 	    	data = JSON.parse(data);
 	    }
-	    stackedColumnChart('.chart1');
+	    stackedColumnChart('.chart1', 'column', data);
 	});
 </script>

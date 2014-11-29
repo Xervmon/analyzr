@@ -49,16 +49,48 @@ class CloudAccountHelper
 	public static function getAccountSummary()
 	{
 		$accounts = self::getAccountStatus();
-		$arr = '';
+		return self::getChartData($accounts);
+	}
+	
+	public static function getChartData($accounts)
+	{
+		$xAxisCategories = '';
+		$series = '';
+		/*
+		 * series: [{
+            name: 'John',
+            data: [5, 3, 4, 7, 2]
+        }, {
+            name: 'Jane',
+            data: [2, 2, 3, 2, 1]
+        }, {
+            name: 'Joe',
+            data: [3, 4, 4, 2, 5]
+        }]
+		 * */
 		foreach($accounts as $account)
 		{
+			$obj = '';
 			switch($account->profileType)
 			{
-				case Constants::READONLY_PROFILE : $arr[][Constants::READONLY_PROFILE] = array($account->name =>self::findCurrentCost($account)); break;
+				case Constants::READONLY_PROFILE : 
+													$xAxisCategories[] = $account->name .'-' .Constants::READONLY_PROFILE;
+													$currentCost = self::findCurrentCost($account);
+													if($currentCost['status'] == 'OK')
+													{
+														$costData = $currentCost['cost_data'];
+														foreach($costData as $key => $value)
+														{
+															$obj['name'] = $key;
+															$obj['data'][] = $value;
+														}
+													}
+				//$arr[][Constants::READONLY_PROFILE] = array($account->name =>self::findCurrentCost($account)); break;
 			}
+			$series['series'][] = $obj;
 			
 		}
-		return $arr;
+		return array('xAxisCategories' => $xAxisCategories, 'series' => $series);
 	}
 	
 	public static function findCurrentCost($account)

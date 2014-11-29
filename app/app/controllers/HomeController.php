@@ -39,8 +39,11 @@ class HomeController extends BaseController {
 			$data = CloudAccountHelper::getAccountSummary();
 		
         } else {
-            $accounts = array();
+            $data = array();
         }
+		
+		$data['titleText'] = 'Current Spend across all subscribed services ';
+		$data['yAxisTitle'] = 'Total consumption of subscribed services';
         // Show the page
         return View::make('site/home/index', array(
             'accounts' => $data
