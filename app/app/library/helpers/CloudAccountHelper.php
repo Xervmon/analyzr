@@ -54,7 +54,7 @@ class CloudAccountHelper
 		{
 			switch($account->profileType)
 			{
-				case Constants::READONLY_PROFILE : $arr[Constants::READONLY_PROFILE][] = array($account->name =>self::findCurrentCost($account)); break;
+				case Constants::READONLY_PROFILE : $arr[][Constants::READONLY_PROFILE] = array($account->name =>self::findCurrentCost($account)); break;
 			}
 			
 		}
