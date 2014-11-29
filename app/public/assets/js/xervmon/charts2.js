@@ -1,5 +1,7 @@
 ;columnDrilldown = function (selector, columnType, data)
 {
+	console.log(data.series);
+	console.log(data.drilldownSeries);
 	$(selector).highcharts({
                 chart: {
                     type: columnType
