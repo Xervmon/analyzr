@@ -55,7 +55,7 @@ class CloudAccountHelper
 	public static function getChartData($accounts)
 	{
 		$xAxisCategories = '';
-		$series= new stdClass();
+		$series= [];
 		$drilldownSeries = '';
 		$arr = '';
 		foreach($accounts as $account)
@@ -66,7 +66,7 @@ class CloudAccountHelper
 													$currentCost = self::findCurrentCost($account);
 													if($currentCost['status'] == 'OK')
 													{
-														$series ->{"$account->name .'-' .Constants::READONLY_PROFILE"} = $currentCost['total'];
+														$series [$account->name .'-' .Constants::READONLY_PROFILE] = $currentCost['total'];
 														$costData = $currentCost['cost_data'];
 														$arr = '';
 														$drilldownSeries['id'] = $account->name .'-' .Constants::READONLY_PROFILE;
