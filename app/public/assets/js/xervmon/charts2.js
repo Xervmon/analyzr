@@ -10,14 +10,14 @@
                     text: data.titleText
                 },
                 subtitle: {
-                    text: 'Click the columns to view versions. Source: netmarketshare.com.'
+                    text: data.subtitleText
                 },
                 xAxis: {
                     type: 'category'
                 },
                 yAxis: {
                     title: {
-                        text: 'Total percent market share'
+                        text: data.yAxisTitle
                     }
                 },
                 legend: {

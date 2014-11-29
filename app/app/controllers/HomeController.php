@@ -42,8 +42,11 @@ class HomeController extends BaseController {
             $data = array();
         }
 		
-		$data['titleText'] = 'Current Spend across all subscribed services ';
-		//$data['yAxisTitle'] = 'Total Subscribed services';
+		$data['titleText'] = Lang::get('home/home.titleText');
+		
+		$data['subtitleText'] = Lang::get('home/home.subtitleText');
+		
+		$data['yAxisTitle'] = 'Total Subscribed services';
         // Show the page
         return View::make('site/home/index', array(
             'accounts' => $data
