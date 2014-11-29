@@ -46,8 +46,9 @@ class CloudAccountHelper
 		}
 	}
 	
-	public static function getAccountSummary($accounts)
+	public static function getAccountSummary()
 	{
+		$accounts = self::getAccountStatus();
 		$arr = '';
 		foreach($accounts as $account)
 		{
