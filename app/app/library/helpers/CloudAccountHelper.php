@@ -74,7 +74,7 @@ class CloudAccountHelper
 														  	
 														foreach($costData as $key => $value)
 														{
-															$drilldownSeries ->data[] = array(0 => $key, 1 => $value);
+															$drilldownSeries ->data = array(0 => $key, 1 => $value);
 														}													
 													}
 				//$arr[][Constants::READONLY_PROFILE] = array($account->name =>self::findCurrentCost($account)); break;
