@@ -11,16 +11,45 @@
 	        .labelType(labelType) //Configure what type of data to show in the label. Can be "key", "value" or "percent"
 	        .donut(donut)          //Turn on Donut mode. Makes pie chart look tasty!
 	        .donutRatio(0.5);     //Configure how big you want the donut hole size to be.
-
+	        var left_margin=650;
 	    	d3.select(selector)
 	       	.datum(data)
 	        .transition().duration(350)
 	        .call(chart);
 			d3.select(".nv-legendWrap")
-			.attr('transform', 'translate(-60,-120)');
+			.attr('transform', 'translate(0,-30)');
+
+
+			d3.select(".nv-series")
+			.attr('transform', 'translate('+left_margin+',0)');
+			d3.select(".nv-series:nth-child(2)")
+			.attr('transform', 'translate('+left_margin+',40)');
+			d3.select(".nv-series:nth-child(3)")
+			.attr('transform', 'translate('+left_margin+',80)');
+			d3.select(".nv-series:nth-child(4)")
+			.attr('transform', 'translate('+left_margin+',120)');
+			d3.select(".nv-series:nth-child(5)")
+			.attr('transform', 'translate('+left_margin+',160)');
+			d3.select(".nv-series:nth-child(6)")
+			.attr('transform', 'translate('+left_margin+',200)');
+			d3.select(".nv-series:nth-child(7)")
+			.attr('transform', 'translate('+left_margin+',240)');
+			d3.select(".nv-series:nth-child(8)")
+			.attr('transform', 'translate('+left_margin+',280)');
+			d3.select(".nv-series:nth-child(9)")
+			.attr('transform', 'translate('+left_margin+',320)');
+			d3.select(".nv-series:nth-child(10)")
+			.attr('transform', 'translate('+left_margin+',360)');
+			d3.select(".nv-series:nth-child(11)")
+			.attr('transform', 'translate('+left_margin+',400)');
+
+
 			d3.select(".nv-pieWrap")
-			.attr('transform', 'translate()');
+			.attr('transform', 'translate(-250,-75)');
+
 		  	return chart;
+
+		  
 		});
 };
 
