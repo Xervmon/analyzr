@@ -13,4 +13,26 @@
 		print_r($accounts);
 		
 		?>
+		
+		<div class="panel-body">
+                      <div class="col-md-6">
+                       <p class="chart1">
+							<svg style="height:500px;">
+							</svg>
+						</p>
+					</div>
+
+        </div>
 </div>
+
+<script src="{{asset('assets/js/nvd3/lib/d3.v2.min.js')}}"></script>
+<script src="{{asset('assets/js/nvd3/nv.d3.min.js')}}"></script>
+<script src="{{asset('assets/js/nvd3/lib/stream_layers.js')}}"></script>
+<script src="{{asset('assets/js/xervmon/charts.js')}}"></script>
+<link rel="stylesheet" href="{{asset('assets/css/nvd3/nv.d3.min.css')}}">
+<script>
+	$( document ).ready(function() 
+	{
+		multibar();
+	});
+</script>
