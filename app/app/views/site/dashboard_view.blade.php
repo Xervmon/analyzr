@@ -26,6 +26,7 @@
 <script src="{{asset('assets/js/xervmon/charts2.js')}}"></script>
 <script>
 var data = '{{json_encode($accounts)}}';
+
 	$( document ).ready(function() 
 	{
 		if (!$.isArray(data)) 
