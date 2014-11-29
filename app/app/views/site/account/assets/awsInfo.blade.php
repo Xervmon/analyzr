@@ -6,7 +6,7 @@
 <div class="page-header">
 	<div class="row">
 		<div class="col-md-9">
-			<h5>{{ $account->name }} : {{{ Lang::get('account/account.awsDetails') }}}</h5>
+			<h5><a href="{{ URL::to('account/'.$account->id.'/edit') }}">{{ $account->name }} </a> : {{{ Lang::get('account/account.awsInstanceDetails') }}}</h5>
 		</div>
 	</div>
 </div>
@@ -40,7 +40,7 @@
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_instances') }}}</strong>
 											<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -63,7 +63,7 @@
 										<div class="panel-body text-center">
 											<strong>{{{ ucfirst ( $key_is ) . ' Instances' }}}</strong>
 											<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -104,7 +104,7 @@
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_volumes') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -127,7 +127,7 @@
 										<div class="panel-body text-center">
 											<strong>{{{ ucfirst ( $key_is ) . ' Volumes' }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -169,7 +169,7 @@
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_secgroups') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -192,7 +192,7 @@
 										<div class="panel-body text-center">
 											<strong>{{{ ucfirst ( $key_is ) . ' SecGroups' }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -235,7 +235,7 @@
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_key_pairs') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -258,7 +258,7 @@
 										<div class="panel-body text-center">
 											<strong>{{{ ucfirst ( $key_is ) . ' Key Pairs' }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -299,7 +299,7 @@
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_rds') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -322,7 +322,7 @@
 										<div class="panel-body text-center">
 											<strong>{{{ ucfirst ( $key_is ) . ' RDS' }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -363,7 +363,7 @@
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_subnets') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -386,7 +386,7 @@
 										<div class="panel-body text-center">
 											<strong>{{{ ucfirst ( $key_is ) . ' Subnets' }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -427,7 +427,7 @@
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_vpc') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -450,7 +450,7 @@
 										<div class="panel-body text-center">
 											<strong>{{{ ucfirst ( $key_is ) . ' VPC' }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('account/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
 											</p>
 										</div>
 									</li>

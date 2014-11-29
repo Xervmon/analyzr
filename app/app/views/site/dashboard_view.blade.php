@@ -6,64 +6,68 @@
 	</div>
 </div>
 
-<div class="media-block">
-	<ul class="list-group">
+<div class="panel panel-default">
+       
 		@if(!empty($accounts)) 
 			@foreach ($accounts as $account)
+
+			<ul class="list-group">
 		  			<li class="list-group-item">
-						<div class="media">
+						<div class="panel-heading">
 							<p>
 								<a alt="{{ $account->name }}" title="{{ $account->name }}" href="{{ URL::to('account/'.$account->id.'/edit') }}" class="pull-left" href="#">
 								    <img title="{{ $account->name }}" class="media-object img-responsive" src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.'.$account->cloudProvider.'.logo')) }}" alt="{{ $account->name }}" />
 								</a> 
 							</p>
-							<form class="pull-right" method="post" action="{{ URL::to('account/' . $account->id . '/refresh') }}">
-								<!-- CSRF Token -->
-								<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-								<!-- ./ csrf token -->
-								<button type="submit" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-refresh"></span></button>
-							</form>
-							<div class="media-body">
+<!-- 							<form class="pull-right" method="post" action="{{ URL::to('account/' . $account->id . '/refresh') }}">
+ -->								<!-- CSRF Token -->
+<!-- 								<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+ -->								<!-- ./ csrf token -->
+								<!-- <button type="submit" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-refresh"></span></button>
+							</form> -->
 								
-								<h4 class="media-heading"> 
+								<h4> 
 									<a alt="{{ $account->name }}" title="{{ $account->name }}" href="{{ URL::to('account/'.$account->id.'/edit') }}" class="pull-left" href="#">
 									{{ String::title($account->name) }}
 									</a> 
 								</h4> 
 								| <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
 								@if($account -> profileType == Constants::READONLY_PROFILE)
-								| <span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
-								| <a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
-								| <a href="{{ URL::to('account/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
+								| <a href="{{ URL::to('assets/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
+								| <a href="{{ URL::to('assets/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
 
 								@else
 								<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
 								| 
 								<a href="{{ URL::to('security/' . $account->id . '/auditReports') }}"><span class="glyphicon glyphicon-lock"></span></a>
                                 @endif
-                                <p class="summary{{$account->id}}">
-									
-								</p>
-								<p class="chart{{$account->id}}">
-									<svg style="height:500px;width:800px">
-										
-									</svg>
-									
-								</p>
-								
-							</div>
-						</div>
+                         </div>      
 					</li>
+				</ul>
+					<div class="panel-body">
+                      <div class="col-md-12">
+                       <p class="chart{{$account->id}}">
+							<svg style="height:500px;">
+							</svg>
+						</p>
+						 <p class="summary{{$account->id}}">
+				                					
+						 </p>
+					</div>
+
+              </div>
 			@endforeach
 		@endif
-	</ul>
+</div>
+
 	@if(empty($accounts) || count($accounts) === 0) 
 		<div class="alert alert-info"> {{{ Lang::get('account/account.empty_accounts') }}}</div>
 	@endif
-</div>
+
 <div>
 <a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
 </div>
+
 <script src="{{asset('assets/js/nvd3/lib/d3.v2.min.js')}}"></script>
 <script src="{{asset('assets/js/nvd3/nv.d3.min.js')}}"></script>
 <script src="{{asset('assets/js/nvd3/lib/stream_layers.js')}}"></script>
@@ -94,21 +98,22 @@ $( document ).ready(function()
 	{
     	var url= urlTemp.replace('%ID%', accounts[index].id);
     	var selector = '.chart'+accounts[index].id + ' svg';
+    	console.log(selector);
     	$.ajax({
 		url:  url,
 		cache: false
-		}).done(function( response ) {
+		}).done(function( response ) {console.log(response);
 			if (!$.isArray(response)) {
 	        	response = JSON.parse(response);
 	        }
 	        if(response.status == 'error')
 	        {
-	        	selector.append(response.message); return;
+	        	$('.chart'+response.id).append(response.message); return;
 	        }
 	        str =   ' Last Updated :' + response.data['lastUpdated'] 
 	        	    + '| Month :' + response.data['month'] 
 	        	    + '| Total :' + response.data['total'] 
-	        $('.summary'+accounts[index]).append(str);
+	        $('.summary'+response.id).append(str);
 			pieOrDonut(response.chart, selector, true, 'percent');
 		});
    }

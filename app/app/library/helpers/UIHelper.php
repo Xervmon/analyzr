@@ -191,14 +191,13 @@ Inverse	<span class="label label-inverse">Inverse</span>
                 	'</thead>';
 		 	foreach($data as $row)
 			{
-				$str .= '<tr>';
-				$str .= '<td>' . $row -> Command .'</td>';
+				$str   .= '<tr>';
+				$str   .= '<td>' . $row -> Command .'</td>';
 				//$str .= '<td>' . $row -> Id .'</td>';
-				$str .= '<td>' . $row -> Image .'</td>';
-				$str .= '<td>' . self::getPorts($row->Ports) .'</td>';
-				$str .= '<td>' . StringHelper::timeAgo($row -> Created) .'</td>';
-				
-				$str .= '</tr>';
+				$str   .= '<td>' . $row -> Image .'</td>';
+				$str   .= '<td>' . self::getPorts($row->Ports) .'</td>';
+				$str   .= '<td>' . StringHelper::timeAgo($row -> Created) .'</td>';				
+				$str   .= '</tr>';
 				
 			}
 			
@@ -246,11 +245,33 @@ Inverse	<span class="label label-inverse">Inverse</span>
 		if(isset($data->status) && $data->status == 'OK')
 		{
 			$costData = (array) $data->cost_data;
+
+			$i=0;		
 			foreach($costData as $row => $val)
 			{
-				$str .= $row . ' : ' . $val. ' | ';
-			}
-			$str .= 'Total :' . $data->total .'<br>';
+				$str .= '<div class="col-md-2 column">';
+				if($i==0)
+				$str .= '<div class="panel panel-default">';
+				elseif($i==1)
+				$str .= '<div class="panel panel-primary">';
+				elseif($i==2)
+				$str .= '<div class="panel panel-danger">';
+				elseif($i==3)
+				$str .= '<div class="panel panel-warning">';
+				elseif($i==4)
+				$str .= '<div class="panel panel-success">';
+				elseif($i==5) {
+				$str .= '<div class="panel panel-info">';
+					$i=-1;
+				}
+				$str .= '<div class="panel-heading"><h3 class="panel-title text-center"><b>'. $val .'</b></h3></div>';
+				$str .= '<div class="panel-body" style="min-height:8em">'. $row .'</div>';
+				$str .= '</div>';
+				$str .= '</div>';
+				$i++;
+				//$str .= $row . ' : ' . $val. ' | ';
+			}		
+			$str .= '<b>Total :' . $data->total .'</b><br>';
 			$str .= '<span class="glyphicon glyphicon-calendar"></span> Current Month : '.$data->month;
 			$str .= '<br/><span class="glyphicon glyphicon-calendar"></span>Current Month : '.StringHelper::timeAgo($data->lastUpdate);
 		}
@@ -296,5 +317,62 @@ Inverse	<span class="label label-inverse">Inverse</span>
 			
 		}
 	}	
+	
+	public static function getServicesStatus($account)
+	{
+		$jobs = empty($account->jobs) ? '' : $account->jobs;
+		$str = '';	
+		$new_prob = array();
+		if(!empty($jobs))
+		{
+			foreach ($jobs as $array) {
+				if (!array_key_exists($array->operation, $new_prob)) {
+					$new_prob[$array->operation] = $array;
+				}
+			}
+			$jobs = $new_prob;
+
+			$str = '<div class="table-responsive">  <table class="table table-bordered">';
+
+			
+			
+			foreach($jobs as $job)
+			{
+				$temp_url = URL::full().'/'.$job->cloudAccountId.'/refresh';
+				$str .= '<tr>';
+				if($job -> operation==Lang::get('account/account.create_billing'))
+				$str .= '<td> <i class="fa fa-cogs"></i> ' . $job -> operation. '</td>';	
+				elseif($job -> operation==Lang::get('account/account.create_services'))
+				 $str .= '<td> <i class="fa fa-credit-card"></i> ' . $job -> operation. '</td>';
+				else
+					$str .= '<td> <i class="fa fa-lock"></i> ' . $job -> operation. '</td>';
+
+								
+				$str .= '<td>' . self::getLabel($job -> status). '</td>';				
+				if(in_array($job->status, array(Lang::get('account/account.STATUS_IN_PROCESS'), 
+																Lang::get('account/account.STATUS_STARTED'))))
+				{
+					$str .= '<td><a  href="'.$temp_url.'"> <span class="glyphicon glyphicon-refresh"></span> </a></td>';
+				}
+								
+				$str .= '</tr>';
+				
+			}
+			
+			$str .= ' </table> </div>';
+		}
+		return $str;
+		/*$jobData = ProcessJob::where('user_id', Auth::id())
+						-> where('cloudAccountId', $account->id) 
+						-> orderBy('created_at', 'desc')
+						-> get();
+		$str = '';				
+		foreach($jobData as $row)
+		{
+			$str .= ucfirst($row->operation) . ':' . self::getLabel($row->status) . '<br/>';
+		}				
+		return $str;*/
+		
+	}
 
 }

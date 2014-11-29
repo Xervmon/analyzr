@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://dev.xdocker.org',
+	'url' => 'http://awsusage.xdocker.org',
 
 	/*
 	|--------------------------------------------------------------------------
