@@ -28,10 +28,10 @@
 var data = '{{json_encode($accounts)}}';
 	$( document ).ready(function() 
 	{
-		if (!$.isArray(data)) 
+		/*if (!$.isArray(data)) 
 		{
 	    	data = JSON.parse(data);
-	    }
+	    }*/
 	    columnDrilldown('.chart1', 'column', data);
 	});
 </script>
