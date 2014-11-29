@@ -43,7 +43,7 @@ class HomeController extends BaseController {
         }
         // Show the page
         return View::make('site/home/index', array(
-            'accounts' => $data
+            'accounts' => $accounts
         ));
     }
 }
