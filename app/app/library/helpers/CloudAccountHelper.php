@@ -79,9 +79,10 @@ class CloudAccountHelper
 													}
 				//$arr[][Constants::READONLY_PROFILE] = array($account->name =>self::findCurrentCost($account)); break;
 			}
+			$arr[]=  $drilldownSeries;
 			
 		}
-		return array('series' => $series, 'drilldownSeries' => $drilldownSeries);
+		return array('series' => $series, 'drilldownSeries' => $arr);
 	}
 	
 	public static function findCurrentCost($account)
