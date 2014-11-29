@@ -430,11 +430,11 @@ class AccountController extends BaseController {
     public function postDelete($id) {
     		
     	//Delete the jobs for the account
-    	Log:info('Deleting the jobs for ' . $id .' for ' . Auth::user()->username.' from Process Job');	
+    	Log::info('Deleting the jobs for ' . $id .' for ' . Auth::user()->username.' from Process Job');	
     	ProcessJob::where('user_id', Auth::id())->where('cloudAccountId', $id)->delete();
     		
     	CloudAccount::where('id', $id)->where('user_id', Auth::id())->delete();
-        Log:info('Deleting the cloud account for ' . $id .' for ' . Auth::user()->username);	
+        Log::info('Deleting the cloud account for ' . $id .' for ' . Auth::user()->username);	
 		
         // Was the comment post deleted?
         $account = CloudAccount::where('user_id', Auth::id())->find($id);
