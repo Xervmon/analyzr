@@ -130,7 +130,7 @@ multibar = function()
     chart.yAxis
         .tickFormat(d3.format(',.1f'));
 
-    d3.select('#chart1 svg')
+    d3.select('.chart1 svg')
         .datum(exampleData())
         .call(chart);
 
