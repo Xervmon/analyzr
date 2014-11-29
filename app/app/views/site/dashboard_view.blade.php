@@ -24,7 +24,7 @@
     </div>
 </div>
 
-<script src="{{asset('assets/js/Highcharts-4.0.4/js/highcharts-all.js')}}"></script>
+<script src="{{asset('assets/js/Highcharts-4.0.4/js/highcharts.js')}}"></script>
 <script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/exporting.js')}}"></script>
 <script src="{{asset('assets/js/xervmon/charts2.js')}}"></script>
 <script>
