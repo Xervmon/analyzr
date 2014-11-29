@@ -1,10 +1,9 @@
-
-//stackedColumnChart = function (selector, type, data)
-;stackedColumnChart = function (selector)
+;stackedColumnChart = function (selector, columnType, data)
+//;stackedColumnChart = function (selector)
 {
     $(selector).highcharts({
         chart: {
-            type: type
+            type: columnType
         },
         title: {
             text: data.titleText
