@@ -14,14 +14,14 @@
 		
 		?>
 		
-		<div class="panel-body">
-                      <div class="col-md-6">
+	<div class="panel-body">
+    	<div class="col-md-6">
                        <p class="chart1">
 							
-						</p>
+					   </p>
 					</div>
 
-        </div>
+    </div>
 </div>
 
 <script src="{{asset('assets/js/Highcharts-4.0.4/js/highcharts-all.js')}}"></script>
@@ -35,6 +35,6 @@ var data = '{{json_encode($accounts)}}';
 		{
 	    	data = JSON.parse(data);
 	    }
-	    stackedColumnChart($('.chart1'));
+	    stackedColumnChart('.chart1');
 	});
 </script>
