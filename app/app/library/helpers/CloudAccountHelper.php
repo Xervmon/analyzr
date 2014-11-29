@@ -60,15 +60,14 @@ class CloudAccountHelper
 		$arr = '';
 		foreach($accounts as $account)
 		{
-			
-			
 			switch($account->profileType)
 			{
 				case Constants::READONLY_PROFILE : 
 													$currentCost = self::findCurrentCost($account);
 													if($currentCost['status'] == 'OK')
 													{
-														$series = array($account->name .'-' .Constants::READONLY_PROFILE => $currentCost['total']);	
+														array_push($series, array(strval($account->name .'-' .Constants::READONLY_PROFILE) => $currentCost['total']));
+														
 														$costData = $currentCost['cost_data'];
 														$arr = '';
 														$drilldownSeries['id'] = $account->name .'-' .Constants::READONLY_PROFILE;
