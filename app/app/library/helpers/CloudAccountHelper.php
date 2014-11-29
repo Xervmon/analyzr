@@ -83,7 +83,7 @@ class CloudAccountHelper
 			}
 			
 		}
-		return array('series' => $series, 'drilldownSeries' => $arr);
+		return array('series' => $series, 'drilldownSeries' => $drilldownSeries);
 	}
 	
 	public static function findCurrentCost($account)
