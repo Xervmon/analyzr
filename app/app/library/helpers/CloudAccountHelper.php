@@ -68,7 +68,7 @@ class CloudAccountHelper
 													$currentCost = self::findCurrentCost($account);
 													if($currentCost['status'] == 'OK')
 													{
-														$series[] = array($account->name .'-' .Constants::READONLY_PROFILE => $currentCost['total']);	
+														$series = array($account->name .'-' .Constants::READONLY_PROFILE => $currentCost['total']);	
 														$costData = $currentCost['cost_data'];
 														$arr = '';
 														foreach($costData as $key => $value)
