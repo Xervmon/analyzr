@@ -46,7 +46,7 @@ class HomeController extends BaseController {
 		
 		$data['subtitleText'] = Lang::get('home/home.subtitleText');
 		
-		$data['yAxisTitle'] = 'Total Subscribed services';
+		$data['yAxisTitle'] = Lang::get('home/home.yAxisTitle');
         // Show the page
         return View::make('site/home/index', array(
             'accounts' => $data
