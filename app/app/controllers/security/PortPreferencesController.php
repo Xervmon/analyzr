@@ -93,6 +93,7 @@ class PortPreferencesController extends BaseController {
 	            $portPreference->save();
 
 				$account = CloudAccount::where('user_id', Auth::id())->find($portPreference -> cloudAccountId);
+				$processJobLib = new ProcessJobLib();
 				$ret = $processJobLib->process($account, $portPreference);
 
 				return Redirect::intended('security/portPreferences')->with('success', Lang::get('security/portPreferences.portPreference_updated'));
