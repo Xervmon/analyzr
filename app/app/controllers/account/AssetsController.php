@@ -48,6 +48,19 @@ class AssetsController extends BaseController {
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
 		return View::make('site/account/assets/securityGroups', array('account' => $account ));
 	}
+	
+	public function getSecurityGroupsData($id)
+	{
+		UtilHelper::check();
+		$account = CloudAccount::where('user_id', Auth::id())->find($id);
+		$securityGroups = CloudProvider::getSecurityGroups('getSecurityGroups', $id, '');
+		
+		$groups = $this->flatten($securityGroups);
+		
+		print json_encode($groups);
+	}
+	
+	
 
 	
 	public function AwsInfo($id)

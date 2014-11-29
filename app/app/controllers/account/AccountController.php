@@ -368,17 +368,6 @@ class AccountController extends BaseController {
 		return $markup .= '</table>';
 	}
 	
-	public function getSecurityGroupsData($id)
-	{
-		UtilHelper::check();
-		$account = CloudAccount::where('user_id', Auth::id())->find($id);
-		$securityGroups = CloudProvider::getSecurityGroups('getSecurityGroups', $id, '');
-		
-		$groups = $this->flatten($securityGroups);
-		
-		print json_encode($groups);
-	}
-	
 	public function getChartData($id)
 	{
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
