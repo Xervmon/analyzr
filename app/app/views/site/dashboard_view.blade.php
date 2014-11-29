@@ -19,12 +19,12 @@
 								    <img title="{{ $account->name }}" class="media-object img-responsive" src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.'.$account->cloudProvider.'.logo')) }}" alt="{{ $account->name }}" />
 								</a> 
 							</p>
-							<form class="pull-right" method="post" action="{{ URL::to('account/' . $account->id . '/refresh') }}">
-								<!-- CSRF Token -->
-								<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-								<!-- ./ csrf token -->
-								<button type="submit" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-refresh"></span></button>
-							</form>
+<!-- 							<form class="pull-right" method="post" action="{{ URL::to('account/' . $account->id . '/refresh') }}">
+ -->								<!-- CSRF Token -->
+<!-- 								<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+ -->								<!-- ./ csrf token -->
+								<!-- <button type="submit" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-refresh"></span></button>
+							</form> -->
 								
 								<h4> 
 									<a alt="{{ $account->name }}" title="{{ $account->name }}" href="{{ URL::to('account/'.$account->id.'/edit') }}" class="pull-left" href="#">
@@ -45,24 +45,15 @@
 					</li>
 				</ul>
 					<div class="panel-body">
-                      <div class="col-md-6">
+                      <div class="col-md-12">
                        <p class="chart{{$account->id}}">
 							<svg style="height:500px;">
 							</svg>
 						</p>
-					</div>
-                <div class="col-md-2 column" >
-                    <div class="list-group">
-                        <div class="list-group-item" style="margin-top:-15px;height:12em;">
-                              <p class="summary{{$account->id}}">
+						 <p class="summary{{$account->id}}">
 				                					
-							  </p>
-                        </div>
-                    </div>
-                </div>   
-                 <div class="col-md-4">
-                      
-                  </div>
+						 </p>
+					</div>
 
               </div>
 			@endforeach
@@ -74,6 +65,8 @@
 	@endif
 
 <div>
+<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
+</div>
 
 <script src="{{asset('assets/js/nvd3/lib/d3.v2.min.js')}}"></script>
 <script src="{{asset('assets/js/nvd3/nv.d3.min.js')}}"></script>
@@ -105,16 +98,17 @@ $( document ).ready(function()
 	{
     	var url= urlTemp.replace('%ID%', accounts[index].id);
     	var selector = '.chart'+accounts[index].id + ' svg';
+    	console.log(selector);
     	$.ajax({
 		url:  url,
 		cache: false
-		}).done(function( response ) {
+		}).done(function( response ) {console.log(response);
 			if (!$.isArray(response)) {
 	        	response = JSON.parse(response);
 	        }
 	        if(response.status == 'error')
 	        {
-	        	selector.append(response.message); return;
+	        	$('.chart'+response.id).append(response.message); return;
 	        }
 	        str =   ' Last Updated :' + response.data['lastUpdated'] 
 	        	    + '| Month :' + response.data['month'] 
