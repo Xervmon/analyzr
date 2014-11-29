@@ -39,7 +39,7 @@ class HomeController extends BaseController {
 			//$data = CloudAccountHelper::getAccountSummary();
 		
         } else {
-            $data = array();
+            $accounts = array();
         }
         // Show the page
         return View::make('site/home/index', array(
