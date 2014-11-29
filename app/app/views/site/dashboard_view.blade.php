@@ -33,6 +33,7 @@
 <script>
 	$( document ).ready(function() 
 	{
+		console.log('before chart');
 		multibar();
 	});
 </script>
