@@ -55,7 +55,7 @@ class CloudAccountHelper
 	public static function getChartData($accounts)
 	{
 		$xAxisCategories = '';
-		$series = '';
+		$series [];
 		$drilldownSeries = '';
 		$arr = '';
 		foreach($accounts as $account)
