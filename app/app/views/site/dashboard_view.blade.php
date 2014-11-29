@@ -15,7 +15,7 @@
 		?>
 		
 	<div class="panel-body">
-    	<div class="col-md-6">
+    	<div class="col-md-12">
                        <p class="chart1">
 							
 					   </p>
@@ -26,6 +26,8 @@
 
 <script src="{{asset('assets/js/Highcharts-4.0.4/js/highcharts.js')}}"></script>
 <script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/exporting.js')}}"></script>
+<script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/data.js')}}"></script>
+<script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/drilldown.js')}}"></script>
 <script src="{{asset('assets/js/xervmon/charts2.js')}}"></script>
 <script>
 var data = '{{json_encode($accounts)}}';
@@ -35,6 +37,6 @@ var data = '{{json_encode($accounts)}}';
 		{
 	    	data = JSON.parse(data);
 	    }
-	    stackedColumnChart('.chart1', 'column', data);
+	    columnDrilldown('.chart1', 'column', data);
 	});
 </script>

@@ -43,7 +43,7 @@ class HomeController extends BaseController {
         }
 		
 		$data['titleText'] = 'Current Spend across all subscribed services ';
-		$data['yAxisTitle'] = 'Total Subscribed services';
+		//$data['yAxisTitle'] = 'Total Subscribed services';
         // Show the page
         return View::make('site/home/index', array(
             'accounts' => $data

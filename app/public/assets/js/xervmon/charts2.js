@@ -1,61 +1,48 @@
-;stackedColumnChart = function (selector, columnType, data)
-//;stackedColumnChart = function (selector)
+;columnDrilldown = function (selector, columnType, data)
 {
-    $(selector).highcharts({
-        chart: {
-            type: columnType
-        },
-        title: {
-            text: data.titleText
-        },
-        xAxis: {
-            categories: data.xAxisCategories
-            //['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: data.yAxisTitle
-                //'Total fruit consumption'
-            },
-            stackLabels: {
-                enabled: true,
-                style: {
-                    fontWeight: 'bold',
-                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
-                }
-            }
-        },
-        legend: {
-            align: 'right',
-            x: -70,
-            verticalAlign: 'top',
-            y: 20,
-            floating: true,
-            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
-            borderColor: '#CCC',
-            borderWidth: 1,
-            shadow: false
-        },
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.x + '</b><br/>' +
-                    this.series.name + ': ' + this.y + '<br/>' +
-                    'Total: ' + this.point.stackTotal;
-            }
-        },
-        plotOptions: {
-            column: {
-                stacking: 'normal',
-                dataLabels: {
-                    enabled: true,
-                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
-                    style: {
-                        textShadow: '0 0 3px black, 0 0 3px black'
+	$(selector).highcharts({
+                chart: {
+                    type: columnType
+                },
+                title: {
+                    text: data.titleText
+                },
+                subtitle: {
+                    text: 'Click the columns to view versions. Source: netmarketshare.com.'
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total percent market share'
                     }
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:.1f}%'
+                        }
+                    }
+                },
+
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+                },
+
+                series: [{
+                    name: 'Accounts',
+                    colorByPoint: true,
+                    data: data.series
+                }],
+                drilldown: {
+                    series: data.drilldownSeries
                 }
-            }
-        },
-        series: data.series
-    });
+            });
 };

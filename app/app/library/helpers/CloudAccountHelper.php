@@ -56,41 +56,34 @@ class CloudAccountHelper
 	{
 		$xAxisCategories = '';
 		$series = '';
-		/*
-		 * series: [{
-            name: 'John',
-            data: [5, 3, 4, 7, 2]
-        }, {
-            name: 'Jane',
-            data: [2, 2, 3, 2, 1]
-        }, {
-            name: 'Joe',
-            data: [3, 4, 4, 2, 5]
-        }]
-		 * */
+		$drilldownSeries = '';
+		$arr = '';
 		foreach($accounts as $account)
 		{
-			$obj = '';
+			
+			
 			switch($account->profileType)
 			{
 				case Constants::READONLY_PROFILE : 
-													$xAxisCategories[] = $account->name .'-' .Constants::READONLY_PROFILE;
 													$currentCost = self::findCurrentCost($account);
 													if($currentCost['status'] == 'OK')
 													{
+														$series[] = array($account->name .'-' .Constants::READONLY_PROFILE => $currentCost['total']);	
 														$costData = $currentCost['cost_data'];
+														$arr = '';
 														foreach($costData as $key => $value)
 														{
-															$obj['name'][] = $key;
-															$obj['data'][$key] = $value;
-														}
+															$drilldownSeries['id'] = $account->name .'-' .Constants::READONLY_PROFILE;
+															$drilldownSeries['name'] = $account->name .'-' .Constants::READONLY_PROFILE;
+														  	$drilldownSeries['data'][] = array(0 => $key, 1 => $value);
+															$arr[] = $drilldownSeries;
+														}													
 													}
 				//$arr[][Constants::READONLY_PROFILE] = array($account->name =>self::findCurrentCost($account)); break;
 			}
-			$series[] = $obj;
 			
 		}
-		return array('xAxisCategories' => $xAxisCategories, 'series' => $series);
+		return array('series' => $series, 'drilldownSeries' => $arr);
 	}
 	
 	public static function findCurrentCost($account)
