@@ -53,7 +53,7 @@ class CloudAccountHelper
 		{
 			switch($account->profileType)
 			{
-				case Constants::BILLING : $arr[Constants::BILLING][] = array($account->name =>self::findAllCurrentChartsCost($account)); break;
+				case Constants::READONLY_PROFILE : $arr[Constants::BILLING][] = array($account->name =>self::findAllCurrentChartsCost($account)); break;
 			}
 			
 		}
