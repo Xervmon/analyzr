@@ -81,7 +81,7 @@ class CloudAccountHelper
 														$costData = $currentCost['cost_data'];
 														foreach($costData as $key => $value)
 														{
-															$obj['name'] = $key;
+															$obj['name'][] = $key;
 															$obj['data'][] = $value;
 														}
 													}
