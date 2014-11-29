@@ -8,11 +8,6 @@
 
 <div class="panel panel-default">
        
-		<?php
-		echo '<pre>';
-		print_r($accounts);
-		
-		?>
 		
 	<div class="panel-body">
     	<div class="col-md-12">
