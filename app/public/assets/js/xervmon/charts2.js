@@ -1,5 +1,6 @@
 ;columnDrilldown = function (selector, columnType, data)
 {
+	hs.showCredits = false;
 	console.log(data.series);
 	console.log(data.drilldownSeries);
 	$(selector).highcharts({
