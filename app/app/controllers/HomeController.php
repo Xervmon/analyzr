@@ -35,8 +35,8 @@ class HomeController extends BaseController {
      */
     public function getIndex() {
         if (Auth::check()) {
-           // $accounts = CloudAccount::where('user_id', Auth::id())->paginate(10);
-			$accounts = CloudAccountHelper::getAccountSummary();
+            $accounts = CloudAccount::where('user_id', Auth::id())->get();
+			$accounts = CloudAccountHelper::getAccountSummary($accounts);
 		
         } else {
             $accounts = array();
