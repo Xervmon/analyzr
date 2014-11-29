@@ -177,6 +177,10 @@ Route::group(array(
     Route::get('assets/{account}/ebsInfo', 'AssetsController@ebsInfo');
     Route::get('assets/{account}/sgInfo', 'AssetsController@sgInfo');
     Route::get('assets/{account}/kpInfo', 'AssetsController@kpInfo');
+	Route::any('assets/{account}/SecurityGroupsData', 'AssetsController@getSecurityGroupsData');
+	Route::any('Assets/{account}/Summary', 'AssetsController@getSummary');
+	
+	
 	
 	Route::any('security/portPreferences/', 'PortPreferencesController@getIndex'); 
 	Route::get('security/portPreferences/create', 'PortPreferencesController@getCreate');
@@ -199,11 +203,9 @@ Route::group(array(
 	Route::any('enginelog/', 'EnginelogController@getIndex'); 
 	Route::get('account/{account}/log', 'AccountController@getLogs');
 	Route::get('account/{account}/Collection', 'AccountController@Collection');
-	Route::any('account/{account}/SecurityGroupsData', 'AccountController@getSecurityGroupsData');
+	
 	Route::any('account/{account}/ChartData', 'AccountController@getChartData');
 	Route::any('account/{account}/CollectionData', 'AccountController@getCollectionData');
-	
-	Route::any('Assets/{account}/Summary', 'AssetsController@getSummary');
 	
 	Route::any('EC2Products/', 'AWSProductsController@getEC2Products');
 	Route::get('ServiceStatus/', 'WebserviceController@getIndex');

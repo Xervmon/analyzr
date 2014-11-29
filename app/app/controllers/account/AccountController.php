@@ -324,61 +324,6 @@ class AccountController extends BaseController {
 	}
 	
 	
-	private function flatten($securityGroups)
-	{
-		$arr = '';
-		foreach($securityGroups as $group)
-		{
-			$stdClass = new stdClass();
-			$stdClass-> Group = $group['GroupId'] .'-'.$group['GroupName'] . '-'.$group['Description'];
-			$stdClass -> IPPermissions = $this->getTable($group['IpPermissions']);
-			$arr[] = $stdClass;
-		}
-		return $arr;
-	}
-
-	private function getTable($ipPermissions)
-	{
-	 	$markup = '<table id="exportTableid" class="table table-striped table-bordered">';
-		foreach($ipPermissions as $row)
-		{
-			$markup .= '<tr>';
-			foreach($row as $name => $val)
-			{
-				$markup .= '<td>';
-				if(is_array($val))
-				{
-					$markup .= $name .' = ' . json_encode($val);
-				}
-				else {
-					if(in_array($val, array(22, 80)))
-					{
-						$markup .= UIHelper::getLabel2('danger', $name .' = ' . $val);	
-					}
-					else 
-					{
-						$markup .= UIHelper::getLabel2('OK', $name .' = ' . $val);	
-					}
-				}
-				$markup .= '</td>';
-				
-			}
-			$markup .= '</tr>';
-		}
-		return $markup .= '</table>';
-	}
-	
-	public function getSecurityGroupsData($id)
-	{
-		UtilHelper::check();
-		$account = CloudAccount::where('user_id', Auth::id())->find($id);
-		$securityGroups = CloudProvider::getSecurityGroups('getSecurityGroups', $id, '');
-		
-		$groups = $this->flatten($securityGroups);
-		
-		print json_encode($groups);
-	}
-	
 	public function getChartData($id)
 	{
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
@@ -417,6 +362,24 @@ class AccountController extends BaseController {
 	  														   'month' => $data['month'])));
 	  
 	}
+	
+	public function getAccountSummary()
+	{
+		$accounts = $account = CloudAccount::where('user_id', Auth::id())->get();
+		return CloudAccountHelper::getAccountSummary($accounts);
+	}
+
+	
+	public function getMultibar($data)
+	{
+		foreach($data as $row)
+		{
+			switch($row[Constants::READONLY_PROFILE])
+			{
+				//case 
+			}
+		}
+	}
 
 	
 	 /** 
@@ -429,8 +392,13 @@ class AccountController extends BaseController {
      */
     public function postDelete($id) {
     		
+    	//Delete the jobs for the account
+    	Log::info('Deleting the jobs for ' . $id .' for ' . Auth::user()->username.' from Process Job');	
+    	ProcessJob::where('user_id', Auth::id())->where('cloudAccountId', $id)->delete();
+    		
     	CloudAccount::where('id', $id)->where('user_id', Auth::id())->delete();
-        
+        Log::info('Deleting the cloud account for ' . $id .' for ' . Auth::user()->username);	
+		
         // Was the comment post deleted?
         $account = CloudAccount::where('user_id', Auth::id())->find($id);
         if (empty($account)) {
