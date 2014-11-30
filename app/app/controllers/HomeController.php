@@ -34,24 +34,26 @@ class HomeController extends BaseController {
      * @return View
      */
 
-        public function getIndex() {
-        if (Auth::check()) {
-            $accounts = CloudAccount::where('user_id', Auth::id())->get();
-            $data = CloudAccountHelper::getAccountSummary();
-        
-        } else {
-            $data = array();
-        }
+        public function getIndex() 
+        {
+        	if (Auth::check()) 
+        	{
+            	$chartDataForAccounts = CloudAccountHelper::getAccountSummary();
+        	} 
+        	else 
+        	{
+        		$chartDataForAccounts = array();
+        	}
 
               
-        $data['titleText']    = Lang::get('home/home.titleText');        
-        $data['subtitleText'] = Lang::get('home/home.subtitleText');        
-        $data['yAxisTitle']   = Lang::get('home/home.yAxisTitle');
-        $data['account']      = Lang::get('home/home.account');
+        $chartDataForAccounts['titleText']    = Lang::get('home/home.titleText');        
+        $chartDataForAccounts['subtitleText'] = Lang::get('home/home.subtitleText');        
+        $chartDataForAccounts['yAxisTitle']   = Lang::get('home/home.yAxisTitle');
+        $chartDataForAccounts['account']      = Lang::get('home/home.account');
 
         // Show the page
         return View::make('site/home/index', array(
-            'accounts' => $data
+            'chartDataForAccounts' => $chartDataForAccounts
         ));
     }
 
