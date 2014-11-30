@@ -1,8 +1,14 @@
 ;columnDrilldown = function (selector, columnType, data)
 {
-	//hs.showCredits = false;
-	console.log(data.series);
-	console.log(data.drilldownSeries);
+	var brandsData = [];
+	            $.each(data.series, function (name, y) {
+                brandsData.push({
+                    name: name,
+                    y: y,
+                    drilldown: name //versions[name] ? name : null
+                });
+            });
+ 
 	$(selector).highcharts({
                 chart: {
                     type: columnType
@@ -31,24 +37,24 @@
                     series: {
                         borderWidth: 0,
                         dataLabels: {
-                            enabled: true,
-                            format: '{point.y:.1f}%'
+                            format: '{point.y:.1f}'
                         }
                     }
                 },
 
                 tooltip: {
                     headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> of total<br/>'
                 },
 
                 series: [{
-                    name: 'Accounts',
+                    name: data.account,
                     colorByPoint: true,
-                    data: data.series
+                    data: brandsData
                 }],
                 drilldown: {
                     series: data.drilldownSeries
                 }
             });
 };
+

@@ -37,8 +37,57 @@ var data = '{{json_encode($accounts)}}';
 	});
 	
 	//var data = '{"series":{"Amazon Account-ReadOnly Profile":2265.75},"drilldownSeries":[{"id":"Amazon Account-ReadOnly Profile","name":"Amazon Account-ReadOnly Profile","data":[["Amazon Simple Email Service",0.01],["Amazon Virtual Private Cloud",35.65],["APN Annual Program Fee",2000],["Amazon Simple Storage Service",145.37],["Amazon RDS Service",5.16],["Amazon Simple Queue Service",0],["Amazon Simple Notification Service",0],["Amazon Elastic Compute Cloud",78.79],["AWS Key Management Service",0],["Amazon SimpleDB",0],["AWS Data Transfer",0.77]]}],"titleText":"Current Spend across all subscribed services","subtitleText":"Click the columns to view versions.","yAxisTitle":"Total Subscribed services"}';
+<<<<<<< HEAD
 	
 
 	
 });
+=======
+
+/*  	$(function () { 
+
+                   
+  chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Basic drilldown'
+        },
+        xAxis: {
+            type: 'category'
+        },
+
+        legend: {
+            enabled: false
+        },
+
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+
+        series: [{
+            name: 'Things',
+            colorByPoint: true,
+            data: [{
+                name: 'Amazon Account',
+                y: json.series["Amazon Account-ReadOnly Profile"],
+                drilldown: 'Amazon Account-ReadOnly Profile'
+            }]
+        }],
+        drilldown: {
+            series: [{
+                id: json.drilldownSeries[0].id,
+                data: json.drilldownSeries[0].data
+					 
+					
+            }]
+        }
+    });
+});*/
+>>>>>>> 38cbe208797eca4bb41f156bb844e3a22db2eefe
 </script>
