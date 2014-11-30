@@ -8,114 +8,80 @@
 
 <div class="panel panel-default">
        
-		@if(!empty($accounts)) 
-			@foreach ($accounts as $account)
-
-			<ul class="list-group">
-		  			<li class="list-group-item">
-						<div class="panel-heading">
-							<p>
-								<a alt="{{ $account->name }}" title="{{ $account->name }}" href="{{ URL::to('account/'.$account->id.'/edit') }}" class="pull-left" href="#">
-								    <img title="{{ $account->name }}" class="media-object img-responsive" src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.'.$account->cloudProvider.'.logo')) }}" alt="{{ $account->name }}" />
-								</a> 
-							</p>
-<!-- 							<form class="pull-right" method="post" action="{{ URL::to('account/' . $account->id . '/refresh') }}">
- -->								<!-- CSRF Token -->
-<!-- 								<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
- -->								<!-- ./ csrf token -->
-								<!-- <button type="submit" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-refresh"></span></button>
-							</form> -->
-								
-								<h4> 
-									<a alt="{{ $account->name }}" title="{{ $account->name }}" href="{{ URL::to('account/'.$account->id.'/edit') }}" class="pull-left" href="#">
-									{{ String::title($account->name) }}
-									</a> 
-								</h4> 
-								| <span class="glyphicon glyphicon-calendar"></span> <strong>Created Date</strong>:{{{ $account->created_at }}}
-								@if($account -> profileType == Constants::READONLY_PROFILE)
-								| <a href="{{ URL::to('assets/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
-								| <a href="{{ URL::to('assets/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
-
-								@else
-								<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
-								| 
-								<a href="{{ URL::to('security/' . $account->id . '/auditReports') }}"><span class="glyphicon glyphicon-lock"></span></a>
-                                @endif
-                         </div>      
-					</li>
-				</ul>
-					<div class="panel-body">
-                      <div class="col-md-12">
-                       <p class="chart{{$account->id}}">
-							<svg style="height:500px;">
-							</svg>
-						</p>
-						 <p class="summary{{$account->id}}">
-				                					
-						 </p>
+		
+	<div class="panel-body">
+    	<div class="col-md-12">
+                       <p class="chart1">
+							
+					   </p>
 					</div>
 
-              </div>
-			@endforeach
-		@endif
+    </div>
 </div>
 
-	@if(empty($accounts) || count($accounts) === 0) 
-		<div class="alert alert-info"> {{{ Lang::get('account/account.empty_accounts') }}}</div>
-	@endif
-
-<div>
-<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
-</div>
-
-<script src="{{asset('assets/js/nvd3/lib/d3.v2.min.js')}}"></script>
-<script src="{{asset('assets/js/nvd3/nv.d3.min.js')}}"></script>
-<script src="{{asset('assets/js/nvd3/lib/stream_layers.js')}}"></script>
-<script src="{{asset('assets/js/xervmon/charts.js')}}"></script>
-<link rel="stylesheet" href="{{asset('assets/css/nvd3/nv.d3.min.css')}}">
+<script src="{{asset('assets/js/Highcharts-4.0.4/js/highcharts.js')}}"></script>
+<script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/exporting.js')}}"></script>
+<script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/data.js')}}"></script>
+<script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/drilldown.js')}}"></script>
+<script src="{{asset('assets/js/xervmon/charts2.js')}}"></script>
 <script>
-<?php
-	$accArr = '';
-	foreach($accounts as $account)
+var data = '{{json_encode($accounts)}}';
+/*
+	$( document ).ready(function() 
 	{
-		if($account->profileType == Constants::READONLY_PROFILE)
+		if (!$.isArray(data)) 
 		{
-			$accArr[] = $account;
-		}
-	}
-	$urlTemp = URL::to('account/%ID%/ChartData');
-?>
-var accounts = '<?=json_encode($accArr)?>';
-var urlTemp = '<?=$urlTemp;?>';
+	    	data = JSON.parse(data);
+	    }
+	    columnDrilldown('.chart1', 'column', data);
+	});*/
+	
+	//var data = '{"series":{"Amazon Account-ReadOnly Profile":2265.75},"drilldownSeries":[{"id":"Amazon Account-ReadOnly Profile","name":"Amazon Account-ReadOnly Profile","data":[["Amazon Simple Email Service",0.01],["Amazon Virtual Private Cloud",35.65],["APN Annual Program Fee",2000],["Amazon Simple Storage Service",145.37],["Amazon RDS Service",5.16],["Amazon Simple Queue Service",0],["Amazon Simple Notification Service",0],["Amazon Elastic Compute Cloud",78.79],["AWS Key Management Service",0],["Amazon SimpleDB",0],["AWS Data Transfer",0.77]]}],"titleText":"Current Spend across all subscribed services","subtitleText":"Click the columns to view versions.","yAxisTitle":"Total Subscribed services"}';
+	var json = JSON.parse(data);
+	
+	alert(); //mkyong
+	$(function () { 
+     $('.chart1').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Basic drilldown'
+        },
+        xAxis: {
+            type: 'category'
+        },
 
-$( document ).ready(function() 
-{
-	if (!$.isArray(accounts)) 
-	{
-    	accounts = JSON.parse(accounts);
-    }
-	for (index = 0; index < accounts.length; ++index) 
-	{
-    	var url= urlTemp.replace('%ID%', accounts[index].id);
-    	var selector = '.chart'+accounts[index].id + ' svg';
-    	console.log(selector);
-    	$.ajax({
-		url:  url,
-		cache: false
-		}).done(function( response ) {console.log(response);
-			if (!$.isArray(response)) {
-	        	response = JSON.parse(response);
-	        }
-	        if(response.status == 'error')
-	        {
-	        	$('.chart'+response.id).append(response.message); return;
-	        }
-	        str =   ' Last Updated :' + response.data['lastUpdated'] 
-	        	    + '| Month :' + response.data['month'] 
-	        	    + '| Total :' + response.data['total'] 
-	        $('.summary'+response.id).append(str);
-			pieOrDonut(response.chart, selector, true, 'percent');
-		});
-   }
+        legend: {
+            enabled: false
+        },
+
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+
+        series: [{
+            name: 'Things',
+            colorByPoint: true,
+            data: [{
+                name: 'Amazon Account',
+                y: json.series["Amazon Account-ReadOnly Profile"],
+                drilldown: 'Amazon Account-ReadOnly Profile'
+            }]
+        }],
+        drilldown: {
+            series: [{
+                id: json.drilldownSeries[0].id,
+                data: json.drilldownSeries[0].data
+					 
+					
+            }]
+        }
+    });
 });
 </script>
