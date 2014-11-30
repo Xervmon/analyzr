@@ -8,6 +8,9 @@
 		<div class="col-md-9">
 			<h5>{{{ Lang::get('account/account.your_accounts') }}}</h5>
 		</div>
+		<div class="col-md-3">
+		<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>		
+		</div>
 	</div>
 </div>
 
@@ -67,7 +70,6 @@
 	@endif
 </div>
 <div>
-<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
 </div>
 @include('deletemodal')
 @stop
