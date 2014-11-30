@@ -191,13 +191,6 @@ class CloudAccountHelper
 		}
 
 		return $arr;
-		/*return DB::table('cloudAccounts')
-            ->join('processJobs', 'cloudAccounts.id', '=', 'processJobs.cloudAccountId')
-           ->join('users', 'users.id', '=', 'cloudAccounts.user_id')
-			-> where('cloudAccounts.user_id', Auth::id())
-            ->select('cloudAccounts.*', 'processJobs.id as pid', 'processJobs.input',  
-            		'processJobs.operation', 'processJobs.output', 'processJobs.status as processStatus')
-            ->distinct()->get();*/
 	}
 	
 }
