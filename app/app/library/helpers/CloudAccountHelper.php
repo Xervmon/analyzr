@@ -58,6 +58,7 @@ class CloudAccountHelper
 		$series= new stdClass();
 		$drilldownSeries = new stdClass();
 		$arr = '';
+		$services = Config::get('aws_services');
 		foreach($accounts as $account)
 		{
 			switch($account->profileType)
@@ -76,7 +77,8 @@ class CloudAccountHelper
 
   														foreach($costData as $key => $value)
 														{
-															$drilldownSeries ->data[] = array(0 => $key, 1 => $value);
+															$shortKey = self::getShortKey($key, $services);
+															$drilldownSeries ->data[] = array(0 => $shortKey, 1 => $value);
 														}		
 														$arr[]=  $drilldownSeries;
 														unset($drilldownSeries);
@@ -85,6 +87,15 @@ class CloudAccountHelper
 			}
 		}
 		return array('series' => $series, 'drilldownSeries' => $arr);
+	}
+
+	private static function getShortKey($key, $services)
+	{
+		if(array_key_exists($key, $services))
+		{
+			return $services[$key];
+		}
+		else $key;
 	}
 	
 	public static function findCurrentCost($account)
