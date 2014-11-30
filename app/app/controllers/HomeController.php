@@ -33,24 +33,27 @@ class HomeController extends BaseController {
      *
      * @return View
      */
-    public function getIndex() {
+
+        public function getIndex() {
         if (Auth::check()) {
             $accounts = CloudAccount::where('user_id', Auth::id())->get();
-			$data = CloudAccountHelper::getAccountSummary();
-		
+            $data = CloudAccountHelper::getAccountSummary();
+        
         } else {
             $data = array();
         }
-		
-		$data['titleText'] = Lang::get('home/home.titleText');
-		
-		$data['subtitleText'] = Lang::get('home/home.subtitleText');
-		
-		$data['yAxisTitle'] = Lang::get('home/home.yAxisTitle');
+
+              
+        $data['titleText']    = Lang::get('home/home.titleText');        
+        $data['subtitleText'] = Lang::get('home/home.subtitleText');        
+        $data['yAxisTitle']   = Lang::get('home/home.yAxisTitle');
+        $data['account']      = Lang::get('home/home.account');
+
         // Show the page
         return View::make('site/home/index', array(
             'accounts' => $data
         ));
     }
+
 }
 

@@ -63,20 +63,24 @@ class CloudAccountHelper
 			switch($account->profileType)
 			{
 				case Constants::READONLY_PROFILE : 
+													
 													$currentCost = self::findCurrentCost($account);
 													if($currentCost['status'] == 'OK')
 													{
 														$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $currentCost['total'];
 														$costData = $currentCost['cost_data'];
-														$arr = '';
+														//$arr = '';
 														$drilldownSeries->id = $account->name .'-' .Constants::READONLY_PROFILE;
 														$drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
-														  	
-														foreach($costData as $key => $value)
+
+
+  														foreach($costData as $key => $value)
 														{
 															$drilldownSeries ->data[] = array(0 => $key, 1 => $value);
 														}		
-														$arr[]=  $drilldownSeries;											
+														$arr[]=  $drilldownSeries;
+														unset($drilldownSeries);
+														$drilldownSeries = new stdClass();
 													}
 				//$arr[][Constants::READONLY_PROFILE] = array($account->name =>self::findCurrentCost($account)); break;
 			}
@@ -94,14 +98,17 @@ class CloudAccountHelper
 		}
 		if(!empty($account))
 		{
-			$account->jobs = self::operationBillingCheck($account->jobs);
-			switch($account->jobs->status)
-			{
-				case Lang::get('account/account.STATUS_COMPLETED'): return self::processCompletedState($account); break;
-				case Lang::get('account/account.STATUS_FAILED'): return array('status' => 'error', 'message' => 'Account '. $account->jobs->status .' Contact support!');	break;
-				default:return array('status' => 'error', 'message' => 'Please wait..account in '. $account->jobs->status);
+			if(!empty($account->jobs))
+			{	
+				$account->jobs = self::operationBillingCheck($account->jobs);
+				switch($account->jobs->status)
+				{
+					case Lang::get('account/account.STATUS_COMPLETED'): return self::processCompletedState($account); break;
+					case Lang::get('account/account.STATUS_FAILED'): return array('status' => 'error', 'message' => 'Account '. $account->jobs->status .' Contact support!');	break;
+					default:return array('status' => 'error', 'message' => 'Please wait..account in '. $account->jobs->status);
 						break;
-			}
+				}
+			}	
 			return self::processCompletedState($account);
 		}
 		else if(empty($account)) 
