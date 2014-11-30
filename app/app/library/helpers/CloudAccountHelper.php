@@ -95,7 +95,12 @@ class CloudAccountHelper
 		{
 			return $services[$key];
 		}
-		else $key;
+		else
+			{
+				Log::error('Key not found in aws_services.php ' . $key);
+				return $key;
+			} 
+		
 	}
 	
 	public static function findCurrentCost($account)
