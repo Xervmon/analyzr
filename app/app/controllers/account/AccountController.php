@@ -48,11 +48,14 @@ class AccountController extends BaseController {
         $accounts = $this->accounts->where('user_id', Auth::id())->orderBy('created_at', 'DESC')->paginate(10);
 		
 		$data= CloudAccountHelper::getAccountStatus();
-		
+		$costdata = CloudAccountHelper::getAccountSummary();
+		$costdata['titleText']    = Lang::get('account/account.titleText');
+		$costdata['xAxisTitle']   = Lang::get('account/account.xAxisTitle'); 
+		$costdata['yAxisTitle']   = Lang::get('account/account.yAxisTitle');
         // var_dump($accounts, $this->accounts, $this->accounts->owner);
         // Show the page
         return View::make('site/account/index', array(
-            'accounts' => $data
+            'accounts' => $data,'costdata'=>$costdata
         ));
     }
     
