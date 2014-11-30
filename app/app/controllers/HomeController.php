@@ -36,14 +36,20 @@ class HomeController extends BaseController {
     public function getIndex() {
         if (Auth::check()) {
             $accounts = CloudAccount::where('user_id', Auth::id())->get();
-			//$data = CloudAccountHelper::getAccountSummary();
+			$data = CloudAccountHelper::getAccountSummary();
 		
         } else {
             $data = array();
         }
+		
+		$data['titleText'] = Lang::get('home/home.titleText');
+		
+		$data['subtitleText'] = Lang::get('home/home.subtitleText');
+		
+		$data['yAxisTitle'] = Lang::get('home/home.yAxisTitle');
         // Show the page
         return View::make('site/home/index', array(
-            'accounts' => $accounts
+            'accounts' => $data
         ));
     }
 }
