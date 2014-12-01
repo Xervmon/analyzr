@@ -1,6 +1,5 @@
 ;columnDrilldown = function (selector, columnType, data)
 {
-    console.log(data);
 	            var brandsData = [];
 	            $.each(data.series, function (name, y) {
                 brandsData.push({
@@ -59,7 +58,7 @@
             });
 };
 
-barchart=function(selector, columnType, data){
+costbarchart=function(selector, columnType, chartdata ,result){
 
     $(selector).highcharts({
         chart: {
@@ -69,18 +68,18 @@ barchart=function(selector, columnType, data){
             enabled : false
         },
         title: {
-            text: data.titleText
+            text: chartdata.titleText
         },
         xAxis: {
             type: 'category',
             title: {
-            text: data.xAxisTitle
+            text: chartdata.xAxisTitle
                    }
                 },
         yAxis: {
             min: 0,
             title: {
-                text: data.yAxisTitle,
+                text: chartdata.yAxisTitle,
                 align: 'high'
             },
             labels: {
@@ -108,6 +107,59 @@ barchart=function(selector, columnType, data){
             backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
             shadow: true
         },
-        series: data.drilldownSeries
+        series: [result]
+    });
+};
+
+currentcostbarchart=function(selector, columnType, chartdata ,result){
+
+    $(selector).highcharts({
+        chart: {
+            type: columnType
+        },
+        credits:{
+            enabled : false
+        },
+        title: {
+            text: chartdata.titleText
+        },
+        xAxis: {
+            type: 'category',
+            title: {
+            text: chartdata.xAxisTitle
+                   }
+                },
+        yAxis: {
+            min: 0,
+            title: {
+                text: chartdata.yAxisTitle,
+                align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' USD'
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -50,
+            y: 200,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        },
+        series: [result]
     });
 };
