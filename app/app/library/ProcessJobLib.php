@@ -159,6 +159,7 @@ class ProcessJobLib
 				$depStatusJson = AWSBillingEngine::getDeploymentStatus(array('token' => $obj->token, 'job_id' => $row->job_id));
 				EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'getDeploymentStatus', 'return' => $depStatusJson));
 				$obj2 = WSObj::getObject($depStatusJson);
+				Log::info('Deployment Status '. $obj2);
 				$return[] = $this->prepareJobData($row, $obj2);
 			}
 			return $return;
