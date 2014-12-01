@@ -13,8 +13,7 @@
 		</div>
 	</div>
 </div>
- <?php 
-$cost_and_services='';?>
+
 <div class="media-block">
 	<ul class="list-group">
 		@if(!empty($accounts)) 
@@ -51,7 +50,7 @@ $cost_and_services='';?>
 							</p>
 							<!-- <p>UIHelper::getCurrentCostAndServices($account->id, CloudAccountHelper::findCurrentCost($account))</p> -->
       					
-							<p class="barchart">
+							<p class="barchart{{$account->id}}">
 							
 					        </p>
 							@else
@@ -85,15 +84,21 @@ $cost_and_services='';?>
 <script src="{{asset('assets/js/xervmon/charts2.js')}}"></script>
 
 <script>
+var result='';
 var data = '{{json_encode($costdata)}}';
-console.log(data);
+//console.log(data);
 	$( document ).ready(function() 
 	{
 		if (!$.isArray(data)) 
 		{
-	    	data = JSON.parse(data);console.log(data);
+	    	data = JSON.parse(data);
 	    }
-	    barchart('.barchart', 'bar', data);
+	    for (index = 0; index < data.drilldownSeries.length; ++index) 
+	    {
+	    	//console.log(data.drilldownSeries[index]);
+	    	result=data.drilldownSeries[index]
+	    barchart('.barchart'+data.drilldownSeries[index].accountid, 'bar', data ,result);
+	    }
 	});
 </script>
 
