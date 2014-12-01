@@ -199,8 +199,7 @@ class AssetsController extends BaseController {
                 	$stdClass = new stdClass();
 					$stdClass->VolumeId	= $value['VolumeId'];
 					$stdClass->Description = 'SnapshotId : '. $value['SnapshotId'] .'<br/>'
-											  . 'CreateTime : ' .$value['CreateTime']. '<br/>'.
-											  ' Tags : '. $this->getTagNameValue($value['Tags']);
+											  . 'CreateTime : ' .$value['CreateTime']. '<br/>';
 					$stdClass->AvailabilityZone	= $value['AvailabilityZone'];
 					if(!empty($value['Attachments']))
 					{
