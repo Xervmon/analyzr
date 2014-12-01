@@ -92,7 +92,7 @@ class ProcessJobLib
 												}
 													break;
 													
-				case Constants::SECURITY_PROFILE : $data['assumedRole'] = $credentials->assumedRole;
+				case Constants::SECURITY_PROFILE : $data['assumedRole'] = StringHelper::encrypt($credentials ->assumedRole, md5(Auth::user()->username));
 												   $data['accountId'] 	 =  $account->id;
 												   $data['securityToken'] = empty($credentials->securityToken) ? '' : $credentials->securityToken;
 												   $json = $this->executeProcess( Constants::SECURITY_AUDIT, $data);
