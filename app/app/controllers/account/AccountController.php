@@ -252,7 +252,7 @@ class AccountController extends BaseController {
 		$costdata=json_decode(json_encode($obj), true);
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
 		$accountname=$account->name;
-        $costchartsdata=CloudAccountHelper::getCostChartsData($costdata,$accountname);
+        $costchartsdata = CloudAccountHelper::getCostChartsData($costdata,$accountname);
     	$currentcostchartsdata = CloudAccountHelper::getAccountSummary();
 		$chartdata['titleText']    = Lang::get('account/account.titleText');
 		$chartdata['xAxisTitle']   = Lang::get('account/account.xAxisTitle'); 

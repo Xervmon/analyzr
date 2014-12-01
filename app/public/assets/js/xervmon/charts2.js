@@ -58,60 +58,7 @@
             });
 };
 
-costbarchart=function(selector, columnType, chartdata ,result){
-
-    $(selector).highcharts({
-        chart: {
-            type: columnType
-        },
-        credits:{
-            enabled : false
-        },
-        title: {
-            text: chartdata.titleText
-        },
-        xAxis: {
-            type: 'category',
-            title: {
-            text: chartdata.xAxisTitle
-                   }
-                },
-        yAxis: {
-            min: 0,
-            title: {
-                text: chartdata.yAxisTitle,
-                align: 'high'
-            },
-            labels: {
-                overflow: 'justify'
-            }
-        },
-        tooltip: {
-            valueSuffix: ' USD'
-        },
-        plotOptions: {
-            bar: {
-                dataLabels: {
-                    enabled: true
-                }
-            }
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'top',
-            x: -50,
-            y: 200,
-            floating: true,
-            borderWidth: 1,
-            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-            shadow: true
-        },
-        series: [result]
-    });
-};
-
-currentcostbarchart=function(selector, columnType, chartdata ,result){
+barchart=function(selector, columnType, chartdata){
 
     $(selector).highcharts({
         chart: {
