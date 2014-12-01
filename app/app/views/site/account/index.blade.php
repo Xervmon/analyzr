@@ -13,8 +13,7 @@
 		</div>
 	</div>
 </div>
- <?php 
-$cost_and_services='';?>
+
 <div class="media-block">
 	<ul class="list-group">
 		@if(!empty($accounts)) 
@@ -49,14 +48,13 @@ $cost_and_services='';?>
 									| 
 									<a href="{{ URL::to('assets/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
 									|
-									<a href="{{ URL::to('account/' . $account->id . '/Cost') }}"><span class="glyphicon glyphicon-tag"></span></a>
-									
+									<a href="{{ URL::to('account/' . $account->id . '/ChartsData') }}"><i class="fa fa-bar-chart"></i></a>
 							</p>
 							<!-- <p>UIHelper::getCurrentCostAndServices($account->id, CloudAccountHelper::findCurrentCost($account))</p> -->
       					
-							<p class="barchart">
+							<!-- <p class="barchart{{$account->id}}">
 							
-					        </p>
+					        </p> -->
 							@else
 								<p>
 									<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
@@ -80,23 +78,5 @@ $cost_and_services='';?>
 <div>
 </div>
 @include('deletemodal')
-
-<script src="{{asset('assets/js/Highcharts-4.0.4/js/highcharts.js')}}"></script>
-<script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/exporting.js')}}"></script>
-<script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/data.js')}}"></script>
-<script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/drilldown.js')}}"></script>
-<script src="{{asset('assets/js/xervmon/charts2.js')}}"></script>
-
-<script>
-var data = '{{json_encode($costdata)}}';
-	$( document ).ready(function() 
-	{
-		if (!$.isArray(data)) 
-		{
-	    	data = JSON.parse(data);console.log(data);
-	    }
-	    barchart('.barchart', 'bar', data);
-	});
-</script>
 
 @stop
