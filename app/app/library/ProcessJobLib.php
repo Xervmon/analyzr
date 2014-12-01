@@ -98,6 +98,7 @@ class ProcessJobLib
 												   $json = $this->executeProcess('securityAudit', $data);
 												   Log::info('Adding the job to '.Constants::SECURITY_PROFILE.' '.Constants::SECURITY_AUDIT .' queue for processing..'.$json);
 												   $pJob1 = WSObj::getObject($json);
+												   Log::info('After adding...'.$json);
 												   $this->pushToProcessJobTable($account, $data, $pJob1 , Constants::SECURITY_AUDIT); 	
 												   break;
 			}
@@ -139,7 +140,7 @@ class ProcessJobLib
 		{
 			$processJob -> output = '';
 			$processJob->job_id = 	'';
-			$processJob->status = $pJob->status;
+			$processJob->status = $pJob->fail_code .':' .$pJob->fail_message ;
 		}
 		$this->saveJob($processJob);
 	}
