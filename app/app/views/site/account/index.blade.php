@@ -93,7 +93,7 @@ console.log(data);
 		{
 	    	data = JSON.parse(data);console.log(data);
 	    }
-	    barchart('.barchart', 'column', data);
+	    barchart('.barchart', 'bar', data);
 	});
 </script>
 
