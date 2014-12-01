@@ -53,6 +53,7 @@ return array(
 		'create_billing'              => 'create_billing',
 		'titleText'                   => 'Current Spend across all subscribed services',
 		'xAxisTitle'                  => 'Total Subscribed services',
-		'yAxisTitle'                  => 'Cost in USD'
+		'yAxisTitle'                  => 'Cost in USD',
+		'charts_data'                 => 'AWS Services Cost Charts Data',
 	
 );
