@@ -38,7 +38,8 @@ $cost_and_services='';?>
 						<div class="media-body">
 							<h4 class="media-heading">{{ String::title($account->name) }} : {{ String::title($account->profileType) }}</h4>
 							<p>
-								<span class="glyphicon glyphicon-calendar"></span> <!--Sept 16th, 2012-->{{{ $account->created_at }}}
+								<span class="glyphicon glyphicon-calendar"></span> {{{ $account->created_at }}} 
+								
 							</p>
 							@if($account -> profileType == Constants::READONLY_PROFILE)
 								<p>
@@ -47,7 +48,9 @@ $cost_and_services='';?>
 									<a href="{{ URL::to('assets/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
 									| 
 									<a href="{{ URL::to('assets/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
-							
+									|
+									<a href="{{ URL::to('account/' . $account->id . '/Cost') }}"><span class="glyphicon glyphicon-info-tag"></span></a>
+									
 							</p>
 							<!-- <p>UIHelper::getCurrentCostAndServices($account->id, CloudAccountHelper::findCurrentCost($account))</p> -->
       					
@@ -86,7 +89,6 @@ $cost_and_services='';?>
 
 <script>
 var data = '{{json_encode($costdata)}}';
-console.log(data);
 	$( document ).ready(function() 
 	{
 		if (!$.isArray(data)) 

@@ -65,26 +65,22 @@ class CloudAccountHelper
 			switch($account->profileType)
 			{
 				case Constants::READONLY_PROFILE : 
-													
-													$currentCost = self::findCurrentCost($account);
-													if($currentCost['status'] == 'OK')
-													{
-														$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $currentCost['total'];
-														$costData = $currentCost['cost_data'];
-														//$arr = '';
-														$drilldownSeries->id = $account->name .'-' .Constants::READONLY_PROFILE;
-														$drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
-
-
-  														foreach($costData as $key => $value)
-														{
-															$shortKey = self::getShortKey($key, $services);
-															$drilldownSeries ->data[] = array(0 => $shortKey, 1 => $value);
-														}		
-														$arr[]=  $drilldownSeries;
-														unset($drilldownSeries);
-													}
-													break;
+					$currentCost = self::findCurrentCost($account);
+					if($currentCost['status'] == 'OK')
+					{
+						$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $currentCost['total'];
+						$costData = $currentCost['cost_data'];
+						$drilldownSeries->id = $account->name .'-' .Constants::READONLY_PROFILE;
+						$drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
+						foreach($costData as $key => $value)
+						{
+							$shortKey = self::getShortKey($key, $services);
+							$drilldownSeries ->data[] = array(0 => $shortKey, 1 => $value);
+						}		
+						$arr[]=  $drilldownSeries;
+						unset($drilldownSeries);
+					}
+					break;
 			}
 		}
 		return array('series' => $series, 'drilldownSeries' => $arr);
@@ -174,6 +170,7 @@ class CloudAccountHelper
 			return array('status' => 'error', 'message' => 'Backend API is down, please try again later!');
 		}
 	}
+
 
 	public static function getAccountStatus()
 	{
