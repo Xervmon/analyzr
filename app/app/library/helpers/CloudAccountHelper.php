@@ -56,11 +56,12 @@ class CloudAccountHelper
 	{
 		$xAxisCategories = '';
 		$series= new stdClass();
-		$drilldownSeries = new stdClass();
+		
 		$arr = '';
 		$services = Config::get('aws_services');
 		foreach($accounts as $account)
 		{
+			$drilldownSeries = new stdClass();
 			switch($account->profileType)
 			{
 				case Constants::READONLY_PROFILE : 
@@ -82,8 +83,8 @@ class CloudAccountHelper
 														}		
 														$arr[]=  $drilldownSeries;
 														unset($drilldownSeries);
-														$drilldownSeries = new stdClass();
 													}
+													break;
 			}
 		}
 		return array('series' => $series, 'drilldownSeries' => $arr);
