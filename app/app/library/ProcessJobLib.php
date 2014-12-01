@@ -95,7 +95,7 @@ class ProcessJobLib
 				case Constants::SECURITY_PROFILE : $data['assumedRole'] = $credentials->assumedRole;
 												   $data['accountId'] 	 =  $account->id;
 												   $data['securityToken'] = empty($credentials->securityToken) ? '' : $credentials->securityToken;
-												   $json = $this->executeProcess('securityAudit', $data);
+												   $json = $this->executeProcess( Constants::SECURITY_AUDIT, $data);
 												   Log::info('Adding the job to '.Constants::SECURITY_PROFILE.' '.Constants::SECURITY_AUDIT .' queue for processing..'.$json);
 												   $pJob1 = WSObj::getObject($json);
 												   Log::info('After adding...'.$json);
