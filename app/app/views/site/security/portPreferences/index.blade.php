@@ -43,10 +43,11 @@
 							</p>
 							<p>
 								<span title="Status">{{ UIHelper::getLabel($portPreference->status) }}</span>
-								| 
+								
 								<a href="{{ URL::to('security/portPreferences/' . $portPreference->cloudAccountId . '/portInfo') }}"><span class="glyphicon glyphicon-check"></span></a>
 						
 							</p>
+							<span title="Status">{{ UIHelper::getPortPreferenceServicesStatus($portPreference) }}</span>
 							
 						</div>
 					</div>
