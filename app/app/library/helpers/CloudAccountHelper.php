@@ -52,6 +52,29 @@ class CloudAccountHelper
 		return self::getChartData($accounts);
 	}
 	
+	public static function getAccountCostSummary($id)
+	{
+		$account = self::getBillingAccountStatusById($id);
+		
+		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
+		$obj = WSObj::getObject($responseJson);
+		if($obj->status == 'OK')
+		{
+			if($account->job->job_status == Lang::get('account/account.STATUS_COMPLETED'))
+			{
+				$response = AWSBillingEngine::GetCost(array('token' => $obj->token, 'accountId' => $account->id));
+				return response;
+			}	
+			else {
+				return json_encode(array('status' => 'error', 'message' => 'Account aggregation is not ready!'));
+			}
+		}
+		else {
+			return $responseJson;
+		}
+	}
+	
 	public static function getChartData($accounts)
 	{
 		$xAxisCategories = '';
@@ -134,7 +157,7 @@ class CloudAccountHelper
 
 	private static function operationBillingCheck($account)
 	{
-
+		$billing_account = '';
 		foreach ($account as $acc_value )
 		{
 			if($acc_value->operation==Lang::get('account/account.create_billing'))
@@ -190,6 +213,21 @@ class CloudAccountHelper
 
 		return $arr;
 	}
+	
+	public static function getBillingAccountStatusById($id)
+	{
+		$account = CloudAccount::where('user_id', Auth::id())->findOrFail($id) ;
+		$obj = json_decode($account->toJson());
+		$processJobs = ProcessJob::where('user_id', Auth::id())->where('cloudAccountId', $obj->id) -> orderBy('created_at', 'desc') -> get();
+		foreach($processJobs as $job)
+		{
+			if($job->operation==Lang::get('account/account.create_billing'))
+			{
+				$obj->job = $job;	
+			}
+		}
+		return $obj;
+	} 
 	
 }
 	

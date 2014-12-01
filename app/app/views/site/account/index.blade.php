@@ -49,7 +49,7 @@ $cost_and_services='';?>
 									| 
 									<a href="{{ URL::to('assets/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
 									|
-									<a href="{{ URL::to('account/' . $account->id . '/Cost') }}"><span class="glyphicon glyphicon-info-tag"></span></a>
+									<a href="{{ URL::to('account/' . $account->id . '/Cost') }}"><span class="glyphicon glyphicon-tag"></span></a>
 									
 							</p>
 							<!-- <p>UIHelper::getCurrentCostAndServices($account->id, CloudAccountHelper::findCurrentCost($account))</p> -->
