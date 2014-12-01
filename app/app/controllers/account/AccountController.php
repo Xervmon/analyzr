@@ -42,7 +42,8 @@ class AccountController extends BaseController {
      *
      * @return View
      */
-    public function getIndex() {
+    public function getIndex() 
+    {
         // Get all the user's accounts
         //Auth::id() : gives the logged in userid
         $accounts = $this->accounts->where('user_id', Auth::id())->orderBy('created_at', 'DESC')->paginate(10);
@@ -52,11 +53,12 @@ class AccountController extends BaseController {
 		$costdata['titleText']    = Lang::get('account/account.titleText');
 		$costdata['xAxisTitle']   = Lang::get('account/account.xAxisTitle'); 
 		$costdata['yAxisTitle']   = Lang::get('account/account.yAxisTitle');
-        // var_dump($accounts, $this->accounts, $this->accounts->owner);
-        // Show the page
-        return View::make('site/account/index', array(
-            'accounts' => $data,'costdata'=>$costdata
-        ));
+       
+        return View::make('site/account/index',
+        				 array(
+				            'accounts' => $data,
+				            'costdata'=>$costdata
+				        ));
     }
     
     /**
@@ -238,6 +240,15 @@ class AccountController extends BaseController {
 		 {
 			return Redirect::to('ServiceStatus')->with('error', 'Backend API is down, please try again later!');			
 		 }	
+	}
+
+	public function getCost($id)
+	{
+		UtilHelper::check();
+		$response = CloudAccountHelper::getAccountCostSummary($id);
+		$obj = WSObj::getObject($response);
+		echo '<pre>';
+		print_r($obj);	
 	}
 
 	public function getLogs($id)
