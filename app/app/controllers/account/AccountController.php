@@ -95,8 +95,12 @@ class AccountController extends BaseController {
 				CloudAccountHelper::save($account);
 				$processJobLib = new ProcessJobLib();
 				$ret = $processJobLib->process($account);
-
-				return Redirect::to('account/')->with('success', Lang::get('account/account.account_updated'));
+				switch($account->profileType )
+				{
+					case Constants::READONLY_PROFILE : return Redirect::to('account/')->with('success', Lang::get('account/account.account_updated')); break;
+					case Constants::SECURITY_PROFILE : return Redirect::to('account/')->with('success', Lang::get('account/account.account_security_profile_updated')); break;
+				}
+				//return Redirect::to('account/')->with('success', Lang::get('account/account.account_updated'));
             } else {
                 return Redirect::to('account/create')->with('error', Lang::get('account/account.account_auth_failed'));
             }

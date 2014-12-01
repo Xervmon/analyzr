@@ -12,6 +12,7 @@ return array(
 
 		'cp_amazon_aws'               => 'Amazon AWS',
 		'account_updated'             => 'Account updated. Just wait now while we load your usage data and crunch the numbers!',
+		'account_security_profile_updated' => 'Account updated. Just wait now till security audit is completed!',
 		'account_created'             => 'Account created.',
 		'add_account'                 => 'Add Account',
 		'account'                  	  => 'account',
