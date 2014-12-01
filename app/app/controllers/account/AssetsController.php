@@ -191,6 +191,7 @@ class AssetsController extends BaseController {
             UtilHelper::check();
             $account = CloudAccount::where('user_id', Auth::id())->find($id);
             $getEBSAll = CloudProvider::getEBS($id);
+	    //echo '<pre>'; print_r($getEBSAll); die();
             $arr = array();$i=0;
             if(!empty($getEBSAll['Volumes']))
             {
