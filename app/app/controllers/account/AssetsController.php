@@ -196,14 +196,31 @@ class AssetsController extends BaseController {
             {
                 foreach($getEBSAll['Volumes'] as $key => $value)
                 {
-                    $arr[$i]['VolumeId']=$value['VolumeId'];
-                    $arr[$i]['SnapshotId']=$value['SnapshotId'];
-                    $arr[$i]['AvailabilityZone']=$value['AvailabilityZone'];
-                    $i++;
+                	$stdClass = new stdClass();
+					$stdClass->VolumeId	= $value['VolumeId'];
+					$stdClass->Description = 'SnapshotId : '. $value['SnapshotId'] .'<br/>'
+											  . 'CreateTime : ' .$value['CreateTime']. '<br/>'.
+											  ' Tags : '. $this->getTagNameValue($value['Tags']);
+					$stdClass->AvailabilityZone	= $value['AvailabilityZone'];
+					if(!empty($value['Attachments']))
+					{
+						$stdClass->InstanceId = $value['Attachments']['InstanceId'];
+ 					}
+					$stdClass->State	= $value['State'];
+					
+                    $arr[] = $stdClass;
                 }
             }   
 			return View::make('site/account/assets/ebsInfo', array('account' => $account,'instanceDetails'=> $arr));
     }
+
+	public function getTagNameValue($value)
+	{
+		if(!empty($value['Tags']))
+		{
+			return json_encode($tag[0]);			
+		}
+	}
     
     public function sgInfo($id)
     {
