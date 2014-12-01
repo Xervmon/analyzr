@@ -246,7 +246,7 @@ class AccountController extends BaseController {
 	{
 		UtilHelper::check();
 		$response = CloudAccountHelper::getAccountCostSummary($id);
-		$obj = WSObj::getObj($obj);
+		$obj = WSObj::getObject($obj);
 		echo '<pre>';
 		print_r($obj);	
 	}
