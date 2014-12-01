@@ -91,6 +91,7 @@ class CloudAccountHelper
 						   foreach($costData['data'] as $key=>$value)
 						   {
 							$shortKey = self::getShortKey($key, $services);
+							if(intval($value) == 0) continue;
 							$drilldownSeries ->data[] = array(0 => $shortKey, 1 => $value);
 						   }
 						  }
@@ -132,7 +133,7 @@ class CloudAccountHelper
 								foreach($costData as $key => $value)
 								{
 									$shortKey = self::getShortKey($key, $services);
-									if($value ==0) continue;
+									if(intval($value) == 0) continue;
 									$drilldownSeries ->data[] = array(0 => $shortKey, 1 => $value);
 								}		
 								$arr[]=  $drilldownSeries;
