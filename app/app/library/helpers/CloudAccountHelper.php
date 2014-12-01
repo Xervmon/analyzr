@@ -52,41 +52,77 @@ class CloudAccountHelper
 		return self::getChartData($accounts);
 	}
 	
+	public static function getAccountCostSummary($id)
+	{
+		$account = self::getBillingAccountStatusById($id);
+		$account->credentials = StringHelper::decrypt($account->credentials, md5(Auth::user()->username));
+		$cred = json_decode($account->credentials);
+		
+		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
+		$obj = WSObj::getObject($responseJson);
+		if($obj->status == 'OK')
+		{
+			if($account->job->status == Lang::get('account/account.STATUS_COMPLETED'))
+			{
+				$response = AWSBillingEngine::GetCost(array('token' => $obj->token, 'accountId' => $cred->accountId));
+				return $response;
+			}	
+			else {
+				return json_encode(array('status' => 'error', 'message' => 'Account aggregation is not ready!'));
+			}
+		}
+		else {
+			return $responseJson;
+		}
+	}
+	
 	public static function getChartData($accounts)
 	{
 		$xAxisCategories = '';
 		$series= new stdClass();
-		$drilldownSeries = new stdClass();
+		
 		$arr = '';
+		$services = Config::get('aws_services');
 		foreach($accounts as $account)
 		{
+			$drilldownSeries = new stdClass();
 			switch($account->profileType)
 			{
 				case Constants::READONLY_PROFILE : 
-													
-													$currentCost = self::findCurrentCost($account);
-													if($currentCost['status'] == 'OK')
-													{
-														$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $currentCost['total'];
-														$costData = $currentCost['cost_data'];
-														//$arr = '';
-														$drilldownSeries->id = $account->name .'-' .Constants::READONLY_PROFILE;
-														$drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
-
-
-  														foreach($costData as $key => $value)
-														{
-															$drilldownSeries ->data[] = array(0 => $key, 1 => $value);
-														}		
-														$arr[]=  $drilldownSeries;
-														unset($drilldownSeries);
-														$drilldownSeries = new stdClass();
-													}
-				//$arr[][Constants::READONLY_PROFILE] = array($account->name =>self::findCurrentCost($account)); break;
+					$currentCost = self::findCurrentCost($account);
+					if($currentCost['status'] == 'OK')
+					{
+						$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $currentCost['total'];
+						$costData = $currentCost['cost_data'];
+						$drilldownSeries->id = $account->name .'-' .Constants::READONLY_PROFILE;
+						$drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
+						foreach($costData as $key => $value)
+						{
+							$shortKey = self::getShortKey($key, $services);
+							$drilldownSeries ->data[] = array(0 => $shortKey, 1 => $value);
+						}		
+						$arr[]=  $drilldownSeries;
+						unset($drilldownSeries);
+					}
+					break;
 			}
-			
 		}
 		return array('series' => $series, 'drilldownSeries' => $arr);
+	}
+
+	private static function getShortKey($key, $services)
+	{
+		if(array_key_exists($key, $services))
+		{
+			return $services[$key];
+		}
+		else
+			{
+				Log::error('Key not found in aws_services.php ' . $key);
+				return $key;
+			} 
+		
 	}
 	
 	public static function findCurrentCost($account)
@@ -123,7 +159,7 @@ class CloudAccountHelper
 
 	private static function operationBillingCheck($account)
 	{
-
+		$billing_account = '';
 		foreach ($account as $acc_value )
 		{
 			if($acc_value->operation==Lang::get('account/account.create_billing'))
@@ -160,6 +196,7 @@ class CloudAccountHelper
 		}
 	}
 
+
 	public static function getAccountStatus()
 	{
 		$accounts = CloudAccount::where('user_id', Auth::id())->get() ;
@@ -177,14 +214,22 @@ class CloudAccountHelper
 		}
 
 		return $arr;
-		/*return DB::table('cloudAccounts')
-            ->join('processJobs', 'cloudAccounts.id', '=', 'processJobs.cloudAccountId')
-           ->join('users', 'users.id', '=', 'cloudAccounts.user_id')
-			-> where('cloudAccounts.user_id', Auth::id())
-            ->select('cloudAccounts.*', 'processJobs.id as pid', 'processJobs.input',  
-            		'processJobs.operation', 'processJobs.output', 'processJobs.status as processStatus')
-            ->distinct()->get();*/
 	}
+	
+	public static function getBillingAccountStatusById($id)
+	{
+		$account = CloudAccount::where('user_id', Auth::id())->findOrFail($id) ;
+		$obj = json_decode($account->toJson());
+		$processJobs = ProcessJob::where('user_id', Auth::id())->where('cloudAccountId', $obj->id) -> orderBy('created_at', 'desc') -> get();
+		foreach($processJobs as $job)
+		{
+			if($job->operation==Lang::get('account/account.create_billing'))
+			{
+				$obj->job = json_decode($job->toJson());	
+			}
+		}
+		return $obj;
+	} 
 	
 }
 	
