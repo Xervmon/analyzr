@@ -11,8 +11,8 @@ return array(
 	*/
 
 	'empty_deployments' => 'You do not have any deployments. Create one by clicking on "Deploy" below',
-	'titleText'         => 'Current Spend across all subscribed services',
-	'subtitleText'      => 'Click the columns to view perticular service.',
+	'titleText'         => 'Current Spend across all accounts',
+	'subtitleText'      => 'Click the columns to view subscribed services.',
 	'yAxisTitle'        => 'Total Subscribed services',
 	'account'			=> 'Account'
 );

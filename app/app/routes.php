@@ -201,6 +201,7 @@ Route::group(array(
 	Route::any('ticket/{ticket}/close', 'TicketController@closeTicket');
 	
 	Route::any('enginelog/', 'EnginelogController@getIndex'); 
+	Route::get('account/{account}/Cost', 'AccountController@getCost');
 	Route::get('account/{account}/log', 'AccountController@getLogs');
 	Route::get('account/{account}/Collection', 'AccountController@Collection');
 	
