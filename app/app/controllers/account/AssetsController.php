@@ -206,7 +206,7 @@ class AssetsController extends BaseController {
 					{
 						$stdClass->InstanceId = $value['Attachments'][0]['InstanceId'];
  					}
-					$stdClass->State	= $value['State'];
+					$stdClass->State	= UIHelper::getLabel($value['State']);
 					
                     $arr[] = $stdClass;
                 }
