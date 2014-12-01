@@ -61,10 +61,10 @@ class CloudAccountHelper
 		$obj = WSObj::getObject($responseJson);
 		if($obj->status == 'OK')
 		{
-			if($account->job->job_status == Lang::get('account/account.STATUS_COMPLETED'))
+			if($account->job->status == Lang::get('account/account.STATUS_COMPLETED'))
 			{
 				$response = AWSBillingEngine::GetCost(array('token' => $obj->token, 'accountId' => $account->id));
-				return response;
+				return $response;
 			}	
 			else {
 				return json_encode(array('status' => 'error', 'message' => 'Account aggregation is not ready!'));
@@ -223,7 +223,7 @@ class CloudAccountHelper
 		{
 			if($job->operation==Lang::get('account/account.create_billing'))
 			{
-				$obj->job = $job;	
+				$obj->job = json_decode($job->toJson());	
 			}
 		}
 		return $obj;
