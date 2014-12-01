@@ -191,6 +191,7 @@ class AssetsController extends BaseController {
             UtilHelper::check();
             $account = CloudAccount::where('user_id', Auth::id())->find($id);
             $getEBSAll = CloudProvider::getEBS($id);
+	    //echo '<pre>'; print_r($getEBSAll); die();
             $arr = array();$i=0;
             if(!empty($getEBSAll['Volumes']))
             {
@@ -199,8 +200,7 @@ class AssetsController extends BaseController {
                 	$stdClass = new stdClass();
 					$stdClass->VolumeId	= $value['VolumeId'];
 					$stdClass->Description = 'SnapshotId : '. $value['SnapshotId'] .'<br/>'
-											  . 'CreateTime : ' .$value['CreateTime']. '<br/>'.
-											  ' Tags : '. $this->getTagNameValue($value['Tags']);
+											  . 'CreateTime : ' .$value['CreateTime']. '<br/>';
 					$stdClass->AvailabilityZone	= $value['AvailabilityZone'];
 					if(!empty($value['Attachments']))
 					{
