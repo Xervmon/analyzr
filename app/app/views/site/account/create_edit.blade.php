@@ -17,7 +17,7 @@
 	</div>
 
 	{{-- Create/Edit cloud account Form --}}
-	<form id="cloudProviderCredntialsForm" class="form-horizontal" method="post" action="@if (isset($account->id)){{ URL::to('account/' . $account->id . '/edit') }}@endif" autocomplete="off">
+	<form id="cloudProviderCredntialsForm" class="form-horizontal" method="post" action="@if (isset($account->id)){{ URL::to('account/' . $account->id . '/edit') }}@endif" autocomplete="on">
 		<!-- CSRF Token -->
 		<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 		<!-- ./ csrf token -->

@@ -29,6 +29,65 @@ class CloudAccountHelper
 		$account->credentials = StringHelper::encrypt($account->credentials, md5(Auth::user()->username));
         return $account->save();
 	}
+
+	public static function findCurrentChartsCost($account)
+	{
+		if(!empty($account))
+		{
+			return self::processCompletedState($account);
+		}
+		else if(empty($account)) 
+		{
+			return array('status' => 'error', 'message' => 'Empty account, no data found');
+		}
+		else 
+		{
+			return array('status' => 'error', 'message' => 'Unexpected error. Contacted support.');	
+		}
+	}
+	
+	public static function getAccountSummary()
+	{
+		$accounts = self::getAccountStatus();
+		return self::getChartData($accounts);
+	}
+	
+	public static function getChartData($accounts)
+	{
+		$xAxisCategories = '';
+		$series= new stdClass();
+		$drilldownSeries = new stdClass();
+		$arr = '';
+		foreach($accounts as $account)
+		{
+			switch($account->profileType)
+			{
+				case Constants::READONLY_PROFILE : 
+													
+													$currentCost = self::findCurrentCost($account);
+													if($currentCost['status'] == 'OK')
+													{
+														$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $currentCost['total'];
+														$costData = $currentCost['cost_data'];
+														//$arr = '';
+														$drilldownSeries->id = $account->name .'-' .Constants::READONLY_PROFILE;
+														$drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
+
+
+  														foreach($costData as $key => $value)
+														{
+															$drilldownSeries ->data[] = array(0 => $key, 1 => $value);
+														}		
+														$arr[]=  $drilldownSeries;
+														unset($drilldownSeries);
+														$drilldownSeries = new stdClass();
+													}
+				//$arr[][Constants::READONLY_PROFILE] = array($account->name =>self::findCurrentCost($account)); break;
+			}
+			
+		}
+		return array('series' => $series, 'drilldownSeries' => $arr);
+	}
 	
 	public static function findCurrentCost($account)
 	{
@@ -39,13 +98,18 @@ class CloudAccountHelper
 		}
 		if(!empty($account))
 		{
-			switch($account->processStatus)
-			{
-				case Lang::get('account/account.STATUS_COMPLETED'): return self::processCompletedState($account); break;
-				case Lang::get('account/account.STATUS_FAILED'): return array('status' => 'error', 'message' => 'Account '. $account->processStatus .' Contact support!');	break;
-				default:return array('status' => 'error', 'message' => 'Please wait..account in '. $account->processStatus);
+			if(!empty($account->jobs))
+			{	
+				$account->jobs = self::operationBillingCheck($account->jobs);
+				switch($account->jobs->status)
+				{
+					case Lang::get('account/account.STATUS_COMPLETED'): return self::processCompletedState($account); break;
+					case Lang::get('account/account.STATUS_FAILED'): return array('status' => 'error', 'message' => 'Account '. $account->jobs->status .' Contact support!');	break;
+					default:return array('status' => 'error', 'message' => 'Please wait..account in '. $account->jobs->status);
 						break;
-			}
+				}
+			}	
+			return self::processCompletedState($account);
 		}
 		else if(empty($account)) 
 		{
@@ -55,6 +119,20 @@ class CloudAccountHelper
 		{
 			return array('status' => 'error', 'message' => 'Unexpected error. Contacted support.');	
 		}
+	}
+
+	private static function operationBillingCheck($account)
+	{
+
+		foreach ($account as $acc_value )
+		{
+			if($acc_value->operation==Lang::get('account/account.create_billing'))
+			{
+
+				$billing_account = $acc_value;
+			}
+		}
+		return $billing_account;
 	}
 
 	private static function processCompletedState($account)
@@ -84,13 +162,28 @@ class CloudAccountHelper
 
 	public static function getAccountStatus()
 	{
-		return DB::table('cloudAccounts')
+		$accounts = CloudAccount::where('user_id', Auth::id())->get() ;
+		
+		$arr = '';
+		foreach($accounts as $account)
+		{
+			$obj = json_decode($account->toJson());
+			$processJobs = ProcessJob::where('user_id', Auth::id())->where('cloudAccountId', $obj->id) -> orderBy('created_at', 'desc') -> get();
+			foreach($processJobs as $job)
+			{
+				$obj->jobs[] = json_decode($job->toJson());
+			}
+			$arr[] = $obj;
+		}
+
+		return $arr;
+		/*return DB::table('cloudAccounts')
             ->join('processJobs', 'cloudAccounts.id', '=', 'processJobs.cloudAccountId')
-           ->join('users', 'users.id', '=', 'processJobs.user_id')
-			-> where('cloudAccounts.user_id', Auth::user()->id)
+           ->join('users', 'users.id', '=', 'cloudAccounts.user_id')
+			-> where('cloudAccounts.user_id', Auth::id())
             ->select('cloudAccounts.*', 'processJobs.id as pid', 'processJobs.input',  
             		'processJobs.operation', 'processJobs.output', 'processJobs.status as processStatus')
-            ->get();
+            ->distinct()->get();*/
 	}
 	
 }

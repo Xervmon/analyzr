@@ -48,7 +48,10 @@ return array(
 		'aws_sn'                      => 'Subnets',
 		'account_delete'              => 'Are You Sure  Want To Delete This Account ?',
 		'portpreference_delete'       => 'Are You Sure  Want To Delete This PortPreference ?',
-
-	
+		'create_services'             => 'create_services',
+		'create_billing'              => 'create_billing',
+		'titleText'                   => 'Current Spend across all subscribed services',
+		'xAxisTitle'                  => 'Total Subscribed services',
+		'yAxisTitle'                  => 'Cost in USD'
 	
 );

@@ -2,19 +2,24 @@
 
 {{-- Content --}}
 @section('content')
-
+	
 <div class="page-header">
 	<div class="row">
 		<div class="col-md-9">
 			<h5>{{{ Lang::get('account/account.your_accounts') }}}</h5>
 		</div>
+		<div class="col-md-3">
+		<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>		
+		</div>
 	</div>
 </div>
-
+ <?php 
+$cost_and_services='';?>
 <div class="media-block">
 	<ul class="list-group">
 		@if(!empty($accounts)) 
-			@foreach ($accounts as $account)
+			@foreach ($accounts as $account)							
+
 	  			<li class="list-group-item">
 					<div class="media">
 						<span class="pull-left" href="#">
@@ -22,15 +27,6 @@
 						    	src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.'.$account->cloudProvider.'.logo')) }}" alt="{{ $account->cloudProvider }}" />
 						</span>
 					
-						@if(in_array($account->processStatus, array(Lang::get('account/account.STATUS_IN_PROCESS'), 
-															Lang::get('account/account.STATUS_STARTED'))))
-							<form class="pull-right" method="post" action="{{ URL::to('account/' . $account->id . '/refresh') }}">
-									<!-- CSRF Token -->
-									<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-									<!-- ./ csrf token -->
-									<button type="submit" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-refresh"></span></button>
-							</form>
-						@endif	
 						<form class="pull-right" method="post" action="{{ URL::to('account/' . $account->id . '/delete') }}">
 							<!-- CSRF Token -->
 							<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
@@ -48,14 +44,16 @@
 								<p>
 									<span title="Status">{{ UIHelper::getServicesStatus($account) }}</span>
 									
-									<a href="{{ URL::to('account/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
+									<a href="{{ URL::to('assets/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
 									| 
 									<a href="{{ URL::to('assets/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
 							
-								</p>
-							<p>
-								{{UIHelper::displayCurrentCost($account->id, CloudAccountHelper::findCurrentCost($account))}}
 							</p>
+							<!-- <p>UIHelper::getCurrentCostAndServices($account->id, CloudAccountHelper::findCurrentCost($account))</p> -->
+      					
+							<p class="barchart">
+							
+					        </p>
 							@else
 								<p>
 									<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
@@ -70,13 +68,33 @@
 				</li>
 			@endforeach
 		@endif
+		
 	</ul>
 	@if(empty($accounts) || count($accounts) === 0) 
 		<div class="alert alert-info"> {{{ Lang::get('account/account.empty_accounts') }}}</div>
 	@endif
 </div>
 <div>
-<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
 </div>
 @include('deletemodal')
+
+<script src="{{asset('assets/js/Highcharts-4.0.4/js/highcharts.js')}}"></script>
+<script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/exporting.js')}}"></script>
+<script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/data.js')}}"></script>
+<script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/drilldown.js')}}"></script>
+<script src="{{asset('assets/js/xervmon/charts2.js')}}"></script>
+
+<script>
+var data = '{{json_encode($costdata)}}';
+console.log(data);
+	$( document ).ready(function() 
+	{
+		if (!$.isArray(data)) 
+		{
+	    	data = JSON.parse(data);console.log(data);
+	    }
+	    barchart('.barchart', 'bar', data);
+	});
+</script>
+
 @stop
