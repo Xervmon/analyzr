@@ -55,5 +55,4 @@ return array(
 		'xAxisTitle'                  => 'Total Subscribed services',
 		'yAxisTitle'                  => 'Cost in USD',
 		'charts_data'                 => 'AWS Services Cost Charts Data',
-	
 );
