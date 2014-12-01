@@ -221,7 +221,7 @@ class AssetsController extends BaseController {
                     $i++;
                 }
             }   
-			// return View::make('site/account/assets/sgInfo', array('account' => $account,'instanceDetails'=> $arr));
+			 return View::make('site/account/assets/sgInfo', array('account' => $account,'instanceDetails'=> $arr));
     }
 	
 	
