@@ -112,31 +112,34 @@ class CloudAccountHelper
 		{
 			foreach($accounts as $account)
 			{
-				case Constants::READONLY_PROFILE : 
-					$currentCost = self::findCurrentCost($account);
-					if($currentCost['status'] == 'OK')
-					{
-						$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $currentCost['total'];
-						$costData = $currentCost['cost_data'];
-						$drilldownSeries->accountId = $account->id; 
-						$drilldownSeries->id = $account->name .'-' .Constants::READONLY_PROFILE;
-						$drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
-						foreach($costData as $key => $value)
+				switch($account->profileType)
+				{
+					case Constants::READONLY_PROFILE : 
+						$currentCost = self::findCurrentCost($account);
+						if($currentCost['status'] == 'OK')
 						{
 							$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $currentCost['total'];
 							$costData = $currentCost['cost_data'];
+							$drilldownSeries->accountId = $account->id; 
 							$drilldownSeries->id = $account->name .'-' .Constants::READONLY_PROFILE;
 							$drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
 							foreach($costData as $key => $value)
 							{
-								$shortKey = self::getShortKey($key, $services);
-								$drilldownSeries ->data[] = array(0 => $shortKey, 1 => $value);
-							}		
-							$arr[]=  $drilldownSeries;
-							unset($drilldownSeries);
+								$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $currentCost['total'];
+								$costData = $currentCost['cost_data'];
+								$drilldownSeries->id = $account->name .'-' .Constants::READONLY_PROFILE;
+								$drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
+								foreach($costData as $key => $value)
+								{
+									$shortKey = self::getShortKey($key, $services);
+									$drilldownSeries ->data[] = array(0 => $shortKey, 1 => $value);
+								}		
+								$arr[]=  $drilldownSeries;
+								unset($drilldownSeries);
+							}
 						}
-						break;
-				}
+							break;
+					}
 			}
 		}	
 		return array('series' => $series, 'drilldownSeries' => $arr);
