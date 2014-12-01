@@ -204,7 +204,7 @@ class AssetsController extends BaseController {
 					$stdClass->AvailabilityZone	= $value['AvailabilityZone'];
 					if(!empty($value['Attachments']))
 					{
-						$stdClass->InstanceId = $value['Attachments']['InstanceId'];
+						$stdClass->InstanceId = $value['Attachments'][0]['InstanceId'];
  					}
 					$stdClass->State	= $value['State'];
 					
