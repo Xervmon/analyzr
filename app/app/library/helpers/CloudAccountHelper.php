@@ -55,7 +55,7 @@ class CloudAccountHelper
 	public static function getAccountCostSummary($id)
 	{
 		$account = self::getBillingAccountStatusById($id);
-		
+		echo '<pre>'; print_r($account); die();
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
 		$obj = WSObj::getObject($responseJson);
