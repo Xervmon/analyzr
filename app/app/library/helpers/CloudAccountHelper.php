@@ -112,7 +112,7 @@ class CloudAccountHelper
 		{
 			foreach($accounts as $account)
 			{
-				$drilldownSeries = new stdClass();
+				
 				switch($account->profileType)
 				{
 					case Constants::READONLY_PROFILE : 
@@ -121,9 +121,8 @@ class CloudAccountHelper
 						{
 							$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $currentCost['total'];
 							$costData = $currentCost['cost_data'];
+							$drilldownSeries = new stdClass();
 							$drilldownSeries->accountId = $account->id; 
-							$drilldownSeries->id = $account->name .'-' .Constants::READONLY_PROFILE;
-							$drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
 							foreach($costData as $key => $value)
 							{
 								$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $currentCost['total'];
@@ -136,7 +135,7 @@ class CloudAccountHelper
 									$drilldownSeries ->data[] = array(0 => $shortKey, 1 => $value);
 								}		
 								$arr[]=  $drilldownSeries;
-								unset($drilldownSeries);
+								//unset($drilldownSeries);
 							}
 						}
 							break;
