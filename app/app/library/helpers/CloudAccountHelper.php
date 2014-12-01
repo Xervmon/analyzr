@@ -112,6 +112,7 @@ class CloudAccountHelper
 		{
 			foreach($accounts as $account)
 			{
+				$drilldownSeries = new stdClass();
 				switch($account->profileType)
 				{
 					case Constants::READONLY_PROFILE : 
