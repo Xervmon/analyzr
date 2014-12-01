@@ -14,6 +14,7 @@ return array(
 		'account_updated'             => 'Account updated. Just wait now while we load your usage data and crunch the numbers!',
 		'account_created'             => 'Account created.',
 		'add_account'                 => 'Add Account',
+		'account'                  	  => 'account',
 		'your_accounts'               => 'Your Accounts:',
 		'account_auth_failed'         => 'Account authentication failed. Please check the credentials provided for the selected cloud provider.',
 		'empty_accounts'              => 'You do not have any accounts. Create one by clicking on "Add Account" below',
