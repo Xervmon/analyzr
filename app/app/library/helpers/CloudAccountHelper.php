@@ -55,6 +55,9 @@ class CloudAccountHelper
 	public static function getAccountCostSummary($id)
 	{
 		$account = self::getBillingAccountStatusById($id);
+		$account->credentials = StringHelper::decrypt($account->credentials, md5(Auth::user()->username));
+		$cred = json_decode($account->credentials);
+		
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
 		$obj = WSObj::getObject($responseJson);
@@ -62,7 +65,7 @@ class CloudAccountHelper
 		{
 			if($account->job->status == Lang::get('account/account.STATUS_COMPLETED'))
 			{
-				$response = AWSBillingEngine::GetCost(array('token' => $obj->token, 'accountId' => $account->id));
+				$response = AWSBillingEngine::GetCost(array('token' => $obj->token, 'accountId' => $cred->accountId));
 				return $response;
 			}	
 			else {
