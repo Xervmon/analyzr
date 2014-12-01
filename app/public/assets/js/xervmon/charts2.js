@@ -109,7 +109,7 @@
 };*/
 
 
-barchart=function(selector, columnType, data ,result){
+barchart=function(selector, columnType, data){
 
     $(selector).highcharts({
         chart: {
@@ -158,6 +158,6 @@ barchart=function(selector, columnType, data ,result){
             backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
             shadow: true
         },
-        series: [result]
+        series: data.drilldownSeries
     });
 }

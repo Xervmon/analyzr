@@ -70,7 +70,6 @@ class CloudAccountHelper
 														$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $currentCost['total'];
 														$costData = $currentCost['cost_data'];
 														//$arr = '';
-														$drilldownSeries->accountid =$account->id;
 														$drilldownSeries->id = $account->name .'-' .Constants::READONLY_PROFILE;
 														$drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
 
