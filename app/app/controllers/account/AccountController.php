@@ -321,7 +321,8 @@ class AccountController extends BaseController {
 
 	public function getCollectionData($id)
 	{
-		$account = CloudAccount::where('user_id', Auth::id())->find($id);
+		$account = CloudAccountHelper::findAndDecrypt($id);
+		$cred = json_decode($account->credentials);
 		
 		$servicesConf = Config::get('aws_services');
 		$limit  = Input::get('limit');
@@ -338,6 +339,7 @@ class AccountController extends BaseController {
 		{
 			$response = AWSBillingEngine::Collection(array('token' => $obj->token, 
 														   'service_names' => $serviceNames, 
+														   'accountId' =>$cred->accountId,
 														   'limit' => $limit, 
 														   'offset' => $offset)
 												);
