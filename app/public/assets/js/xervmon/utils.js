@@ -232,6 +232,7 @@ window.buildTableFromArray = function (data, excludeKeys, headings, nameChanges,
 
 convertJsonToTableSecurityGroupsDetails = function(data) {
     var pageSize = 10;
+
     if (data.length > 0) {
         var mediaClass = '';
         for (var i = 0; i < data.length; i++) {
@@ -271,6 +272,18 @@ convertJsonToTableSecurityGroupsDetails = function(data) {
 
 convertJsonToTableSecurityGroups = function(data) {
     var pageSize = 10;
+    for (var i = 0; i < data.length; i++) {
+        if(data[i]["Safe Ports"] || data[i]["Danger Ports"] || data[i]["Instance"] || data[i]["Warning Ports"] )
+        {    
+                data[i]["Safe Ports"] = '<span class="label label-success" >'+data[i]['Safe Ports']+'</span>' ;
+                data[i]["Danger Ports"] = '<span class="label label-danger" >'+data[i]['Danger Ports']+'</span>' ;
+                if(data[i]["Instance"]!="" && data[i]["Warning Ports"]!="")
+                    data[i]["Instance"] = '<span class="label label-danger" >'+data[i]['Instance']+'</span>' ;
+                data[i]["Warning Ports"] = '<span class="label label-warning" >'+data[i]['Warning Ports']+'</span>' ;
+        }   
+    }
+
+
     if (data.length > 0) {
         var mediaClass = '';
         mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {

@@ -62,8 +62,8 @@ class TicketController extends BaseController {
         $mode = $ticket !== false ? 'edit' : 'create';
         $ticket = $ticket !== false ? Ticket::where('user_id', Auth::id())->findOrFail($ticket->id) : null;
 		$priorities =array('urgent', 'high', 'medium', 'low');
-		$deployments = Deployment::where('user_id', Auth::id())->get();
-        return View::make('site/ticket/create_edit', compact('mode', 'ticket', 'priorities', 'deployments'));
+		$accounts = CloudAccount::where('user_id', Auth::id())->get();
+        return View::make('site/ticket/create_edit', compact('mode', 'ticket', 'priorities', 'accounts'));
     }
     /**
      * Saves/Edits an account
@@ -81,8 +81,8 @@ class TicketController extends BaseController {
             $ticket->description = Input::get('description');
             $ticket->active = 1;
 			$ticket->priority = Input::get('priority');
-			$deploymentId = Input::get('deploymentId');
-			$ticket->deploymentId = empty($deploymentId) ? 0 : $deploymentId;
+			$accountId = Input::get('accountId');
+			$ticket->accountId = empty($accountId) ? 0 : $accountId;
             $ticket->user_id = Auth::id(); // logged in user id
             
              $success = $ticket->save();
@@ -107,8 +107,8 @@ class TicketController extends BaseController {
 		
 		$ticketComments = $id !== false ? Ticket::leftJoin('ticket_comments', 'tickets.id', '=', 'ticket_comments.ticket_id')->where('tickets.user_id', Auth::id())->orderBy('ticket_comments.created_at', 'DESC')->get() : null;
 		$priorities =array('urgent', 'high', 'medium', 'low');
-		$deployments = Deployment::where('user_id', Auth::id())->get();
-        return View::make('site/ticket/reply', compact('mode', 'ticket', 'priorities', 'ticketComments', 'userList', 'deployments'));
+		$accounts = CloudAccount::where('user_id', Auth::id())->get();
+        return View::make('site/ticket/reply', compact('mode', 'ticket', 'priorities', 'ticketComments', 'userList', 'accounts'));
 	}
 	
 	 public function postReply($id = false) {

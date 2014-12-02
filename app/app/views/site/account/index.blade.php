@@ -57,8 +57,9 @@
 					        </p> -->
 							@else
 								<p>
-									<span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
-									| 
+									<!-- <span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
+									  --> 
+									<span title="Status">{{ UIHelper::getServicesStatus($account) }}</span>  
 									<a href="{{ URL::to('security/' . $account->id . '/auditReports') }}"><span class="glyphicon glyphicon-lock"></span></a>
 									
 								</p>

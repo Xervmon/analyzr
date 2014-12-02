@@ -57,13 +57,17 @@ class ProcessJobLib
 			$credentials    = StringHelper::decrypt($account->credentials, md5(Auth::user()->username));
    			$credentials    = json_decode($credentials);
 
-			$data['token'] 	 	= $obj->token;
+   			$data['token'] 	 	= $obj->token;
 			$data['apiKey'] 	= StringHelper::encrypt($credentials ->apiKey, md5(Auth::user()->username));
 			$data['secretKey'] 	= StringHelper::encrypt($credentials ->secretKey, md5(Auth::user()->username));
 			switch($account->profileType)
 			{
-				case Constants::READONLY_PROFILE : 	$data['accountId'] 	= $credentials->accountId;
-													$data['billingBucket'] = $credentials->billingBucket;
+				case Constants::READONLY_PROFILE : 	
+												   $data['accountId'] 	 =  $credentials->accountId;
+												   $data['billingBucket'] = $credentials->billingBucket;
+											
+												if(empty($portPreference))
+												{
 													$json = $this->executeProcess(Constants::BILLING, $data);
 													Log::info('Adding the job to '.Constants::READONLY_PROFILE.' '.Constants::BILLING.' queue for processing..'.$json);
 													$pJob1 = WSObj::getObject($json);
@@ -72,9 +76,12 @@ class ProcessJobLib
 													Log::info('Adding the job to '.Constants::READONLY_PROFILE.' '. Constants::SERVICES.' queue for processing..'.$json);
 													$pJob2 = WSObj::getObject($json);
 													$this->pushToProcessJobTable($account, $data, $pJob2, Constants::SERVICES);
-													if(!empty($portPreference))
-													{
+													
+												}			
+												else
+												{
 														$preferences = json_decode($portPreference ->preferences);
+														unset($data['billingBucket']);
 														$data['dangerPorts'] = $preferences -> dangerPorts;
 														$data['warningPorts'] = $preferences -> warningPorts;
 														$data['safePorts'] = $preferences -> safePorts;
@@ -82,14 +89,16 @@ class ProcessJobLib
 														Log::info('Adding the job to '.Constants::READONLY_PROFILE.' '. Constants::PORT_SCANNING.' queue for processing..'.$json);
 														$pJob2 = WSObj::getObject($json);
 														$this->pushToProcessJobTable($account, $data, $pJob2, Constants::PORT_SCANNING);
-													}
+												}
 													break;
 													
-				case Constants::SECURITY_PROFILE : $data['assumedRole'] = $credentials->assumedRole;
+				case Constants::SECURITY_PROFILE : $data['assumedRole'] = StringHelper::encrypt($credentials ->assumedRole, md5(Auth::user()->username));
+												   $data['accountId'] 	 =  $account->id;
 												   $data['securityToken'] = empty($credentials->securityToken) ? '' : $credentials->securityToken;
-												   $json = $this->executeProcess('securityAudit', $data);
+												   $json = $this->executeProcess( Constants::SECURITY_AUDIT, $data);
 												   Log::info('Adding the job to '.Constants::SECURITY_PROFILE.' '.Constants::SECURITY_AUDIT .' queue for processing..'.$json);
 												   $pJob1 = WSObj::getObject($json);
+												   Log::info('After adding...'.$json);
 												   $this->pushToProcessJobTable($account, $data, $pJob1 , Constants::SECURITY_AUDIT); 	
 												   break;
 			}
@@ -105,10 +114,10 @@ class ProcessJobLib
 		$response = '';
 		switch($method)
 		{
-			case Constants::BILLING  : $response = AWSBillingEngine::create_billing($data); break;
-			case Constants::SERVICES : $response = AWSBillingEngine::create_services($data); break;
-			case Constants::SECURITY_AUDIT    : $response = AWSBillingEngine::create_audit($data); break;
-			case Constants::PORT_SCANNING : $response = AWSBillingEngine::create_secgroup($data);
+			case Constants::BILLING  	  : $response   = AWSBillingEngine::create_billing($data); break;
+			case Constants::SERVICES 	  : $response   = AWSBillingEngine::create_services($data); break;
+			case Constants::SECURITY_AUDIT: $response 	= AWSBillingEngine::create_audit($data); break;
+			case Constants::PORT_SCANNING : $response   = AWSBillingEngine::create_secgroup($data);
 		}
 		return $response;
 	}
@@ -131,7 +140,7 @@ class ProcessJobLib
 		{
 			$processJob -> output = '';
 			$processJob->job_id = 	'';
-			$processJob->status = $pJob->status;
+			$processJob->status = $pJob->fail_code .':' .$pJob->fail_message ;
 		}
 		$this->saveJob($processJob);
 	}
@@ -150,6 +159,7 @@ class ProcessJobLib
 				$depStatusJson = AWSBillingEngine::getDeploymentStatus(array('token' => $obj->token, 'job_id' => $row->job_id));
 				EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'getDeploymentStatus', 'return' => $depStatusJson));
 				$obj2 = WSObj::getObject($depStatusJson);
+				Log::debug('Deployment Status '. $depStatusJson);
 				$return[] = $this->prepareJobData($row, $obj2);
 			}
 			return $return;

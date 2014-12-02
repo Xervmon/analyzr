@@ -24,6 +24,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 		{
 			case 'running' :
 			case 'OK' :	
+			case 'available' :	
 			case Lang::get('account/account.STATUS_COMPLETED') 	: return '<span class="label label-success">'.$status.'</span>'; break;
 				
 			case Lang::get('account/account.STATUS_IN_PROCESS')  : 
@@ -31,6 +32,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 			case 'started' 		: return '<span class="label label-info">'.$status.'</span>'; break;
 			case 'stop' 		: return '<span class="label label-warning">'.$status.'</span>'; break;
 			case 'error' 		:
+			case 'in-use' :		
 			case 'failed' 		: return '<span class="label label-danger">'.$status.'</span>'; break;
 			default:			  return '<span class="label label-danger">'.$status.'</span>'; break;
 								
@@ -331,7 +333,6 @@ Inverse	<span class="label label-inverse">Inverse</span>
 				}
 			}
 			$jobs = $new_prob;
-
 			$str = '<div class="table-responsive">  <table class="table table-bordered">';
 
 			
@@ -341,11 +342,69 @@ Inverse	<span class="label label-inverse">Inverse</span>
 				$temp_url = URL::full().'/'.$job->cloudAccountId.'/refresh';
 				$str .= '<tr>';
 				if($job -> operation==Lang::get('account/account.create_billing'))
-				$str .= '<td> <i class="fa fa-cogs"></i> ' . $job -> operation. '</td>';	
+					$str .= '<td> <i class="fa fa-cogs"></i> ' . $job -> operation. '</td>';	
 				elseif($job -> operation==Lang::get('account/account.create_services'))
-				 $str .= '<td> <i class="fa fa-credit-card"></i> ' . $job -> operation. '</td>';
+				 	$str .= '<td> <i class="fa fa-credit-card"></i> ' . $job -> operation. '</td>';
 				else
 					$str .= '<td> <i class="fa fa-lock"></i> ' . $job -> operation. '</td>';
+
+								
+				$str .= '<td>' . self::getLabel($job -> status). '</td>';				
+				if(in_array($job->status, array(Lang::get('account/account.STATUS_IN_PROCESS'), 
+																Lang::get('account/account.STATUS_STARTED'))))
+				{
+					$str .= '<td><a  href="'.$temp_url.'"> <span class="glyphicon glyphicon-refresh"></span> </a></td>';
+				}
+								
+				$str .= '</tr>';
+				
+			}
+			
+			$str .= ' </table> </div>';
+		}
+		return $str;
+		/*$jobData = ProcessJob::where('user_id', Auth::id())
+						-> where('cloudAccountId', $account->id) 
+						-> orderBy('created_at', 'desc')
+						-> get();
+		$str = '';				
+		foreach($jobData as $row)
+		{
+			$str .= ucfirst($row->operation) . ':' . self::getLabel($row->status) . '<br/>';
+		}				
+		return $str;*/
+		
+	}
+
+
+
+
+	public static function getPortPreferenceServicesStatus($portPreference)
+	{
+		$obj = json_decode($portPreference->toJson());
+		$processJobs = ProcessJob::where('user_id', Auth::id())->where('cloudAccountId', $obj->cloudAccountId) ->where('operation', Lang::get('account/account.create_secgroup')) -> orderBy('created_at', 'desc') -> get();
+		$processJobs = json_decode($processJobs->toJson());
+		
+		$jobs = empty($account->jobs) ? '' : $account->jobs;
+		$str = '';	
+		$new_prob = array();
+		if(!empty($processJobs))
+		{
+			foreach ($processJobs as $array) {
+				if (!array_key_exists($array->operation, $new_prob)) {
+					$new_prob[$array->operation] = $array;
+				}
+			}
+			$processJobs = $new_prob;
+			$str = '<div class="table-responsive">  <table class="table table-bordered">';
+
+			foreach($processJobs as $job)
+			{
+				$temp_url = URL::full().'/'.$job->cloudAccountId.'/refresh';
+				$temp_url = str_ireplace(Lang::get('security/portPreferences.portPreference'),Lang::get('account/account.account'),$temp_url);
+				
+				$str .= '<tr>';
+				$str .= '<td> <i class="fa fa-lock"></i> ' . $job -> operation. '</td>';
 
 								
 				$str .= '<td>' . self::getLabel($job -> status). '</td>';				
