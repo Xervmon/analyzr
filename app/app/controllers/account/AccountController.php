@@ -254,15 +254,12 @@ class AccountController extends BaseController {
     	UtilHelper::check();
 		
 		$response = CloudAccountHelper::getAccountCostSummary($id);
-		$obj = WSObj::getObject($response);
-		$getCostData = json_decode(json_encode($obj), true);
-		
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
-		$accountname = $account->name;
-        
+		$getCostData = CloudAccountHelper::getChartsFormat(json_decode($response, true), $account->name);
+		
        	$getCurrentCostData = CloudAccountHelper::getAccountSummaryById($id);
 		
-		$costdata = array(
+		$costchartsdata = array(
 							'titleText' => Lang::get('account/account.titleText'),
 							'xAxisTitle' => Lang::get('account/account.xAxisTitle'),
 							'yAxisTitle' => Lang::get('account/account.yAxisTitle'),
@@ -279,11 +276,11 @@ class AccountController extends BaseController {
         return View::make('site/account/charts',
         				 array(
 				            'account' => $account,
-				            'chartdata'=>$chartdata,
 				            'costchartsdata'=>$costchartsdata,
 				            'currentcostchartsdata'=>$currentcostchartsdata
 				             ));
     }
+
 
 	public function getLogs($id)
 	{

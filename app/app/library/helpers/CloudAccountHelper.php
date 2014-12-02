@@ -48,20 +48,47 @@ class CloudAccountHelper
 	
 	public static function getAccountSummary()
 	{
-		$accounts = self::getAccountStatus();
+	 $accounts = self::getAccountStatus();
 		return self::getChartData($accounts);
 	}
 	
 	public static function getAccountSummaryById($id)
 	{
-		$account = self::getBillingAccountStatusById($id);
-		return self::getChartData(array($account));
+		 $accounts = self::getBillingAccountStatusById($id);
+		return self::getChartData(array($accounts));
+	
 	}
 	
-	
+	 public static function getChartsFormat($costdata, $accountname)
+    {
+		$arr = '';
+		$drilldownSeries = new stdClass();
+		$services = Config::get('aws_services');
+		if($costdata['status'] == 'OK')
+					{
+						$drilldownSeries ->name = $accountname .'-' .Constants::READONLY_PROFILE;
+						// $costdata['cost_data'][];
+						$costDatas = $costdata['cost_data'];
+						foreach($costDatas as $k=>$val)
+						 {
+						 	$drilldownSeries ->updated =$k;
+						   foreach($val['data'] as $key=>$value)
+						   {
+							$shortKey = CloudAccountHelper::getShortKey($key, $services);
+							if(intval($value) == 0) continue;
+							$drilldownSeries ->data[] = array(0 => $shortKey, 1 => $value);
+						   }
+						  }
+						$arr[]=  $drilldownSeries;
+						unset($drilldownSeries);
+					}
+
+		return array('drilldownSeries' => $arr);
+    }
+
 	public static function getAccountCostSummary($id)
 	{
-		$account = self::getBillingAccountStatusById($id);
+		$account = self::getBillingAccountStatusById($id);//return $account->name;
 		$account->credentials = StringHelper::decrypt($account->credentials, md5(Auth::user()->username));
 		$cred = json_decode($account->credentials);
 		
@@ -84,30 +111,6 @@ class CloudAccountHelper
 		}
 	}
 	
-    public static function getCostChartsData($costdata, $accountname)
-    {
-		$arr = '';
-		$drilldownSeries = new stdClass();
-		$services = Config::get('aws_services');
-		if($costdata['status'] == 'OK')
-					{
-						$drilldownSeries ->name = $accountname .'-' .Constants::READONLY_PROFILE;
-						$costDatas = $costdata['cost_data'];
-						foreach($costDatas as $costData)
-						 {
-						   foreach($costData['data'] as $key=>$value)
-						   {
-							$shortKey = self::getShortKey($key, $services);
-							if(intval($value) == 0) continue;
-							$drilldownSeries ->data[] = array(0 => $shortKey, 1 => $value);
-						   }
-						  }
-						$arr[]=  $drilldownSeries;
-						unset($drilldownSeries);
-					}
-
-		return array('drilldownSeries' => $arr);
-    }
 
 	public static function getChartData($accounts)
 	{
@@ -130,22 +133,19 @@ class CloudAccountHelper
 							$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $currentCost['total'];
 							$costData = $currentCost['cost_data'];
 							$drilldownSeries = new stdClass();
-							$drilldownSeries->accountId = $account->id; 
+							$drilldownSeries->accountId = $account->id;
+						    $drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
+							$drilldownSeries->updated = $account->updated_at; 
 							foreach($costData as $key => $value)
 							{
-								$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $currentCost['total'];
-								$costData = $currentCost['cost_data'];
-								$drilldownSeries->id = $account->name .'-' .Constants::READONLY_PROFILE;
-								$drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
-								foreach($costData as $key => $value)
-								{
+								
 									$shortKey = self::getShortKey($key, $services);
 									if(intval($value) == 0) continue;
 									$drilldownSeries ->data[] = array(0 => $shortKey, 1 => $value);
 								}		
 								$arr[]=  $drilldownSeries;
-								//unset($drilldownSeries);
-							}
+								unset($drilldownSeries);
+							
 						}
 							break;
 					}
