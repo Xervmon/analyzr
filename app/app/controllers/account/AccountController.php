@@ -95,8 +95,12 @@ class AccountController extends BaseController {
 				CloudAccountHelper::save($account);
 				$processJobLib = new ProcessJobLib();
 				$ret = $processJobLib->process($account);
-
-				return Redirect::to('account/')->with('success', Lang::get('account/account.account_updated'));
+				switch($account->profileType )
+				{
+					case Constants::READONLY_PROFILE : return Redirect::to('account/')->with('success', Lang::get('account/account.account_updated')); break;
+					case Constants::SECURITY_PROFILE : return Redirect::to('account/')->with('success', Lang::get('account/account.account_security_profile_updated')); break;
+				}
+				//return Redirect::to('account/')->with('success', Lang::get('account/account.account_updated'));
             } else {
                 return Redirect::to('account/create')->with('error', Lang::get('account/account.account_auth_failed'));
             }
@@ -252,7 +256,7 @@ class AccountController extends BaseController {
 		$costdata=json_decode(json_encode($obj), true);
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
 		$accountname=$account->name;
-        $costchartsdata=CloudAccountHelper::getCostChartsData($costdata,$accountname);
+        $costchartsdata = CloudAccountHelper::getCostChartsData($costdata,$accountname);
     	$currentcostchartsdata = CloudAccountHelper::getAccountSummary();
 		$chartdata['titleText']    = Lang::get('account/account.titleText');
 		$chartdata['xAxisTitle']   = Lang::get('account/account.xAxisTitle'); 
@@ -317,7 +321,8 @@ class AccountController extends BaseController {
 
 	public function getCollectionData($id)
 	{
-		$account = CloudAccount::where('user_id', Auth::id())->find($id);
+		$account = CloudAccountHelper::findAndDecrypt($id);
+		$cred = json_decode($account->credentials);
 		
 		$servicesConf = Config::get('aws_services');
 		$limit  = Input::get('limit');
@@ -329,17 +334,17 @@ class AccountController extends BaseController {
 		$serviceNames = array_keys($servicesConf);
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - Collection', 'return' => $responseJson));
-		$obj = json_decode($responseJson);
-		if(!empty($obj) && $obj->status == 'OK')
+		$obj = WSObj::getObject($responseJson);
+		if($obj->status == 'OK')
 		{
 			$response = AWSBillingEngine::Collection(array('token' => $obj->token, 
 														   'service_names' => $serviceNames, 
+														   'accountId' =>$cred->accountId,
 														   'limit' => $limit, 
 														   'offset' => $offset)
-													);
-													
-			$result = json_decode($response);
-			if(!empty($result) && $result->status == 'OK')
+												);
+			$result = WSObj::getObject($response);										
+			if($result->status == 'OK')
 			{
 				$billingData = $result -> billing_data;
 				echo '<pre>';

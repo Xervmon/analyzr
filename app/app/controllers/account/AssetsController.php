@@ -191,19 +191,37 @@ class AssetsController extends BaseController {
             UtilHelper::check();
             $account = CloudAccount::where('user_id', Auth::id())->find($id);
             $getEBSAll = CloudProvider::getEBS($id);
+	    //echo '<pre>'; print_r($getEBSAll); die();
             $arr = array();$i=0;
             if(!empty($getEBSAll['Volumes']))
             {
                 foreach($getEBSAll['Volumes'] as $key => $value)
                 {
-                    $arr[$i]['VolumeId']=$value['VolumeId'];
-                    $arr[$i]['SnapshotId']=$value['SnapshotId'];
-                    $arr[$i]['AvailabilityZone']=$value['AvailabilityZone'];
-                    $i++;
+                	$stdClass = new stdClass();
+					$stdClass->VolumeId	= $value['VolumeId'];
+					$stdClass->Description = 'SnapshotId : '. $value['SnapshotId'] .'<br/>'
+											  . 'CreateTime : ' .$value['CreateTime']. '<br/>';
+					$stdClass->AvailabilityZone	= $value['AvailabilityZone'];
+					if(!empty($value['Attachments']))
+					{
+						$stdClass->InstanceId = $value['Attachments'][0]['InstanceId'];
+ 					}
+					$stdClass->State	= $value['State'];
+					//UIHelper::getLabel($value['State']);
+					
+                    $arr[] = $stdClass;
                 }
             }   
 			return View::make('site/account/assets/ebsInfo', array('account' => $account,'instanceDetails'=> $arr));
     }
+
+	public function getTagNameValue($value)
+	{
+		if(!empty($value['Tags']))
+		{
+			return json_encode($tag[0]);			
+		}
+	}
     
     public function sgInfo($id)
     {

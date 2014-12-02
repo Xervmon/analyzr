@@ -42,12 +42,13 @@ var accountId='{{$account->id}}';
 	    	chartdata = JSON.parse(chartdata);
 	    }
 	    result=costchartsdata.drilldownSeries[0];
-	    costbarchart('#costbarchart', 'bar', chartdata ,result);
+	    barchart('#costbarchart', 'bar', chartdata ,result);
 	    for (index = 0; index < currentcostchartsdata.drilldownSeries.length; ++index) 
 	    {
 	     if(currentcostchartsdata.drilldownSeries[index].accountId==accountId){
 	     	result=currentcostchartsdata.drilldownSeries[index];
-	     	currentcostbarchart('#currentcostbarchart', 'bar', chartdata ,result);
+	     	//currentcostbarchart('#currentcostbarchart', 'bar', chartdata ,result);
+	     	 barchart('#currentcostbarchart', 'bar', chartdata ,result);
 	     }
 	    }
 	});

@@ -92,12 +92,13 @@ class ProcessJobLib
 												}
 													break;
 													
-				case Constants::SECURITY_PROFILE : $data['assumedRole'] = $credentials->assumedRole;
+				case Constants::SECURITY_PROFILE : $data['assumedRole'] = StringHelper::encrypt($credentials ->assumedRole, md5(Auth::user()->username));
 												   $data['accountId'] 	 =  $account->id;
 												   $data['securityToken'] = empty($credentials->securityToken) ? '' : $credentials->securityToken;
-												   $json = $this->executeProcess('securityAudit', $data);
+												   $json = $this->executeProcess( Constants::SECURITY_AUDIT, $data);
 												   Log::info('Adding the job to '.Constants::SECURITY_PROFILE.' '.Constants::SECURITY_AUDIT .' queue for processing..'.$json);
 												   $pJob1 = WSObj::getObject($json);
+												   Log::info('After adding...'.$json);
 												   $this->pushToProcessJobTable($account, $data, $pJob1 , Constants::SECURITY_AUDIT); 	
 												   break;
 			}
@@ -139,7 +140,7 @@ class ProcessJobLib
 		{
 			$processJob -> output = '';
 			$processJob->job_id = 	'';
-			$processJob->status = $pJob->status;
+			$processJob->status = $pJob->fail_code .':' .$pJob->fail_message ;
 		}
 		$this->saveJob($processJob);
 	}
@@ -158,6 +159,7 @@ class ProcessJobLib
 				$depStatusJson = AWSBillingEngine::getDeploymentStatus(array('token' => $obj->token, 'job_id' => $row->job_id));
 				EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'getDeploymentStatus', 'return' => $depStatusJson));
 				$obj2 = WSObj::getObject($depStatusJson);
+				Log::debug('Deployment Status '. $depStatusJson);
 				$return[] = $this->prepareJobData($row, $obj2);
 			}
 			return $return;
