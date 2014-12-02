@@ -40,15 +40,21 @@ var costchartsdata = '{{json_encode($costchartsdata)}}';
 console.log(currentcostchartsdata);console.log(costchartsdata);
 	$(document).ready(function() 
 	{
-		if (!$.isArray((costchartsdata)&&(currentcostchartsdata))) 
+		if (!$.isArray(costchartsdata))
+		{
+			costchartsdata = JSON.parse(costchartsdata);
+		}
+		if (!$.isArray(currentcostchartsdata))
 		{
 			currentcostchartsdata = JSON.parse(currentcostchartsdata);
-            str='Last Updated : '+currentcostchartsdata.result.drilldownSeries[0].updated;
-			$('#currentcostupdate').append(str);
-			costchartsdata = JSON.parse(costchartsdata);
-			str='Last Updated : '+costchartsdata.result.drilldownSeries[0].updated;
-			$('#costupdate').append(str);
-	    }
+		}
+		str='Last Updated : '+currentcostchartsdata.result.drilldownSeries[0].updated;
+		
+		$('#currentcostupdate').append(str);
+		
+		str='Last Updated : '+costchartsdata.result.drilldownSeries[0].updated;
+		$('#costupdate').append(str);
+		
 	    barchart('#currentcostbarchart', 'bar', currentcostchartsdata);
 	    barchart('#costbarchart', 'bar', costchartsdata);
 	    
