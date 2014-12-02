@@ -54,6 +54,36 @@
 				</li>
 			@endforeach
 		@endif
+		@if(!empty($accounts)) 
+			@foreach ($accounts as $account)
+			<li class="list-group-item">
+					<div class="media">
+						<span class="pull-left" href="#">
+						    <img class="media-object img-responsive" 
+						    	src="{{ asset('/assets/img/providers/'.Config::get('provider_meta.'.$portPreference->cloudProvider.'.logo')) }}" alt="{{ $portPreference->cloudProvider }}" />
+						</span>
+			
+				<div class="media-body">
+							<h4 class="media-heading">{{ String::title($account->name) }} : {{ String::title($account->profileType) }}</h4>
+							<p>
+								<span class="glyphicon glyphicon-calendar"></span> {{{ $account->created_at }}} 
+								
+							</p>
+							<p>
+									<!-- <span title="Status">{{ UIHelper::getLabel($account->status) }}</span>
+									  --> 
+									<span title="Status">{{ UIHelper::getServicesStatus($account) }}</span>
+									<a href="{{ URL::to('security/' . $account->id . '/auditReports') }}"><span class="glyphicon glyphicon-lock"></span></a>
+									
+								</p>
+							
+						</div>
+							</div>
+				</li>
+			@endforeach
+		@endif
+		
+		
 	</ul>
 	@if(empty($portPreferences) || count($portPreferences) === 0) 
 		<div class="alert alert-info"> {{{ Lang::get('security/portPreferences.empty_no_preferences') }}}</div>

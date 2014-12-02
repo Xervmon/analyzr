@@ -36,6 +36,7 @@ class SecurityReportsController extends BaseController {
 	public function getAuditReports($id)
 	{
 		$this->account = CloudAccountHelper::findAndDecrypt($id);
+		$account_details = CloudAccount::where('user_id', Auth::id())->find($id);
 		 
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
@@ -55,7 +56,7 @@ class SecurityReportsController extends BaseController {
 			}
 			else 
 			{
-				return View::make('site/security/audit/reports', array('reports' =>$table ));	
+				return View::make('site/security/audit/reports', array('account' => $account_details,'reports' =>$table ));	
 			}
 			
 		}

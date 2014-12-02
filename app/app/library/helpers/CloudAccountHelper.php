@@ -258,6 +258,25 @@ class CloudAccountHelper
 
 		return $arr;
 	}
+	
+	public static function getAccountSecurityStatus()
+	{
+		$accounts = CloudAccount::where('user_id', Auth::id())->where('profileType', Lang::get('security/portPreferences.securityProfile')) ->get() ;
+		
+		$arr = '';
+		foreach($accounts as $account)
+		{
+			$obj = json_decode($account->toJson());
+			$processJobs = ProcessJob::where('user_id', Auth::id())->where('cloudAccountId', $obj->id) -> orderBy('created_at', 'desc') -> get();
+			foreach($processJobs as $job)
+			{
+				$obj->jobs[] = json_decode($job->toJson());
+			}
+			$arr[] = $obj;
+		}
+		return $arr;
+	}
+
 
 	public static function getBillingAccountStatusById($id)
 	{
