@@ -3,6 +3,17 @@
 {{-- Content --}}
 @section('content')
 
+<script type="text/javascript">
+function toggleChevron(e) {
+    $(e.target)
+        .prev('.panel-heading')
+        .find("i.indicator")
+        .toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+}
+$('#accordion').on('hidden.bs.collapse', toggleChevron);
+$('#accordion').on('shown.bs.collapse', toggleChevron);
+</script>
+
 <div class="page-header">
 	<div class="row">
 		<div class="col-md-9">
@@ -13,9 +24,19 @@
 
 <div class="container">
 	<div class="row clearfix">
-		<div class="col-md-12 column">
-						<h3><img alt="300x200" src="{{{ asset('assets/img/aws/ec2.png') }}}" />{{{ Lang::get('account/account.aws_ec2') }}}</h3>
-						<?php foreach ($instances as $key_i => $value_i) { 
+		
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+         <img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/ec2.png') }}}" />{{{ Lang::get('account/account.aws_ec2') }}}
+      <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+      </h4> </a>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse">
+      <div class="panel-body">
+					<?php foreach ($instances as $key_i => $value_i) { 
 						$instances_sum = array_sum((array)$value_i); 
 						if($instances_sum!=0)
 						{ ?>
@@ -77,10 +98,23 @@
 						<?php } 
 					    } ?> 
 
-</div>
 
-<div class="col-md-12 column">
-						<h3><img alt="300x200" src="{{{ asset('assets/img/aws/ebs.png') }}}" />{{{ Lang::get('account/account.aws_ebs') }}}</h3>
+
+
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+          <img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/ebs.png') }}}" />{{{ Lang::get('account/account.aws_ebs') }}}
+		</a><i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse">
+      <div class="panel-body">
+
 						<?php foreach ($volumes as $key_i => $value_i) {
 						$volumes_sum = array_sum((array)$value_i);
 						if($volumes_sum!=0) {
@@ -139,14 +173,21 @@
 						</div>
 						</div><?php } 
 					    } ?> 
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+         <img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/providers/aws-big.jpg') }}}" />{{{ Lang::get('account/account.aws_sg') }}}
+		 </a><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse">
+      <div class="panel-body">
 
-
-</div>
-
-
-<div class="col-md-12 column">
-						<h3><img alt="300x200" src="{{{ asset('assets/img/providers/aws-big.jpg') }}}" />{{{ Lang::get('account/account.aws_sg') }}}</h3>
-						<?php foreach ($secgroups as $key_i => $value_i) { 
+      					<?php foreach ($secgroups as $key_i => $value_i) { 
 							$secgroups_sum = array_sum((array)$value_i);
 							if($secgroups_sum!=0) {
 						 ?>
@@ -206,12 +247,24 @@
 					    } ?> 
 
 
-</div>
+
+      </div>
+    </div>
+  </div>
 
 
-
-<div class="col-md-12 column">
-						<h3><img alt="73x33" src="{{{ asset('assets/img/providers/aws-big.jpg') }}}" />{{{ Lang::get('account/account.aws_kp') }}}</h3>
+    <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+        	
+      					<img alt="73x33" src="{{{ asset('assets/img/providers/aws-big.jpg') }}}" />{{{ Lang::get('account/account.aws_kp') }}}
+						
+        </a><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+      </h4>
+    </div>
+    <div id="collapseFour" class="panel-collapse collapse">
+      <div class="panel-body">
 						<?php foreach ($key_pairs as $key_i => $value_i) { 
 						$key_pairs_sum = array_sum((array)$value_i); 
 						if($key_pairs_sum!=0)
@@ -272,12 +325,26 @@
 						<?php } 
 					    } ?> 
 
-</div>
 
 
-<div class="col-md-12 column">
-						<h3><img alt="300x200" src="{{{ asset('assets/img/aws/rds.png') }}}" />{{{ Lang::get('account/account.aws_rds') }}}</h3>
-						<?php foreach ($rds as $key_i => $value_i) { 
+      </div>
+    </div>
+  </div>
+
+
+    <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+        <img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/rds.png') }}}" />{{{ Lang::get('account/account.aws_rds') }}}
+						
+        </a><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+      </h4>
+    </div>
+    <div id="collapseFive" class="panel-collapse collapse">
+      <div class="panel-body">
+
+      					<?php foreach ($rds as $key_i => $value_i) { 
 							$rds_sum = array_sum((array)$value_i);
 							if($rds_sum!=0)
 						{ ?>
@@ -336,11 +403,24 @@
 					    } ?> 
 
 
-</div>
 
-<div class="col-md-12 column">
-						<h3><img alt="300x200" src="{{{ asset('assets/img/aws/subnet.png') }}}" />{{{ Lang::get('account/account.aws_sn') }}}</h3>
-						<?php foreach ($subnets as $key_i => $value_i) { 
+      </div>
+    </div>
+  </div>
+
+
+    <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+        	<img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/subnet.png') }}}" />{{{ Lang::get('account/account.aws_sn') }}}
+         </a><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+      </h4>
+    </div>
+    <div id="collapseSix" class="panel-collapse collapse">
+      <div class="panel-body">
+
+      						<?php foreach ($subnets as $key_i => $value_i) { 
 							$subnets_sum = array_sum((array)$value_i);
 							if($subnets_sum!=0)
 						{ ?>
@@ -398,14 +478,24 @@
 						</div>
 						</div><?php } 
 					    } ?> 
- 
-
-</div>
 
 
-<div class="col-md-12 column">
-						<h3><img alt="300x200" src="{{{ asset('assets/img/aws/vpc.png') }}}" />{{{ Lang::get('account/account.aws_vpc') }}}</h3>
-						<?php foreach ($vpc as $key_i => $value_i) { 
+      </div>
+    </div>
+  </div>
+
+    <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
+        	<img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/vpc.png') }}}" />{{{ Lang::get('account/account.aws_vpc') }}}
+		</a><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+      </h4>
+    </div>
+    <div id="collapseSeven" class="panel-collapse collapse">
+      <div class="panel-body">
+
+      					<?php foreach ($vpc as $key_i => $value_i) { 
 							$vpc_sum = array_sum((array)$value_i);
 							if($vpc_sum!=0)
 						{ ?>
@@ -463,10 +553,10 @@
 						</div><?php } 
 					    } ?> 
 
-
+      </div>
+    </div>
+  </div>
 </div>
-
-
 
 		</div>	
 	</div>
