@@ -249,18 +249,32 @@ class AccountController extends BaseController {
 		print_r($obj);	
 	}
     
+	//@TODO Review and fix by Vasanth and Karthik
     public function getChartsData($id){
     	UtilHelper::check();
+		
 		$response = CloudAccountHelper::getAccountCostSummary($id);
 		$obj = WSObj::getObject($response);
-		$costdata=json_decode(json_encode($obj), true);
+		$getCostData = json_decode(json_encode($obj), true);
+		
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
-		$accountname=$account->name;
-        $costchartsdata = CloudAccountHelper::getCostChartsData($costdata,$accountname);
-    	$currentcostchartsdata = CloudAccountHelper::getAccountSummary();
-		$chartdata['titleText']    = Lang::get('account/account.titleText');
-		$chartdata['xAxisTitle']   = Lang::get('account/account.xAxisTitle'); 
-		$chartdata['yAxisTitle']   = Lang::get('account/account.yAxisTitle');
+		$accountname = $account->name;
+        
+       	$getCurrentCostData = CloudAccountHelper::getAccountSummaryById($id);
+		
+		$costdata = array(
+							'titleText' => Lang::get('account/account.titleText'),
+							'xAxisTitle' => Lang::get('account/account.xAxisTitle'),
+							'yAxisTitle' => Lang::get('account/account.yAxisTitle'),
+							'result' => $getCostData
+						);
+						
+		$currentcostchartsdata = array(
+										'titleText' => Lang::get('account/account.currenttitleText'),
+										'xAxisTitle' => Lang::get('account/account.currentxAxisTitle'),
+										'yAxisTitle' => Lang::get('account/account.currentyAxisTitle'),
+										'result' => $getCurrentCostData
+									);
        
         return View::make('site/account/charts',
         				 array(
@@ -359,45 +373,6 @@ class AccountController extends BaseController {
 	}
 	
 	
-	// public function getChartData($id)
-	// {
-	// 	$account = CloudAccount::where('user_id', Auth::id())->find($id);
-	// 	Log::debug('Chart data for '. $account -> name);
-	// 	// echo '<pre>';
-	// 	// print_r($account);die();
-	// 	//var accountData = '{"cost_data":{"AWS Data Transfer":0.38,"Amazon Elastic Compute Cloud":96.67,"Amazon Simple Email Service":0.01,
-	// 	//"Amazon Simple Notification Service":0,"Amazon Simple Queue Service":0,"Amazon Simple Storage Service":105.68,"Amazon SimpleDB":0,
-	// 	//"Amazon Virtual Private Cloud":20.64},"lastUpdate":1415541555,"month":"Nov 2014","status":"OK","total":223.38}';
-		
-	// 	$data = CloudAccountHelper::findCurrentChartsCost($account);
- //        //   echo '<pre>';
-	// 	// print_r($data);die();
-	// 	/*
-	// 	 *  { 
- //        "label": "One",
- //        "value" : 29.765957771107
- //      	} , */ 
- //      if(!isset($data['cost_data']))
-	//   {
-	//   	print json_encode(array('id'=>$id,'status' => $data['status'], 'message' =>$data['message']));
-	//   	return;
-	//   }
-	  
-	//   $costData = $data['cost_data'];
-	//   $arr = '';
-	//   foreach($costData as $key => $value)
-	//   {
-	//   	$obj['label'] = $key;
-	// 	$obj['value'] = $value;
-	// 	$arr[] = $obj;
-	//   }
-	  
-	//   print json_encode (array('id'=>$id,'chart' =>$arr, 'data' => array('lastUpdated' => stringHelper::timeAgo($data['lastUpdate']), 
-	//   														   'total' => $data['total'], 
-	//   														   'month' => $data['month'])));
-	  
-	// }
-	
 	public function getAccountSummary()
 	{
 		$accounts = $account = CloudAccount::where('user_id', Auth::id())->get();
@@ -405,17 +380,6 @@ class AccountController extends BaseController {
 	}
 
 	
-	public function getMultibar($data)
-	{
-		foreach($data as $row)
-		{
-			switch($row[Constants::READONLY_PROFILE])
-			{
-				//case 
-			}
-		}
-	}
-
 	
 	 /** 
 	 *//* 

@@ -52,6 +52,13 @@ class CloudAccountHelper
 		return self::getChartData($accounts);
 	}
 	
+	public static function getAccountSummaryById($id)
+	{
+		$account = self::getBillingAccountStatusById($id);
+		return self::getChartData(array($account));
+	}
+	
+	
 	public static function getAccountCostSummary($id)
 	{
 		$account = self::getBillingAccountStatusById($id);
@@ -77,7 +84,7 @@ class CloudAccountHelper
 		}
 	}
 	
-    public static function getCostChartsData($costdata,$accountname)
+    public static function getCostChartsData($costdata, $accountname)
     {
 		$arr = '';
 		$drilldownSeries = new stdClass();
