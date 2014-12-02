@@ -12,6 +12,7 @@ return array(
 
 		'cp_amazon_aws'               => 'Amazon AWS',
 		'account_updated'             => 'Account updated. Just wait now while we load your usage data and crunch the numbers!',
+		'account_security_profile_updated' => 'Account updated. Just wait now till security audit is completed!',
 		'account_created'             => 'Account created.',
 		'add_account'                 => 'Add Account',
 		'account'                  	  => 'account',
@@ -51,8 +52,13 @@ return array(
 		'portpreference_delete'       => 'Are You Sure  Want To Delete This PortPreference ?',
 		'create_services'             => 'create_services',
 		'create_billing'              => 'create_billing',
-		'titleText'                   => 'Current Spend across all subscribed services',
+		'titleText'                   => 'Spend across all subscribed services',
 		'xAxisTitle'                  => 'Total Subscribed services',
-		'yAxisTitle'                  => 'Cost in USD'
-	
+		'yAxisTitle'                  => 'Cost in USD',
+		'charts_data'                 => 'AWS Services Cost Charts Data',
+		
+		'currenttitleText'                   => 'Current Spend across all subscribed services',
+		'xAxisTitle'                  => 'Total Subscribed services',
+		'yAxisTitle'                  => 'Cost in USD',
+		'charts_data'                 => 'AWS Services Cost Charts Data',
 );

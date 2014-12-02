@@ -49,15 +49,9 @@ class AccountController extends BaseController {
         $accounts = $this->accounts->where('user_id', Auth::id())->orderBy('created_at', 'DESC')->paginate(10);
 		
 		$data= CloudAccountHelper::getAccountStatus();
-		$costdata = CloudAccountHelper::getAccountSummary();
-		$costdata['titleText']    = Lang::get('account/account.titleText');
-		$costdata['xAxisTitle']   = Lang::get('account/account.xAxisTitle'); 
-		$costdata['yAxisTitle']   = Lang::get('account/account.yAxisTitle');
-       
         return View::make('site/account/index',
         				 array(
 				            'accounts' => $data,
-				            'costdata'=>$costdata
 				        ));
     }
     
@@ -101,8 +95,12 @@ class AccountController extends BaseController {
 				CloudAccountHelper::save($account);
 				$processJobLib = new ProcessJobLib();
 				$ret = $processJobLib->process($account);
-
-				return Redirect::to('account/')->with('success', Lang::get('account/account.account_updated'));
+				switch($account->profileType )
+				{
+					case Constants::READONLY_PROFILE : return Redirect::to('account/')->with('success', Lang::get('account/account.account_updated')); break;
+					case Constants::SECURITY_PROFILE : return Redirect::to('account/')->with('success', Lang::get('account/account.account_security_profile_updated')); break;
+				}
+				//return Redirect::to('account/')->with('success', Lang::get('account/account.account_updated'));
             } else {
                 return Redirect::to('account/create')->with('error', Lang::get('account/account.account_auth_failed'));
             }
@@ -250,6 +248,42 @@ class AccountController extends BaseController {
 		echo '<pre>';
 		print_r($obj);	
 	}
+    
+	//@TODO Review and fix by Vasanth and Karthik
+    public function getChartsData($id){
+    	UtilHelper::check();
+		
+		$response = CloudAccountHelper::getAccountCostSummary($id);
+		$obj = WSObj::getObject($response);
+		$getCostData = json_decode(json_encode($obj), true);
+		
+		$account = CloudAccount::where('user_id', Auth::id())->find($id);
+		$accountname = $account->name;
+        
+       	$getCurrentCostData = CloudAccountHelper::getAccountSummaryById($id);
+		
+		$costdata = array(
+							'titleText' => Lang::get('account/account.titleText'),
+							'xAxisTitle' => Lang::get('account/account.xAxisTitle'),
+							'yAxisTitle' => Lang::get('account/account.yAxisTitle'),
+							'result' => $getCostData
+						);
+						
+		$currentcostchartsdata = array(
+										'titleText' => Lang::get('account/account.currenttitleText'),
+										'xAxisTitle' => Lang::get('account/account.currentxAxisTitle'),
+										'yAxisTitle' => Lang::get('account/account.currentyAxisTitle'),
+										'result' => $getCurrentCostData
+									);
+       
+        return View::make('site/account/charts',
+        				 array(
+				            'account' => $account,
+				            'chartdata'=>$chartdata,
+				            'costchartsdata'=>$costchartsdata,
+				            'currentcostchartsdata'=>$currentcostchartsdata
+				             ));
+    }
 
 	public function getLogs($id)
 	{
@@ -301,7 +335,8 @@ class AccountController extends BaseController {
 
 	public function getCollectionData($id)
 	{
-		$account = CloudAccount::where('user_id', Auth::id())->find($id);
+		$account = CloudAccountHelper::findAndDecrypt($id);
+		$cred = json_decode($account->credentials);
 		
 		$servicesConf = Config::get('aws_services');
 		$limit  = Input::get('limit');
@@ -313,17 +348,17 @@ class AccountController extends BaseController {
 		$serviceNames = array_keys($servicesConf);
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - Collection', 'return' => $responseJson));
-		$obj = json_decode($responseJson);
-		if(!empty($obj) && $obj->status == 'OK')
+		$obj = WSObj::getObject($responseJson);
+		if($obj->status == 'OK')
 		{
 			$response = AWSBillingEngine::Collection(array('token' => $obj->token, 
 														   'service_names' => $serviceNames, 
+														   'accountId' =>$cred->accountId,
 														   'limit' => $limit, 
 														   'offset' => $offset)
-													);
-													
-			$result = json_decode($response);
-			if(!empty($result) && $result->status == 'OK')
+												);
+			$result = WSObj::getObject($response);										
+			if($result->status == 'OK')
 			{
 				$billingData = $result -> billing_data;
 				echo '<pre>';
@@ -338,45 +373,6 @@ class AccountController extends BaseController {
 	}
 	
 	
-	public function getChartData($id)
-	{
-		$account = CloudAccount::where('user_id', Auth::id())->find($id);
-		Log::debug('Chart data for '. $account -> name);
-		// echo '<pre>';
-		// print_r($account);die();
-		//var accountData = '{"cost_data":{"AWS Data Transfer":0.38,"Amazon Elastic Compute Cloud":96.67,"Amazon Simple Email Service":0.01,
-		//"Amazon Simple Notification Service":0,"Amazon Simple Queue Service":0,"Amazon Simple Storage Service":105.68,"Amazon SimpleDB":0,
-		//"Amazon Virtual Private Cloud":20.64},"lastUpdate":1415541555,"month":"Nov 2014","status":"OK","total":223.38}';
-		
-		$data = CloudAccountHelper::findCurrentChartsCost($account);
-        //   echo '<pre>';
-		// print_r($data);die();
-		/*
-		 *  { 
-        "label": "One",
-        "value" : 29.765957771107
-      	} , */ 
-      if(!isset($data['cost_data']))
-	  {
-	  	print json_encode(array('id'=>$id,'status' => $data['status'], 'message' =>$data['message']));
-	  	return;
-	  }
-	  
-	  $costData = $data['cost_data'];
-	  $arr = '';
-	  foreach($costData as $key => $value)
-	  {
-	  	$obj['label'] = $key;
-		$obj['value'] = $value;
-		$arr[] = $obj;
-	  }
-	  
-	  print json_encode (array('id'=>$id,'chart' =>$arr, 'data' => array('lastUpdated' => stringHelper::timeAgo($data['lastUpdate']), 
-	  														   'total' => $data['total'], 
-	  														   'month' => $data['month'])));
-	  
-	}
-	
 	public function getAccountSummary()
 	{
 		$accounts = $account = CloudAccount::where('user_id', Auth::id())->get();
@@ -384,17 +380,6 @@ class AccountController extends BaseController {
 	}
 
 	
-	public function getMultibar($data)
-	{
-		foreach($data as $row)
-		{
-			switch($row[Constants::READONLY_PROFILE])
-			{
-				//case 
-			}
-		}
-	}
-
 	
 	 /** 
 	 *//* 

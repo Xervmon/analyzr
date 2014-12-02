@@ -50,7 +50,8 @@ return array(
         'credentials[assumedRole]' => array(
             'type' => 'string',
             'title' => 'Assumed Role',
-            'required' => true
+            'required' => true,
+            'description' => 'Ex: Pattern : arn:aws:iam::2978XXXX7XX8:role/ROLE_NAME'
         ) ,
         'credentials[securityToken]' => array(
             'type' => 'string',

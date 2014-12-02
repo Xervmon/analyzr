@@ -24,6 +24,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 		{
 			case 'running' :
 			case 'OK' :	
+			case 'available' :	
 			case Lang::get('account/account.STATUS_COMPLETED') 	: return '<span class="label label-success">'.$status.'</span>'; break;
 				
 			case Lang::get('account/account.STATUS_IN_PROCESS')  : 
@@ -31,6 +32,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 			case 'started' 		: return '<span class="label label-info">'.$status.'</span>'; break;
 			case 'stop' 		: return '<span class="label label-warning">'.$status.'</span>'; break;
 			case 'error' 		:
+			case 'in-use' :		
 			case 'failed' 		: return '<span class="label label-danger">'.$status.'</span>'; break;
 			default:			  return '<span class="label label-danger">'.$status.'</span>'; break;
 								

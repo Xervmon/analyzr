@@ -36,11 +36,11 @@
 		</div>
 
 		<div class="form-group {{{ $errors->has('email') ? 'error' : '' }}}">
-			<label class="col-md-2 control-label" for="email">{{{ Lang::get('ticket/ticket.Deployment') }}} </label>
+			<label class="col-md-2 control-label" for="email">{{{ Lang::get('ticket/ticket.Account') }}} </label>
 			<div class="col-md-6">
-				<select class="form-control" name="deploymentId" id="deploymentId" readonly>
-					@foreach ($deployments as $key )
-						<option value="{{$key->id}}" {{{ Input::old('deploymentId', isset($ticket->deploymentId) && ($ticket->deploymentId == $key->id) ? 'selected="selected"' : '') }}}>{{{ $key ->name}}}</option>
+				<select class="form-control" name="deploymentId" id="accountId" readonly>
+					@foreach ($accounts as $key )
+						<option value="{{$key->id}}" {{{ Input::old('accountId', isset($ticket->accountId) && ($ticket->accountId == $key->id) ? 'selected="selected"' : '') }}}>{{{ $key ->name}}}</option>
 					@endforeach
 				</select>
 			</div>

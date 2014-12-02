@@ -20,7 +20,7 @@ return array(
 	'Ticket' => 'Ticket:',
 	'Title' => 'Title',
 	'Description' => 'Description',
-	'Deployment' => 'Deployment',
+	'Account' => 'Account',
 	'Priority' => 'Priority',
 	'Comment' => 'Comment',
 	'No_response_yet' => 'No responses yet - Be first to respond',
