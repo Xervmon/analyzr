@@ -340,8 +340,8 @@ class AccountController extends BaseController {
 														   'service_names' => $serviceNames, 
 														   'limit' => $limit, 
 														   'offset' => $offset)
-													);
-			$obj2 = WSObj::getObject($response);										
+												);
+			$result = WSObj::getObject($response);										
 			if($result->status == 'OK')
 			{
 				$billingData = $result -> billing_data;
