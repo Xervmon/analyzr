@@ -107,6 +107,6 @@ barchart=function(selector, columnType, chartdata){
             backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
             shadow: true
         },
-        series: costdata.result
+        series: chartdata.result.drilldownSeries
     });
 };

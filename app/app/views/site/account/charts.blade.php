@@ -12,11 +12,14 @@
 </div>
 
 <div id="currentcostbarchart">
-</div>
 
+</div>
+<p id="currentcostupdate"></p>
+</br>
+</br>
 <div id="costbarchart">
 </div>
-
+<p id="costupdate"></p>
 
 @stop
 
@@ -30,22 +33,25 @@
 <script src="{{asset('assets/js/xervmon/charts2.js')}}"></script>
 
 <script>
+var str='';
 var result='';
-var costchartsdata = '{{json_encode($costchartsdata)}}';
 var currentcostchartsdata='{{json_encode($currentcostchartsdata)}}';
-var chartdata = '{{json_encode($chartdata)}}';
-var accountId='{{$account->id}}';
+var costchartsdata = '{{json_encode($costchartsdata)}}';
+console.log(currentcostchartsdata);console.log(costchartsdata);
 	$(document).ready(function() 
 	{
 		if (!$.isArray((costchartsdata)&&(currentcostchartsdata))) 
 		{
-			costchartsdata = JSON.parse(costchartsdata);
 			currentcostchartsdata = JSON.parse(currentcostchartsdata);
-	    	chartdata = JSON.parse(chartdata);
+            str='Last Updated : '+currentcostchartsdata.result.drilldownSeries[0].updated;
+			$('#currentcostupdate').append(str);
+			costchartsdata = JSON.parse(costchartsdata);
+			str='Last Updated : '+costchartsdata.result.drilldownSeries[0].updated;
+			$('#costupdate').append(str);
 	    }
+	    barchart('#currentcostbarchart', 'bar', currentcostchartsdata);
+	    barchart('#costbarchart', 'bar', costchartsdata);
 	    
-	    barchart('#costbarchart', 'bar', $costdata);
-	    barchart('#currentcostbarchart', 'bar', chartdata);
 	   
 	});
 </script>
