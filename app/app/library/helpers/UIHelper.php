@@ -314,9 +314,10 @@ Inverse	<span class="label label-inverse">Inverse</span>
 				$table -> Time = StringHelper::timeAgo($row->report_time);	
 				$table -> Changed = $row->changed;
 				$arr[] = $table;
+				unset($table);
+				$table = new stdClass();
 			}
 			return $arr;
-			
 		}
 	}	
 	
@@ -355,7 +356,9 @@ Inverse	<span class="label label-inverse">Inverse</span>
 				{
 					$str .= '<td><a  href="'.$temp_url.'"> <span class="glyphicon glyphicon-refresh"></span> </a></td>';
 				}
-								
+					
+				$str .=  '<td> <i class="fa fa-calendar"></i> Last Update ' . $job -> updated_at. '</td>';
+				
 				$str .= '</tr>';
 				
 			}
@@ -413,6 +416,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 				{
 					$str .= '<td><a  href="'.$temp_url.'"> <span class="glyphicon glyphicon-refresh"></span> </a></td>';
 				}
+				$str .=  '<td> <i class="fa fa-calendar"></i> Last Update ' . $job -> updated_at. '</td>';
 								
 				$str .= '</tr>';
 				
