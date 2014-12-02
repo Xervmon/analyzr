@@ -333,17 +333,16 @@ class AccountController extends BaseController {
 		$serviceNames = array_keys($servicesConf);
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - Collection', 'return' => $responseJson));
-		$obj = json_decode($responseJson);
-		if(!empty($obj) && $obj->status == 'OK')
+		$obj = WSObj::getObject($responseJson);
+		if($obj->status == 'OK')
 		{
 			$response = AWSBillingEngine::Collection(array('token' => $obj->token, 
 														   'service_names' => $serviceNames, 
 														   'limit' => $limit, 
 														   'offset' => $offset)
 													);
-													
-			$result = json_decode($response);
-			if(!empty($result) && $result->status == 'OK')
+			$obj2 = WSObj::getObject($response);										
+			if($result->status == 'OK')
 			{
 				$billingData = $result -> billing_data;
 				echo '<pre>';
