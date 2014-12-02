@@ -384,55 +384,6 @@ Inverse	<span class="label label-inverse">Inverse</span>
 
 	public static function getPortPreferenceServicesStatus($portPreference)
 	{
-
-		$obj = json_decode($portPreference->toJson());
-		$processJobs = ProcessJob::where('user_id', Auth::id())->where('cloudAccountId', $obj->cloudAccountId) ->where('operation', Lang::get('account/account.create_secgroup')) -> orderBy('created_at', 'desc') -> get();
-		$processJobs = json_decode($processJobs->toJson());
-
-		$jobs = empty($account->jobs) ? '' : $account->jobs;
-		$str = '';	
-		$new_prob = array();
-		if(!empty($processJobs))
-		{
-			foreach ($processJobs as $array) {
-				if (!array_key_exists($array->operation, $new_prob)) {
-					$new_prob[$array->operation] = $array;
-				}
-			}
-			$processJobs = $new_prob;
-			$str = '<div class="table-responsive">  <table class="table table-bordered">';
-
-			foreach($processJobs as $job)
-			{
-				$temp_url = URL::full().'/'.$job->cloudAccountId.'/refresh';
-				$temp_url = str_ireplace(Lang::get('security/portPreferences.portPreference'),Lang::get('account/account.account'),$temp_url);
-				
-				$str .= '<tr>';
-				$str .= '<td> <i class="fa fa-lock"></i> ' . $job -> operation. '</td>';
-
-								
-				$str .= '<td>' . self::getLabel($job -> status). '</td>';				
-				if(in_array($job->status, array(Lang::get('account/account.STATUS_IN_PROCESS'), 
-																Lang::get('account/account.STATUS_STARTED'))))
-				{
-					$str .= '<td><a  href="'.$temp_url.'"> <span class="glyphicon glyphicon-refresh"></span> </a></td>';
-				}
-				$str .=  '<td> <i class="fa fa-calendar"></i> Last Update ' . $job -> updated_at. '</td>';
-								
-				$str .= '</tr>';
-				
-			}
-			
-			$str .= ' </table> </div>';
-		}
-
-		
-		return $str;
-	}
-
-
-	public static function getPortPreferenceServicesStatus($portPreference)
-	{
 		$obj = json_decode($portPreference->toJson());
 		$processJobs = ProcessJob::where('user_id', Auth::id())->where('cloudAccountId', $obj->cloudAccountId) ->where('operation', Lang::get('account/account.create_secgroup')) -> orderBy('created_at', 'desc') -> get();
 		$processJobs = json_decode($processJobs->toJson());
