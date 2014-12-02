@@ -315,7 +315,7 @@ convertJsonToTableAuditReports = function(data) {
         var mediaClass = '';
         for (var i = 0; i < data.length; i++) 
         {
-        	data[i]["actions"] = '<div id="audit_reports">' + '<a href class="viewAuditReport" id="viewAuditReport" onclick="viewAuditReport(\'' + data[i]['report'] + '\', \'' + data[i]['accountId'] + '\', \'' + data[i]['oid'] + '\'); return false;" name="viewAuditReport">View Audit Report</a></div>';
+        	data[i]["actions"] = '<div id="audit_reports'+i+'">' + '<a href class="viewAuditReport" id="viewAuditReport" onclick="viewAuditReport(\'' + data[i]['report'] + '\', \'' + data[i]['accountId'] + '\', \'' + data[i]['oid'] + '\', \'' + i + '\'); return false;" name="viewAuditReport">View Audit Report</a></div>';
             delete data[i]['accountId'];
      		delete data[i]['oid'];
      		delete data[i]['report'];
@@ -341,7 +341,7 @@ convertJsonToTableAuditReports = function(data) {
     }
 };
 
-viewAuditReport = function (url, accountId, oid)
+viewAuditReport = function (url, accountId, oid , i)
 {
    var results="";
    var jqxhr= $.ajax({
@@ -351,13 +351,13 @@ viewAuditReport = function (url, accountId, oid)
                     if (!$.isArray(response)) {
                       result = JSON.parse(response);
                       if(result.status=='OK'){
-                       results='<ul style="list-style-type:none";>';
+                       results='<ul style="list-style-type:none; margin-left: -10%;";>';
                        results+='<li>User Name : '+result.report.username+'</li>';
                        results+='<li>Report Time : '+timeAgo(result.report.report_time)+'</li>';
                        results+='<li> Audit diff from previous report :[( New data : '+result.report.diff.new +' ), ( Deleted data : '+result.report.diff.old + ') ] </li>';
                        results+='<li> Whether there is diff : '+result.report.changed+'</li>';
                        results+='<ul>';
-                    $('#audit_reports').html(results);
+                    $('#audit_reports'+i).html(results);
                       }else{
                     $('#audit_reports').html('No Data');
                       }
