@@ -11,10 +11,12 @@
 	</div>
 </div>
 
-<div id="costbarchart">
-</div>
 <div id="currentcostbarchart">
 </div>
+
+<div id="costbarchart">
+</div>
+
 
 @stop
 
@@ -41,16 +43,10 @@ var accountId='{{$account->id}}';
 			currentcostchartsdata = JSON.parse(currentcostchartsdata);
 	    	chartdata = JSON.parse(chartdata);
 	    }
-	    result=costchartsdata.drilldownSeries[0];
-	    barchart('#costbarchart', 'bar', chartdata ,result);
-	    for (index = 0; index < currentcostchartsdata.drilldownSeries.length; ++index) 
-	    {
-	     if(currentcostchartsdata.drilldownSeries[index].accountId==accountId){
-	     	result=currentcostchartsdata.drilldownSeries[index];
-	     	//currentcostbarchart('#currentcostbarchart', 'bar', chartdata ,result);
-	     	 barchart('#currentcostbarchart', 'bar', chartdata ,result);
-	     }
-	    }
+	    
+	    barchart('#costbarchart', 'bar', $costdata);
+	    barchart('#currentcostbarchart', 'bar', chartdata);
+	   
 	});
 </script>
 @stop
