@@ -385,6 +385,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 	public static function getPortPreferenceServicesStatus($portPreference)
 	{
 		$obj = json_decode($portPreference->toJson());
+		
 		$processJobs = ProcessJob::where('user_id', Auth::id())->where('cloudAccountId', $obj->cloudAccountId) ->where('operation', Lang::get('account/account.create_secgroup')) -> orderBy('created_at', 'desc') -> get();
 		$processJobs = json_decode($processJobs->toJson());
 		
