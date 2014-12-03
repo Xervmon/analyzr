@@ -12,14 +12,25 @@
 </div>
 
 <div id="currentcostbarchart">
-
 </div>
-<p id="currentcostupdate"></p>
+
+<div>
+<span class="glyphicon glyphicon-calendar"></span>
+<span id="currentupdate">  Last Update  : </span>&nbsp;&nbsp;&nbsp;&nbsp;
+<i class="fa fa-usd"></i><span id="currenttotalcost">  Total Cost  : </span>
+</div>
+
 </br>
 </br>
+
 <div id="costbarchart">
 </div>
-<p id="costupdate"></p>
+
+<div>
+<span class="glyphicon glyphicon-calendar">
+</span><span id="previousupdate">  Last Update  : </span>&nbsp;&nbsp;&nbsp;&nbsp;
+<i class="fa fa-usd"></i><span id="previoustotalcost">  Total Cost  : </span>
+</div>
 
 @stop
 
@@ -33,30 +44,33 @@
 <script src="{{asset('assets/js/xervmon/charts2.js')}}"></script>
 
 <script>
-var str='';
-var result='';
+var updatedate='';
+var totalcost='';
 var currentcostchartsdata='{{json_encode($currentcostchartsdata)}}';
-var costchartsdata = '{{json_encode($costchartsdata)}}';
-console.log(currentcostchartsdata);console.log(costchartsdata);
+var previouscostchartsdata = '{{json_encode($previouscostchartsdata)}}';
+
 	$(document).ready(function() 
 	{
-		if (!$.isArray(costchartsdata))
+		if (!$.isArray((currentcostchartsdata)&&(previouscostchartsdata))) 
 		{
-			costchartsdata = JSON.parse(costchartsdata);
-		}
-		if (!$.isArray(currentcostchartsdata))
-		{
+
 			currentcostchartsdata = JSON.parse(currentcostchartsdata);
-		}
-		str='Last Updated : '+currentcostchartsdata.result.drilldownSeries[0].updated;
-		
-		$('#currentcostupdate').append(str);
-		
-		str='Last Updated : '+costchartsdata.result.drilldownSeries[0].updated;
-		$('#costupdate').append(str);
-		
+
+            updatedate=currentcostchartsdata.result.drilldownSeries[0].updatedate;
+            totalcost=currentcostchartsdata.result.drilldownSeries[0].totalcost;
+			$('#currentupdate').append(updatedate);
+			$('#currenttotalcost').append(totalcost+' USD');
+
+			previouscostchartsdata = JSON.parse(previouscostchartsdata);
+
+			updatedate=previouscostchartsdata.result.drilldownSeries[0].updatedate;
+			totalcost=previouscostchartsdata.result.drilldownSeries[0].totalcost;
+			$('#previousupdate').append(updatedate);
+			$('#previoustotalcost').append(totalcost+' USD');
+
+	    }
 	    barchart('#currentcostbarchart', 'bar', currentcostchartsdata);
-	    barchart('#costbarchart', 'bar', costchartsdata);
+	    barchart('#costbarchart', 'bar', previouscostchartsdata);
 	    
 	   
 	});
