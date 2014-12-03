@@ -385,20 +385,13 @@ Inverse	<span class="label label-inverse">Inverse</span>
 	public static function getPortPreferenceServicesStatus($portPreference)
 	{
 		$obj = json_decode($portPreference->toJson());
-		$processJobs = ProcessJob::where('user_id', Auth::id())->where('cloudAccountId', $obj->cloudAccountId) ->where('operation', Lang::get('account/account.create_secgroup')) -> orderBy('created_at', 'desc') -> get();
+		$processJobs = ProcessJob::where('user_id', Auth::id())->where('cloudAccountId', $obj->cloudAccountId) ->where('operation', Lang::get('account/account.create_secgroup')) -> orderBy('created_at', 'desc') -> first();
 		$processJobs = json_decode($processJobs->toJson());
 		
 		$jobs = empty($account->jobs) ? '' : $account->jobs;
 		$str = '';	
-		$new_prob = array();
 		if(!empty($processJobs))
 		{
-			foreach ($processJobs as $array) {
-				if (!array_key_exists($array->operation, $new_prob)) {
-					$new_prob[$array->operation] = $array;
-				}
-			}
-			$processJobs = $new_prob;
 			$str = '<div class="table-responsive">  <table class="table table-bordered">';
 
 			foreach($processJobs as $job)
