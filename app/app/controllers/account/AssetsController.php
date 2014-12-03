@@ -123,33 +123,27 @@ class AssetsController extends BaseController {
 			$json = AWSBillingEngine::serviceSummary($data);
 			$ret = WSObj::getObject($responseJson);				
 			$ret = json_decode($json);
+
 			if($ret->status == 'OK')
 			{
 				foreach ($ret->report->summary as $key => $value) 
 				{
 					$regions[] = $key;
 					$instances[$key] = empty($value->instances) ? '' : $value->instances->state;
-					$subnets[$key] = empty($value->subnet) ? '' 	 : $value->subnet;
-					$volumes[$key] = empty($value->volumes) ? '' 	 : $value->volumes->state;
-					$rds[$key]	   = empty($value->rds) ? '' 		 : $value->rds;
+					$subnets[$key]   = empty($value->subnet)    ? '' : $value->subnet;
+					$volumes[$key]   = empty($value->volumes)   ? '' : $value->volumes->state;
+					$rds[$key]       = empty($value->rds)       ? '' : $value->rds;
 					$key_pairs[$key] = empty($value->key_pairs) ? '' : $value->key_pairs;
-					$vpc[$key] 		 = empty($value->vpc) ? '' 		 : $value->vpc;
-					$secgroups[$key] = empty($value->secgroup) ? ''  : $value->secgroup;
-					//if(empty($value->instances)) $instances[$key] = '';  else  $instances[$key] = $value->instances->state;  
-					//if(empty($value->subnet)) $subnets[$key]      = '';  else  $subnets[$key] = $value->subnet;  
-					//if(empty($value->volumes)) $volumes[$key]     = '';  else  $volumes[$key] = $value->volumes->state;  
-					//if(empty($value->rds)) $rds[$key]             = '';  else  $rds[$key] = $value->rds;  
-					//if(empty($value->key_pairs)) $key_pairs[$key] = '';  else  $key_pairs[$key] = $value->key_pairs;  
-					//if(empty($value->vpc)) $vpc[$key]             = '';  else  $vpc[$key] = $value->vpc;  
-					//if(empty($value->secgroup)) $secgroups[$key]  = '';  else  $secgroups[$key] = $value->secgroup;  
-								
-					}
+					$vpc[$key]       = empty($value->vpc)       ? '' : $value->vpc;
+					$secgroups[$key] = empty($value->secgroup)  ? '' : $value->secgroup;
+					$tags[$key]      = empty($value->tags)      ? '' : $value->tags;
+				}
 
 					Log::info('ServiceSummary Generated Successfully');			
 					return View::make('site/account/assets/awsInfo', array('account' => $account,
 						'instances'=> $instances,'subnets'=> $subnets,'volumes'=> $volumes,
 						'rds'=> $rds,'key_pairs'=> $key_pairs,'vpc'=> $vpc,'regions'=> $regions,
-						'secgroups'=>$secgroups));
+						'secgroups'=>$secgroups,'tags'=>$tags));
  				}
 				else if($ret->status == 'error')
 				{
@@ -169,6 +163,7 @@ class AssetsController extends BaseController {
             UtilHelper::check();
             $account = CloudAccount::where('user_id', Auth::id())->find($id);
             $getInstancesAll = CloudProvider::getInstances($id);
+
             $arr = array();$i=0;
             if(!empty($getInstancesAll['Reservations']))
             {
@@ -215,13 +210,29 @@ class AssetsController extends BaseController {
 			return View::make('site/account/assets/ebsInfo', array('account' => $account,'instanceDetails'=> $arr));
     }
 
-	public function getTagNameValue($value)
+	public function getTagNameValue($id)
 	{
-		if(!empty($value['Tags']))
-		{
-			return json_encode($tag[0]);			
-		}
-	}
+		 UtilHelper::check();
+         $account = CloudAccount::where('user_id', Auth::id())->find($id);
+         $getTagsAll = CloudProvider::getTags($id);
+
+
+
+          $arr = array();$i=0;
+            if(!empty($getTagsAll['Tags']))
+            {
+                foreach($getTagsAll['Tags'] as $key => $value)
+                {
+                    $arr[$i]['ResourceId']=$value['ResourceId'];
+                    $arr[$i]['ResourceType']=$value['ResourceType'];
+                    $arr[$i]['Key']=$value['Key'];
+                    $arr[$i]['Value']=$value['Value'];
+                    $i++;
+                }
+            }   
+			 return View::make('site/account/assets/tagsInfo', array('account' => $account,'tagDetails'=> $arr));
+			} 
+		
     
     public function sgInfo($id)
     {
@@ -259,6 +270,47 @@ class AssetsController extends BaseController {
                 }
             }   
 			return View::make('site/account/assets/kpInfo', array('account' => $account,'instanceDetails'=> $arr));
+    }
+
+
+     public function vpcsInfo($id)
+    {
+            UtilHelper::check();
+            $account = CloudAccount::where('user_id', Auth::id())->find($id);
+            $getVpcsall = CloudProvider::getVpcs($id);
+            echo '<pre>';
+            print_r($getVpcsall);
+            die();
+            $arr = array();$i=0;
+            if(!empty($getKPall['KeyPairs']))
+            {
+                foreach($getKPall['KeyPairs'] as $key => $value)
+                {
+                    $arr[$i]['KeyName']=$value['KeyName'];
+                    $i++;
+                }
+            }   
+			return View::make('site/account/assets/vpcsInfo', array('account' => $account,'instanceDetails'=> $arr));
+    }
+
+     public function subnetsInfo($id)
+    {
+            UtilHelper::check();
+            $account = CloudAccount::where('user_id', Auth::id())->find($id);
+            $getSubnetsall = CloudProvider::getSubnets($id);
+            echo '<pre>';
+            print_r($getSubnetsall);
+            die();
+            $arr = array();$i=0;
+            if(!empty($getKPall['KeyPairs']))
+            {
+                foreach($getKPall['KeyPairs'] as $key => $value)
+                {
+                    $arr[$i]['KeyName']=$value['KeyName'];
+                    $i++;
+                }
+            }   
+			return View::make('site/account/assets/subnetsInfo', array('account' => $account,'instanceDetails'=> $arr));
     }
 	
 	

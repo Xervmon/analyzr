@@ -180,7 +180,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
     <div class="panel-heading">
       <h4 class="panel-title">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-         <img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/providers/aws-big.jpg') }}}" />{{{ Lang::get('account/account.aws_sg') }}}
+         <img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/aws.png') }}}" />{{{ Lang::get('account/account.aws_sg') }}}
 		 </a><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
       </h4>
     </div>
@@ -258,7 +258,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
       <h4 class="panel-title">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
         	
-      					<img alt="73x33" src="{{{ asset('assets/img/providers/aws-big.jpg') }}}" />{{{ Lang::get('account/account.aws_kp') }}}
+      					<img alt="73x33" src="{{{ asset('assets/img/aws/aws.png') }}}" />{{{ Lang::get('account/account.aws_kp') }}}
 						
         </a><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
       </h4>
@@ -556,6 +556,88 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
       </div>
     </div>
   </div>
+
+
+
+    <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseEight">
+        	<img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/aws.png') }}}" />{{{ Lang::get('account/account.aws_tags') }}}
+		</a><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+      </h4>
+    </div>
+    <div id="collapseEight" class="panel-collapse collapse">
+      <div class="panel-body">
+     
+
+      					<?php foreach ($tags as $key_i => $value_i) { 
+							if(!empty($value_i->Environment)) $tags_Env = count($value_i->Environment);
+							if(!empty($value_i->Name)) $tags_Name = count($value_i->Name);
+							if($tags_Env!=0 || $tags_Name!=0)
+						{ ?>
+						<div class="bs-callout bs-callout-default">
+
+						<div class="media">
+							
+							<div class="media-left pull-left text-center" href="#">
+								<h5 class="media-heading">{{{ 'TAGS '. $key_i }}}</h5>
+								<p style="text-align:center">
+									<h4 class="media-heading">{{{ 'Details Available:' . ($tags_Env+$tags_Name) }}}</h4>
+							</div>
+							<div class="media-body bs-callout-danger">
+								<ul class="list-group list-group-horizontal">
+									<li class="list-group-item panel panel-status panel-primary">
+										<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ ($tags_Env+$tags_Name) }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ Lang::get('account/account.total_tags') }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/getTagNameValue') }}">Details</a>
+											</p>
+										</div>
+									</li>
+									<li class="list-group-item panel panel-status panel-success">
+										<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $tags_Env }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ Lang::get('account/account.total_Env') }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/getTagNameValue') }}">Details</a>
+											</p>
+										</div>
+									</li>
+									<li class="list-group-item panel panel-status panel-danger">
+										<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $tags_Name }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ Lang::get('account/account.total_Name') }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/getTagNameValue') }}">Details</a>
+											</p>
+										</div>
+									</li>
+								</ul>
+							</div>
+						
+
+						</div>
+						</div><?php } 
+					    $tags_Env=0;$tags_Name=0;}?> 
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
 </div>
 
 		</div>	
