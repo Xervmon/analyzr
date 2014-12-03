@@ -249,34 +249,56 @@ class AccountController extends BaseController {
 		print_r($obj);	
 	}
     
-	//@TODO Review and fix by Vasanth and Karthik
-    public function getChartsData($id){
+	public function getChartsData($id){
     	UtilHelper::check();
 		
-		$response = CloudAccountHelper::getAccountCostSummary($id);
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
-		$getCostData = CloudAccountHelper::getChartsFormat(json_decode($response, true), $account->name);
+		$response = CloudAccountHelper::getAccountCostSummary($id);
+		$costdata = json_decode($response, true);
 		
-       	$getCurrentCostData = CloudAccountHelper::getAccountSummaryById($id);
-		
-		$costchartsdata = array(
+	   //$getCostData = CloudAccountHelper::getChartsFormat(json_decode($response, true), $account->name);
+       //$getCurrentCostData = CloudAccountHelper::getAccountSummaryById($id);
+		                 $i=0;
+						foreach ($costdata['cost_data'] as $key => $value) {
+								if($i==0)
+								{
+									$current['timestamp'] = $key;
+									$current[] = $value;
+									$current['totalcost']=array_sum($current[0]['data']);								
+								}
+								else
+								{
+									$previous['timestamp'] = $key;
+									$previous[] = $value;
+									$previous['totalcost']=array_sum($previous[0]['data']);
+								}
+							$i++;							
+						}
+
+        $getCurrentCostData = CloudAccountHelper::getChartsFormat($current, $account->name);
+        $getPreviousCostData = CloudAccountHelper::getChartsFormat($previous, $account->name);
+						
+						 
+        $currentcostchartsdata = array(
+							'titleText' => Lang::get('account/account.currenttitleText'),
+							'xAxisTitle' => Lang::get('account/account.currentxAxisTitle'),
+							'yAxisTitle' => Lang::get('account/account.currentyAxisTitle'),
+							'result' => $getCurrentCostData
+									);
+
+
+		$previouscostchartsdata = array(
 							'titleText' => Lang::get('account/account.titleText'),
 							'xAxisTitle' => Lang::get('account/account.xAxisTitle'),
 							'yAxisTitle' => Lang::get('account/account.yAxisTitle'),
-							'result' => $getCostData
+							'result' => $getPreviousCostData
 						);
 						
-		$currentcostchartsdata = array(
-										'titleText' => Lang::get('account/account.currenttitleText'),
-										'xAxisTitle' => Lang::get('account/account.currentxAxisTitle'),
-										'yAxisTitle' => Lang::get('account/account.currentyAxisTitle'),
-										'result' => $getCurrentCostData
-									);
-       
+		      
         return View::make('site/account/charts',
         				 array(
 				            'account' => $account,
-				            'costchartsdata'=>$costchartsdata,
+				            'previouscostchartsdata'=>$previouscostchartsdata,
 				            'currentcostchartsdata'=>$currentcostchartsdata
 				             ));
     }
