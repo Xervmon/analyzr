@@ -64,24 +64,18 @@ class CloudAccountHelper
 		$arr = '';
 		$drilldownSeries = new stdClass();
 		$services = Config::get('aws_services');
-		if($costdata['status'] == 'OK')
-					{
-						$drilldownSeries ->name = $accountname .'-' .Constants::READONLY_PROFILE;
-						// $costdata['cost_data'][];
-						$costDatas = $costdata['cost_data'];
-						foreach($costDatas as $k=>$val)
-						 {
-						 	$drilldownSeries ->updated =$k;
-						   foreach($val['data'] as $key=>$value)
-						   {
-							$shortKey = CloudAccountHelper::getShortKey($key, $services);
-							if(intval($value) == 0) continue;
-							$drilldownSeries ->data[] = array(0 => $shortKey, 1 => $value);
-						   }
-						  }
+					$drilldownSeries ->name = $accountname .'-' .Constants::READONLY_PROFILE;
+					$timestamp = $costdata['timestamp'];
+					$drilldownSeries ->updatedate = date("d F Y H:i:s", $timestamp);
+					$drilldownSeries ->totalcost =$costdata['totalcost'];
+					 foreach($costdata[0]['data'] as $key=>$value)
+					  {
+						if($value == 0) continue;
+						$shortKey = self::getShortKey($key, $services);
+					    $drilldownSeries ->data[] = array(0 => $shortKey, 1 => $value);
+					  }						
 						$arr[]=  $drilldownSeries;
 						unset($drilldownSeries);
-					}
 
 		return array('drilldownSeries' => $arr);
     }
@@ -133,14 +127,14 @@ class CloudAccountHelper
 							$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $currentCost['total'];
 							$costData = $currentCost['cost_data'];
 							$drilldownSeries = new stdClass();
-							$drilldownSeries->accountId = $account->id;
-						    $drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
-							$drilldownSeries->updated = $account->updated_at; 
+							$drilldownSeries->accountId = $account->id; 
+						    $drilldownSeries->id = $account->name .'-' .Constants::READONLY_PROFILE;
+						    //$drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
+						    //$drilldownSeries->updatedate = $account->updated_at; 
 							foreach($costData as $key => $value)
 							{
-								
 									$shortKey = self::getShortKey($key, $services);
-									if(intval($value) == 0) continue;
+									if($value == 0) continue;
 									$drilldownSeries ->data[] = array(0 => $shortKey, 1 => $value);
 								}		
 								$arr[]=  $drilldownSeries;
