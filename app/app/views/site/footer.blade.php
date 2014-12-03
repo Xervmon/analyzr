@@ -28,7 +28,7 @@
 	
 	
 <div style="position: absolute; top: -172px; left: 0px; z-index: 97; opacity: 1; display: none; width: 263px;" class="rotatingtweet cycle-slide">
-		<p class="rtw_main"><a href="https://twitter.com/intent/user?user_id=11611512" title="Diptanu Choudhury" lang="en">@diptanu</a> <a href="https://twitter.com/intent/user?user_id=2808678330" title="xDocker" lang="en">@xDocker</a>.io supports deployment of these netflix_oss images on AWS. We have open sourced as well <a href="https://t.co/0Oru3lKhJq" title="https://github.com/XDocker/Dockerfiles">github.com/XDocker/Docker…</a></p>
+		<p class="rtw_main"><a href="https://twitter.com/intent/user?user_id=11611512" title="Diptanu Choudhury" lang="en">@diptanu</a> <a href="https://twitter.com/intent/user?user_id=2808678330" title="xDocker" lang="en">@xDocker</a>.io supports deployment of these netflix_oss images on AWS. We have open sourced as well <a href="https://t.co/0Oru3lKhJq" title="https://github.com/XDocker/Dockerfiles">github.com/XDocker/Dockerï¿½</a></p>
 		<p class="rtw_meta"><a href="https://twitter.com/twitterapi/status/532954691873693698">About 4 days ago</a> from <a href="https://twitter.com/intent/user?user_id=476252901" title="xervmon">xervmon's Twitter</a> via <a href="http://twitter.com" rel="nofollow">Twitter Web Client</a></p></div><div class="rotatingtweet cycle-slide" style="display: none; position: absolute; top: -172px; left: 0px; z-index: 96; opacity: 1; width: 263px;">
 		<p class="rtw_main"><a href="https://twitter.com/intent/user?user_id=11611512" title="Diptanu Choudhury" lang="en">@diptanu</a> <a href="https://twitter.com/intent/user?user_id=386170457" title="NetflixOSS" lang="en">@NetflixOSS</a> xdocker.io supports deployment of  netflix_oss images on AWS.</p>
 		<p class="rtw_meta"><a href="https://twitter.com/twitterapi/status/532953904221130752">About 4 days ago</a> from <a href="https://twitter.com/intent/user?user_id=476252901" title="xervmon">xervmon's Twitter</a> via <a href="http://twitter.com" rel="nofollow">Twitter Web Client</a></p></div><div class="rotatingtweet cycle-slide" style="display: none; position: absolute; top: -172px; left: 0px; z-index: 95; opacity: 1; width: 263px;">
@@ -100,7 +100,7 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-54777003-1', 'auto');
+  ga('create', 'UA-57292256-1', 'auto');
   ga('send', 'pageview');
 
 </script>
