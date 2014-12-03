@@ -14,7 +14,7 @@
  
  
 return array(
-	'endpoint_ip'  		  => 'http://104.131.38.159:5050',
+	'endpoint_ip'  		  => 'https://engine.analyzr.io',
 	'register'            => '/register',
 	'authenticate'        => '/authenticate',
 	'create_billing'      => '/create_billing',
