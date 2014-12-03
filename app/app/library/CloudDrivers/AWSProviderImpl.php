@@ -308,7 +308,7 @@ class AWSPRoviderImpl implements IProvider
 			try
 			{	
 				$tagsResult = $this->ec2Client->DescribeTags(array());
-				if (!empty($kpResult))
+				if (!empty($tagsResult))
 				{
 					return array('status' => 'OK', 'message'  => $tagsResult-> toArray());
 				} 
@@ -334,7 +334,7 @@ class AWSPRoviderImpl implements IProvider
 			try
 			{	
 				$vpcsResult = $this->ec2Client->DescribeVpcs(array());
-				if (!empty($kpResult))
+				if (!empty($vpcsResult))
 				{
 					return array('status' => 'OK', 'message'  => $vpcsResult-> toArray());
 				} 
@@ -361,7 +361,7 @@ class AWSPRoviderImpl implements IProvider
 			try
 			{	
 				$subnetsResult = $this->ec2Client->DescribeSubnets(array());
-				if (!empty($kpResult))
+				if (!empty($subnetsResult))
 				{
 					return array('status' => 'OK', 'message'  => $subnetsResult-> toArray());
 				} 

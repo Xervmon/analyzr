@@ -215,10 +215,7 @@ class AssetsController extends BaseController {
 		 UtilHelper::check();
          $account = CloudAccount::where('user_id', Auth::id())->find($id);
          $getTagsAll = CloudProvider::getTags($id);
-
-
-
-          $arr = array();$i=0;
+            $arr = array();$i=0;
             if(!empty($getTagsAll['Tags']))
             {
                 foreach($getTagsAll['Tags'] as $key => $value)
@@ -278,15 +275,18 @@ class AssetsController extends BaseController {
             UtilHelper::check();
             $account = CloudAccount::where('user_id', Auth::id())->find($id);
             $getVpcsall = CloudProvider::getVpcs($id);
-            echo '<pre>';
-            print_r($getVpcsall);
-            die();
             $arr = array();$i=0;
-            if(!empty($getKPall['KeyPairs']))
+            if(!empty($getVpcsall['Vpcs']))
             {
-                foreach($getKPall['KeyPairs'] as $key => $value)
+                foreach($getVpcsall['Vpcs'] as $key => $value)
                 {
-                    $arr[$i]['KeyName']=$value['KeyName'];
+                    $arr[$i]['VpcId']           =$value['VpcId'];
+                    $arr[$i]['State']           =$value['State'];
+                    $arr[$i]['CidrBlock']       =$value['CidrBlock'];
+                    $arr[$i]['DhcpOptionsId']   =$value['DhcpOptionsId'];
+                    $arr[$i]['Tags']            =$value['Tags'][0]['Key'].'=>'.$value['Tags'][0]['Value'];
+                    $arr[$i]['InstanceTenancy'] =$value['InstanceTenancy'];
+                    $arr[$i]['InstanceTenancy'] =$value['InstanceTenancy'];
                     $i++;
                 }
             }   
@@ -298,15 +298,19 @@ class AssetsController extends BaseController {
             UtilHelper::check();
             $account = CloudAccount::where('user_id', Auth::id())->find($id);
             $getSubnetsall = CloudProvider::getSubnets($id);
-            echo '<pre>';
-            print_r($getSubnetsall);
-            die();
             $arr = array();$i=0;
-            if(!empty($getKPall['KeyPairs']))
+            if(!empty($getSubnetsall['Subnets']))
             {
-                foreach($getKPall['KeyPairs'] as $key => $value)
+                foreach($getSubnetsall['Subnets'] as $key => $value)
                 {
-                    $arr[$i]['KeyName']=$value['KeyName'];
+                       $arr[$i]['SubnetId']                =$value['SubnetId'];
+                       $arr[$i]['State']                   =$value['State'];
+                       $arr[$i]['VpcId']                   =$value['VpcId'];
+                       $arr[$i]['CidrBlock']               =$value['CidrBlock'];
+                       $arr[$i]['AvailableIpAddressCount'] =$value['AvailableIpAddressCount'];
+                       $arr[$i]['AvailabilityZone']        =$value['AvailabilityZone'];
+                       $arr[$i]['Tags']                    =$value['Tags'][0]['Key'].'=>'.$value['Tags'][0]['Value'];
+                       
                     $i++;
                 }
             }   
