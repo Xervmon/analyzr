@@ -13,25 +13,23 @@
     	@if(!empty($chartDataForAccounts['drilldownSeries']))
 
     	<div class="col-md-12">
+
                     <p class="chart1">
 					</p>
-					</br>
-<div id="updatedid">
-</div>
+
         </div>
 
 		@else
        <div class="alert alert-info"> {{{ Lang::get('account/account.empty_accounts') }}}</div>
         @endif
-		
-<div>
-<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
-</div>
 
-     </div>
+    </div>
 
 </div>
-
+       <div>
+       <a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
+       </div>
+       
 <script src="{{asset('assets/js/Highcharts-4.0.4/js/highcharts.js')}}"></script>
 <script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/exporting.js')}}"></script>
 <script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/data.js')}}"></script>
@@ -45,12 +43,7 @@ var data = '{{json_encode($chartDataForAccounts)}}';
 		if (!$.isArray(data)) 
 		{
 	    	data = JSON.parse(data);
-	    	for (index = 0; index < data.drilldownSeries.length; ++index) 
-	        {
-	    	str='Last Updated : '+data.drilldownSeries[index].updated;
-	    	console.log(str);
-			$('#updatedid').append(str);
-			}
+	    	
 	    }
 	    columnDrilldown('.chart1', 'column', data);
 	});
