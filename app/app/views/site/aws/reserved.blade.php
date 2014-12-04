@@ -2,7 +2,6 @@
 
 {{-- Content --}}
 @section('content')
-@section('breadcrumbs', Breadcrumbs::render('Reserved'))
 
 <style>
     #AWSPricing_reserved_holder .chosen-container,#AWSPricing_ondemand_holder .chosen-container{max-width: 140px;}

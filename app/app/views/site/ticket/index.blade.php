@@ -2,8 +2,6 @@
 
 {{-- Content --}}
 @section('content')
-@section('breadcrumbs', Breadcrumbs::render('Ticket'))
-
 
 <div class="page-header">
 	<div class="row">

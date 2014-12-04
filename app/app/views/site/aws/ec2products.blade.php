@@ -2,7 +2,6 @@
 
 {{-- Content --}}
 @section('content')
-@section('breadcrumbs', Breadcrumbs::render('EC2Products'))
 
 <div class="page-header">
 	<div class="row">
