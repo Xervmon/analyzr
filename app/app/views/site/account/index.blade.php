@@ -2,7 +2,8 @@
 
 {{-- Content --}}
 @section('content')
-	
+ @section('breadcrumbs', Breadcrumbs::render('account'))
+
 <div class="page-header">
 	<div class="row">
 		<div class="col-md-9">
