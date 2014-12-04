@@ -136,6 +136,10 @@
 					</div>
 				</div>
 			</nav>
+
+
+	@section('breadcrumbs', Breadcrumbs::render('home'))
+
 			<!-- ./ navbar -->
 			<!--
 			<a class="banner-github {{ (Request::is('/') ? '' : 'hide') }}" href="https://github.com/XDocker/app" target="_blank">
@@ -144,7 +148,8 @@
 			-->
 			<!-- Container -->
 			<div class="container clear-both" style="margin-top: 3em;">
-				
+				@yield('breadcrumbs')
+
 				<!-- Notifications -->
 				@include('notifications')
 				<!-- ./ notifications -->
