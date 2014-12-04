@@ -56,15 +56,15 @@ return array(
 		),
 
 		'mysql' => array(
-			'driver'    => 'mysql',
-			'host'      => '127.0.0.1',
-			'database'  => 'dev',
-			'username'  => 'dev',
-			'password'  => 'oYTrSdbR0II76Qnl',
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix'    => 'xd_',
-		),
+                        'driver'    => 'mysql',
+                        'host'      => '127.0.0.1',
+                        'database'  => 'analyzrio_prod',
+                        'username'  => 'root',
+                        'password'  => 'z8a9bODFB1',
+                        'charset'   => 'utf8',
+                        'collation' => 'utf8_unicode_ci',
+                        'prefix'    => 'xd_',
+                ),
 
 		'pgsql' => array(
 			'driver'   => 'pgsql',
