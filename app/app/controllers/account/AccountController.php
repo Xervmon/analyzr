@@ -258,22 +258,22 @@ class AccountController extends BaseController {
 		
 	   //$getCostData = CloudAccountHelper::getChartsFormat(json_decode($response, true), $account->name);
        //$getCurrentCostData = CloudAccountHelper::getAccountSummaryById($id);
-		                 $i=0;
-						foreach ($costdata['cost_data'] as $key => $value) {
-								if($i==0)
-								{
-									$current['timestamp'] = $key;
-									$current[] = $value;
-									$current['totalcost']=array_sum($current[0]['data']);								
-								}
-								else
-								{
-									$previous['timestamp'] = $key;
-									$previous[] = $value;
-									$previous['totalcost']=array_sum($previous[0]['data']);
-								}
-							$i++;							
-						}
+		$i=0;
+		foreach ($costdata['cost_data'] as $key => $value) {
+			if($i == 0)
+			{
+				$current['timestamp'] = $key;
+				$current[] = $value;
+				$current['totalcost']=array_sum($current[0]['data']);								
+			}
+			else
+			{
+				$previous['timestamp'] = $key;
+				$previous[] = $value;
+				$previous['totalcost']=array_sum($previous[0]['data']);
+			}
+			$i++;							
+		}
 
         $getCurrentCostData = CloudAccountHelper::getChartsFormat($current, $account->name);
         $getPreviousCostData = CloudAccountHelper::getChartsFormat($previous, $account->name);

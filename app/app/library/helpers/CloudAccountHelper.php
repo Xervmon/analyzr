@@ -129,7 +129,7 @@ class CloudAccountHelper
 							$drilldownSeries = new stdClass();
 							$drilldownSeries->accountId = $account->id; 
 						    $drilldownSeries->id = $account->name .'-' .Constants::READONLY_PROFILE;
-						    //$drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
+						    $drilldownSeries ->name = $account->name .'-' .Constants::READONLY_PROFILE;
 						    //$drilldownSeries->updatedate = $account->updated_at; 
 							foreach($costData as $key => $value)
 							{
