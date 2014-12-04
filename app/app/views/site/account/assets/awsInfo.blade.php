@@ -2,7 +2,6 @@
 
 {{-- Content --}}
 @section('content')
-@section('breadcrumbs', Breadcrumbs::render('AWS_Details',$account->id))
 
 <script type="text/javascript">
 function toggleChevron(e) {

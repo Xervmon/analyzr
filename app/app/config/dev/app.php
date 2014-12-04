@@ -114,11 +114,10 @@ return array(
         'Zizaco\Entrust\EntrustServiceProvider', // Entrust Provider for roles
         'Bllim\Datatables\DatatablesServiceProvider', // Datatables
 
-		/* Uncomment for use in development */
-		'Way\Generators\GeneratorsServiceProvider', // Generators
-		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider', // IDE Helpers
-		'Fbf\LaravelNewsletterSignup\LaravelNewsletterSignupServiceProvider',
-		'DaveJamesMiller\Breadcrumbs\ServiceProvider',
+        /* Uncomment for use in development */
+        'Way\Generators\GeneratorsServiceProvider', // Generators
+        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider', // IDE Helpers
+        'Fbf\LaravelNewsletterSignup\LaravelNewsletterSignupServiceProvider'
 
     ),
 
@@ -187,13 +186,12 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 
-		/* Additional Aliases */
-		'Confide' => 'Zizaco\Confide\ConfideFacade', // Confide Alias
-		'Entrust' => 'Zizaco\Entrust\EntrustFacade', // Entrust Alias
-		'String' => 'Andrew13\Helpers\String', // String
-		'Carbon' => 'Carbon\Carbon', // Carbon
-		'Datatables' => 'Bllim\Datatables\Datatables', // DataTables
-		'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facade',
+        /* Additional Aliases */
+        'Confide'         => 'Zizaco\Confide\ConfideFacade', // Confide Alias
+        'Entrust'         => 'Zizaco\Entrust\EntrustFacade', // Entrust Alias
+        'String'          => 'Andrew13\Helpers\String', // String
+        'Carbon'          => 'Carbon\Carbon', // Carbon
+        'Datatables'      => 'Bllim\Datatables\Datatables', // DataTables
 
     ),
 

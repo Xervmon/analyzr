@@ -7,7 +7,6 @@
 
 {{-- Content --}}
 @section('content')
-@section('breadcrumbs', Breadcrumbs::render('CloudExperts'))
 <h4>{{{ Lang::get('site.cloudExperts') }}}</h4>
 <div class="row">
 	<div class="col-md-12">
