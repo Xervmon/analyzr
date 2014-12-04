@@ -300,6 +300,85 @@ class AWSPRoviderImpl implements IProvider
 			return array('status' => 'error', 'message' => 'Authentication failure! API key and secret key for account is not correct');
 		}
 	}
+
+		public function describeTags($params)
+	{
+		if($this->init())
+		{
+			try
+			{	
+				$tagsResult = $this->ec2Client->DescribeTags(array());
+				if (!empty($tagsResult))
+				{
+					return array('status' => 'OK', 'message'  => $tagsResult-> toArray());
+				} 
+			}
+			catch(Exception $ex)
+			{
+				Log::error($ex);
+				return array('status' => 'error', 'message' => 'Error occured during describeInstances - '.json_encode($params['InstanceIds']));
+			}
+		} 
+		else
+		{
+			Log::error(Auth::check() ? Auth::user()->username : '__Guest__');
+			Log::error('describeInstances Authentication failure! API key and secret key for account is not correct');
+			return array('status' => 'error', 'message' => 'Authentication failure! API key and secret key for account is not correct');
+		}
+	}
+
+		public function describeVpcs($params)
+	{
+		if($this->init())
+		{
+			try
+			{	
+				$vpcsResult = $this->ec2Client->DescribeVpcs(array());
+				if (!empty($vpcsResult))
+				{
+					return array('status' => 'OK', 'message'  => $vpcsResult-> toArray());
+				} 
+			}
+			catch(Exception $ex)
+			{
+				Log::error($ex);
+				return array('status' => 'error', 'message' => 'Error occured during describeInstances - '.json_encode($params['InstanceIds']));
+			}
+		} 
+		else
+		{
+			Log::error(Auth::check() ? Auth::user()->username : '__Guest__');
+			Log::error('describeInstances Authentication failure! API key and secret key for account is not correct');
+			return array('status' => 'error', 'message' => 'Authentication failure! API key and secret key for account is not correct');
+		}
+	}
+
+
+	public function describeSubnets($params)
+	{
+		if($this->init())
+		{
+			try
+			{	
+				$subnetsResult = $this->ec2Client->DescribeSubnets(array());
+				if (!empty($subnetsResult))
+				{
+					return array('status' => 'OK', 'message'  => $subnetsResult-> toArray());
+				} 
+			}
+			catch(Exception $ex)
+			{
+				Log::error($ex);
+				return array('status' => 'error', 'message' => 'Error occured during describeInstances - '.json_encode($params['InstanceIds']));
+			}
+		} 
+		else
+		{
+			Log::error(Auth::check() ? Auth::user()->username : '__Guest__');
+			Log::error('describeInstances Authentication failure! API key and secret key for account is not correct');
+			return array('status' => 'error', 'message' => 'Authentication failure! API key and secret key for account is not correct');
+		}
+	}
 	
 	public function getSummary()
 	{

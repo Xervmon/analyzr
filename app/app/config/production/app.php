@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => true,
+	'debug' => false,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://dev.xdocker.org',
+	'url' => 'https://www.analyzr.io',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -197,6 +197,6 @@ return array(
 
     'available_language' => array('en'),
     
-	'app_environment' => 'dev'
+	'app_environment' => 'production'
 
 );

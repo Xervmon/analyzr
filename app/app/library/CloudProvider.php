@@ -237,8 +237,58 @@ class CloudProvider
        }
 
     }
-    
-    public static function getSummary($account)
+
+     public static function getTags($cloudAccountId)
+    {
+        $account = CloudAccountHelper::findAndDecrypt($cloudAccountId);
+
+         $response = self::getDriver($account)->describeTags(array(
+                    'DryRun' => false, 
+                    'InstanceIds' => array('')));
+
+        if (!empty($response) && $response['status'] === 'OK') {
+            return $response['message'];
+        } else {
+            return array();
+       }
+
+    }
+
+
+     public static function getSubnets($cloudAccountId)
+    {
+        $account = CloudAccountHelper::findAndDecrypt($cloudAccountId);
+
+         $response = self::getDriver($account)->describeSubnets(array(
+                    'DryRun' => false, 
+                    'InstanceIds' => array('')));
+
+        if (!empty($response) && $response['status'] === 'OK') {
+            return $response['message'];
+        } else {
+            return array();
+       }
+
+    }
+
+     public static function getVpcs($cloudAccountId)
+    {
+        $account = CloudAccountHelper::findAndDecrypt($cloudAccountId);
+
+         $response = self::getDriver($account)->describeVpcs(array(
+                    'DryRun' => false, 
+                    'InstanceIds' => array('')));
+
+        if (!empty($response) && $response['status'] === 'OK') {
+            return $response['message'];
+        } else {
+            return array();
+       }
+
+    }
+
+
+ public static function getSummary($account)
 	{
 		return self::getDriver($account)->getSummary();
 	}
