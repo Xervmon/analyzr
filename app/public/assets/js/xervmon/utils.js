@@ -287,7 +287,9 @@ convertJsonToTableSecurityGroups = function(data) {
     if (data.length > 0) {
         var mediaClass = '';
         mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {
-             "name" : " filter-select filter-exact "
+             "name" : " filter-select filter-exact ",
+             "ResourceType" : " filter-select filter-exact ",
+             "Key" : " filter-select filter-exact "
         }), $table = $(mediaClass);
         mediaClass += setupTableSorterChecked($table, false, pageSize);
         $table.find('td[data-title="id"]').each(function() {
@@ -351,7 +353,7 @@ viewAuditReport = function (url, accountId, oid , i)
                     if (!$.isArray(response)) {
                       result = JSON.parse(response);
                       if(result.status=='OK'){
-                       results='<ul style="list-style-type:none; margin-left: -10%;";>';
+                       results='<ul style="list-style-type:none; margin-left: -7%;";>';
                        results+='<li>User Name : '+result.report.username+'</li>';
                        results+='<li>Report Time : '+timeAgo(result.report.report_time)+'</li>';
                        results+='<li> Audit diff from previous report :[( New data : '+result.report.diff.new +' ), ( Deleted data : '+result.report.diff.old + ') ] </li>';
@@ -359,7 +361,7 @@ viewAuditReport = function (url, accountId, oid , i)
                        results+='<ul>';
                     $('#audit_reports'+i).html(results);
                       }else{
-                    $('#audit_reports').html('No Data');
+                    $('#audit_reports'+i).html('No Data');
                       }
                       
                  }
