@@ -2,7 +2,6 @@
 
 {{-- Content --}}
 @section('content')
-@section('breadcrumbs', Breadcrumbs::render('SecurityGroups',$account->id))
 
 <div class="page-header">
 	<div class="row">
