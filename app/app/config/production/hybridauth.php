@@ -42,8 +42,8 @@ return array(
         "GitHub" => array(
             "enabled" => true,
             "keys" => array(
-                "id" => "5a4a2307bfc112c6b713",
-                "secret" => "c201ddebba40a0fb310022e53998a4056418dfc2"
+                "id" => "e15e70b482f360485fd3",
+                "secret" => "51398208d5c8d539586a54b894c03a0a565ba065"
             ),
             "wrapper" => array(
                     'class'=>'Hybrid_Providers_GitHub',
