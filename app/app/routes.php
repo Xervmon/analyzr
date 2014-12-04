@@ -173,15 +173,15 @@ Route::group(array(
     
     Route::get('assets/{account}/SecurityGroups', 'AssetsController@SecurityGroups');
     Route::get('assets/{account}/AwsInfo', 'AssetsController@AwsInfo');
-    Route::get('assets/{account}/instanceInfo', 'AssetsController@instanceInfo');
-    Route::get('assets/{account}/ebsInfo', 'AssetsController@ebsInfo');
-    Route::get('assets/{account}/sgInfo', 'AssetsController@sgInfo');
-    Route::get('assets/{account}/kpInfo', 'AssetsController@kpInfo');
-    Route::get('assets/{account}/getTagNameValue', 'AssetsController@getTagNameValue');
-    Route::get('assets/{account}/vpcsInfo', 'AssetsController@vpcsInfo');
-    Route::get('assets/{account}/subnetsInfo', 'AssetsController@subnetsInfo');
+    Route::get('assets/{account}/EC2', 'AssetsController@instanceInfo');
+    Route::get('assets/{account}/EBS', 'AssetsController@ebsInfo');
+    Route::get('assets/{account}/SecurityGroups', 'AssetsController@sgInfo');
+    Route::get('assets/{account}/KeyPairs', 'AssetsController@kpInfo');
+    Route::get('assets/{account}/Tags', 'AssetsController@getTagNameValue');
+    Route::get('assets/{account}/VPC', 'AssetsController@vpcsInfo');
+    Route::get('assets/{account}/Subnets', 'AssetsController@subnetsInfo');
 	Route::any('assets/{account}/SecurityGroupsData', 'AssetsController@getSecurityGroupsData');
-	Route::any('Assets/{account}/Summary', 'AssetsController@getSummary');
+	Route::any('assets/{account}/Summary', 'AssetsController@getSummary');
 	
 	
 	
@@ -193,8 +193,8 @@ Route::group(array(
 	
 	
 	
-	Route::any('security/{account}/auditReports', 'SecurityReportsController@getAuditReports');
-	Route::any('security/auditReport', 'SecurityReportsController@getAuditReport');
+	Route::any('security/{account}/AuditReports', 'SecurityReportsController@getAuditReports');
+	Route::any('security/AuditReport', 'SecurityReportsController@getAuditReport');
 	
 	
 	Route::any('ticket/', 'TicketController@getIndex'); 
