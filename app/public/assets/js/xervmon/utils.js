@@ -311,6 +311,7 @@ convertJsonToTableSecurityGroups = function(data) {
     }
 
 };
+
 convertJsonToTableAuditReports = function(data) {
     var pageSize = 10;
     if (data.length > 0) {
@@ -345,48 +346,34 @@ convertJsonToTableAuditReports = function(data) {
 
 viewAuditReport = function (url, accountId, oid , i)
 {
-   var results="";
    var jqxhr= $.ajax({
     url :url,
     data:{'accountId':accountId,'oid' : oid},
     success:function(response){
-                    if (!$.isArray(response)) {
-                      result = JSON.parse(response);
-                      if(result.status=='OK'){
-                       results='<ul style="list-style-type:none; margin-left: -7%;";>';
-                       results+='<li>User Name : '+result.report.username+'</li>';
-                       results+='<li>Report Time : '+timeAgo(result.report.report_time)+'</li>';
-                       results+='<li> Audit diff from previous report :[( New data : '+result.report.diff.new +' ), ( Deleted data : '+result.report.diff.old + ') ] </li>';
-                       results+='<li> Whether there is diff : '+result.report.changed+'</li>';
-                       results+='<ul>';
-                    $('#audit_reports'+i).html(results);
-                      }else{
-                    $('#audit_reports'+i).html('No Data');
-                      }
-                      
-                 }
-    }
-});
+                 $('#audit_reports'+i).html(response);
+              }
+          });
 };
 
-function timeAgo(time){
-  var units = [
-    { name: "second", limit: 60, in_seconds: 1 },
-    { name: "minute", limit: 3600, in_seconds: 60 },
-    { name: "hour", limit: 86400, in_seconds: 3600  },
-    { name: "day", limit: 604800, in_seconds: 86400 },
-    { name: "week", limit: 2629743, in_seconds: 604800  },
-    { name: "month", limit: 31556926, in_seconds: 2629743 },
-    { name: "year", limit: null, in_seconds: 31556926 }
-  ];
-  var diff = (new Date() - new Date(time*1000)) / 1000;
-  if (diff < 5) return "now";
+
+// function timeAgo(time){
+//   var units = [
+//     { name: "second", limit: 60, in_seconds: 1 },
+//     { name: "minute", limit: 3600, in_seconds: 60 },
+//     { name: "hour", limit: 86400, in_seconds: 3600  },
+//     { name: "day", limit: 604800, in_seconds: 86400 },
+//     { name: "week", limit: 2629743, in_seconds: 604800  },
+//     { name: "month", limit: 31556926, in_seconds: 2629743 },
+//     { name: "year", limit: null, in_seconds: 31556926 }
+//   ];
+//   var diff = (new Date() - new Date(time*1000)) / 1000;
+//   if (diff < 5) return "now";
   
-  var i = 0;
-  while (unit = units[i++]) {
-    if (diff < unit.limit || !unit.limit){
-      var diff =  Math.floor(diff / unit.in_seconds);
-      return diff + " " + unit.name + (diff>1 ? "s ago" : " ago");
-    }
-  };
-}
+//   var i = 0;
+//   while (unit = units[i++]) {
+//     if (diff < unit.limit || !unit.limit){
+//       var diff =  Math.floor(diff / unit.in_seconds);
+//       return diff + " " + unit.name + (diff>1 ? "s ago" : " ago");
+//     }
+//   };
+// }

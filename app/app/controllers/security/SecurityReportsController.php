@@ -86,10 +86,20 @@ class SecurityReportsController extends BaseController {
 			$return = AWSBillingEngine::auditReport(array('token' => $obj->token, 'accountId' => $this->account->id, 'oid' => $oid));
 
 			Log::info('Return:' . $return);
-			print $return;
-		}
-			
-		
+
+			$result=json_decode($return,true);
+			if($result['status']=='OK'){
+                       $results ='<ul style="list-style-type:none; margin-left: -8%;";>';
+                       $results.='<li>User Name : '.$result['report']['username'].'</li>';
+                       $results.='<li>Report Time : '.StringHelper::timeAgo($result['report']['report_time']).'</li>';
+                       $results.='<li> Audit diff from previous report :[( New data : '.implode($result['report']['diff']['new']) .' ), ( Deleted data : '.implode($result['report']['diff']['old']). ') ] </li>';
+                       $results.='<li> Whether there is diff : '.var_export($result['report']['changed'],true).'</li>';
+                       $results.='<ul>';
+                   }
+			print $results;
+		}else{
+		print ($obj->status .', Error retrieving security audit report');
+	   }
 	}
 	
 }
