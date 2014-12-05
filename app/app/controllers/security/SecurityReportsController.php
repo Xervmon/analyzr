@@ -49,10 +49,15 @@ class SecurityReportsController extends BaseController {
 		if($obj->status == 'OK')
 		{
 			$return = AWSBillingEngine::auditReports(array('token' => $obj->token, 'accountId' => $this->account->id));
+			EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'auditReports', 'return' => $return));
+			
 			$table = UIHelper::getAuditTable($this->account, $return);
+			EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'auditReports', 'return' => implode(",", $table)));
+			
+			
 			if(is_array($table) && isset($table['status']) && $table['status'] == 'error')
 			{
-				Redirect::intended('account/'.$id.'/edit')->with('error' , $table['message'] );
+				return Redirect::intended('account/'.$id.'/edit')->with('error' , $table['message'] );
 			}
 			else 
 			{
@@ -62,7 +67,7 @@ class SecurityReportsController extends BaseController {
 		}
 		else if($obj->status == 'error')
 		{
-			Redirect::intended('account/'.$id.'/edit')->with($obj->status , 'Error retrieving security audit report for '.$account->name); break;
+			return Redirect::intended('account/'.$id.'/edit')->with($obj->status , 'Error retrieving security audit report for '.$account->name); break;
 		}
 	}
 
@@ -86,10 +91,20 @@ class SecurityReportsController extends BaseController {
 			$return = AWSBillingEngine::auditReport(array('token' => $obj->token, 'accountId' => $this->account->id, 'oid' => $oid));
 
 			Log::info('Return:' . $return);
-			print $return;
-		}
-			
-		
+
+			$result=json_decode($return,true);
+			if($result['status']=='OK'){
+                       $results ='<ul style="list-style-type:none; margin-left: -8%;";>';
+                       $results.='<li>User Name : '.$result['report']['username'].'</li>';
+                       $results.='<li>Report Time : '.StringHelper::timeAgo($result['report']['report_time']).'</li>';
+                       $results.='<li> Audit diff from previous report :[( New data : '.implode($result['report']['diff']['new']) .' ), ( Deleted data : '.implode($result['report']['diff']['old']). ') ] </li>';
+                       $results.='<li> Whether there is diff : '.var_export($result['report']['changed'],true).'</li>';
+                       $results.='<ul>';
+                   }
+			print $results;
+		}else{
+		print ($obj->status .', Error retrieving security audit report');
+	   }
 	}
 	
 }

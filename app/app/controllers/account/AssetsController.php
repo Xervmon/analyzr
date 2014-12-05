@@ -126,6 +126,8 @@ class AssetsController extends BaseController {
 
 			if($ret->status == 'OK')
 			{
+              if(!empty($ret->report->summary))
+              { 
 				foreach ($ret->report->summary as $key => $value) 
 				{
 					$regions[] = $key;
@@ -145,6 +147,7 @@ class AssetsController extends BaseController {
 						'rds'=> $rds,'key_pairs'=> $key_pairs,'vpc'=> $vpc,'regions'=> $regions,
 						'secgroups'=>$secgroups,'tags'=>$tags));
  				}
+              }  
 				else if($ret->status == 'error')
 				{
 					Log::error($ret->message.' '.json_encode($account));
@@ -169,12 +172,13 @@ class AssetsController extends BaseController {
             {
                 foreach($getInstancesAll['Reservations'] as $key => $value)
                 {
-                    $arr[$i]['InstanceId'] = $value['Instances'][0]['InstanceId'];
-                    $arr[$i]['KeyName'] = $value['Instances'][0]['KeyName'];
-                    $arr[$i]['PublicDnsName'] = $value['Instances'][0]['PublicDnsName'];
-                    $arr[$i]['ImageId'] = $value['Instances'][0]['ImageId'];
-                    $arr[$i]['LaunchTime'] = $value['Instances'][0]['LaunchTime'];
-                    $arr[$i]['State'] = $value['Instances'][0]['State']['Name'];
+                    $arr[$i]['InstanceId']    = empty($value['Instances'][0]['InstanceId']) ? '' : $value['Instances'][0]['InstanceId'];
+                    $arr[$i]['KeyName']       = empty($value['Instances'][0]['KeyName']) ? '' : $value['Instances'][0]['KeyName'];
+                    $arr[$i]['PublicDnsName'] = empty($value['Instances'][0]['PublicDnsName']) ? '' : $value['Instances'][0]['PublicDnsName'];
+                    $arr[$i]['ImageId']       = empty($value['Instances'][0]['ImageId']) ? '' : $value['Instances'][0]['ImageId'];
+                    $arr[$i]['LaunchTime']    = empty($value['Instances'][0]['LaunchTime']) ? '' : $value['Instances'][0]['LaunchTime'];
+                    $arr[$i]['State']         = empty($value['Instances'][0]['State']['Name']) ? '' : $value['Instances'][0]['State']['Name'];
+                    
                     $i++;
                 }
             }   
@@ -186,25 +190,23 @@ class AssetsController extends BaseController {
             UtilHelper::check();
             $account = CloudAccount::where('user_id', Auth::id())->find($id);
             $getEBSAll = CloudProvider::getEBS($id);
-	    //echo '<pre>'; print_r($getEBSAll); die();
-            $arr = array();$i=0;
+	        $arr = array();$i=0;
             if(!empty($getEBSAll['Volumes']))
             {
                 foreach($getEBSAll['Volumes'] as $key => $value)
                 {
                 	$stdClass = new stdClass();
-					$stdClass->VolumeId	= $value['VolumeId'];
-					$stdClass->Description = 'SnapshotId : '. $value['SnapshotId'] .'<br/>'
-											  . 'CreateTime : ' .$value['CreateTime']. '<br/>';
-					$stdClass->AvailabilityZone	= $value['AvailabilityZone'];
+                    $stdClass->VolumeId         = empty($value['VolumeId']) ? '' : $value['VolumeId'];
+                    $stdClass->Description      = empty($value['SnapshotId']) ? '' : 'SnapshotId : '. $value['SnapshotId'] .'<br/>'. 'CreateTime : ' .$value['CreateTime']. '<br/>';
+                    $stdClass->AvailabilityZone = empty($value['AvailabilityZone']) ? '' : $value['AvailabilityZone'];
+
 					if(!empty($value['Attachments']))
 					{
 						$stdClass->InstanceId = $value['Attachments'][0]['InstanceId'];
  					}
-					$stdClass->State	= $value['State'];
-					//UIHelper::getLabel($value['State']);
+                    $stdClass->State    = empty($value['State']) ? '' : $value['State'];
 					
-                    $arr[] = $stdClass;
+					$arr[] = $stdClass;
                 }
             }   
 			return View::make('site/account/assets/ebsInfo', array('account' => $account,'instanceDetails'=> $arr));
@@ -220,10 +222,12 @@ class AssetsController extends BaseController {
             {
                 foreach($getTagsAll['Tags'] as $key => $value)
                 {
-                    $arr[$i]['ResourceId']=$value['ResourceId'];
-                    $arr[$i]['ResourceType']=$value['ResourceType'];
-                    $arr[$i]['Key']=$value['Key'];
-                    $arr[$i]['Value']=$value['Value'];
+
+                    $arr[$i]['ResourceId']   = empty($value['ResourceId']) ? '' : $value['ResourceId'];
+                    $arr[$i]['ResourceType'] = empty($value['ResourceType']) ? '' : $value['ResourceType'];
+                    $arr[$i]['Key']          = empty($value['Key']) ? '' : $value['Key'];
+                    $arr[$i]['Value']        = empty($value['Value']) ? '' : $value['Value'];
+                   
                     $i++;
                 }
             }   
@@ -241,9 +245,10 @@ class AssetsController extends BaseController {
             {
                 foreach($getSGAll['SecurityGroups'] as $key => $value)
                 {
-                    $arr[$i]['GroupId']=$value['GroupId'];
-                    $arr[$i]['GroupName']=$value['GroupName'];
-                    $arr[$i]['Description']=$value['Description'];
+                     $arr[$i]['GroupId']     = empty($value['GroupId']) ? '' : $value['GroupId'];
+                     $arr[$i]['GroupName']   = empty($value['GroupName']) ? '' : $value['GroupName'];
+                     $arr[$i]['Description'] = empty($value['Description']) ? '' : $value['Description'];
+                     
                     $i++;
                 }
             }   
@@ -262,7 +267,8 @@ class AssetsController extends BaseController {
             {
                 foreach($getKPall['KeyPairs'] as $key => $value)
                 {
-                    $arr[$i]['KeyName']=$value['KeyName'];
+                    $arr[$i]['KeyName'] = empty($value['KeyName']) ? '' : $value['KeyName'];
+
                     $i++;
                 }
             }   
@@ -280,13 +286,14 @@ class AssetsController extends BaseController {
             {
                 foreach($getVpcsall['Vpcs'] as $key => $value)
                 {
-                    $arr[$i]['VpcId']           =$value['VpcId'];
-                    $arr[$i]['State']           =$value['State'];
-                    $arr[$i]['CidrBlock']       =$value['CidrBlock'];
-                    $arr[$i]['DhcpOptionsId']   =$value['DhcpOptionsId'];
-                    $arr[$i]['Tags']            =$value['Tags'][0]['Key'].'=>'.$value['Tags'][0]['Value'];
-                    $arr[$i]['InstanceTenancy'] =$value['InstanceTenancy'];
-                    $arr[$i]['InstanceTenancy'] =$value['InstanceTenancy'];
+                    $arr[$i]['VpcId']           = empty($value['VpcId']) ? '' : $value['VpcId'];
+                    $arr[$i]['State']           = empty($value['State']) ? '' : $value['State'];
+                    $arr[$i]['CidrBlock']       = empty($value['CidrBlock']) ? '' : $value['CidrBlock'];
+                    $arr[$i]['DhcpOptionsId']   = empty($value['DhcpOptionsId']) ? '' : $value['DhcpOptionsId'];
+                    $arr[$i]['Tags']            = empty($value['Tags']) ? '' : $value['Tags'];
+                    $arr[$i]['InstanceTenancy'] = empty($value['InstanceTenancy']) ? '' : $value['InstanceTenancy'];
+                    
+                    
                     $i++;
                 }
             }   
@@ -303,19 +310,20 @@ class AssetsController extends BaseController {
             {
                 foreach($getSubnetsall['Subnets'] as $key => $value)
                 {
-                       $arr[$i]['SubnetId']                =$value['SubnetId'];
-                       $arr[$i]['State']                   =$value['State'];
-                       $arr[$i]['VpcId']                   =$value['VpcId'];
-                       $arr[$i]['CidrBlock']               =$value['CidrBlock'];
-                       $arr[$i]['AvailableIpAddressCount'] =$value['AvailableIpAddressCount'];
-                       $arr[$i]['AvailabilityZone']        =$value['AvailabilityZone'];
-                       $arr[$i]['Tags']                    =$value['Tags'][0]['Key'].'=>'.$value['Tags'][0]['Value'];
-                       
-                    $i++;
+
+                     $arr[$i]['SubnetId']                = empty($value['SubnetId']) ? '' : $value['SubnetId'];
+                     $arr[$i]['State']                   = empty($value['State']) ? '' : $value['State'];
+                     $arr[$i]['VpcId']                   = empty($value['VpcId']) ? '' : $value['VpcId'];
+                     $arr[$i]['CidrBlock']               = empty($value['CidrBlock']) ? '' : $value['CidrBlock'];
+                     $arr[$i]['AvailableIpAddressCount'] = empty($value['AvailableIpAddressCount']) ? '' : $value['AvailableIpAddressCount'];
+                     $arr[$i]['AvailabilityZone']        = empty($value['AvailabilityZone']) ? '' : $value['AvailabilityZone'];
+                     $arr[$i]['Tags']                    = empty($value['Tags'][0]['Key']) ? '' : $value['Tags'][0]['Key'].'=>'.$value['Tags'][0]['Value'];
+                     
+                     $i++;
                 }
             }   
 			return View::make('site/account/assets/subnetsInfo', array('account' => $account,'instanceDetails'=> $arr));
     }
-	
-	
+
+    
 }
