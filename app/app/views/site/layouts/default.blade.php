@@ -117,8 +117,8 @@
 	    							</ul>
 	    						</li>
 		                        <li class="dropdown">
-		    							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-	    									<span class="glyphicon glyphicon-user"></span> {{{ Auth::user()->username }}}	<span class="caret"></span>
+		    							<a class="dropdown-toggle " data-toggle="dropdown" href="#" data-toggle="tooltip"  title="{{Auth::user()->username}}">
+	    									<span class="glyphicon glyphicon-user"></span>{{{ strlen(Auth::user()->username) > 22 ? substr(Auth::user()->username,0,22)."..." : Auth::user()->username }}}<span class="caret"></span>
 	    								</a>
 	    							<ul class="dropdown-menu">
 	    								<li><a href="{{{ URL::to('user') }}}"><span class="glyphicon glyphicon-edit"></span> {{{ Lang::get('site.edit_profile') }}}</a></li>
@@ -169,8 +169,12 @@
 		<script src="{{asset('bower_components/jquery/dist/jquery.tablesorter.widgets.js')}}"></script>
         <script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
         <script src="{{asset('assets/js/jquery.fileDownload.js')}}"></script>
-       <script src="{{asset('assets/js/jquery-plugins/prettify.js')}}"></script>
-       
+        <script src="{{asset('assets/js/jquery-plugins/prettify.js')}}"></script>
+        <script>
+        $(function () {
+        $('[data-toggle=tooltip]').tooltip();
+        });
+        </script>
         @yield('scripts')
 
         {{-- Load SumoMe for the marketing stuff --}}

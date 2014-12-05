@@ -61,7 +61,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_instances') }}}</strong>
 											<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/EC2') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -84,7 +84,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ ucfirst ( $key_is ) . ' Instances' }}}</strong>
 											<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/EC2') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -138,7 +138,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_volumes') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/ebsInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/EBS') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -161,7 +161,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ ucfirst ( $key_is ) . ' Volumes' }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/ebsInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/EBS') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -210,7 +210,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_secgroups') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/sgInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/SecurityGroups') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -233,7 +233,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ ucfirst ( $key_is ) . ' SecGroups' }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/sgInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/SecurityGroups') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -288,7 +288,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_key_pairs') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/kpInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/KeyPairs') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -311,7 +311,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ ucfirst ( $key_is ) . ' Key Pairs' }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/kpInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/KeyPairs') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -366,7 +366,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_rds') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/EC2') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -389,7 +389,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ ucfirst ( $key_is ) . ' RDS' }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/instanceInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/EC2') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -443,7 +443,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_subnets') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/subnetsInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/Subnets') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -466,7 +466,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ ucfirst ( $key_is ) . ' Subnets' }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/subnetsInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/Subnets') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -517,7 +517,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_vpc') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/vpcsInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/VPC') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -540,7 +540,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ ucfirst ( $key_is ) . ' VPC' }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/vpcsInfo') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/VPC') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -558,7 +558,6 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
   </div>
 
 
-
     <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
@@ -571,7 +570,10 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
       <div class="panel-body">
      
 
-      					<?php foreach ($tags as $key_i => $value_i) { 
+      					<?php 
+      					 $tags_Env=0;$tags_Name=0;
+      					foreach ($tags as $key_i => $value_i) { 
+
 							if(!empty($value_i->Environment)) $tags_Env = count($value_i->Environment);
 							if(!empty($value_i->Name)) $tags_Name = count($value_i->Name);
 							if($tags_Env!=0 || $tags_Name!=0)
@@ -594,7 +596,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_tags') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/getTagNameValue') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/Tags') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -605,7 +607,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_Env') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/getTagNameValue') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/Tags') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -616,7 +618,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_Name') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/getTagNameValue') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/Tags') }}">Details</a>
 											</p>
 										</div>
 									</li>
