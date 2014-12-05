@@ -49,10 +49,15 @@ class SecurityReportsController extends BaseController {
 		if($obj->status == 'OK')
 		{
 			$return = AWSBillingEngine::auditReports(array('token' => $obj->token, 'accountId' => $this->account->id));
+			EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'auditReports', 'return' => $return));
+			
 			$table = UIHelper::getAuditTable($this->account, $return);
+			EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'auditReports', 'return' => implode(",", $table)));
+			
+			
 			if(is_array($table) && isset($table['status']) && $table['status'] == 'error')
 			{
-				Redirect::intended('account/'.$id.'/edit')->with('error' , $table['message'] );
+				return Redirect::intended('account/'.$id.'/edit')->with('error' , $table['message'] );
 			}
 			else 
 			{
@@ -62,7 +67,7 @@ class SecurityReportsController extends BaseController {
 		}
 		else if($obj->status == 'error')
 		{
-			Redirect::intended('account/'.$id.'/edit')->with($obj->status , 'Error retrieving security audit report for '.$account->name); break;
+			return Redirect::intended('account/'.$id.'/edit')->with($obj->status , 'Error retrieving security audit report for '.$account->name); break;
 		}
 	}
 
