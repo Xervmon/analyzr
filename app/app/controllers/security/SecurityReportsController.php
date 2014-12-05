@@ -52,9 +52,7 @@ class SecurityReportsController extends BaseController {
 			EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'auditReports', 'return' => $return));
 			
 			$table = UIHelper::getAuditTable($this->account, $return);
-			EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'auditReports', 'return' => implode(",", $table)));
-			
-			
+				
 			if(is_array($table) && isset($table['status']) && $table['status'] == 'error')
 			{
 				return Redirect::intended('account/'.$id.'/edit')->with('error' , $table['message'] );
