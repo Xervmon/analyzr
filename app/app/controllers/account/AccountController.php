@@ -317,33 +317,33 @@ class AccountController extends BaseController {
 		UtilHelper::check();
 		$account = CloudAccount::where('user_id', Auth::id())->find($id);
 		
-		if(!empty($account) && isset($account->job_id))
+		$jobId = Input::get('jobId');
+		
+		if(!empty($account))
 		{
 			$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		 	EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
-		 	$obj = json_decode($responseJson);
+		 	$obj = WSObj::getObject($responseJson);
 			
-			if(!empty($obj) && $obj->status == 'OK')
+			if($obj->status == 'OK')
 		 	{
-				$response = AWSBillingEngine::getLog(array('token' => $obj->token, 'job_id' => $account->job_id, "line_num" => 10));
-				return View::make('site/account/logs', array(
-            	'response' => $response,
-            	'account' => $account));
+				$response = AWSBillingEngine::getLog(array('token' => $obj->token, 'job_id' => $jobId, "line_num" => 10));
+				print $response;
+				return;
 				
 			}
-			else if(!empty($obj) && $obj->status == 'error')
+			else if($obj->status == 'error')
 			{
 				Log::error('Request to Account logs failed :' . $obj2->fail_code . ':' . $obj2->fail_message);
 				Log::error('Log :' . implode(' ', $obj2->job_log));
-            	return Redirect::to('account')->with('error', $obj->fail_message );
+				print json_encode(array('status' => $ob->status, 'message' => $obj2->fail_code . ':' . $obj2->fail_message));
+				return;
+            	//return Redirect::to('account')->with('error', $obj->fail_message );
 			}
 			else
 				{
-					return Redirect::to('ServiceStatus')->with('error', 'Backend API is down, please try again later!');
+					print json_encode(array('status' => $ob->status, 'message' => 'Backend API is down, please try again later!'));
 				}
-		}
-		else if(empty($account)) {
-			 return Redirect::to('account')->with('info', 'No Account Logs found! ' );
 		}
 		else {
 			 return Redirect::to('account')->with('info', 'No logs found! ' );

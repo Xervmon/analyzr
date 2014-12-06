@@ -358,7 +358,8 @@ Inverse	<span class="label label-inverse">Inverse</span>
 				}
 					
 				$str .=  '<td> <i class="fa fa-calendar"></i> ' . $job -> updated_at. '</td>';
-				$str .=  '<td> <i onclick ="viewLog(' .$account ->id .',' .$job->id .')" class="fa fa-calendar">' .  '</i></td>';
+				$logURl = URL::to('account').'/'.$job->cloudAccountId.'/Log';
+				$str .=  '<td> <i onclick ="viewLog(' .$logURl .', ' .$job->id .')" class="fa fa-calendar">' .  '</i></td>';
 				$str .= '</tr>';
 				
 			}
