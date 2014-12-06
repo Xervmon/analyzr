@@ -357,8 +357,8 @@ Inverse	<span class="label label-inverse">Inverse</span>
 					$str .= '<td><a  href="'.$temp_url.'"> <span class="glyphicon glyphicon-refresh"></span> </a></td>';
 				}
 					
-				$str .=  '<td> <i class="fa fa-calendar"></i> Last Update ' . $job -> updated_at. '</td>';
-				
+				$str .=  '<td> <i class="fa fa-calendar"></i> ' . $job -> updated_at. '</td>';
+				$str .=  '<td> <i onclick ="viewLog(' .$account ->id .',' .$job->id .')" class="fa fa-calendar">' .  '</i></td>';
 				$str .= '</tr>';
 				
 			}
