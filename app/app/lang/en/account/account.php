@@ -72,4 +72,5 @@ return array(
 		'currentyAxisTitle'           => 'Cost in USD',
 		'charts_data'                 => 'AWS Services Cost Charts Data',
 		'create_secgroup'             => 'create_secgroup',
+		'cost_data_empty'			  => 'Cost data could not be aggregated: Please double check account credentials! or Open support ticket!',
 );
