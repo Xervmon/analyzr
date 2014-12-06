@@ -82,13 +82,7 @@
 <script>
 	viewLog = function(url, jobId)
 	{
-		 var jqxhr= $.ajax({
-    	url :url,
-   		 data:{'jobId' : jobId},
-    		success:function(response){
-                 console.log(response);
-              }
-          });
+		alert(url); alert(jobId);
 	}
 </script>
 
