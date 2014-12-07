@@ -439,7 +439,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 		}
 		else
 		{
-			return $acctName;		
+			return '<b>'.$acctName.'</b>';		
 		}
 	}
 
