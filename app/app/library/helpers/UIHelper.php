@@ -431,7 +431,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 
 	public static function getAccountAnchor($acctName)
 	{
-		$accounts = CloudAccount::where('user_id', Auth::id())->where('name', $acctName) -> orderBy('created_at', 'desc') -> get();
+		$accounts = CloudAccount::where('user_id', Auth::id())->where('name', DB::connection()->getPdo()->quote($acctName)) -> orderBy('created_at', 'desc') -> get();
 		$arr = $accounts->toArray();
 		if(!empty($arr))
 		{
