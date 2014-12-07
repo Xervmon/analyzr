@@ -4,7 +4,7 @@
 			<div class="alert alert-danger alert-block">
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
 				<h4>Error</h4>
-   				{{ $row }} {{{ Lang::get('account/account.check_accountId') }}}
+   				{{ UIHelper::getAccountAnchor($row) }}  {{{ Lang::get('account/account.check_accountId') }}}
 			</div>
 		</div>
 	@endif	
