@@ -73,5 +73,5 @@ return array(
 		'charts_data'                 => 'AWS Services Cost Charts Data',
 		'create_secgroup'             => 'create_secgroup',
 		'cost_data_empty'			  => 'Cost data could not be aggregated: Please double check account credentials! or <a href="ticket/create">Open support ticket</a>',
-		'check_accountId' 			  => 'shows 0 total. Please double check the Account Id and credentials for the account or or <a href="ticket/create">Open support ticket</a>',
+		'check_accountId' 			  => 'shows 0 total. Please double check the Account Id and credentials for the account or <a href="ticket/create">Open support ticket</a>',
 );
