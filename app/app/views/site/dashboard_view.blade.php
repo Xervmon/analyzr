@@ -3,6 +3,9 @@
 		<div class="col-md-9">
 			<h5>Dashboard</h5>
 		</div>
+		<div class="col-md-3">
+		<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>		
+		</div>
 	</div>
 </div>
 
@@ -26,10 +29,7 @@
     </div>
 
 </div>
-       <div>
-       <a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
-       </div>
-       
+
 <script src="{{asset('assets/js/Highcharts-4.0.4/js/highcharts.js')}}"></script>
 <script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/exporting.js')}}"></script>
 <script src="{{asset('assets/js/Highcharts-4.0.4/js/modules/data.js')}}"></script>
