@@ -8,6 +8,9 @@
 		<div class="col-md-9">
 			<h5>{{{ Lang::get('ticket/ticket.your_tickets') }}}</h5>
 		</div>
+		<div class="col-md-3">
+		<a href="{{ URL::to('ticket/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('ticket/ticket.add_ticket') }}}</a>		
+		</div>
 	</div>
 </div>
 <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
@@ -87,9 +90,6 @@
 			@endif
 		</div>
 	</div>
-</div>
-<div>
-<a href="{{ URL::to('ticket/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('ticket/ticket.add_ticket') }}}</a>
 </div>
 
 @stop
