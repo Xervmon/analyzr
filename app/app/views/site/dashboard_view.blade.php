@@ -1,5 +1,16 @@
 <div class="page-header">
 	<div class="row">
+		@foreach($chartDataForAccounts['series'] as $row => $value)
+			@if($value == 0)
+				<div class="col-md12">
+					<div class="alert alert-danger alert-block">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<h4>Error</h4>
+   						$row . ' shows 0 total. Please double check the Account Id and credentials for the account ';
+					</div>
+				</div>
+			@endif	
+		@endforach
 		<div class="col-md-9">
 			<h5>Dashboard</h5>
 		</div>
@@ -8,6 +19,13 @@
 		</div>
 	</div>
 </div>
+
+    [series] => stdClass Object
+        (
+            [test-ReadOnly Profile] => 0
+            [aws0-ReadOnly Profile] => 2084.13
+            [Amazon Account-ReadOnly Profile] => 2084.13
+        )
 
 <div class="panel panel-default">
 		
