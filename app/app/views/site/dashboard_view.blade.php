@@ -20,12 +20,6 @@
 	</div>
 </div>
 
-    [series] => stdClass Object
-        (
-            [test-ReadOnly Profile] => 0
-            [aws0-ReadOnly Profile] => 2084.13
-            [Amazon Account-ReadOnly Profile] => 2084.13
-        )
 
 <div class="panel panel-default">
 		
