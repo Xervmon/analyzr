@@ -1,5 +1,6 @@
 <div class="page-header">
 	<div class="row">
+		@include('site.dashboard_account_error')
 		<div class="col-md-9">
 			<h5>Dashboard</h5>
 		</div>

@@ -8,4 +8,4 @@
 			</div>
 		</div>
 	@endif	
-@endforach
+@endforeach
