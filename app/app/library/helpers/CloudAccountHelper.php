@@ -236,7 +236,7 @@ class CloudAccountHelper
 
 	public static function getAccountStatus()
 	{
-		$accounts = CloudAccount::where('user_id', Auth::id())->get() ;
+		$accounts = CloudAccount::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get() ;
 		
 		$arr = '';
 		foreach($accounts as $account)
@@ -274,7 +274,7 @@ class CloudAccountHelper
 
 	public static function getBillingAccountStatusById($id)
 	{
-		$account = CloudAccount::where('user_id', Auth::id())->findOrFail($id) ;
+		$account = CloudAccount::where('user_id', Auth::id())->orderBy('created_at', 'desc')->findOrFail($id) ;
 		$obj = json_decode($account->toJson());
 		$processJobs = ProcessJob::where('user_id', Auth::id())->where('cloudAccountId', $obj->id) -> orderBy('created_at', 'desc') -> get();
 		foreach($processJobs as $job)
