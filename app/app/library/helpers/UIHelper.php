@@ -432,7 +432,7 @@ Inverse	<span class="label label-inverse">Inverse</span>
 	public static function getAccountAnchor($acctName)
 	{
 		$accounts = CloudAccount::where('user_id', Auth::id())->where('name', $acctName) -> orderBy('created_at', 'desc') -> get();
-		$account = $accounts->first();
+		$account = $accounts->all();
 		if(!empty($account))
 		{
 			return '<a href="'.URL::to('account/'.$account->id.'/edit') .'">'.$acctName .'</a>';
