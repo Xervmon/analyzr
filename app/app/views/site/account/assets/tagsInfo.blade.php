@@ -2,7 +2,7 @@
 
 {{-- Content --}}
 @section('content')
-@section('breadcrumbs', Breadcrumbs::render('TagsInfo'),$account->id)
+@section('breadcrumbs', Breadcrumbs::render('TagsInfo',$account->id))
 
 <div class="page-header">
 	<div class="row">

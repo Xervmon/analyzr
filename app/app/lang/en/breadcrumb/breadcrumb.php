@@ -4,6 +4,7 @@ return array(
 
 	'home'                    => 'home',
 	'account'                 => 'account',
+    'EditProfile'             => 'EditProfile',
 	'CreateAccount'           => 'CreateAccount',
 	'EditAccount'             => 'EditAccount',
 	'SecurityGroups'          => 'SecurityGroups',
