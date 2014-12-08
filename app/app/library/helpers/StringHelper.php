@@ -212,15 +212,14 @@ class StringHelper
 	public static function timeAgo($time)
 	{
 		$time = (!is_int($time)) ? strtotime($time) : $time;
-		
 		$now = time();
-		
 		$remainder = $now - $time;
-		
+			
 		if($remainder < 60) 
 		{
 			return $remainder . ' seconds ago';
-		} else if($remainder < 3600) 
+		} 
+		else if($remainder < 3600) 
 		{
 			$number = ceil($remainder / 60);
 			$suffix = ($number > 1) ? 's' : '';
@@ -229,7 +228,7 @@ class StringHelper
 		{
 			$number = floor($remainder / 3600);
 			$suffix = ($number > 1) ? 's' : '';
-			return $number . ' hour' . $suffix . ' ago';
+			return $number . ' hour' . $suffix . ' ago'.' ';
 		} else 
 		{
 			$number = floor($remainder / 86400);
