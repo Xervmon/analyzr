@@ -7,10 +7,10 @@
 */
 
 namespace Whoops\Handler;
-
+use Whoops\Handler\Handler;
 use InvalidArgumentException;
-use Psr\Log\LoggerInterface;
 use Whoops\Exception\Frame;
+use Psr\Log\LoggerInterface;
 
 /**
 * Handler outputing plaintext error messages. Can be used
@@ -58,8 +58,8 @@ class PlainTextHandler extends Handler
 
     /**
      * Constructor.
-     * @throws InvalidArgumentException     If argument is not null or a LoggerInterface
-     * @param  Psr\Log\LoggerInterface|null $logger
+     * @throws InvalidArgumentException If argument is not null or a LoggerInterface
+     * @param Psr\Log\LoggerInterface|null $logger
      */
     public function __construct($logger = null)
     {
@@ -68,13 +68,13 @@ class PlainTextHandler extends Handler
 
     /**
      * Set the output logger interface.
-     * @throws InvalidArgumentException     If argument is not null or a LoggerInterface
-     * @param  Psr\Log\LoggerInterface|null $logger
+     * @throws InvalidArgumentException If argument is not null or a LoggerInterface
+     * @param Psr\Log\LoggerInterface|null $logger
      */
     public function setLogger($logger = null)
     {
-        if (! (is_null($logger)
-            || $logger instanceof LoggerInterface)) {
+        if(! (is_null($logger)
+            || $logger InstanceOf LoggerInterface)) {
             throw new InvalidArgumentException(
                 'Argument to ' . __METHOD__ .
                 " must be a valid Logger Interface (aka. Monolog), " .
@@ -95,12 +95,12 @@ class PlainTextHandler extends Handler
 
     /**
      * Add error trace to output.
-     * @param  bool|null  $addTraceToOutput
+     * @param bool|null $addTraceToOutput
      * @return bool|$this
      */
     public function addTraceToOutput($addTraceToOutput = null)
     {
-        if (func_num_args() == 0) {
+        if(func_num_args() == 0) {
             return $this->addTraceToOutput;
         }
 
@@ -111,18 +111,19 @@ class PlainTextHandler extends Handler
     /**
      * Add error trace function arguments to output.
      * Set to True for all frame args, or integer for the n first frame args.
-     * @param  bool|integer|null $addTraceFunctionArgsToOutput
+     * @param bool|integer|null $addTraceFunctionArgsToOutput
      * @return null|bool|integer
      */
     public function addTraceFunctionArgsToOutput($addTraceFunctionArgsToOutput = null)
     {
-        if (func_num_args() == 0) {
+        if(func_num_args() == 0) {
             return $this->addTraceFunctionArgsToOutput;
         }
 
-        if (! is_integer($addTraceFunctionArgsToOutput)) {
+        if(! is_integer($addTraceFunctionArgsToOutput)) {
             $this->addTraceFunctionArgsToOutput = (bool) $addTraceFunctionArgsToOutput;
-        } else {
+        }
+        else {
             $this->addTraceFunctionArgsToOutput = $addTraceFunctionArgsToOutput;
         }
     }
@@ -151,12 +152,12 @@ class PlainTextHandler extends Handler
 
     /**
      * Restrict error handling to command line calls.
-     * @param  bool|null $onlyForCommandLine
+     * @param bool|null $onlyForCommandLine
      * @return null|bool
      */
     public function onlyForCommandLine($onlyForCommandLine = null)
     {
-        if (func_num_args() == 0) {
+        if(func_num_args() == 0) {
             return $this->onlyForCommandLine;
         }
         $this->onlyForCommandLine = (bool) $onlyForCommandLine;
@@ -166,12 +167,12 @@ class PlainTextHandler extends Handler
      * Output the error message only if using command line.
      * else, output to logger if available.
      * Allow to safely add this handler to web pages.
-     * @param  bool|null $outputOnlyIfCommandLine
+     * @param bool|null $outputOnlyIfCommandLine
      * @return null|bool
      */
     public function outputOnlyIfCommandLine($outputOnlyIfCommandLine = null)
     {
-        if (func_num_args() == 0) {
+        if(func_num_args() == 0) {
             return $this->outputOnlyIfCommandLine;
         }
         $this->outputOnlyIfCommandLine = (bool) $outputOnlyIfCommandLine;
@@ -179,12 +180,12 @@ class PlainTextHandler extends Handler
 
     /**
      * Only output to logger.
-     * @param  bool|null $loggerOnly
+     * @param bool|null $loggerOnly
      * @return null|bool
      */
     public function loggerOnly($loggerOnly = null)
     {
-        if (func_num_args() == 0) {
+        if(func_num_args() == 0) {
             return $this->loggerOnly;
         }
 
@@ -222,12 +223,12 @@ class PlainTextHandler extends Handler
     /**
      * Get the frame args var_dump.
      * @param  \Whoops\Exception\Frame $frame [description]
-     * @param  integer                 $line  [description]
+     * @param  integer $line  [description]
      * @return string
      */
     private function getFrameArgsOutput(Frame $frame, $line)
     {
-        if ($this->addTraceFunctionArgsToOutput() === false
+        if($this->addTraceFunctionArgsToOutput() === false
             || $this->addTraceFunctionArgsToOutput() < $line) {
             return '';
         }
@@ -235,7 +236,7 @@ class PlainTextHandler extends Handler
         // Dump the arguments:
         ob_start();
         var_dump($frame->getArgs());
-        if (ob_get_length() > $this->getTraceFunctionArgsOutputLimit()) {
+        if(ob_get_length() > $this->getTraceFunctionArgsOutputLimit()) {
             // The argument var_dump is to big.
             // Discarded to limit memory usage.
             ob_clean();
@@ -257,7 +258,7 @@ class PlainTextHandler extends Handler
      */
     private function getTraceOutput()
     {
-        if (! $this->addTraceToOutput()) {
+        if(! $this->addTraceToOutput()) {
             return '';
         }
         $inspector = $this->getInspector();
@@ -266,12 +267,12 @@ class PlainTextHandler extends Handler
         $response = "\nStack trace:";
 
         $line = 1;
-        foreach ($frames as $frame) {
+        foreach($frames as $frame) {
             /** @var Frame $frame */
             $class = $frame->getClass();
 
             $template = "\n%3d. %s->%s() %s:%d%s";
-            if (! $class) {
+            if(! $class) {
                 // Remove method arrow (->) from output.
                 $template = "\n%3d. %s%s() %s:%d%s";
             }
@@ -297,7 +298,7 @@ class PlainTextHandler extends Handler
      */
     public function handle()
     {
-        if (! $this->canProcess()) {
+        if(! $this->canProcess()) {
             return Handler::DONE;
         }
 
@@ -311,15 +312,15 @@ class PlainTextHandler extends Handler
                 $this->getTraceOutput()
             );
 
-        if ($this->getLogger()) {
+        if($this->getLogger()) {
             $this->getLogger()->error($response);
         }
 
-        if (! $this->canOutput()) {
+        if(! $this->canOutput()) {
             return Handler::DONE;
         }
 
-        if (class_exists('\Whoops\Util\Misc')
+        if(class_exists('\Whoops\Util\Misc')
             && \Whoops\Util\Misc::canSendHeaders()) {
             header('Content-Type: text/plain');
         }

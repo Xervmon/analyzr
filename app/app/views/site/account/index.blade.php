@@ -80,5 +80,18 @@
 <div>
 </div>
 @include('deletemodal')
+<script>
+	viewLog = function(url, jobId)
+	{
+		alert(url); alert(jobId);
+		 var jqxhr= $.ajax({
+    url :url,
+    data:{'jobId':jobId},
+    success:function(response){
+                 console.log(response);
+              }
+          });
+	}
+</script>
 
 @stop

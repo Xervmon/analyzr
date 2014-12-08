@@ -357,8 +357,9 @@ Inverse	<span class="label label-inverse">Inverse</span>
 					$str .= '<td><a  href="'.$temp_url.'"> <span class="glyphicon glyphicon-refresh"></span> </a></td>';
 				}
 					
-				$str .=  '<td> <i class="fa fa-calendar"></i> Last Update ' . $job -> updated_at. '</td>';
-				
+				$str .=  '<td> <i class="fa fa-calendar"></i> ' . $job -> updated_at. '</td>';
+				//$logURl = URL::to('account').'/'.$job->cloudAccountId.'/Log';
+				//$str .=  '<td> <i onclick ="viewLog(\'' .$logURl .'\', ' .$job->id .')" class="fa fa-calendar">' .  '</i></td>';
 				$str .= '</tr>';
 				
 			}
@@ -426,6 +427,20 @@ Inverse	<span class="label label-inverse">Inverse</span>
 			$str .= ' </table> </div>';
 		}
 		return $str;
+	}
+
+	public static function getAccountAnchor($acctName)
+	{
+		$accounts = CloudAccount::where('user_id', Auth::id())->where('name', DB::connection()->getPdo()->quote($acctName)) -> orderBy('created_at', 'desc') -> get();
+		$arr = $accounts->toArray();
+		if(!empty($arr))
+		{
+			return '<a href="'.URL::to('account/'.$arr[0]->id.'/edit') .'">'.$acctName .'</a>';
+		}
+		else
+		{
+			return '<b>'.$acctName.'</b>';		
+		}
 	}
 
 }

@@ -137,7 +137,6 @@
 				</div>
 			</nav>
 
-
 	@section('breadcrumbs', Breadcrumbs::render('home'))
 
 			<!-- ./ navbar -->

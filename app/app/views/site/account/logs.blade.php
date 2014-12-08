@@ -14,7 +14,7 @@
 <?php
 
 $data = json_decode($response);
-//print_r($data);
+print_r($data);
 echo '<pre>';
 if($data->status == 'OK') echo implode('<br/>', $data->log);
 else echo 'No log data available';
