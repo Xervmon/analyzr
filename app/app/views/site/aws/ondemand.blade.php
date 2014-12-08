@@ -2,6 +2,7 @@
 
 {{-- Content --}}
 @section('content')
+@section('breadcrumbs', Breadcrumbs::render('OndemandInstancePricing'))
 
 <style>
     #AWSPricing_reserved_holder .chosen-container,#AWSPricing_ondemand_holder .chosen-container{max-width: 140px;}

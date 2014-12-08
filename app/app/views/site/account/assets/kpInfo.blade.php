@@ -2,6 +2,7 @@
 
 {{-- Content --}}
 @section('content')
+@section('breadcrumbs', Breadcrumbs::render('KpInfo',$account->id))
 
 <div class="page-header">
 	<div class="row">
