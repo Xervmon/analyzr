@@ -206,7 +206,7 @@ Route::group(array(
 	Route::any('enginelog/', 'EnginelogController@getIndex'); 
 	Route::get('account/{account}/Cost', 'AccountController@getCost');
     Route::get('account/{account}/ChartsData', 'AccountController@getChartsData');
-	Route::get('account/{account}/log', 'AccountController@getLogs');
+	Route::get('account/{account}/Log', 'AccountController@getLogs');
 	Route::get('account/{account}/Collection', 'AccountController@Collection');
 	
 	//Route::any('account/{account}/ChartData', 'AccountController@getChartData');

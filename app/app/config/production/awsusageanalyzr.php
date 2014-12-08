@@ -30,6 +30,7 @@ return array(
 	'auditReports'        => '/auditReports',
 	'auditReport'         => '/auditReport',
 	'create_services'     => '/create_services',
-	'serviceSummary'      => '/serviceSummary'
+	'serviceSummary'      => '/serviceSummary',
+	'getLog' 			  => '/getLog',
 	);
 
