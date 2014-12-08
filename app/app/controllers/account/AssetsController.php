@@ -103,11 +103,23 @@ class AssetsController extends BaseController {
 		}
 		return $markup .= '</table>';
 	}
+	
+	public function checkProcessStatus($id) {
+		$account = CloudAccountHelper::findAndDecrypt($id);
+		$processJobs = ProcessJob::where('user_id', Auth::id())->where('cloudAccountId', $account->id)->where('operation', Lang::get('account/account.create_services'))->orderBy('created_at', 'desc')->first();
+		if ($processJobs->status == 'Completed') {
+			return;
+		} else {
+			Log::error(Lang::get('account/account.processnotcompleted'));
+			return Redirect::to('account/')->with('error', Lang::get('account/account.processnotcompleted'));
+		}
+	}
 
 	
 	public function AwsInfo($id)
     {    
    		UtilHelper::check();
+   		$this->checkProcessStatus($id);
         $account = CloudAccountHelper::findAndDecrypt($id);
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));

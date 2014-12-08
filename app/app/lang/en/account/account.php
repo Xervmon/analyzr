@@ -76,4 +76,5 @@ return array(
 		'check_accountId' 			  => 'Cost data could not be aggregated: Please double check account credentials!',
 		'create_ticket'				  => '<a href="ticket/create">Open support ticket</a>',
 		'warning_cost_data_empty'	  => 'No cost data were processed for previous month. Please dump the previous months\' usage to the same bucket to process for past months.'
+		'processnotcompleted' 		  => 'Process is yet to be Completed',
 );
