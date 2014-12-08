@@ -166,17 +166,14 @@ class PHPUnit_Extensions_PhptTestCase implements PHPUnit_Framework_Test, PHPUnit
 
             if (isset($sections['EXPECT'])) {
                 $assertion = 'assertEquals';
-                $expected  = $sections['EXPECT'];
+                $expected  = preg_replace('/\r\n/', "\n", trim($sections['EXPECT']));
             } else {
                 $assertion = 'assertStringMatchesFormat';
-                $expected  = $sections['EXPECTF'];
+                $expected  = trim($sections['EXPECTF']);
             }
 
-            $output = preg_replace('/\r\n/', "\n", trim($jobResult['stdout']));
-            $expected = preg_replace('/\r\n/', "\n", trim($expected));
-
             try {
-                PHPUnit_Framework_Assert::$assertion($expected, $output);
+                PHPUnit_Framework_Assert::$assertion($expected, trim($jobResult['stdout']));
             } catch (PHPUnit_Framework_AssertionFailedError $e) {
                 $result->addFailure($this, $e, $time);
             } catch (Exception $e) {
