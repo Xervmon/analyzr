@@ -14,6 +14,7 @@
 
 {{-- Content --}}
 @section('content')
+@section('breadcrumbs', Breadcrumbs::render(Lang::get('breadcrumb/breadcrumb.EditProfile')))
 <div>
 	<h4 class="page-header">Edit your settings</h4>
 </div>

@@ -75,4 +75,5 @@ return array(
 		'cost_data_empty'			  => 'Cost data could not be aggregated: Please double check account credentials! or <a href="ticket/create">Open support ticket</a>',
 		'check_accountId' 			  => 'Cost data could not be aggregated: Please double check account credentials!',
 		'create_ticket'				  => '<a href="ticket/create">Open support ticket</a>',
+		'processnotcompleted' 		  => 'Process is yet to be Completed',
 );
