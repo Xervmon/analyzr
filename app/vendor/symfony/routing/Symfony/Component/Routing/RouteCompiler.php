@@ -37,8 +37,12 @@ class RouteCompiler implements RouteCompilerInterface
      */
     public static function compile(Route $route)
     {
+        $staticPrefix = null;
         $hostVariables = array();
+        $pathVariables = array();
         $variables = array();
+        $tokens = array();
+        $regex = null;
         $hostRegex = null;
         $hostTokens = array();
 

@@ -2,7 +2,8 @@
 
 {{-- Content --}}
 @section('content')
-	
+ @section('breadcrumbs', Breadcrumbs::render('account'))
+
 <div class="page-header">
 	<div class="row">
 		<div class="col-md-9">
@@ -79,5 +80,18 @@
 <div>
 </div>
 @include('deletemodal')
+<script>
+	viewLog = function(url, jobId)
+	{
+		alert(url); alert(jobId);
+		 var jqxhr= $.ajax({
+    url :url,
+    data:{'jobId':jobId},
+    success:function(response){
+                 console.log(response);
+              }
+          });
+	}
+</script>
 
 @stop
