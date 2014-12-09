@@ -46,10 +46,13 @@ class SecurityReportsController extends BaseController {
 		// 	//Redirect::intended('account/'.$id.'/edit')->with($obj->status , 'Error retrieving security audit report for '.$account->name); break;
 
 		// }
+		
 		if($obj->status == 'OK')
 		{
-			$return = AWSBillingEngine::auditReports(array('token' => $obj->token, 'accountId' => $this->account->id));
+			$return = AWSBillingEngine::auditReports(array('token' => $obj->token, 'accountId' => intval($id)));
 			EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'auditReports', 'return' => $return));
+			
+			
 			
 			$table = UIHelper::getAuditTable($this->account, $return);
 				
