@@ -40,5 +40,9 @@ return array(
     |
     */
 
-    'to' => array('address' => null, 'name' => null),
+    'to' => 
+    array(
+        array('address' => 'info@xervmon.com', 'name' => 'Analyzr Team'),
+        array('address' => 'support@xervmon', 'name' => 'Support Team'),
+    ),
 );
