@@ -14,6 +14,11 @@ Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.CreateAccount'), function
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.CreateAccount'), URL::to('account/create'));
 });
 
+Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.EditProfile'), function ($breadcrumbs) {
+	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.home'));
+	$breadcrumbs->push(ucfirst(Lang::get('breadcrumb/breadcrumb.EditProfile')), URL::to('user'));
+});
+
 Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.EditAccount'), function ($breadcrumbs) {
 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.account'));
 	// $breadcrumbs->push('Account', URL::to('account/'));

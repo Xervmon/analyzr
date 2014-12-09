@@ -277,10 +277,16 @@ class AccountController extends BaseController {
 			$i++;							
 		}
 		
-		if(empty($current) || empty($previous))
+		if(empty($current))
 		{
 			Log::error(Lang::get('account/account.cost_data_empty'));
 			return Redirect::to('account')->with('error', Lang::get('account/account.cost_data_empty') );
+		}
+		
+		if(empty($previous))
+		{
+			Log::error(Lang::get('account/account.cost_data_empty'));
+			return Redirect::to('account')->with('warning', Lang::get('account/account.warning_cost_data_empty') );
 		}
 
         $getCurrentCostData = CloudAccountHelper::getChartsFormat($current, $account->name);
