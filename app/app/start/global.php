@@ -58,9 +58,21 @@ App::error(function(Exception $exception, $code)
     	return;
     }
 
+	$data['exception'] = $exception;
+	$data['code'] = $code;
+	$data['message'] = $message;
+	$user = Auth::user();
+	$subject = 'Error : '.$code .'-'.$message .' for user : '.$user->username .' : '.$user->email;
+	$adminEmail = Config::get('mail');
+	Mail::send('error/email', $data, function($message1) use ($subject, $adminEmail)
+			{
+		  		$message1->to($adminEmail['supportEmail'])
+		          ->subject($subject);
+			});
     switch ($code)
     {
         case 403:
+			
             return Response::view('error/403', array(), 403);
 
         case 500:
