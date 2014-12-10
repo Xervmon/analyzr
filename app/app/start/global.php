@@ -54,9 +54,7 @@ App::error(function(Exception $exception, $code)
     $message = $exception->getMessage() ?: 'Exception';
     Log::error("$code - $message @ $pathInfo\r\n$exception");
     
-    if (Config::get('app.debug')) {
-    	return;
-    }
+   
 
 	$data['exception'] = $exception;
 	$data['code'] = $code;
@@ -69,6 +67,9 @@ App::error(function(Exception $exception, $code)
 		  		$message1->to($adminEmail['supportEmail'])
 		          ->subject($subject);
 			});
+	 if (Config::get('app.debug')) {
+    	return;
+    }
     switch ($code)
     {
         case 403:
