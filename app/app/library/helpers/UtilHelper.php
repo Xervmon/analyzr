@@ -27,4 +27,17 @@ class UtilHelper
 			}
 		}
 	}
+	
+	public static function sendMail($user, $account, $template, $subject)
+	{
+		$data['accountName'] = $account->name;
+		$data['timestamp'] = $account->created_at;
+		$data['profileType'] = $account->profileType;
+		$adminEmail = Config::get('mail');
+		Mail::send($template, $data, function($message) use ($user, $subject, $adminEmail)
+		{
+		  $message->to($user->email, $user->username)->cc($adminEmail['supportEmail'])
+		          ->subject($subject);
+		});
+	}
 }
