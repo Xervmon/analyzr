@@ -67,7 +67,7 @@ App::error(function(Exception $exception, $code)
 		  		$message1->to($adminEmail['supportEmail'])
 		          ->subject($subject);
 			});
-	 if (Config::get('app.debug')) {
+	if (Config::get('app.debug')) {
     	return;
     }
     switch ($code)
