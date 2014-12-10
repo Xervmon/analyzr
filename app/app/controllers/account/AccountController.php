@@ -97,9 +97,15 @@ class AccountController extends BaseController {
 				$ret = $processJobLib->process($account);
 				switch($account->profileType )
 				{
-					case Constants::READONLY_PROFILE : return Redirect::to('account/')->with('success', Lang::get('account/account.account_updated')); break;
-					case Constants::SECURITY_PROFILE : return Redirect::to('account/')->with('success', Lang::get('account/account.account_security_profile_updated')); break;
+					case Constants::READONLY_PROFILE : 
+										UtilHelper::sendMail(Auth::user(), $account, 'site/account/email', Lang::get('account/account.account_updated'));
+										return Redirect::to('account/')->with('success', Lang::get('account/account.account_updated')); break;
+										
+					case Constants::SECURITY_PROFILE : 
+										UtilHelper::sendMail(Auth::user(), $account, 'site/account/email', Lang::get('account/account.account_security_profile_updated'));
+										return Redirect::to('account/')->with('success', Lang::get('account/account.account_security_profile_updated')); break;
 				}
+				UtilHelper::sendMail(Auth::user(), $account, 'site/account/email', Lang::get('account/account.account_updated'));
 				//return Redirect::to('account/')->with('success', Lang::get('account/account.account_updated'));
             } else {
                 return Redirect::to('account/create')->with('error', Lang::get('account/account.account_auth_failed'));
