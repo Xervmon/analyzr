@@ -54,13 +54,26 @@ App::error(function(Exception $exception, $code)
     $message = $exception->getMessage() ?: 'Exception';
     Log::error("$code - $message @ $pathInfo\r\n$exception");
     
-    if (Config::get('app.debug')) {
+   
+
+	$data['exception'] = $exception;
+	$data['code'] = $code;
+	$data['message'] = $message;
+	$user = Auth::user();
+	$subject = 'Error : '.$code .'-'.$message .' for user : '.$user->username .' : '.$user->email;
+	$adminEmail = Config::get('mail');
+	Mail::send('error/email', $data, function($message1) use ($subject, $adminEmail)
+			{
+		  		$message1->to($adminEmail['supportEmail'])
+		          ->subject($subject);
+			});
+	if (Config::get('app.debug')) {
     	return;
     }
-
     switch ($code)
     {
         case 403:
+			
             return Response::view('error/403', array(), 403);
 
         case 500:

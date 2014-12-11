@@ -19,7 +19,7 @@ return array(
     |
     */
     'disabledStatusCodes' => array(
-        '404' => true,
+        //'404' => true,
     ),
 
     /*
@@ -43,6 +43,6 @@ return array(
     'to' => 
     array(
         array('address' => 'info@xervmon.com', 'name' => 'Analyzr Team'),
-        array('address' => 'support@xervmon', 'name' => 'Support Team'),
+        array('address' => 'support@xervmon.com', 'name' => 'Support Team'),
     ),
 );
