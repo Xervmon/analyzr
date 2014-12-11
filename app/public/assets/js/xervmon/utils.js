@@ -289,7 +289,9 @@ convertJsonToTableSecurityGroups = function(data) {
         mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {
              "name" : " filter-select filter-exact ",
              "ResourceType" : " filter-select filter-exact ",
-             "Key" : " filter-select filter-exact "
+             "Key" : " filter-select filter-exact ",
+             "UsageType" : " filter-select filter-exact ",
+             "Operation" : " filter-select filter-exact "
         }), $table = $(mediaClass);
         mediaClass += setupTableSorterChecked($table, false, pageSize);
         $table.find('td[data-title="id"]').each(function() {

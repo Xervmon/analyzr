@@ -35,6 +35,13 @@ Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.AWS_Details'), function (
 	// $breadcrumbs->push('Account', URL::to('account/'));
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.AwsInfo'), URL::to('assets/' . $id . '/AwsInfo'));
 });
+
+Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.CollectionData'), function ($breadcrumbs) {
+	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.account'));
+	// $breadcrumbs->push('account', URL::to('account/'));
+	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.CollectionData'), URL::to('account/{account}/CollectionData'));
+});
+
 Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.ChartsData'), function ($breadcrumbs) {
 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.account'));
 	// $breadcrumbs->push('account', URL::to('account/'));
@@ -88,6 +95,11 @@ Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.VpcsInfo'), function ($br
 
 });
 
+Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.AuditReport'), function ($breadcrumbs) {
+	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.CreateAccount'), URL::to('account/create'));
+	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.AuditReport'), URL::to('security/AuditReport'));
+});
+
 Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.PortPreferences'), function ($breadcrumbs) {
 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.home'));
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.PortPreferences'), URL::to('security/portPreferences/'));
@@ -98,6 +110,12 @@ Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.AddPolicy'), function ($b
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.AddPolicy'), URL::to('security/portPreferences/create'));
 
 });
+
+Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.PortPreferencesInfo'), function ($breadcrumbs) {
+	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.PortPreferences'), URL::to('security/portPreferences/'));
+	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.PortPreferencesInfo'), URL::to('security/portPreferences/{portPreference}/portInfo'));
+});
+
 Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.EngineLog'), function ($breadcrumbs) {
 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.home'));
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.EngineLog'), URL::to('enginelog/'));
