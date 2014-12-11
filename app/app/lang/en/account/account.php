@@ -77,4 +77,5 @@ return array(
 		'create_ticket'				  => '<a href="ticket/create">Open support ticket</a>',
 		'warning_cost_data_empty'	  => 'No cost data were processed for previous month. Please dump the previous months\' usage to the same bucket to process for past months.',
 		'processnotcompleted' 		  => 'Process is yet to be Completed',
+		'collection_data'             => 'Collection Data Of AWS Services',
 );

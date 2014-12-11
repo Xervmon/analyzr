@@ -35,6 +35,13 @@ Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.AWS_Details'), function (
 	// $breadcrumbs->push('Account', URL::to('account/'));
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.AwsInfo'), URL::to('assets/' . $id . '/AwsInfo'));
 });
+
+Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.CollectionData'), function ($breadcrumbs) {
+	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.account'));
+	// $breadcrumbs->push('account', URL::to('account/'));
+	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.CollectionData'), URL::to('account/{account}/CollectionData'));
+});
+
 Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.ChartsData'), function ($breadcrumbs) {
 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.account'));
 	// $breadcrumbs->push('account', URL::to('account/'));
