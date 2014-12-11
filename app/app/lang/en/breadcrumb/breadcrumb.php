@@ -17,7 +17,7 @@ return array(
 	'KpInfo'                  => 'Key pair Info',
 	'PortPreferences'         => 'PortPreferences',
 	'AddPolicy'               => 'AddPolicy',
-	'PortPreferencesInfo'     =>  'PortPreferencesInfo',
+	'PortPreferencesInfo' => 'PortPreferencesInfo',
 	'EngineLog'               => 'EngineLog',
 	'ServiceStatus'           => 'ServiceStatus',
 	'Reserved'                => 'Reserved',
@@ -32,6 +32,6 @@ return array(
 	'SubnetsInfo'             => 'SubnetsInfo',
 	'TagsInfo'                => 'TagsInfo',
 	'VpcsInfo'                => 'VpcsInfo',
-        'AuditReport'             => 'AuditReport',
-
+	'AuditReport'             => 'AuditReport',
+    'CollectionData'          => 'CollectionData',
 );
