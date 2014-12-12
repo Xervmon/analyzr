@@ -384,6 +384,7 @@ class AccountController extends BaseController {
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - Collection', 'return' => $responseJson));
 		$obj = WSObj::getObject($responseJson);
 		$arr = [];
+		
 		if($obj->status == 'OK')
 		{
 			$response = AWSBillingEngine::Collection(array('token' => $obj->token, 
@@ -402,12 +403,12 @@ class AccountController extends BaseController {
 				{
 					foreach($billingData as $key => $value)
 					{
-                		for($i=0 ; $i < count($value); $i++)
+                		for( $i = 0; $i < count($value); $i++)
                 		{
 							$arr[$i]['LinkedAccountId'] = $value[$i]->LinkedAccountId;
 							$arr[$i]['UsageStartDate']  = date("d F Y ", $value[$i]->UsageStartDate);
-							$arr[$i]['UsageType'] = $value[$i]->UsageType;
-							$arr[$i]['InvoiceID'] = $value[$i]->InvoiceID;
+							$arr[$i]['UsageType'] 		= $value[$i]->UsageType;
+							$arr[$i]['InvoiceID'] 		= $value[$i]->InvoiceID;
 							$arr[$i]['RateId'] = $value[$i]->RateId;
 							$arr[$i]['RecordType'] = $value[$i]->RecordType;
 							$arr[$i]['ResourceId'] = $value[$i]->ResourceId;
@@ -415,10 +416,12 @@ class AccountController extends BaseController {
 							$arr[$i]['PricingPlanId'] = $value[$i]->PricingPlanId;
 							$arr[$i]['UsageQuantity'] = $value[$i]->UsageQuantity;
 							$arr[$i]['BlendedRate'] = $value[$i]->BlendedRate;
-							$in=0;
+							
+							$in = 0;
+							
 							if(empty($value[$i]->tags)) 
 							{
-							    $tags='';
+							    $tags = '';
 						    }
 						    else
 						    {
