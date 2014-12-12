@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -100,7 +100,7 @@
 	<div class="wrapper">
 		<div class="error-spacer"></div>
 		<div role="main" class="main">
-			<?php $messages = array('We need a map.', 'I think we\'re lost.', 'We took a wrong turn.'); ?>
+			<?php $messages //= //array('We need a map.', 'I think we\'re lost.', 'We took a wrong turn.'); ?>
 
 			<h1>Unn</h1>
 
@@ -122,4 +122,32 @@
 		</div>
 	</div>
 </body>
-</html>
+</html> -->
+
+
+@extends('site.layouts.default')
+
+{{-- Content --}}
+@section('content')
+@section('breadcrumbs', Breadcrumbs::render('Error403'))
+
+
+<div class="page-header">
+ <div class="row">
+  <div class="col-md-9">
+ 
+  </div>
+ </div>
+</div>
+@yield('breadcrumbs')
+<div class="container">
+ <div class="row clearfix">
+  <div class="col-md-12 column text-center">
+   <img alt="500x327" src="{{{ asset('assets/img/errors/error-403.png') }}}" />
+
+  </div>
+  <h4 class="text-center">
+    <span style="color:red">{{{ Lang::get('error/error.Ohh') }}}</span>{{{ Lang::get('error/error.403_message') }}}
+   </h4>
+ </div>
+</div>

@@ -6,11 +6,12 @@
 	
 </p>
 -->
+<div>
 <p class="text-center">
 	<a title="LinkedIn" href="{{URL::to('user/social')}}?provider=LinkedIn" class="social-linkedin "><i class="fa fa-linkedin-square fa-4x social-login-icons"></i></a>
-	<a title="Amazon" href="#" id="LoginWithAmazon" class="social-amazon "><i class="fa fa-adn fa-4x"></i></a>
-
+	<a title="Amazon" href="#" id="LoginWithAmazon" class="social-amazon "><img style="margin-top: -10%; margin-left: -6%; height:4em;" src="{{{ asset('assets/img/amazon.jpg') }}}"></a>
 </p>
+</div>
 <!-- Amazon login -->
 <div id="amazon-root"></div>
 <script type="text/javascript">

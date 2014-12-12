@@ -126,6 +126,7 @@
 
 {{-- Content --}}
 @section('content')
+@section('breadcrumbs', Breadcrumbs::render('Error500'))
 
 <div class="page-header">
  <div class="row">
@@ -134,7 +135,7 @@
   </div>
  </div>
 </div>
-
+@yield('breadcrumbs')
 <div class="container">
  <div class="row clearfix">
   <div class="col-md-12 column text-center">
