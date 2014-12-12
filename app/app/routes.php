@@ -213,7 +213,6 @@ Route::group(array(
 	
 	//Route::any('account/{account}/ChartData', 'AccountController@getChartData');
 	Route::any('account/{account}/CollectionData', 'AccountController@getCollectionData');
-    Route::any('account/{account}/FilterCollectionData', 'AccountController@getFilterCollectionData');
     Route::any('account/{account}/CurrentTagCost', 'AccountController@CurrentTagCostInfo');
 	
 	Route::any('EC2Products/', 'AWSProductsController@getEC2Products');
