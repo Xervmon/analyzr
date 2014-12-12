@@ -49,7 +49,7 @@
 									| 
 									<a href="{{ URL::to('assets/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
 									|
-									<a href="{{ URL::to('account/' . $account->id . '/CollectionData') }}"><i class="fa fa-briefcase"></i></a>
+									<a href="{{ URL::to('account/' . $account->id . '/CollectionData') }}"><i class="fa fa-suitcase"></i></a>
                                     | 
 									<a href="{{ URL::to('account/' . $account->id . '/ChartsData') }}"><i class="fa fa-bar-chart"></i></a>
 							</p>
