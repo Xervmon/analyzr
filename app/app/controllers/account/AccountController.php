@@ -581,5 +581,68 @@ class AccountController extends BaseController {
             return Redirect::to('account/' . $account->id . '/edit')->with('error', 'Error while deleting');
         }
     }
+
+     public function getTaggedcost()
+    {
+    	$tag_key = Input::get('key');
+    	$tag_value = Input::get('value');
+    	$id = Input::get('id');
+    	
+    	    	   	
+    	$account = CloudAccountHelper::findAndDecrypt($id);
+    	$cred = json_decode($account->credentials);
+    	
+    	
+    	$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+    	EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - Collection', 'return' => $responseJson));
+    	$obj = WSObj::getObject($responseJson);
+    	
+    	if($obj->status == 'OK')
+    	{
+    		$response = AWSBillingEngine::getCurrentTaggedcost(array('token' => $obj->token,'accountId' =>$cred->accountId));
+
+    		
+    		$result = WSObj::getObject($response);
+
+    		
+
+    		$arr = array();$i=0;
+    		if(!empty($result->tagged_data->Name) || !empty($tag_value) || !empty($tag_key))
+    		{
+
+    			foreach($result->tagged_data->$tag_key as $key => $value)
+    			{
+    				if($key == $tag_value)
+    				{
+    					$arr[$i]['ServiceType'] = empty($key) ? '' : $key;
+    					if(empty($value))
+    					{
+    						$arr[$i]['Resource'] = '';
+    						$arr[$i]['ResourceCount'] = '';
+    					}
+    					else
+    					{
+    						$arr[$i]['Resource'] = key((array)$value);
+    						$arr[$i]['ResourceCount'] = count($value);
+    					}
+    					$arr[$i]['LastUpdated'] = $result->lastUpdate;
+    					$arr[$i]['Status']      = $result->status;
+    		
+    					$i++;
+    				}	
+    			}
+    		}
+
+    		 return View::make('site/account/assets/taggedcost', array(
+    				'account' => $account,'taggedcost' => $arr ));
+    		
+    		
+    		
+    		
+    	}
+    	
+    	
+    	
+    }
 	
 }

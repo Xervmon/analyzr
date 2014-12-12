@@ -85,6 +85,13 @@ class AWSBillingEngine {
     	Log::debug('Ret: '.$ret);
     	return $ret;
 	}
+    
+    public static function getCurrentTaggedcost($data) {
+        self::init();
+        Log::info('URL ' . self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['getCurrentTaggedcost']);
+        Log::info('Data '.json_encode($data));      
+        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['getCurrentTaggedcost'] , $data);
+    }
 	
 	public static function Collection($data) {
         self::init();

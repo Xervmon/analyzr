@@ -14,10 +14,10 @@ return array(
 	'InstanceInfo'            => 'InstanceInfo',
 	'EbsInfo'                 => 'EbsInfo',
 	'SecurityGroupInfo'       => 'SecurityGroupInfo',
-	'KpInfo'                  => 'KpInfo',
+	'KpInfo'                  => 'Key Pair Info',
 	'PortPreferences'         => 'PortPreferences',
 	'AddPolicy'               => 'AddPolicy',
-	'PortPreferencesInfo' => 'PortPreferencesInfo',
+	'PortPreferencesInfo'     => 'PortPreferencesInfo',
 	'EngineLog'               => 'EngineLog',
 	'ServiceStatus'           => 'ServiceStatus',
 	'Reserved'                => 'Reserved',
@@ -37,4 +37,5 @@ return array(
     'Error500'                => 'Error500',
     'Error404'                => 'Error404',
     'Error403'                => 'Error403',
+    'TaggedCost'			  => 'TaggedCost',
 );
