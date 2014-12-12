@@ -32,5 +32,6 @@ return array(
 	'create_services'     => '/create_services',
 	'serviceSummary'      => '/serviceSummary',
 	'getLog' 			  => '/getLog',
+	'getCurrentTaggedcost' => '/getCurrentTaggedcost'
 	);
 

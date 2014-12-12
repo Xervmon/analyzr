@@ -28,7 +28,7 @@
 		if (!$.isArray(data)) {
         	data = JSON.parse(data);
         }
-		$('#instanceDetails').append(convertJsonToTableSecurityGroupsDetails(data));
+		$('#instanceDetails').append(convertJsonToTableInstances(data));
 		
 	});
 	</script>
