@@ -473,7 +473,9 @@ class AccountController extends BaseController {
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - Collection', 'return' => $responseJson));
 		$obj = WSObj::getObject($responseJson);
+		
 		$arr = [];
+		
 		if($obj->status == 'OK')
 		{
 			$response = AWSBillingEngine::Collection(array('token' => $obj->token, 

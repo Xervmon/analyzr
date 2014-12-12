@@ -142,7 +142,7 @@
 
   </div>
   <h4 class="text-center">
-    <span style="color:red">{{{ Lang::get('error/error.Ohh') }}}</span>{{{ Lang::get('error/error.500_message') }}}
+    <span style="color:red">{{{ Lang::get('error/error.500_message') }}}</span>
    </h4>
  </div>
 </div>
