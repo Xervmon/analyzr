@@ -14,7 +14,7 @@ return array(
 	'InstanceInfo'            => 'InstanceInfo',
 	'EbsInfo'                 => 'EbsInfo',
 	'SecurityGroupInfo'       => 'SecurityGroupInfo',
-	'KpInfo'                  => 'Key pair Info',
+	'KpInfo'                  => 'KpInfo',
 	'PortPreferences'         => 'PortPreferences',
 	'AddPolicy'               => 'AddPolicy',
 	'PortPreferencesInfo' => 'PortPreferencesInfo',
@@ -34,4 +34,7 @@ return array(
 	'VpcsInfo'                => 'VpcsInfo',
 	'AuditReport'             => 'AuditReport',
     'CollectionData'          => 'CollectionData',
+    'Error500'                => 'Error500',
+    'Error404'                => 'Error404',
+    'Error403'                => 'Error403',
 );
