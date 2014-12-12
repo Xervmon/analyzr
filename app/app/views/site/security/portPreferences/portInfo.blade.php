@@ -2,6 +2,7 @@
 
 {{-- Content --}}
 @section('content')
+@section('breadcrumbs', Breadcrumbs::render('PortPreferencesInfo'))
 
 <div class="page-header">
 	<div class="row">
