@@ -383,6 +383,8 @@ class AccountController extends BaseController {
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - Collection', 'return' => $responseJson));
 		$obj = WSObj::getObject($responseJson);
+		$arr = [];
+		
 		if($obj->status == 'OK')
 		{
 			$response = AWSBillingEngine::Collection(array('token' => $obj->token, 
@@ -394,50 +396,58 @@ class AccountController extends BaseController {
 			if($result->status == 'OK')
 			{
 				$billingData = $result -> billing_data;
-				//echo '<pre>';print_r($billingData);die();
-				$arr = array(); $tags=array(); $out=0;
-				if(!empty($billingData)){
-				foreach($billingData as $key => $value)
+				
+				$tags=array(); $out=0;
+				
+				if(!empty($billingData))
 				{
-                for($i=0;$i<count($value);$i++)
-                {
-				$arr[$i]['LinkedAccountId'] = $value[$i]->LinkedAccountId;
-				$arr[$i]['UsageStartDate']  = date("d F Y ", $value[$i]->UsageStartDate);
-				$arr[$i]['UsageType'] = $value[$i]->UsageType;
-				$arr[$i]['InvoiceID'] = $value[$i]->InvoiceID;
-				$arr[$i]['RateId'] = $value[$i]->RateId;
-				$arr[$i]['RecordType'] = $value[$i]->RecordType;
-				$arr[$i]['ResourceId'] = $value[$i]->ResourceId;
-				$arr[$i]['UsageEndDate'] = date("d F Y ", $value[$i]->UsageEndDate);
-				$arr[$i]['PricingPlanId'] = $value[$i]->PricingPlanId;
-				$arr[$i]['UsageQuantity'] = $value[$i]->UsageQuantity;
-				$arr[$i]['BlendedRate'] = $value[$i]->BlendedRate;
-				$in=0;
-				if(empty($value[$i]->tags)) {
-				    $tags='';
-			    }else{
-			    	foreach ($value[$i]->tags as $keys=>$values) {
-				    $tags[$in] = $values->name.'-'.$values->value;
-			    	$in++;	
-				}
-			    }
-			    $arr[$i]['tags'] = $tags;
-				$arr[$i]['RecordId'] = $value[$i]->RecordId;
-				$arr[$i]['aws_filename'] = $value[$i]->aws_filename;
-				$arr[$i]['AvailabilityZone'] = $value[$i]->AvailabilityZone;
-				$arr[$i]['ItemDescription'] = $value[$i]->ItemDescription;
-				$arr[$i]['ProductName'] = $value[$i]->ProductName;
-				$arr[$i]['BlendedCost'] = $value[$i]->BlendedCost;
-				$arr[$i]['UnBlendedCost'] = $value[$i]->UnBlendedCost;
-				$arr[$i]['ReservedInstance'] = $value[$i]->ReservedInstance;
-				$arr[$i]['is_current_month'] = $value[$i]->is_current_month;
-				$arr[$i]['Operation'] = $value[$i]->Operation;
-				$arr[$i]['UnBlendedRate'] = $value[$i]->UnBlendedRate;
-
-                }
-                  $out++;
-				}
-              }
+					foreach($billingData as $key => $value)
+					{
+                		for( $i = 0; $i < count($value); $i++)
+                		{
+							$arr[$i]['LinkedAccountId'] = $value[$i]->LinkedAccountId;
+							$arr[$i]['UsageStartDate']  = date("d F Y ", $value[$i]->UsageStartDate);
+							$arr[$i]['UsageType'] 		= $value[$i]->UsageType;
+							$arr[$i]['InvoiceID'] 		= $value[$i]->InvoiceID;
+							$arr[$i]['RateId'] = $value[$i]->RateId;
+							$arr[$i]['RecordType'] = $value[$i]->RecordType;
+							$arr[$i]['ResourceId'] = $value[$i]->ResourceId;
+							$arr[$i]['UsageEndDate'] = date("d F Y ", $value[$i]->UsageEndDate);
+							$arr[$i]['PricingPlanId'] = $value[$i]->PricingPlanId;
+							$arr[$i]['UsageQuantity'] = $value[$i]->UsageQuantity;
+							$arr[$i]['BlendedRate'] = $value[$i]->BlendedRate;
+							
+							$in = 0;
+							
+							if(empty($value[$i]->tags)) 
+							{
+							    $tags = '';
+						    }
+						    else
+						    {
+						    	foreach ($value[$i]->tags as $keys=>$values) 
+						    	{
+							    	$tags[$in] = $values->name.'-'.$values->value;
+						    		$in++;	
+								}
+			    			}
+						    $arr[$i]['tags'] = $tags;
+							$arr[$i]['RecordId'] = $value[$i]->RecordId;
+							$arr[$i]['aws_filename'] = $value[$i]->aws_filename;
+							$arr[$i]['AvailabilityZone'] = $value[$i]->AvailabilityZone;
+							$arr[$i]['ItemDescription'] = $value[$i]->ItemDescription;
+							$arr[$i]['ProductName'] = $value[$i]->ProductName;
+							$arr[$i]['BlendedCost'] = $value[$i]->BlendedCost;
+							$arr[$i]['UnBlendedCost'] = $value[$i]->UnBlendedCost;
+							$arr[$i]['ReservedInstance'] = $value[$i]->ReservedInstance;
+							$arr[$i]['is_current_month'] = $value[$i]->is_current_month;
+							$arr[$i]['Operation'] = $value[$i]->Operation;
+							$arr[$i]['UnBlendedRate'] = $value[$i]->UnBlendedRate;
+		
+		                }
+                  		$out++;
+					}
+              	}
 			}
 		}
 		return View::make('site/account/collection', array(
@@ -463,6 +473,9 @@ class AccountController extends BaseController {
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - Collection', 'return' => $responseJson));
 		$obj = WSObj::getObject($responseJson);
+		
+		$arr = [];
+		
 		if($obj->status == 'OK')
 		{
 			$response = AWSBillingEngine::Collection(array('token' => $obj->token, 
@@ -476,51 +489,57 @@ class AccountController extends BaseController {
 			if($result->status == 'OK')
 			{
 				$billingData = $result -> billing_data;
-				$arr = array();$tags=array();
-				if(!empty($billingData)){
-				foreach($billingData as $key => $value)
+				$tags=array();
+				if(!empty($billingData))
 				{
+							
+					foreach($billingData as $key => $value)
+					{
 				
-                for($i=0;$i<count($value);$i++)
-                {
+                		for($i=0;$i<count($value);$i++)
+                		{
                    	
-				$arr[$i]['LinkedAccountId'] = $value[$i]->LinkedAccountId;
-				$arr[$i]['UsageStartDate']  = date("d F Y ", $value[$i]->UsageStartDate);
-				$arr[$i]['UsageType'] = $value[$i]->UsageType;
-				$arr[$i]['InvoiceID'] = $value[$i]->InvoiceID;
-				$arr[$i]['RateId'] = $value[$i]->RateId;
-				$arr[$i]['RecordType'] = $value[$i]->RecordType;
-				$arr[$i]['ResourceId'] = $value[$i]->ResourceId;
-				$arr[$i]['UsageEndDate'] = date("d F Y ", $value[$i]->UsageEndDate);
-				$arr[$i]['PricingPlanId'] = $value[$i]->PricingPlanId;
-				$arr[$i]['UsageQuantity'] = $value[$i]->UsageQuantity;
-				$arr[$i]['BlendedRate'] = $value[$i]->BlendedRate;
-				$in=0;
-				if(empty($value[$i]->tags)) {
-				    $tags='';
-			    }else{
-			    	foreach ($value[$i]->tags as $keys=>$values) {
-				    $tags[$in] = $values->name.'-'.$values->value;
-			    	$in++;	
-				}
-			    }
-			    $arr[$i]['tags'] = $tags;
-				$arr[$i]['RecordId'] = $value[$i]->RecordId;
-				$arr[$i]['aws_filename'] = $value[$i]->aws_filename;
-				$arr[$i]['AvailabilityZone'] = $value[$i]->AvailabilityZone;
-				$arr[$i]['ItemDescription'] = $value[$i]->ItemDescription;
-				$arr[$i]['ProductName'] = $value[$i]->ProductName;
-				$arr[$i]['BlendedCost'] = $value[$i]->BlendedCost;
-				$arr[$i]['UnBlendedCost'] = $value[$i]->UnBlendedCost;
-				$arr[$i]['ReservedInstance'] = $value[$i]->ReservedInstance;
-				$arr[$i]['is_current_month'] = $value[$i]->is_current_month;
-				$arr[$i]['Operation'] = $value[$i]->Operation;
-				$arr[$i]['UnBlendedRate'] = $value[$i]->UnBlendedRate;
-
-                }
-
-				}
-              }
+							$arr[$i]['LinkedAccountId'] = $value[$i]->LinkedAccountId;
+							$arr[$i]['UsageStartDate']  = date("d F Y ", $value[$i]->UsageStartDate);
+							$arr[$i]['UsageType'] = $value[$i]->UsageType;
+							$arr[$i]['InvoiceID'] = $value[$i]->InvoiceID;
+							$arr[$i]['RateId'] = $value[$i]->RateId;
+							$arr[$i]['RecordType'] = $value[$i]->RecordType;
+							$arr[$i]['ResourceId'] = $value[$i]->ResourceId;
+							$arr[$i]['UsageEndDate'] = date("d F Y ", $value[$i]->UsageEndDate);
+							$arr[$i]['PricingPlanId'] = $value[$i]->PricingPlanId;
+							$arr[$i]['UsageQuantity'] = $value[$i]->UsageQuantity;
+							$arr[$i]['BlendedRate'] = $value[$i]->BlendedRate;
+							$in=0;
+							if(empty($value[$i]->tags)) 
+							{
+							    $tags='';
+						    }
+						    else
+						    {
+						    	foreach ($value[$i]->tags as $keys=>$values) 
+						    	{
+							    	$tags[$in] = $values->name.'-'.$values->value;
+						    		$in++;	
+								}
+			    			}
+						    $arr[$i]['tags'] = $tags;
+							$arr[$i]['RecordId'] = $value[$i]->RecordId;
+							$arr[$i]['aws_filename'] = $value[$i]->aws_filename;
+							$arr[$i]['AvailabilityZone'] = $value[$i]->AvailabilityZone;
+							$arr[$i]['ItemDescription'] = $value[$i]->ItemDescription;
+							$arr[$i]['ProductName'] = $value[$i]->ProductName;
+							$arr[$i]['BlendedCost'] = $value[$i]->BlendedCost;
+							$arr[$i]['UnBlendedCost'] = $value[$i]->UnBlendedCost;
+							$arr[$i]['ReservedInstance'] = $value[$i]->ReservedInstance;
+							$arr[$i]['is_current_month'] = $value[$i]->is_current_month;
+							$arr[$i]['Operation'] = $value[$i]->Operation;
+							$arr[$i]['UnBlendedRate'] = $value[$i]->UnBlendedRate;
+		
+		                }
+	
+					}
+              	}
 			}
 		}
 		print json_encode($arr);

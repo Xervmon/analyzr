@@ -110,8 +110,8 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
       <h4 class="panel-title">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
           <img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/ebs.png') }}}" />{{{ Lang::get('account/account.aws_ebs') }}}
-		</a><i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
-      </h4>
+		<i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+      </h4></a>
     </div>
     <div id="collapseTwo" class="panel-collapse collapse">
       <div class="panel-body">
@@ -182,8 +182,8 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
       <h4 class="panel-title">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
          <img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/aws.png') }}}" />{{{ Lang::get('account/account.aws_sg') }}}
-		 </a><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
-      </h4>
+		 <i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+      </h4></a>
     </div>
     <div id="collapseThree" class="panel-collapse collapse">
       <div class="panel-body">
@@ -261,8 +261,8 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
         	
       					<img alt="73x33" src="{{{ asset('assets/img/aws/aws.png') }}}" />{{{ Lang::get('account/account.aws_kp') }}}
 						
-        </a><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
-      </h4>
+        <i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+      </h4></a>
     </div>
     <div id="collapseFour" class="panel-collapse collapse">
       <div class="panel-body">
@@ -339,8 +339,8 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
         <img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/rds.png') }}}" />{{{ Lang::get('account/account.aws_rds') }}}
 						
-        </a><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
-      </h4>
+        <i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+      </h4></a>
     </div>
     <div id="collapseFive" class="panel-collapse collapse">
       <div class="panel-body">
@@ -415,8 +415,8 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
       <h4 class="panel-title">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
         	<img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/subnet.png') }}}" />{{{ Lang::get('account/account.aws_sn') }}}
-         </a><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
-      </h4>
+         <i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+      </h4></a>
     </div>
     <div id="collapseSix" class="panel-collapse collapse">
       <div class="panel-body">
@@ -490,8 +490,8 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
       <h4 class="panel-title">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
         	<img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/vpc.png') }}}" />{{{ Lang::get('account/account.aws_vpc') }}}
-		</a><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
-      </h4>
+		<i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+      </h4></a>
     </div>
     <div id="collapseSeven" class="panel-collapse collapse">
       <div class="panel-body">
@@ -564,8 +564,8 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
       <h4 class="panel-title">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseEight">
         	<img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/aws.png') }}}" />{{{ Lang::get('account/account.aws_tags') }}}
-		</a><i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
-      </h4>
+		<i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+      </h4></a>
     </div>
     <div id="collapseEight" class="panel-collapse collapse">
       <div class="panel-body">
