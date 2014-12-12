@@ -314,6 +314,97 @@ convertJsonToTableSecurityGroups = function(data) {
 
 };
 
+
+convertJsonToTableTags = function(data) {
+    var pageSize = 10;
+    if (data.length > 0) {
+        var mediaClass = '';
+        for (var i = 0; i < data.length; i++) 
+        {
+        	data[i]["actions"] = '<a href="'+data[i]['url']+'" class="viewTaggedcost" id="viewTaggedcost" name="viewTaggedcost">View Current Tagged cost</a>';
+        	delete data[i]['url'];
+        	delete data[i]['id'];
+        }
+        
+        mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {
+             "name" : " filter-select filter-exact ",
+             "ResourceType" : " filter-select filter-exact ",
+             "Key" : " filter-select filter-exact "
+        }), $table = $(mediaClass);
+        mediaClass += setupTableSorterChecked($table, false, pageSize);
+        $table.find('td[data-title="id"]').each(function() {
+            var $td = $(this);
+            var $parent = $td.parent();
+            //$td = $this.parent();
+            $td.addClass("btn-link").on("click", function(e) {
+                e.preventDefault();
+
+                var $selectedLink = this.dataset.title;
+
+            });
+        })
+
+        return $table;
+    } else {
+        return '<div class="no_data"><span class="label label-primary">No Data</span></div>';
+
+    }
+
+};
+
+
+convertJsonToTableInstances = function(data) {
+    var pageSize = 10;
+    if (data.length > 0) {
+        var mediaClass = '';
+        var form_text = '';
+       
+       for (var i = 0; i < data.length; i++) 
+        {
+           if(data[i]["State"]=='running')
+           {
+                     data[i]["actions"] = '<a href="'+data[i]['url']+'" class="push_button red" id="viewTaggedcost" name="viewTaggedcost"><i class="fa fa-power-off"></i></a>';
+                     data[i]["State"] = '<span class="label label-success" >'+data[i]['State']+'</span>' ;
+           }
+           else if(data[i]["State"]=='stopped')
+           {
+                     data[i]["actions"] = '<a href="'+data[i]['url']+'" class="push_button blue" id="viewTaggedcost" name="viewTaggedcost"><i class="fa fa-play"></i></a>';
+                     data[i]["State"] = '<span class="label label-danger" >'+data[i]['State']+'</span>' ;
+           } 
+           else
+           {
+                     //data[i]["actions"] = '<a href="'+data[i]['url']+'" class="push_button blue" id="viewTaggedcost" name="viewTaggedcost"><i class="fa fa-play"></i></a>';
+                     data[i]["State"] = '<span class="label label-warning" >'+data[i]['State']+'</span>' ;
+           }
+            delete data[i]['url'];
+        }
+        
+         mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {
+             "name" : " filter-select filter-exact ",
+             "ResourceType" : " filter-select filter-exact ",
+             "Key" : " filter-select filter-exact "
+        }), $table = $(mediaClass);
+        mediaClass += setupTableSorterChecked($table, false, pageSize);
+        $table.find('td[data-title="id"]').each(function() {
+            var $td = $(this);
+            var $parent = $td.parent();
+            //$td = $this.parent();
+            $td.addClass("btn-link").on("click", function(e) {
+                e.preventDefault();
+
+                var $selectedLink = this.dataset.title;
+
+            });
+        })
+
+        return $table;
+    } else {
+        return '<div class="no_data"><span class="label label-primary">No Data</span></div>';
+
+    }
+
+};
+
 convertJsonToTableAuditReports = function(data) {
     var pageSize = 10;
     if (data.length > 0) {

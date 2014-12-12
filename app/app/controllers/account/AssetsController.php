@@ -118,64 +118,96 @@ class AssetsController extends BaseController {
 	
 	public function AwsInfo($id)
     {    
-   		UtilHelper::check();
-   		$this->checkProcessStatus($id);
-        $account = CloudAccountHelper::findAndDecrypt($id);
-		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
-		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
-		$obj = WSObj::getObject($responseJson);
-		
-		if($obj->status == 'OK')
-		{
-			Log::info('Preparing the ServiceSummary for processing..');
-			$credentials 	 	= json_decode($account->credentials);
-			$data['token'] 	 	= $obj->token;
-			$data['accountId'] 	= $credentials->accountId;
-			
-			$json = AWSBillingEngine::serviceSummary($data);
-			$ret = WSObj::getObject($responseJson);				
-			$ret = json_decode($json);
+      UtilHelper::check();
+      $this->checkProcessStatus($id);
+      $account = CloudAccountHelper::findAndDecrypt($id);
+      $responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+      EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
+      $obj = WSObj::getObject($responseJson);
+    
+      if($obj->status == 'OK')
+      {
+          Log::info('Preparing the ServiceSummary for processing..');
+         $credentials     = json_decode($account->credentials);
+         $data['token']     = $obj->token;
+         $data['accountId']   = $credentials->accountId;
+      
+         $json = AWSBillingEngine::serviceSummary($data);
+         $ret = WSObj::getObject($responseJson);        
+         $ret = json_decode($json);
 
-			if($ret->status == 'OK')
-			{
+         if($ret->status == 'OK')
+         {
               if(!empty($ret->report->summary))
               { 
-				foreach ($ret->report->summary as $key => $value) 
-				{
-					$regions[] = $key;
-					$instances[$key] = empty($value->instances) ? '' : $value->instances->state;
-					$subnets[$key]   = empty($value->subnet)    ? '' : $value->subnet;
-					$volumes[$key]   = empty($value->volumes)   ? '' : $value->volumes->state;
-					$rds[$key]       = empty($value->rds)       ? '' : $value->rds;
-					$key_pairs[$key] = empty($value->key_pairs) ? '' : $value->key_pairs;
-					$vpc[$key]       = empty($value->vpc)       ? '' : $value->vpc;
-					$secgroups[$key] = empty($value->secgroup)  ? '' : $value->secgroup;
-					$tags[$key]      = empty($value->tags)      ? '' : $value->tags;
-				}
+                foreach ($ret->report->summary as $key => $value) 
+                {
+                  $regions[] = $key;
+                  $instances[$key] = empty($value->instances) ? '' : $value->instances->state;
+                  $subnets[$key]   = empty($value->subnet)    ? '' : $value->subnet;
+                  $volumes[$key]   = empty($value->volumes)   ? '' : $value->volumes->state;
+                  $rds[$key]       = empty($value->rds)       ? '' : $value->rds;
+                  $key_pairs[$key] = empty($value->key_pairs) ? '' : $value->key_pairs;
+                  $vpc[$key]       = empty($value->vpc)       ? '' : $value->vpc;
+                  $secgroups[$key] = empty($value->secgroup)  ? '' : $value->secgroup;
+                  $tags[$key]      = empty($value->tags)      ? '' : $value->tags;
+                }
 
-					Log::info('ServiceSummary Generated Successfully');			
-					return View::make('site/account/assets/awsInfo', array('account' => $account,
-						'instances'=> $instances,'subnets'=> $subnets,'volumes'=> $volumes,
-						'rds'=> $rds,'key_pairs'=> $key_pairs,'vpc'=> $vpc,'regions'=> $regions,
-						'secgroups'=>$secgroups,'tags'=>$tags));
- 				}
-              }  
-				else if($ret->status == 'error')
-				{
-					Log::error($ret->message.' '.json_encode($account));
-					RedirectHelper::redirectAccount(Constants::FAILURE);
-				}
-		}
-		else
-			{
-				RedirectHelper::redirectAccount(Constants::ENGINE_CREDENTIALS_FAILURE);
-			}
-          
-         }
+                Log::info('ServiceSummary Generated Successfully');     
+                return View::make('site/account/assets/awsInfo', array('account' => $account,
+                'instances'=> $instances,'subnets'=> $subnets,'volumes'=> $volumes,
+                'rds'=> $rds,'key_pairs'=> $key_pairs,'vpc'=> $vpc,'regions'=> $regions,
+                'secgroups'=>$secgroups,'tags'=>$tags));
+              }
+          }  
+          else if($ret->status == 'error')
+          {
+            Log::error($ret->message.' '.json_encode($account));
+            RedirectHelper::redirectAccount(Constants::FAILURE);
+          }
+       }
+       else
+       {
+          RedirectHelper::redirectAccount(Constants::ENGINE_CREDENTIALS_FAILURE);
+       }
+           
+    }
+
+
+  public function startInstance()
+  {
+      $instance_id = Input::get('key');
+      $id = Input::get('id');
+
+      UtilHelper::check();
+      $account = CloudAccount::where('user_id', Auth::id())->find($id);
+      $startInstance = CloudProvider::startInstance($id,$instance_id);
+      
+     if(!empty($startInstance))
+            return Redirect::to('assets/' . $id . '/EC2')->with('Success Instance ID:', $startInstance['StartingInstances'][0]['InstanceId'] .' is ' . $startInstance['StartingInstances'][0]['CurrentState']['Name']);
+     
+
+  }
+
+  public function stopInstance()
+  {
+      $instance_id = Input::get('key');
+      $id = Input::get('id');
+
+      UtilHelper::check();
+      $account = CloudAccount::where('user_id', Auth::id())->find($id);
+      $stopInstance = CloudProvider::stopInstance($id,$instance_id);
+
+      if(!empty($stopInstance))
+           return Redirect::to('assets/' . $id . '/EC2')->with('Success Instance ID:', $stopInstance['StoppingInstances'][0]['InstanceId'] .' is ' . $stopInstance['StoppingInstances'][0]['CurrentState']['Name']);
+         
+  }
+
 
     public function instanceInfo($id)
     {
             UtilHelper::check();
+
             $account = CloudAccount::where('user_id', Auth::id())->find($id);
             $getInstancesAll = CloudProvider::getInstances($id);
 
@@ -189,12 +221,21 @@ class AssetsController extends BaseController {
                     $arr[$i]['PublicDnsName'] = empty($value['Instances'][0]['PublicDnsName']) ? '' : $value['Instances'][0]['PublicDnsName'];
                     $arr[$i]['ImageId']       = empty($value['Instances'][0]['ImageId']) ? '' : $value['Instances'][0]['ImageId'];
                     $arr[$i]['LaunchTime']    = empty($value['Instances'][0]['LaunchTime']) ? '' : $value['Instances'][0]['LaunchTime'];
-                    $arr[$i]['State']         = empty($value['Instances'][0]['State']['Name']) ? '' : $value['Instances'][0]['State']['Name'];
-                    
-                    $i++;
+
+                    if(empty($value['Instances'][0]['State']['Name']))
+                      $arr[$i]['State'] = '';
+                    else
+                    {
+                      $arr[$i]['State'] = $value['Instances'][0]['State']['Name'];
+                      if($value['Instances'][0]['State']['Name']=='running')
+                          $arr[$i]['url']      = URL::to('assets/Stop').'?id='.$id.'&key='.$arr[$i]['InstanceId'];
+                      else
+                          $arr[$i]['url']     = URL::to('assets/Start').'?id='.$id.'&key='.$arr[$i]['InstanceId'];
+                    }
+                 $i++;
                 }
             }   
-			return View::make('site/account/assets/instanceInfo', array('account' => $account,'instanceDetails'=> $arr));
+      return View::make('site/account/assets/instanceInfo', array('account' => $account,'instanceDetails'=> $arr));
     }
 
     public function ebsInfo($id)
@@ -202,31 +243,31 @@ class AssetsController extends BaseController {
             UtilHelper::check();
             $account = CloudAccount::where('user_id', Auth::id())->find($id);
             $getEBSAll = CloudProvider::getEBS($id);
-	        $arr = array();$i=0;
+          $arr = array();$i=0;
             if(!empty($getEBSAll['Volumes']))
             {
                 foreach($getEBSAll['Volumes'] as $key => $value)
                 {
-                	$stdClass = new stdClass();
+                  $stdClass = new stdClass();
                     $stdClass->VolumeId         = empty($value['VolumeId']) ? '' : $value['VolumeId'];
                     $stdClass->Description      = empty($value['SnapshotId']) ? '' : 'SnapshotId : '. $value['SnapshotId'] .'<br/>'. 'CreateTime : ' .$value['CreateTime']. '<br/>';
                     $stdClass->AvailabilityZone = empty($value['AvailabilityZone']) ? '' : $value['AvailabilityZone'];
 
-					if(!empty($value['Attachments']))
-					{
-						$stdClass->InstanceId = $value['Attachments'][0]['InstanceId'];
- 					}
+          if(!empty($value['Attachments']))
+          {
+            $stdClass->InstanceId = $value['Attachments'][0]['InstanceId'];
+          }
                     $stdClass->State    = empty($value['State']) ? '' : $value['State'];
-					
-					$arr[] = $stdClass;
+          
+          $arr[] = $stdClass;
                 }
             }   
-			return View::make('site/account/assets/ebsInfo', array('account' => $account,'instanceDetails'=> $arr));
+      return View::make('site/account/assets/ebsInfo', array('account' => $account,'instanceDetails'=> $arr));
     }
 
-	public function getTagNameValue($id)
-	{
-		 UtilHelper::check();
+  public function getTagNameValue($id)
+  {
+     UtilHelper::check();
          $account = CloudAccount::where('user_id', Auth::id())->find($id);
          $getTagsAll = CloudProvider::getTags($id);
             $arr = array();$i=0;
@@ -239,12 +280,12 @@ class AssetsController extends BaseController {
                     $arr[$i]['ResourceType'] = empty($value['ResourceType']) ? '' : $value['ResourceType'];
                     $arr[$i]['Key']          = empty($value['Key']) ? '' : $value['Key'];
                     $arr[$i]['Value']        = empty($value['Value']) ? '' : $value['Value'];
-                   
+                    $arr[$i]['url']      = URL::to('account/Taggedcost').'?id='.$id.'&key='.$arr[$i]['Key'].'&value='.$arr[$i]['Value'];
                     $i++;
                 }
             }   
-			 return View::make('site/account/assets/tagsInfo', array('account' => $account,'tagDetails'=> $arr));
-			} 
+       return View::make('site/account/assets/tagsInfo', array('account' => $account,'tagDetails'=> $arr));
+      } 
 		
     
     public function sgInfo($id)
