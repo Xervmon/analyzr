@@ -173,6 +173,30 @@ class CloudProvider
         }
     }
 
+     public static function startInstance($cloudAccountId, $instanceID) {
+       $account = CloudAccountHelper::findAndDecrypt($cloudAccountId);
+        
+        $data = self::executeAction('start', $account, $instanceID);
+        if ($data['status'] == 'OK') {
+            return $data['message'];
+        } else {
+            return array();
+        }
+    }
+
+    public static function stopInstance($cloudAccountId, $instanceID) {
+        $account = CloudAccountHelper::findAndDecrypt($cloudAccountId);
+        
+        $data = self::executeAction('stop', $account, $instanceID);
+        
+        if ($data['status'] == 'OK') {
+            return $data['message'];
+        } else {
+            return array();
+        }
+    }
+
+
 
     public static function getInstances($cloudAccountId)
     {
