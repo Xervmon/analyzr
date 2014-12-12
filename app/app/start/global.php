@@ -55,7 +55,7 @@ App::error(function(Exception $exception, $code)
     Log::error("$code - $message @ $pathInfo\r\n$exception");
     
    
-
+	/*
 	$data['exception'] = $exception;
 	$data['code'] = $code;
 	$data['message'] = $message;
@@ -67,6 +67,7 @@ App::error(function(Exception $exception, $code)
 		  		$message1->to($adminEmail['supportEmail'])
 		          ->subject($subject);
 			});
+	 */
 	if (Config::get('app.debug')) {
     	return;
     }
