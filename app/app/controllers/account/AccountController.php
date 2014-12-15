@@ -283,43 +283,45 @@ class AccountController extends BaseController {
 			$i++;							
 		}
 		
-		if(empty($current))
-		{
-			Log::error(Lang::get('account/account.cost_data_empty'));
-			return Redirect::to('account')->with('error', Lang::get('account/account.cost_data_empty') );
-		}
-		
-		if(empty($previous))
-		{
-			Log::error(Lang::get('account/account.cost_data_empty'));
-			return Redirect::to('account')->with('warning', Lang::get('account/account.warning_cost_data_empty') );
-		}
+          if(!empty($current))
+          {
+          	$getCurrentCostData  = CloudAccountHelper::getChartsFormat($current, $account->name);
+          }else{
+          	Log::error(Lang::get('account/account.cost_data_empty'));
+                $getCurrentCostData  = Lang::get('account/account.cost_data_empty');
+          }
 
-        $getCurrentCostData = CloudAccountHelper::getChartsFormat($current, $account->name);
-        $getPreviousCostData = CloudAccountHelper::getChartsFormat($previous, $account->name);
+
+          if(!empty($previous))
+          {
+          	$getPreviousCostData = CloudAccountHelper::getChartsFormat($previous, $account->name);
+          }else{
+          	Log::error(Lang::get('account/account.cost_data_empty'));
+                $getPreviousCostData = Lang::get('account/account.warning_cost_data_empty');
+          }
+        
 						
 						 
         $currentcostchartsdata = array(
-							'titleText' => Lang::get('account/account.currenttitleText'),
+							'titleText'  => Lang::get('account/account.currenttitleText'),
 							'xAxisTitle' => Lang::get('account/account.currentxAxisTitle'),
 							'yAxisTitle' => Lang::get('account/account.currentyAxisTitle'),
-							'result' => $getCurrentCostData
-									);
+							'result'     => $getCurrentCostData
+									  );
 
 
 		$previouscostchartsdata = array(
-							'titleText' => Lang::get('account/account.titleText'),
+							'titleText'  => Lang::get('account/account.titleText'),
 							'xAxisTitle' => Lang::get('account/account.xAxisTitle'),
 							'yAxisTitle' => Lang::get('account/account.yAxisTitle'),
-							'result' => $getPreviousCostData
-						);
-						
+							'result'     => $getPreviousCostData
+						               );
 		      
         return View::make('site/account/charts',
         				 array(
 				            'account' => $account,
 				            'previouscostchartsdata'=>$previouscostchartsdata,
-				            'currentcostchartsdata'=>$currentcostchartsdata
+				            'currentcostchartsdata' =>$currentcostchartsdata
 				             ));
     }
 
@@ -416,54 +418,51 @@ class AccountController extends BaseController {
 
 				if(!empty($billingData))
 				{
-					$arr = []; $tags=[]; $out=0;
+					$arr = []; $tags=[]; $i=0;
 
-					foreach($billingData as $key => $value)
+					foreach($billingData as $keys => $values)
 					{
-                		for( $i = 0; $i < count($value); $i++)
+						foreach( $values as $key => $value)
                 		{
-							$arr[$i]['LinkedAccountId'] = $value[$i]->LinkedAccountId;
-							$arr[$i]['UsageStartDate']  = date("d F Y ", $value[$i]->UsageStartDate);
-							$arr[$i]['UsageType'] 		= $value[$i]->UsageType;
-							$arr[$i]['InvoiceID'] 		= $value[$i]->InvoiceID;
-							$arr[$i]['RateId']          = $value[$i]->RateId;
-							$arr[$i]['RecordType']      = $value[$i]->RecordType;
-							$arr[$i]['ResourceId']      = $value[$i]->ResourceId;
-							$arr[$i]['UsageEndDate']    = date("d F Y ", $value[$i]->UsageEndDate);
-							$arr[$i]['PricingPlanId']   = $value[$i]->PricingPlanId;
-							$arr[$i]['UsageQuantity']   = $value[$i]->UsageQuantity;
-							$arr[$i]['BlendedRate']     = $value[$i]->BlendedRate;
+							$arr[$i]['UsageStartDate']  = date("d F Y ", $value->UsageStartDate);
+							$arr[$i]['UsageType'] 		= $value->UsageType;
+							$arr[$i]['InvoiceID'] 		= $value->InvoiceID;
+							$arr[$i]['RateId']          = $value->RateId;
+							$arr[$i]['ResourceId']      = $value->ResourceId;
+							$arr[$i]['UsageEndDate']    = date("d F Y ", $value->UsageEndDate);
+							$arr[$i]['PricingPlanId']   = $value->PricingPlanId;
+							$arr[$i]['UsageQuantity']   = $value->UsageQuantity;
+							$arr[$i]['BlendedRate']     = $value->BlendedRate;
 							
 							$in = 0;
 							
-							if(empty($value[$i]->tags)) 
+							if(empty($value->tags)) 
 							{
 							    $tags = '';
 						    }
 						    else
 						    {
-						    	foreach ($value[$i]->tags as $keys => $values) 
+						    	foreach ($value->tags as $key1 => $value1) 
 						    	{
-							    	$tags[$in] = $values->name.'-'.$values->value;
+							    	$tags[$in] = $value1->name.'-'.$value1->value;
 						    		$in++;	
 								}
 			    			}
 						    $arr[$i]['tags']             = $tags;
-							$arr[$i]['RecordId']         = $value[$i]->RecordId;
-							$arr[$i]['aws_filename']     = $value[$i]->aws_filename;
-							$arr[$i]['AvailabilityZone'] = $value[$i]->AvailabilityZone;
-							$arr[$i]['ItemDescription']  = $value[$i]->ItemDescription;
-							$arr[$i]['ProductName']      = $value[$i]->ProductName;
-							$arr[$i]['BlendedCost']      = $value[$i]->BlendedCost;
-							$arr[$i]['UnBlendedCost']    = $value[$i]->UnBlendedCost;
-							$arr[$i]['ReservedInstance'] = $value[$i]->ReservedInstance;
-							$arr[$i]['is_current_month'] = $value[$i]->is_current_month;
-							$arr[$i]['Operation']        = $value[$i]->Operation;
-							$arr[$i]['UnBlendedRate']    = $value[$i]->UnBlendedRate;
+							$arr[$i]['aws_filename']     = $value->aws_filename;
+							$arr[$i]['AvailabilityZone'] = $value->AvailabilityZone;
+							$arr[$i]['ItemDescription']  = $value->ItemDescription;
+							$arr[$i]['ProductName']      = $value->ProductName;
+							$arr[$i]['BlendedCost']      = $value->BlendedCost;
+							$arr[$i]['UnBlendedCost']    = $value->UnBlendedCost;
+							$arr[$i]['ReservedInstance'] = $value->ReservedInstance;
+							$arr[$i]['is_current_month'] = $value->is_current_month;
+							$arr[$i]['Operation']        = $value->Operation;
+							$arr[$i]['UnBlendedRate']    = $value->UnBlendedRate;
 		
-		                }
-
-                  		$out++;
+                			$i++;
+                		}
+                		
 					}
               	}
 			}
