@@ -12,25 +12,42 @@
 	</div>
 </div>
 
+@if(empty($currentcostchartsdata['result']['drilldownSeries']))
+<div class="bs-example">
+    <div class="alert alert-danger alert-error">
+       <span id="currentcostbarcharterror"></span>
+    </div>
+</div>
+@endif
+
+@if(empty($previouscostchartsdata['result']['drilldownSeries']))
+<div class="bs-example">
+    <div class="alert alert-warning">
+        <span id="previouscostbarchartwarning"></span>
+    </div>
+</div>
+@endif
+
+</br>
 <div id="currentcostbarchart">
 </div>
 
 <div>
-<span class="glyphicon glyphicon-calendar"></span>
-<span id="currentupdate">  Last Update  : </span>&nbsp;&nbsp;&nbsp;&nbsp;
-<i class="fa fa-usd"></i><span id="currenttotalcost">  Total Cost  : </span>
+<span id="currentupdate"></span>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<span id="currenttotalcost"></span>
 </div>
 
 </br>
 </br>
 
-<div id="costbarchart">
+<div id="previouscostbarchart">
 </div>
 
 <div>
-<span class="glyphicon glyphicon-calendar">
-</span><span id="previousupdate">  Last Update  : </span>&nbsp;&nbsp;&nbsp;&nbsp;
-<i class="fa fa-usd"></i><span id="previoustotalcost">  Total Cost  : </span>
+<span id="previousupdate"></span>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<span id="previoustotalcost"></span>
 </div>
 
 @stop
@@ -45,35 +62,61 @@
 <script src="{{asset('assets/js/xervmon/charts2.js')}}"></script>
 
 <script>
-var updatedate='';
-var totalcost='';
-var currentcostchartsdata='{{json_encode($currentcostchartsdata)}}';
+
+var updatedate = '';
+var totalcost  = '';
+var currentcostchartsdata  = '{{json_encode($currentcostchartsdata)}}';
 var previouscostchartsdata = '{{json_encode($previouscostchartsdata)}}';
 
 	$(document).ready(function() 
 	{
-		if (!$.isArray((currentcostchartsdata)&&(previouscostchartsdata))) 
+		if (!$.isArray(currentcostchartsdata)) 
 		{
-
 			currentcostchartsdata = JSON.parse(currentcostchartsdata);
 
-            updatedate=currentcostchartsdata.result.drilldownSeries[0].updatedate;
-            totalcost=currentcostchartsdata.result.drilldownSeries[0].totalcost;
-			$('#currentupdate').append(updatedate);
-			$('#currenttotalcost').append(totalcost+' USD');
+             if (currentcostchartsdata.result.drilldownSeries != undefined && currentcostchartsdata.result.drilldownSeries.length > 0) 
+		     {
 
+              updatedate=currentcostchartsdata.result.drilldownSeries[0].updatedate;
+              totalcost=currentcostchartsdata.result.drilldownSeries[0].totalcost;
+			  $('#currentupdate').html('<span class="glyphicon glyphicon-calendar"></span> Last Update  : '+updatedate);
+			  $('#currenttotalcost').html('<i class="fa fa-usd"></i>  Total Cost  : '+totalcost+' USD');
+
+			  barchart('#currentcostbarchart', 'bar', currentcostchartsdata);
+
+            }else{
+
+              $('#currentcostbarcharterror').html(currentcostchartsdata.result);
+
+            }
+       
+       }
+
+        if (!$.isArray(previouscostchartsdata)) 
+		{
 			previouscostchartsdata = JSON.parse(previouscostchartsdata);
 
-			updatedate=previouscostchartsdata.result.drilldownSeries[0].updatedate;
-			totalcost=previouscostchartsdata.result.drilldownSeries[0].totalcost;
-			$('#previousupdate').append(updatedate);
-			$('#previoustotalcost').append(totalcost+' USD');
+             if (previouscostchartsdata.result.drilldownSeries != undefined && previouscostchartsdata.result.drilldownSeries.length > 0) 
+		     {
 
+			  updatedate=previouscostchartsdata.result.drilldownSeries[0].updatedate;
+			  totalcost=previouscostchartsdata.result.drilldownSeries[0].totalcost;
+			  $('#previousupdate').html('<span class="glyphicon glyphicon-calendar"></span> Last Update  : '+updatedate);
+			  $('#previoustotalcost').html('<i class="fa fa-usd"></i>  Total Cost  : '+totalcost+' USD');
+
+              barchart('#previouscostbarchart', 'bar', previouscostchartsdata);
+
+	         }else{
+  
+            $('#previouscostbarchartwarning').html(previouscostchartsdata.result);
 	    }
-	    barchart('#currentcostbarchart', 'bar', currentcostchartsdata);
-	    barchart('#costbarchart', 'bar', previouscostchartsdata);
+
+	   } 
+	    
 	    
 	   
 	});
 </script>
 @stop
+
+

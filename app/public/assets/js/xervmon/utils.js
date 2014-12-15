@@ -291,7 +291,10 @@ convertJsonToTableSecurityGroups = function(data) {
              "ResourceType" : " filter-select filter-exact ",
              "Key" : " filter-select filter-exact ",
              "UsageType" : " filter-select filter-exact ",
-             "Operation" : " filter-select filter-exact "
+             "Operation" : " filter-select filter-exact ",
+             "ResourceId" : " filter-select filter-exact ",
+             "ReservedInstance" : " filter-select filter-exact ",
+             "AvailabilityZone" : " filter-select filter-exact "
         }), $table = $(mediaClass);
         mediaClass += setupTableSorterChecked($table, false, pageSize);
         $table.find('td[data-title="id"]').each(function() {
