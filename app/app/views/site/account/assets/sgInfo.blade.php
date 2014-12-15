@@ -2,7 +2,7 @@
 
 {{-- Content --}}
 @section('content')
-@section('breadcrumbs', Breadcrumbs::render('SecurityGroupInfo',$account->id))
+@section('breadcrumbs', Breadcrumbs::render(Lang::get('breadcrumb/breadcrumb.SecurityGroupInfo'),$account->id))
 
 <div class="page-header">
 	<div class="row">
