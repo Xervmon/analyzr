@@ -490,7 +490,22 @@ class AccountController extends BaseController {
      *
      */
     public function postDelete($id) {
-    		
+
+    	//check for portpreference
+
+    	$portPreference = PortPreference::where('user_id', Auth::id())->where('cloudAccountId', $id)->get();
+
+    	$obj = json_decode($portPreference->toJson());
+
+    	if(!empty($obj))
+    	{
+    		foreach ($obj as $key => $value) {
+
+				PortPreference::where('id', $value->id)->where('user_id', Auth::id())->delete();
+    		}
+
+    	}  
+
     	//Delete the jobs for the account
     	Log::info('Deleting the jobs for ' . $id .' for ' . Auth::user()->username.' from Process Job');	
     	ProcessJob::where('user_id', Auth::id())->where('cloudAccountId', $id)->delete();
