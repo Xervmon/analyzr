@@ -10,20 +10,20 @@
 	</div>
 </div>
 
+<div class="col-md-12">
+
+	@if(!empty($chartDataForAccounts['drilldownSeries']))
+
 <div class="panel panel-default">
 
 	<div class="panel-body">
 
-		@if(!empty($chartDataForAccounts['drilldownSeries']))
-
-		<div class="col-md-12">
-
 			<div class="media-body bs-callout-danger">
 				<ul class="list-group list-group-horizontal">
 
-					<li class="list-group-item panel panel-status panel-success">
+					<li class="list-group-item panel panel-status panel-success" style="margin-left:28em;">
 						<div class="panel-heading" style="text-align:center; color:black;">
-							<i class="fa fa-usd"></i> Total Cost
+							&nbsp;&nbsp;&nbsp;<i class="fa fa-usd"></i> Total Cost&nbsp;&nbsp;&nbsp;&nbsp;
 						</div>
 						<div class="panel-body text-center">
 
@@ -36,8 +36,8 @@
 							{{array_sum($totalcost)}} USD
 						</div>
 					</li>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<li class="list-group-item panel panel-status panel-danger">
+					
+					<li class="list-group-item panel panel-status panel-danger" style="margin-left:8em;">
 						<div class="panel-heading" style="text-align:center; color:black;">
 							<i class="fa fa-usd"></i> Predicted Cost
 						</div>
@@ -56,7 +56,7 @@
 
 									foreach ($arr as $key1 => $value1) {
 
-										if ($value1[0] == 'APN Fee')
+										if ($value1[0] == Lang::get('account/account.apn_fee'))
 
 											$Apnsum += $value1[1];
 
@@ -67,7 +67,7 @@
 							}
 
 							$cost      = array_sum($totalcost);
-							$multiple  = 12;
+							$multiple  = Lang::get('account/account.multiple_value');
 							$Predicted = $cost - $Apnsum;
 
 							?>
@@ -80,9 +80,17 @@
 				</ul>
 			</div>
 
-			<p class="chart1"></p>
-
+			
 		</div>
+
+	</div>
+
+
+<div class="panel panel-default">
+
+	<div class="panel-body">
+
+			<p class="chart1"></p>
 
 		@else
 		<div class="alert alert-info">
@@ -91,6 +99,8 @@
 		@endif
 
 	</div>
+
+</div>
 
 </div>
 
