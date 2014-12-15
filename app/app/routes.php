@@ -168,7 +168,8 @@ Route::group(array(
 	Route::get('account/create', 'AccountController@getCreate');
     Route::get('account/{account}/edit', 'AccountController@getCreate');
 	Route::any('account/{account}/refresh', 'AccountController@checkStatus');
-    
+    Route::any('account/Taggedcost', 'AccountController@getTaggedcost');
+      
     
     
     Route::get('assets/{account}/SecurityGroups', 'AssetsController@SecurityGroups');
@@ -180,11 +181,12 @@ Route::group(array(
     Route::get('assets/{account}/Tags', 'AssetsController@getTagNameValue');
     Route::get('assets/{account}/VPC', 'AssetsController@vpcsInfo');
     Route::get('assets/{account}/Subnets', 'AssetsController@subnetsInfo');
-	Route::any('assets/{account}/SecurityGroupsData', 'AssetsController@getSecurityGroupsData');
-	Route::any('assets/{account}/Summary', 'AssetsController@getSummary');
-	
-	
-	
+    Route::any('assets/{account}/SecurityGroupsData', 'AssetsController@getSecurityGroupsData');
+    Route::any('assets/{account}/Summary', 'AssetsController@getSummary');
+    Route::any('assets/Start', 'AssetsController@startInstance');
+    Route::any('assets/Stop', 'AssetsController@stopInstance');
+    
+  	
 	Route::any('security/portPreferences/', 'PortPreferencesController@getIndex'); 
 	Route::get('security/portPreferences/create', 'PortPreferencesController@getCreate');
     Route::get('security/portPreferences/{portPreference}/edit', 'PortPreferencesController@getCreate');
@@ -211,7 +213,6 @@ Route::group(array(
 	
 	//Route::any('account/{account}/ChartData', 'AccountController@getChartData');
 	Route::any('account/{account}/CollectionData', 'AccountController@getCollectionData');
-    Route::any('account/{account}/FilterCollectionData', 'AccountController@getFilterCollectionData');
     Route::any('account/{account}/CurrentTagCost', 'AccountController@CurrentTagCostInfo');
 	
 	Route::any('EC2Products/', 'AWSProductsController@getEC2Products');

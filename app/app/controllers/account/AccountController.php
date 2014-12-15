@@ -365,10 +365,14 @@ class AccountController extends BaseController {
 
 	public function Collection($id)
 	{
-		UtilHelper::check();
-		$account = CloudAccount::where('user_id', Auth::id())->find($id);
+		//UtilHelper::check();
+		//$accountId = CloudAccount::where('user_id', Auth::id())->find($id);
+		$account = CloudAccountHelper::findAndDecrypt($id);
+		$servicesConf = Config::get('aws_services');
 		return View::make('site/account/collection', array(
-            	'account' => $account ));
+            	                                   'account'  => $account,
+            	                                   'services' => $servicesConf 
+            	                                         ));
 		
 	}
 
@@ -377,30 +381,43 @@ class AccountController extends BaseController {
 		$account = CloudAccountHelper::findAndDecrypt($id);
 		$cred = json_decode($account->credentials);
 		
-		$servicesConf = Config::get('aws_services');
+        $accountId    = Input::get('AccountId');
+		$startDate    = Input::get('StartDate');
+		$endDate      = Input::get('EndDate');
+		$productName  = Input::get('ProductName');
 		
-		$serviceNames = array_keys($servicesConf);
+		$startrange   = strtotime($startDate);
+		$endrange     = strtotime($endDate);
+
+		$servicesConf = Config::get('aws_services');		
+		$serviceName  = array_keys($servicesConf);
+        
+        if(empty($productName)) $serviceNames   = $serviceName; else $serviceNames   = array($productName);
+		if(empty($accountId)) $accountId        = $cred->accountId;
+		if(empty($startrange)) $startrange      = '';
+		if(empty($endrange)) $endrange          = '';
+		
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - Collection', 'return' => $responseJson));
 		$obj = WSObj::getObject($responseJson);
-		$arr = [];
 		
 		if($obj->status == 'OK')
 		{
-			$response = AWSBillingEngine::Collection(array('token' => $obj->token, 
+			$response = AWSBillingEngine::Collection(array('token'         => $obj->token, 
 														   'service_names' => $serviceNames, 
-														   'accountId' =>$cred->accountId
-														   )
+														   'accountId'     => $accountId,
+														   'startRange'    => $startrange,
+														   'endRange'      => $endrange)
 												    );
 			$result = WSObj::getObject($response);										
 			if($result->status == 'OK')
 			{
 				$billingData = $result -> billing_data;
-				
-				$tags=array(); $out=0;
-				
+
 				if(!empty($billingData))
 				{
+					$arr = []; $tags=[]; $out=0;
+
 					foreach($billingData as $key => $value)
 					{
                 		for( $i = 0; $i < count($value); $i++)
@@ -409,13 +426,13 @@ class AccountController extends BaseController {
 							$arr[$i]['UsageStartDate']  = date("d F Y ", $value[$i]->UsageStartDate);
 							$arr[$i]['UsageType'] 		= $value[$i]->UsageType;
 							$arr[$i]['InvoiceID'] 		= $value[$i]->InvoiceID;
-							$arr[$i]['RateId'] = $value[$i]->RateId;
-							$arr[$i]['RecordType'] = $value[$i]->RecordType;
-							$arr[$i]['ResourceId'] = $value[$i]->ResourceId;
-							$arr[$i]['UsageEndDate'] = date("d F Y ", $value[$i]->UsageEndDate);
-							$arr[$i]['PricingPlanId'] = $value[$i]->PricingPlanId;
-							$arr[$i]['UsageQuantity'] = $value[$i]->UsageQuantity;
-							$arr[$i]['BlendedRate'] = $value[$i]->BlendedRate;
+							$arr[$i]['RateId']          = $value[$i]->RateId;
+							$arr[$i]['RecordType']      = $value[$i]->RecordType;
+							$arr[$i]['ResourceId']      = $value[$i]->ResourceId;
+							$arr[$i]['UsageEndDate']    = date("d F Y ", $value[$i]->UsageEndDate);
+							$arr[$i]['PricingPlanId']   = $value[$i]->PricingPlanId;
+							$arr[$i]['UsageQuantity']   = $value[$i]->UsageQuantity;
+							$arr[$i]['BlendedRate']     = $value[$i]->BlendedRate;
 							
 							$in = 0;
 							
@@ -425,126 +442,36 @@ class AccountController extends BaseController {
 						    }
 						    else
 						    {
-						    	foreach ($value[$i]->tags as $keys=>$values) 
+						    	foreach ($value[$i]->tags as $keys => $values) 
 						    	{
 							    	$tags[$in] = $values->name.'-'.$values->value;
 						    		$in++;	
 								}
 			    			}
-						    $arr[$i]['tags'] = $tags;
-							$arr[$i]['RecordId'] = $value[$i]->RecordId;
-							$arr[$i]['aws_filename'] = $value[$i]->aws_filename;
+						    $arr[$i]['tags']             = $tags;
+							$arr[$i]['RecordId']         = $value[$i]->RecordId;
+							$arr[$i]['aws_filename']     = $value[$i]->aws_filename;
 							$arr[$i]['AvailabilityZone'] = $value[$i]->AvailabilityZone;
-							$arr[$i]['ItemDescription'] = $value[$i]->ItemDescription;
-							$arr[$i]['ProductName'] = $value[$i]->ProductName;
-							$arr[$i]['BlendedCost'] = $value[$i]->BlendedCost;
-							$arr[$i]['UnBlendedCost'] = $value[$i]->UnBlendedCost;
+							$arr[$i]['ItemDescription']  = $value[$i]->ItemDescription;
+							$arr[$i]['ProductName']      = $value[$i]->ProductName;
+							$arr[$i]['BlendedCost']      = $value[$i]->BlendedCost;
+							$arr[$i]['UnBlendedCost']    = $value[$i]->UnBlendedCost;
 							$arr[$i]['ReservedInstance'] = $value[$i]->ReservedInstance;
 							$arr[$i]['is_current_month'] = $value[$i]->is_current_month;
-							$arr[$i]['Operation'] = $value[$i]->Operation;
-							$arr[$i]['UnBlendedRate'] = $value[$i]->UnBlendedRate;
+							$arr[$i]['Operation']        = $value[$i]->Operation;
+							$arr[$i]['UnBlendedRate']    = $value[$i]->UnBlendedRate;
 		
 		                }
+
                   		$out++;
 					}
               	}
 			}
 		}
-		return View::make('site/account/collection', array(
-            	'account' => $account,
-            	 'collections' => $arr,
-            	 'services' => $servicesConf
-            	 ));
-	}
-	
-	public function getFilterCollectionData($id)
-	{
-		$account = CloudAccountHelper::findAndDecrypt($id);
-		$cred = json_decode($account->credentials);
-		
-		$AccountId = Input::get('AccountId');
-		$StartDate = Input::get('StartDate');
-		$EndDate = Input::get('EndDate');
-		$ProductName = Input::get('ProductName');
-		
-		$serviceName = array($ProductName);
-		$startrange = strtotime($StartDate);
-		$endrange = strtotime($EndDate);
-		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
-		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - Collection', 'return' => $responseJson));
-		$obj = WSObj::getObject($responseJson);
-		
-		$arr = [];
-		
-		if($obj->status == 'OK')
-		{
-			$response = AWSBillingEngine::Collection(array('token' => $obj->token, 
-														   'service_names' => $serviceName, 
-														   'accountId' => $AccountId,
-														   'startRange' => $startrange,
-														   'endRange' => $endrange)
-												    );
-			//echo '<pre>';print_r($response);die();
-			$result = WSObj::getObject($response);										
-			if($result->status == 'OK')
-			{
-				$billingData = $result -> billing_data;
-				$tags=array();
-				if(!empty($billingData))
-				{
-							
-					foreach($billingData as $key => $value)
-					{
-				
-                		for($i=0;$i<count($value);$i++)
-                		{
-                   	
-							$arr[$i]['LinkedAccountId'] = $value[$i]->LinkedAccountId;
-							$arr[$i]['UsageStartDate']  = date("d F Y ", $value[$i]->UsageStartDate);
-							$arr[$i]['UsageType'] = $value[$i]->UsageType;
-							$arr[$i]['InvoiceID'] = $value[$i]->InvoiceID;
-							$arr[$i]['RateId'] = $value[$i]->RateId;
-							$arr[$i]['RecordType'] = $value[$i]->RecordType;
-							$arr[$i]['ResourceId'] = $value[$i]->ResourceId;
-							$arr[$i]['UsageEndDate'] = date("d F Y ", $value[$i]->UsageEndDate);
-							$arr[$i]['PricingPlanId'] = $value[$i]->PricingPlanId;
-							$arr[$i]['UsageQuantity'] = $value[$i]->UsageQuantity;
-							$arr[$i]['BlendedRate'] = $value[$i]->BlendedRate;
-							$in=0;
-							if(empty($value[$i]->tags)) 
-							{
-							    $tags='';
-						    }
-						    else
-						    {
-						    	foreach ($value[$i]->tags as $keys=>$values) 
-						    	{
-							    	$tags[$in] = $values->name.'-'.$values->value;
-						    		$in++;	
-								}
-			    			}
-						    $arr[$i]['tags'] = $tags;
-							$arr[$i]['RecordId'] = $value[$i]->RecordId;
-							$arr[$i]['aws_filename'] = $value[$i]->aws_filename;
-							$arr[$i]['AvailabilityZone'] = $value[$i]->AvailabilityZone;
-							$arr[$i]['ItemDescription'] = $value[$i]->ItemDescription;
-							$arr[$i]['ProductName'] = $value[$i]->ProductName;
-							$arr[$i]['BlendedCost'] = $value[$i]->BlendedCost;
-							$arr[$i]['UnBlendedCost'] = $value[$i]->UnBlendedCost;
-							$arr[$i]['ReservedInstance'] = $value[$i]->ReservedInstance;
-							$arr[$i]['is_current_month'] = $value[$i]->is_current_month;
-							$arr[$i]['Operation'] = $value[$i]->Operation;
-							$arr[$i]['UnBlendedRate'] = $value[$i]->UnBlendedRate;
-		
-		                }
-	
-					}
-              	}
-			}
-		}
+
 		print json_encode($arr);
 	}
-	
+		
 	
 	public function getAccountSummary()
 	{
@@ -580,6 +507,69 @@ class AccountController extends BaseController {
             // There was a problem deleting the user
             return Redirect::to('account/' . $account->id . '/edit')->with('error', 'Error while deleting');
         }
+    }
+
+     public function getTaggedcost()
+    {
+    	$tag_key = Input::get('key');
+    	$tag_value = Input::get('value');
+    	$id = Input::get('id');
+    	
+    	    	   	
+    	$account = CloudAccountHelper::findAndDecrypt($id);
+    	$cred = json_decode($account->credentials);
+    	
+    	
+    	$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+    	EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - Collection', 'return' => $responseJson));
+    	$obj = WSObj::getObject($responseJson);
+    	
+    	if($obj->status == 'OK')
+    	{
+    		$response = AWSBillingEngine::getCurrentTaggedcost(array('token' => $obj->token,'accountId' =>$cred->accountId));
+
+    		
+    		$result = WSObj::getObject($response);
+
+    		
+
+    		$arr = array();$i=0;
+    		if(!empty($result->tagged_data->Name) || !empty($tag_value) || !empty($tag_key))
+    		{
+
+    			foreach($result->tagged_data->$tag_key as $key => $value)
+    			{
+    				if($key == $tag_value)
+    				{
+    					$arr[$i]['ServiceType'] = empty($key) ? '' : $key;
+    					if(empty($value))
+    					{
+    						$arr[$i]['Resource'] = '';
+    						$arr[$i]['ResourceCount'] = '';
+    					}
+    					else
+    					{
+    						$arr[$i]['Resource'] = key((array)$value);
+    						$arr[$i]['ResourceCount'] = count($value);
+    					}
+    					$arr[$i]['LastUpdated'] = $result->lastUpdate;
+    					$arr[$i]['Status']      = $result->status;
+    		
+    					$i++;
+    				}	
+    			}
+    		}
+
+    		 return View::make('site/account/assets/taggedcost', array(
+    				'account' => $account,'taggedcost' => $arr ));
+    		
+    		
+    		
+    		
+    	}
+    	
+    	
+    	
     }
 	
 }
