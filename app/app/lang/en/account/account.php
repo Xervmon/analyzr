@@ -59,7 +59,7 @@ return array(
 		'aws_rds'                     => 'Relational Database Service',
 		'aws_sn'                      => 'Subnets',
 		'aws_tags'                    => 'Tags',
-		'account_delete'              => 'Are You Sure  Want To Delete This Account ?',
+		'account_delete'              => 'Are You Sure  Want To Delete This Account ?. This would also Delete PORT PREFERENCES Associated with this Account.',
 		'portpreference_delete'       => 'Are You Sure  Want To Delete This PortPreference ?',
 		'create_services'             => 'create_services',
 		'create_billing'              => 'create_billing',
