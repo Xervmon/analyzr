@@ -13,7 +13,7 @@ return array(
 	'ChartsData'              => 'ChartsData',
 	'InstanceInfo'            => 'InstanceInfo',
 	'EbsInfo'                 => 'EbsInfo',
-	'SecurityGroupInfo'       => 'SecurityGroupInfo',
+	'SecurityGroupInfo'       => 'Security Group Info',
 	'KpInfo'                  => 'Key Pair Info',
 	'PortPreferences'         => 'PortPreferences',
 	'AddPolicy'               => 'AddPolicy',

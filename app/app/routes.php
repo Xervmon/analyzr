@@ -176,7 +176,7 @@ Route::group(array(
     Route::get('assets/{account}/AwsInfo', 'AssetsController@AwsInfo');
     Route::get('assets/{account}/EC2', 'AssetsController@instanceInfo');
     Route::get('assets/{account}/EBS', 'AssetsController@ebsInfo');
-    Route::get('assets/{account}/SecurityGroups', 'AssetsController@sgInfo');
+    Route::get('assets/{account}/SecurityGroupsInfo', 'AssetsController@sgInfo');
     Route::get('assets/{account}/KeyPairs', 'AssetsController@kpInfo');
     Route::get('assets/{account}/Tags', 'AssetsController@getTagNameValue');
     Route::get('assets/{account}/VPC', 'AssetsController@vpcsInfo');

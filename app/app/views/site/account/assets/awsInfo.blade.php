@@ -25,8 +25,86 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 
 <div class="container">
 	<div class="row clearfix">
-		
+
+
 <div class="panel-group" id="accordion">
+	<div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseEight">
+        	<img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/aws.png') }}}" />{{{ Lang::get('account/account.aws_tags') }}}
+		<i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+      </h4></a>
+    </div>
+    <div id="collapseEight" class="panel-collapse collapse">
+      <div class="panel-body">
+     
+
+      					<?php 
+      					 $tags_Env=0;$tags_Name=0;
+      					foreach ($tags as $key_i => $value_i) { 
+
+							if(!empty($value_i->Environment)) $tags_Env = count($value_i->Environment);
+							if(!empty($value_i->Name)) $tags_Name = count($value_i->Name);
+							if($tags_Env!=0 || $tags_Name!=0)
+						{ ?>
+						<div class="bs-callout bs-callout-default">
+
+						<div class="media">
+							
+							<div class="media-left pull-left text-center" href="#">
+								<h5 class="media-heading">{{{ 'TAGS '. $key_i }}}</h5>
+								<p style="text-align:center">
+									<h4 class="media-heading">{{{ 'Details Available:' . ($tags_Env+$tags_Name) }}}</h4>
+							</div>
+							<div class="media-body bs-callout-danger">
+								<ul class="list-group list-group-horizontal">
+									<li class="list-group-item panel panel-status panel-primary">
+										<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ ($tags_Env+$tags_Name) }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ Lang::get('account/account.total_tags') }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/Tags') }}">Details</a>
+											</p>
+										</div>
+									</li>
+									<li class="list-group-item panel panel-status panel-success">
+										<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $tags_Env }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ Lang::get('account/account.total_Env') }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/Tags') }}">Details</a>
+											</p>
+										</div>
+									</li>
+									<li class="list-group-item panel panel-status panel-danger">
+										<div class="panel-heading">
+											<h1 class="panel-title text-center">{{{ $tags_Name }}}</h1>
+										</div>
+										<div class="panel-body text-center">
+											<strong>{{{ Lang::get('account/account.total_Name') }}}</strong>
+										<p style="text-align:center">
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/Tags') }}">Details</a>
+											</p>
+										</div>
+									</li>
+								</ul>
+							</div>
+						
+
+						</div>
+						</div><?php } 
+					    $tags_Env=0;$tags_Name=0;}?> 
+
+      </div>
+    </div>
+  </div>
+
+
   <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
@@ -211,7 +289,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_secgroups') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/SecurityGroups') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/SecurityGroupsInfo') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -234,7 +312,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ ucfirst ( $key_is ) . ' SecGroups' }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/SecurityGroups') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/SecurityGroupsInfo') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -333,41 +411,42 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
   </div>
 
 
-    <div class="panel panel-default">
+
+
+      <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
-        <img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/rds.png') }}}" />{{{ Lang::get('account/account.aws_rds') }}}
-						
-        <i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
+        	<img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/vpc.png') }}}" />{{{ Lang::get('account/account.aws_vpc') }}}
+		<i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
       </h4></a>
     </div>
-    <div id="collapseFive" class="panel-collapse collapse">
+    <div id="collapseSeven" class="panel-collapse collapse">
       <div class="panel-body">
 
-      					<?php foreach ($rds as $key_i => $value_i) { 
-							$rds_sum = array_sum((array)$value_i);
-							if($rds_sum!=0)
+      					<?php foreach ($vpc as $key_i => $value_i) { 
+							$vpc_sum = array_sum((array)$value_i);
+							if($vpc_sum!=0)
 						{ ?>
 						<div class="bs-callout bs-callout-default">
 
 						<div class="media">
 							
 							<div class="media-left pull-left text-center" href="#">
-								<h5 class="media-heading">{{{ 'RDS '. $key_i }}}</h5>
+								<h5 class="media-heading">{{{ 'VPC '. $key_i }}}</h5>
 								<p style="text-align:center">
-								<h4 class="media-heading">{{{ 'Details Available:' . $rds_sum }}}</h4>	
+									<h4 class="media-heading">{{{ 'Details Available:' . $vpc_sum }}}</h4>
 							</div>
 							<div class="media-body bs-callout-danger">
 								<ul class="list-group list-group-horizontal">
 									<li class="list-group-item panel panel-status panel-primary">
 										<div class="panel-heading">
-											<h1 class="panel-title text-center">{{{ $rds_sum }}}</h1>
+											<h1 class="panel-title text-center">{{{ $vpc_sum }}}</h1>
 										</div>
 										<div class="panel-body text-center">
-											<strong>{{{ Lang::get('account/account.total_rds') }}}</strong>
+											<strong>{{{ Lang::get('account/account.total_vpc') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/EC2') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/VPC') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -388,9 +467,9 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 											<h1 class="panel-title text-center">{{{ $value_is }}}</h1>
 										</div>
 										<div class="panel-body text-center">
-											<strong>{{{ ucfirst ( $key_is ) . ' RDS' }}}</strong>
+											<strong>{{{ ucfirst ( $key_is ) . ' VPC' }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/EC2') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/VPC') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -402,8 +481,6 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 						</div>
 						</div><?php } 
 					    } ?> 
-
-
 
       </div>
     </div>
@@ -485,40 +562,41 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
     </div>
   </div>
 
-    <div class="panel panel-default">
+      <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
-        	<img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/vpc.png') }}}" />{{{ Lang::get('account/account.aws_vpc') }}}
-		<i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+        <img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/rds.png') }}}" />{{{ Lang::get('account/account.aws_rds') }}}
+						
+        <i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
       </h4></a>
     </div>
-    <div id="collapseSeven" class="panel-collapse collapse">
+    <div id="collapseFive" class="panel-collapse collapse">
       <div class="panel-body">
 
-      					<?php foreach ($vpc as $key_i => $value_i) { 
-							$vpc_sum = array_sum((array)$value_i);
-							if($vpc_sum!=0)
+      					<?php foreach ($rds as $key_i => $value_i) { 
+							$rds_sum = array_sum((array)$value_i);
+							if($rds_sum!=0)
 						{ ?>
 						<div class="bs-callout bs-callout-default">
 
 						<div class="media">
 							
 							<div class="media-left pull-left text-center" href="#">
-								<h5 class="media-heading">{{{ 'VPC '. $key_i }}}</h5>
+								<h5 class="media-heading">{{{ 'RDS '. $key_i }}}</h5>
 								<p style="text-align:center">
-									<h4 class="media-heading">{{{ 'Details Available:' . $vpc_sum }}}</h4>
+								<h4 class="media-heading">{{{ 'Details Available:' . $rds_sum }}}</h4>	
 							</div>
 							<div class="media-body bs-callout-danger">
 								<ul class="list-group list-group-horizontal">
 									<li class="list-group-item panel panel-status panel-primary">
 										<div class="panel-heading">
-											<h1 class="panel-title text-center">{{{ $vpc_sum }}}</h1>
+											<h1 class="panel-title text-center">{{{ $rds_sum }}}</h1>
 										</div>
 										<div class="panel-body text-center">
-											<strong>{{{ Lang::get('account/account.total_vpc') }}}</strong>
+											<strong>{{{ Lang::get('account/account.total_rds') }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/VPC') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/EC2') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -539,9 +617,9 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 											<h1 class="panel-title text-center">{{{ $value_is }}}</h1>
 										</div>
 										<div class="panel-body text-center">
-											<strong>{{{ ucfirst ( $key_is ) . ' VPC' }}}</strong>
+											<strong>{{{ ucfirst ( $key_is ) . ' RDS' }}}</strong>
 										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/VPC') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/EC2') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -554,89 +632,11 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 						</div><?php } 
 					    } ?> 
 
-      </div>
-    </div>
-  </div>
 
-
-    <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseEight">
-        	<img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/aws.png') }}}" />{{{ Lang::get('account/account.aws_tags') }}}
-		<i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
-      </h4></a>
-    </div>
-    <div id="collapseEight" class="panel-collapse collapse">
-      <div class="panel-body">
-     
-
-      					<?php 
-      					 $tags_Env=0;$tags_Name=0;
-      					foreach ($tags as $key_i => $value_i) { 
-
-							if(!empty($value_i->Environment)) $tags_Env = count($value_i->Environment);
-							if(!empty($value_i->Name)) $tags_Name = count($value_i->Name);
-							if($tags_Env!=0 || $tags_Name!=0)
-						{ ?>
-						<div class="bs-callout bs-callout-default">
-
-						<div class="media">
-							
-							<div class="media-left pull-left text-center" href="#">
-								<h5 class="media-heading">{{{ 'TAGS '. $key_i }}}</h5>
-								<p style="text-align:center">
-									<h4 class="media-heading">{{{ 'Details Available:' . ($tags_Env+$tags_Name) }}}</h4>
-							</div>
-							<div class="media-body bs-callout-danger">
-								<ul class="list-group list-group-horizontal">
-									<li class="list-group-item panel panel-status panel-primary">
-										<div class="panel-heading">
-											<h1 class="panel-title text-center">{{{ ($tags_Env+$tags_Name) }}}</h1>
-										</div>
-										<div class="panel-body text-center">
-											<strong>{{{ Lang::get('account/account.total_tags') }}}</strong>
-										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/Tags') }}">Details</a>
-											</p>
-										</div>
-									</li>
-									<li class="list-group-item panel panel-status panel-success">
-										<div class="panel-heading">
-											<h1 class="panel-title text-center">{{{ $tags_Env }}}</h1>
-										</div>
-										<div class="panel-body text-center">
-											<strong>{{{ Lang::get('account/account.total_Env') }}}</strong>
-										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/Tags') }}">Details</a>
-											</p>
-										</div>
-									</li>
-									<li class="list-group-item panel panel-status panel-danger">
-										<div class="panel-heading">
-											<h1 class="panel-title text-center">{{{ $tags_Name }}}</h1>
-										</div>
-										<div class="panel-body text-center">
-											<strong>{{{ Lang::get('account/account.total_Name') }}}</strong>
-										<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/Tags') }}">Details</a>
-											</p>
-										</div>
-									</li>
-								</ul>
-							</div>
-						
-
-						</div>
-						</div><?php } 
-					    $tags_Env=0;$tags_Name=0;}?> 
 
       </div>
     </div>
   </div>
-
-
-
 
 
 

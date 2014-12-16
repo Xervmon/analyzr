@@ -55,7 +55,7 @@ Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.EbsInfo'), function ($bre
 
 Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.SecurityGroupInfo'), function ($breadcrumbs, $id) {
 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.AWS_Details'), $id);
-	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.SecurityGroupInfo'), URL::to('assets/' . $id . '/SecurityGroups'));
+	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.SecurityGroupInfo'), URL::to('assets/' . $id . '/SecurityGroupInfo'));
 
 });
 
@@ -90,7 +90,7 @@ Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.VpcsInfo'), function ($br
 });
 
 Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.AuditReport'), function ($breadcrumbs) {
-	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.CreateAccount'), URL::to('account/create'));
+	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.account'));
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.AuditReport'), URL::to('security/AuditReport'));
 });
 
