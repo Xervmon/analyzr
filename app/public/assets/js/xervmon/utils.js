@@ -442,34 +442,56 @@ convertJsonToTableAuditReports = function(data) {
 
 viewAuditReport = function (url, accountId, oid , i)
 {
-   var jqxhr= $.ajax({
+    var jqxhr= $.ajax({
     url :url,
     data:{'accountId':accountId,'oid' : oid},
     success:function(response){
-                 $('#audit_reports'+i).html(response);
-              }
-          });
+        if (!$.isArray(response)) {
+
+            response = JSON.parse(response);
+
+            if(response.status == 'OK'){
+
+            result ='<ul style="list-style-type:none; margin-left: -8%;";>';
+            result+='<li>User Name : '+response.report.username+'</li>';
+            result+='<li>Report Time : '+timeAgo(response.report.report_time)+'</li>';
+            result+='<li> Audit diff from previous report :[( New data : '+response.report.diff.new+' ), ( Deleted data : '+response.report.diff.old+ ') ] </li>';
+            result+='<li> Whether there is diff : '+response.report.changed+'</li>';
+            result+='<ul>';
+            
+            $('#audit_reports'+i).html(result);
+
+            }else{
+
+            $('#audit_reports'+i).html('Error retrieving security audit report');
+
+            }
+          }
+        }
+
+    });
+
 };
 
 
-// function timeAgo(time){
-//   var units = [
-//     { name: "second", limit: 60, in_seconds: 1 },
-//     { name: "minute", limit: 3600, in_seconds: 60 },
-//     { name: "hour", limit: 86400, in_seconds: 3600  },
-//     { name: "day", limit: 604800, in_seconds: 86400 },
-//     { name: "week", limit: 2629743, in_seconds: 604800  },
-//     { name: "month", limit: 31556926, in_seconds: 2629743 },
-//     { name: "year", limit: null, in_seconds: 31556926 }
-//   ];
-//   var diff = (new Date() - new Date(time*1000)) / 1000;
-//   if (diff < 5) return "now";
+function timeAgo(time){
+  var units = [
+    { name: "second", limit: 60, in_seconds: 1 },
+    { name: "minute", limit: 3600, in_seconds: 60 },
+    { name: "hour", limit: 86400, in_seconds: 3600  },
+    { name: "day", limit: 604800, in_seconds: 86400 },
+    { name: "week", limit: 2629743, in_seconds: 604800  },
+    { name: "month", limit: 31556926, in_seconds: 2629743 },
+    { name: "year", limit: null, in_seconds: 31556926 }
+  ];
+  var diff = (new Date() - new Date(time*1000)) / 1000;
+  if (diff < 5) return "now";
   
-//   var i = 0;
-//   while (unit = units[i++]) {
-//     if (diff < unit.limit || !unit.limit){
-//       var diff =  Math.floor(diff / unit.in_seconds);
-//       return diff + " " + unit.name + (diff>1 ? "s ago" : " ago");
-//     }
-//   };
-// }
+  var i = 0;
+  while (unit = units[i++]) {
+    if (diff < unit.limit || !unit.limit){
+      var diff =  Math.floor(diff / unit.in_seconds);
+      return diff + " " + unit.name + (diff>1 ? "s ago" : " ago");
+    }
+  };
+}
