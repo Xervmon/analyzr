@@ -48,7 +48,7 @@ class BudgetController extends BaseController {
             return Redirect::to('budget')->with('error', Lang::get('budget/budget.budget_auth_failed'));
         }
 
-        return View::make('site/budget/index', array(
+        return View::make('site/account/budget/index', array(
 
                                              'budgets' => $budgets
             
@@ -64,9 +64,9 @@ class BudgetController extends BaseController {
         $mode        = $id !== false ? 'edit' : 'create';
         $budget      = $id !== false ? Budget::where('user_id', Auth::id())->findOrFail($id) : null;
         $budget_type = array('weekly', 'monthly');
-        $accounts    = CloudAccount::where('user_id', Auth::id())->get();
+        $accounts    = CloudAccount::where('user_id', Auth::id())->where('cloudAccountId', $budget->cloudAccountId)->get();
 
-        return View::make('site/budget/create_edit', compact('mode', 'budget', 'budget_type', 'accounts'));
+        return View::make('site/account/budget/create_edit', compact('mode', 'budget', 'budget_type', 'account'));
     }
 
 
@@ -88,9 +88,9 @@ class BudgetController extends BaseController {
 
             $cloudAccountId             = Input::get('cloudAccountId');
             $budget->cloudAccountId     = empty($cloudAccountId) ? 0 : $cloudAccountId;
-            $budget->budget_type        = Input::get('budget_type');
+            $budget->budgetType        = Input::get('budgetType');
             $budget->budget             = Input::get('budget');
-            //$budget->notification_email = Input::get('notification_email');
+            $budget->budgetNotificationEmail = Input::get('budgetNotificationEmail');
             $budget->user_id            = Auth::id();
 
             $success = $budget->save();
