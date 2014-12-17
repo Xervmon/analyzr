@@ -324,15 +324,16 @@ convertJsonToTableTags = function(data) {
         var mediaClass = '';
         for (var i = 0; i < data.length; i++) 
         {
-        	data[i]["actions"] = '<a href="'+data[i]['url']+'" class="viewTaggedcost" id="viewTaggedcost" name="viewTaggedcost">View Current Tagged cost</a>';
-        	delete data[i]['url'];
+            data[i]["actions"] = '<div id="tagged_reports'+i+'">' + '<a href class="viewTaggedcost" id="viewTaggedcost" onclick="viewTaggedCost(\'' + data[i]['url'] + '\', \'' + data[i]['id'] + '\', \'' + data[i]['Key'] + '\', \'' + data[i]['Value'] + '\', \'' + i + '\'); return false;" name="viewTaggedcost">View Current Tagged cost</a></div>';
+            delete data[i]['url'];
         	delete data[i]['id'];
         }
         
         mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {
              "name" : " filter-select filter-exact ",
              "ResourceType" : " filter-select filter-exact ",
-             "Key" : " filter-select filter-exact "
+             "Key" : " filter-select filter-exact ",
+             "Value" : " filter-select filter-exact "
         }), $table = $(mediaClass);
         mediaClass += setupTableSorterChecked($table, false, pageSize);
         $table.find('td[data-title="id"]').each(function() {
@@ -352,6 +353,39 @@ convertJsonToTableTags = function(data) {
         return '<div class="no_data"><span class="label label-primary">No Data</span></div>';
 
     }
+
+};
+
+
+viewTaggedCost = function (url,id,key,value,i)
+{
+    var jqxhr= $.ajax({
+    url :url,
+    data:{'id':id,'key' : key,'value':value},
+    success:function(response){
+        if (!$.isArray(response)) {
+
+            response = JSON.parse(response);
+
+            if(response.Content == 'true'){
+            result ='<ul style="list-style-type:none; margin-left: -8%;";>';
+            result+='<li>Resource : '+response.Resource+'</li>';
+            result+='<li>Taggedcost : '+response.taggedcost+'</li>';
+            result+='<li>Last Updated : '+response.LastUpdated+'</li>';
+            result+='<li>Taggedcost : '+response.Status+'</li>';
+            result+='<ul>';
+            
+            $('#tagged_reports'+i).html(result);
+
+            }else{
+
+            $('#tagged_reports'+i).html('No Data available for the Current Tag');
+
+            }
+          }
+        }
+
+    });
 
 };
 
@@ -449,8 +483,7 @@ viewAuditReport = function (url, accountId, oid , i)
         if (!$.isArray(response)) {
 
             response = JSON.parse(response);
-
-            if(response.status == 'OK'){
+            if(response.status == 'OK' && response.report != null){
 
             result ='<ul style="list-style-type:none; margin-left: -8%;";>';
             result+='<li>User Name : '+response.report.username+'</li>';
