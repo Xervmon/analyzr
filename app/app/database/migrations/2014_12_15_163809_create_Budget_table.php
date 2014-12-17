@@ -21,7 +21,8 @@ class CreateBudgetTable extends Migration {
         Schema::create('budget', function (Blueprint $table) {
             $table->increments('id')->unsigned();
 			$table->integer('cloudAccountId')->unsigned()->index();
-			$table->enum('budget_type', array('weekly', 'monthly'));
+			$table->enum('budgetType', array('weekly', 'monthly'));
+			$table->string('budgetNotificationEmail');
             $table->float('budget');
             //$table->string('email')->unique();
 			$table->integer('user_id')->unsigned()->index();
