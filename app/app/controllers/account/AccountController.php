@@ -576,15 +576,26 @@ class AccountController extends BaseController {
     						}
     						$arr[$i]['LastUpdated'] = $result->lastUpdate;
     						$arr[$i]['Status']      = $result->status;
+    						$arr[$i]['Content']		= 'true';
     					}
     					$i++;
     				}	
     			}
     		}
 
-    		 return View::make('site/account/assets/taggedcost', array(
-    				'account' => $account,'taggedcost' => $arr ));
     		
+    		if(empty($arr))
+    		{
+    			$arr1['Content'] = 'false';
+    			$tagged_reports = json_encode($arr1);
+    		}
+    		else
+    		{
+    			$tagged_reports = json_encode($arr[0]);
+    		}
+    	
+    		print $tagged_reports;
+
     	}
     	
     }
