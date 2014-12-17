@@ -547,7 +547,7 @@ class AccountController extends BaseController {
 
     		
 
-    		$arr = array();$i=0;
+    		$arr = array();$i = 0;$taggedcost = 0;   
     		if(!empty($result->tagged_data->Name) || !empty($tag_value) || !empty($tag_key))
     		{
 
@@ -555,20 +555,28 @@ class AccountController extends BaseController {
     			{
     				if($key == $tag_value)
     				{
-    					$arr[$i]['ServiceType'] = empty($key) ? '' : $key;
-    					if(empty($value))
-    					{
-    						$arr[$i]['Resource'] = '';
-    						$arr[$i]['ResourceCount'] = '';
+    					
+    					foreach ($value as $key1 => $value1) {
+    						foreach ($value1 as $key2 => $value2) {
+    							$taggedcost +=   $value2->cost; 							
+    						}
     					}
-    					else
+    					if(!empty($value))
     					{
-    						$arr[$i]['Resource'] = key((array)$value);
-    						$arr[$i]['ResourceCount'] = count($value);
+    						$arr[$i]['ServiceType'] = empty($key) ? '' : $key;
+    						if(empty($value))
+    						{
+    							$arr[$i]['Resource'] = '';
+    							$arr[$i]['taggedcost'] = '';
+    						}
+    						else
+    						{
+    							$arr[$i]['Resource'] = key((array)$value);
+    							$arr[$i]['taggedcost'] = '$ '.$taggedcost;
+    						}
+    						$arr[$i]['LastUpdated'] = $result->lastUpdate;
+    						$arr[$i]['Status']      = $result->status;
     					}
-    					$arr[$i]['LastUpdated'] = $result->lastUpdate;
-    					$arr[$i]['Status']      = $result->status;
-    		
     					$i++;
     				}	
     			}
@@ -577,12 +585,7 @@ class AccountController extends BaseController {
     		 return View::make('site/account/assets/taggedcost', array(
     				'account' => $account,'taggedcost' => $arr ));
     		
-    		
-    		
-    		
     	}
-    	
-    	
     	
     }
 	
