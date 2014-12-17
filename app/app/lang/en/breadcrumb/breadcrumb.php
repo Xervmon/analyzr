@@ -38,4 +38,6 @@ return array(
     'Error404'                => 'Error404',
     'Error403'                => 'Error403',
     'TaggedCost'			  => 'TaggedCost',
+    'Budget'                  => 'Budget',
+	'CreateBudget'            => 'CreateBudget',
 );

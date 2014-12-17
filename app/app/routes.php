@@ -219,10 +219,17 @@ Route::group(array(
 	Route::get('ServiceStatus/', 'WebserviceController@getIndex');
 	
 	
-	 Route::any('Reserved/', 'AWSPricingController@getReserved'); 
-	 Route::any('Ondemand/', 'AWSPricingController@getOndemand'); 
+	Route::any('Reserved/', 'AWSPricingController@getReserved'); 
+	Route::any('Ondemand/', 'AWSPricingController@getOndemand'); 
 	
+
+    Route::any('budget/', 'BudgetController@getIndex');
+    Route::get('budget/create', 'BudgetController@getCreate');
+    Route::get('budget/{budget}/edit', 'BudgetController@getCreate');
+
+
     // Route::get('deployment/{id}/edit/', 'DeploymentController@getCreate');
+    
     Route::group(array(
         'before' => 'csrf'
     ) , function () {
@@ -238,6 +245,11 @@ Route::group(array(
         Route::post('ticket/{ticket}/edit', 'TicketController@postEdit');
 		Route::post('ticket/{ticket}/reply', 'TicketController@postReply');
         Route::post('ticket/{ticket}/delete', 'TicketController@postDelete');
+
+        Route::post('budget/create', 'BudgetController@postEdit');
+        Route::post('budget/{budget}/edit', 'BudgetController@postEdit');
+        Route::post('budget/{budget}/delete', 'BudgetController@postDelete');
+
     });
     
     
