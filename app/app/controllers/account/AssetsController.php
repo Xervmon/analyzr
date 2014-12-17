@@ -280,7 +280,8 @@ class AssetsController extends BaseController {
                     $arr[$i]['ResourceType'] = empty($value['ResourceType']) ? '' : $value['ResourceType'];
                     $arr[$i]['Key']          = empty($value['Key']) ? '' : $value['Key'];
                     $arr[$i]['Value']        = empty($value['Value']) ? '' : $value['Value'];
-                    $arr[$i]['url']          = URL::to('account/Taggedcost').'?id='.$id.'&key='.$arr[$i]['Key'].'&value='.$arr[$i]['Value'];
+                    $arr[$i]['url']          = URL::to('account/Taggedcost');//.'?id='.$id.'&key='.$arr[$i]['Key'].'&value='.$arr[$i]['Value'];
+                    $arr[$i]['id']           = $id;
                     $i++;
                 }
             }   
