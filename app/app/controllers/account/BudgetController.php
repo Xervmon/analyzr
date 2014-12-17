@@ -64,9 +64,15 @@ class BudgetController extends BaseController {
         $mode        = $id !== false ? 'edit' : 'create';
         $budget      = $id !== false ? Budget::where('user_id', Auth::id())->findOrFail($id) : null;
         $budget_type = array('weekly', 'monthly');
-        $accounts    = CloudAccount::where('user_id', Auth::id())->where('cloudAccountId', $budget->cloudAccountId)->get();
-
-        return View::make('site/account/budget/create_edit', compact('mode', 'budget', 'budget_type', 'account'));
+		
+		if($id !== false)
+        {
+        	$accounts    = CloudAccount::where('user_id', Auth::id())->where('cloudAccountId', $budget->cloudAccountId)->get();
+		}
+		else {
+			$accounts    = CloudAccount::where('user_id', Auth::id())->get();
+		}
+        return View::make('site/account/budget/create_edit', compact('mode', 'budget', 'budget_type', 'accounts'));
     }
 
 
