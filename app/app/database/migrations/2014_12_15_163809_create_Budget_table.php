@@ -24,6 +24,7 @@ class CreateBudgetTable extends Migration {
 			$table->enum('budgetType', array('weekly', 'monthly'));
 			$table->string('budgetNotificationEmail');
             $table->float('budget');
+            //$table->string('email')->unique();
 			$table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 			$table->foreign('cloudAccountId')->references('id')->on('cloudAccounts')->onDelete('cascade');
