@@ -4,6 +4,13 @@
 @section('content')
 @section('breadcrumbs', Breadcrumbs::render('CreateBudget'))
 
+@if(empty($accounts) || count($accounts) === 0)	
+
+	<div class="alert alert-info">
+		{{{ Lang::get('budget/budget.empty_budget_accounts') }}}
+	</div>
+	<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button" id="acc_add_btn">{{{ Lang::get('account/account.add_account') }}}</a>	
+   @else
 	<div class="page-header">
 		<div class="row">
 			<div class="col-md-9">
@@ -11,7 +18,7 @@
 			</div>
 		</div>
 	</div>
-<?php //echo '<pre>';print_r($accounts);die(); ?>
+
 	{{-- Create/Edit cloud budget Form --}}
 	<form id="cloudProviderCredntialsForm" class="form-horizontal" method="post" action="@if (isset($budget->id)){{ URL::to('budget/' . $budget->id . '/edit') }}@endif" autocomplete="on">
 		<!-- CSRF Token -->
@@ -36,10 +43,10 @@
 		</div></br>
 
 		<div class="form-group {{{ $errors->has('email') ? 'error' : '' }}}">
-			<label class="col-md-2 control-label" for="budget_type">{{{ Lang::get('budget/budget.budgettype') }}}<font color="red">*</font></label>
+			<label class="col-md-2 control-label" for="budgetType">{{{ Lang::get('budget/budget.budgettype') }}}<font color="red">*</font></label>
 			<div class="col-md-6">
-				<select class="form-control" name="budget_type" id="budget_type" required>
-					@foreach ($budget_type as $key )
+				<select class="form-control" name="budgetType" id="budgetType" required>
+					@foreach ($budgetType as $key )
 						<option value="{{$key}}" {{{ Input::old('budgetType', isset($budget->budgetType) && ($budget->budgetType == $key) ? 'selected="selected"' : '') }}}>{{{ $key }}}</option>
 					@endforeach
 				</select>
@@ -65,12 +72,13 @@
 		<!-- Form Actions -->
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-10">
-				<a href="{{ URL::to('budget') }}" class="btn btn-default">Back</a>
-				<button type="submit" class="btn btn-primary">Save</button>
+				<a href="{{ URL::to('budget') }}" class="btn btn-default" id="budget_back_btn">Back</a>
+				<button type="submit" class="btn btn-primary" id="budget_save_btn">Save</button>
 			</div>
 		</div>
 		<!-- ./ form actions -->
 	</form>
+	@endif
 @stop
 
 @section('scripts')
