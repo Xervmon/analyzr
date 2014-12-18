@@ -1,7 +1,7 @@
 <?php
 
 return array(
-	"Amazon Simple Queue Service"        => "SQL",
+	"Amazon Simple Queue Service"        => "SQS",
 	"Amazon Elastic Compute Cloud"       => "EC2",
 	"Amazon Simple Storage Service"      => "S3",
 	"Amazon Simple Notification Service" => "SNS",
