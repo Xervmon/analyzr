@@ -11,13 +11,13 @@
 			<h5>{{{ Lang::get('ticket/ticket.your_tickets') }}}</h5>
 		</div>
 		<div class="col-md-3">
-		<a href="{{ URL::to('ticket/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('ticket/ticket.add_ticket') }}}</a>		
+		<a id="ticket_add_btn" href="{{ URL::to('ticket/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('ticket/ticket.add_ticket') }}}</a>		
 		</div>
 	</div>
 </div>
 <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-	<li class="active"><a href="#Open" data-toggle="tab"><i title="Open"></i>Open</a></li>
-	<li><a href="#Closed" data-toggle="tab"><i title="Closed"></i>Closed</a></li>
+	<li class="active"><a id="ticket_open_btn" href="#Open" data-toggle="tab"><i title="Open"></i>Open</a></li>
+	<li><a id="portpre_close_btn" href="#Closed" data-toggle="tab"><i title="Closed"></i>Closed</a></li>
 </ul>
 <div id="my-tab-content" class="tab-content">
 	<div class="tab-pane active" id="Open">
@@ -68,9 +68,9 @@
 									<!-- CSRF Token -->
 									<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 									<!-- ./ csrf token -->
-									<button type="submit" class="btn btn-warning pull-right" role="button"><span class="glyphicon glyphicon-eye-close"></span></button>
+									<button id="ticket_add_btn" type="submit" class="btn btn-warning pull-right" role="button"><span class="glyphicon glyphicon-eye-close"></span></button>
 								</form>
-								<a href="{{ URL::to('ticket/' . $ticket->id . '/reply') }}" class="btn btn-success pull-right" role="button">
+								<a  id="ticket_reply_btn"href="{{ URL::to('ticket/' . $ticket->id . '/reply') }}" class="btn btn-success pull-right" role="button">
 										<span class="glyphicon glyphicon-comment"></span></a>
 								<div class="media-body">
 									<h4 class="media-heading">{{ String::title($ticket->title) }}</h4>

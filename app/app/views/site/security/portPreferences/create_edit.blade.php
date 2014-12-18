@@ -54,8 +54,8 @@
 		<!-- Form Actions -->
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-10">
-				<a href="{{ URL::to('security/portPreferences') }}" class="btn btn-default">Back</a>
-				<button type="submit" class="btn btn-primary">Save</button>
+				<a id="portpre_save_btn" href="{{ URL::to('security/portPreferences') }}" class="btn btn-default">Back</a>
+				<button id="portpre_back_btn" type="submit" class="btn btn-primary">Save</button>
 			</div>
 		</div>
 		<!-- ./ form actions -->
