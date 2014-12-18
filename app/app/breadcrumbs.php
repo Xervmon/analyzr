@@ -172,3 +172,12 @@ Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.Error404'), function ($br
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.Error404'), URL::to('Error404/'));
 
 });
+
+Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.Budget'), function ($breadcrumbs) {
+	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.home'));
+	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.Budget'), URL::to('budget/'));
+});
+Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.CreateBudget'), function ($breadcrumbs) {
+	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.Budget'), URL::to('budget/'));
+	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.CreateBudget'), URL::to('budget/create'));
+});

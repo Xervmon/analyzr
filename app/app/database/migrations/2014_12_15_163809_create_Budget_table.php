@@ -21,8 +21,10 @@ class CreateBudgetTable extends Migration {
         Schema::create('budget', function (Blueprint $table) {
             $table->increments('id')->unsigned();
 			$table->integer('cloudAccountId')->unsigned()->index();
-			$table->enum('budget_type', array('weekly', 'monthly'));
+			$table->enum('budgetType', array('weekly', 'monthly'));
+			$table->string('budgetNotificationEmail');
             $table->float('budget');
+            //$table->string('email')->unique();
 			$table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 			$table->foreign('cloudAccountId')->references('id')->on('cloudAccounts')->onDelete('cascade');
