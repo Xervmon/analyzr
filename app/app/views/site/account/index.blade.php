@@ -10,7 +10,7 @@
 			<h5>{{{ Lang::get('account/account.your_accounts') }}}</h5>
 		</div>
 		<div class="col-md-3">
-			<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
+			<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button" id="acc_add_btn">{{{ Lang::get('account/account.add_account') }}}</a>
 		</div>
 	</div>
 </div>
@@ -29,12 +29,12 @@
 					<!-- CSRF Token -->
 					<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 					<!-- ./ csrf token -->
-					<button type="button" class="btn btn-warning pull-right" role="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Account" data-message="{{ Lang::get('account/account.account_delete') }}">
+					<button type="button" class="btn btn-warning pull-right" id="acc_delete_btn" role="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Account" data-message="{{ Lang::get('account/account.account_delete') }}">
 						<span class="glyphicon glyphicon-trash"></span>
 					</button>
 
 				</form>
-				<a href="{{ URL::to('account/' . $account->id . '/edit') }}" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-edit"></span></a>
+				<a href="{{ URL::to('account/' . $account->id . '/edit') }}" id="acc_edit_btn" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-edit"></span></a>
 				<div class="media-body">
 					<h4 class="media-heading">{{ String::title($account->name) }} : {{ String::title($account->profileType) }}</h4>
 					<p>
@@ -45,13 +45,13 @@
 					<p>
 						<span title="Status">{{ UIHelper::getServicesStatus($account) }}</span>
 
-						<a href="{{ URL::to('assets/' . $account->id . '/SecurityGroups') }}"><span class="glyphicon glyphicon-lock"></span></a>
+						<a href="{{ URL::to('assets/' . $account->id . '/SecurityGroups') }}" id="acc_security_btn"><span class="glyphicon glyphicon-lock"></span></a>
 						|
-						<a href="{{ URL::to('assets/' . $account->id . '/AwsInfo') }}"><span class="glyphicon glyphicon-info-sign"></span></a>
+						<a href="{{ URL::to('assets/' . $account->id . '/AwsInfo') }}" id="acc_awsinfo_btn"><span class="glyphicon glyphicon-info-sign"></span></a>
 						|
-						<a href="{{ URL::to('account/' . $account->id . '/Collection') }}"><i class="fa fa-briefcase"></i></a>
+						<a href="{{ URL::to('account/' . $account->id . '/Collection') }}" id="acc_collection_btn"><i class="fa fa-briefcase"></i></a>
 						|
-						<a href="{{ URL::to('account/' . $account->id . '/ChartsData') }}"><i class="fa fa-bar-chart"></i></a>
+						<a href="{{ URL::to('account/' . $account->id . '/ChartsData') }}" id="acc_charts_btn"><i class="fa fa-bar-chart"></i></a>
 					</p>
 					<!-- <p>UIHelper::getCurrentCostAndServices($account->id, CloudAccountHelper::findCurrentCost($account))</p> -->
 
