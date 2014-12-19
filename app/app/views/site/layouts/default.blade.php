@@ -68,6 +68,7 @@
 	                </div>
 	                <div class="collapse navbar-collapse navbar-ex1-collapse" id="navbar-collapse-target">
 	                	<ul class="nav navbar-nav">
+	  
 	                		<li{{ (Request::is('data-security') ? ' class="active"' : '') }}><a href="{{{ URL::to('data-security') }}}"><span class="glyphicon glyphicon-lock"></span> {{{ Lang::get('site.data_security') }}}</a></li>
     						<li{{ (Request::is('roadmap') ? ' class="active"' : '') }}><a href="{{{ URL::to('roadmap') }}}"><span class="glyphicon glyphicon-list-alt"></span> {{{ Lang::get('site.roadmap') }}}</a></li>
 	                		<li{{ (Request::is('cloudExperts') ? ' class="active"' : '') }}><a href="{{{ URL::to('cloudExperts') }}}"><span class="glyphicon glyphicon-plane"></span> {{{ Lang::get('site.cloudExperts') }}}</a></li>
@@ -130,6 +131,9 @@
 	    							</ul>
 	    						</li>
 	                        @else
+	                                      	    <li><a href="#Howitworks">How it works</a></li>
+                            <li><a href="#services">Services</a></li>
+                            <li><a href="#blog">Blog</a></li>
 	                        <li {{ (Request::is('user/login') ? ' class="active"' : '') }}><a href="{{{ URL::to('user/login') }}}"><span class="glyphicon glyphicon-log-in"></span> {{{ Lang::get('site.login') }}}</a></li>
 	                        <li {{ (Request::is('user/create') ? ' class="active"' : '') }}><a href="{{{ URL::to('user/create') }}}"><span class="glyphicon glyphicon-log-out"></span> {{{ Lang::get('site.sign_up') }}}</a></li>
 	                        @endif
