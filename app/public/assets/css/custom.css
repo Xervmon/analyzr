@@ -153,8 +153,8 @@ div#footer  .container > .row > div.column:first-child{
 
 .process-next-arrow-horizontal {
     position: absolute;
-    top: 2em;
-    right: -0.5em;
+    top: 1.5em;
+    right: 0.5em;
 }
 .process-next-arrow-vertical {
     margin: 0.2em;
