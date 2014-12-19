@@ -83,7 +83,7 @@
 
 $(document).ready(function() {
 
-  $('#collections').html('<img src="{{asset('assets/img/ajax-loader.gif')}}" id="ajaxSpinnerImage" title="working..." style="margin-top:20px; margin-left: 500px;" height="100px" width="100px">');
+  $('#collections').html('<img src="{{asset('assets/img/ajax-loader.gif')}}" id="ajaxSpinnerImage" title="working..." style="margin-top:20px; margin-left: 500px;" height="90px" width="90px">');
   $.ajax({
     url:  "{{ URL::to('account/'.$account->id.'/CollectionData') }}",
     cache: false
@@ -130,7 +130,7 @@ $(document).ready(function() {
 
 
 function applyFilter(){
-   $('#collections').html('<img src="{{asset('assets/img/ajax-loader.gif')}}" id="ajaxSpinnerImage" title="working..." style="margin-top:20px; margin-left: 500px;" height="100px" width="100px">');
+   $('#collections').html('<img src="{{asset('assets/img/ajax-loader.gif')}}" id="ajaxSpinnerImage" title="working..." style="margin-top:20px; margin-left: 500px;" height="90px" width="90px">');
     AccountId   = $('#AccountId').val();
     StartDate   = $('#StartDate').val();
     EndDate     = $('#EndDate').val();
@@ -154,7 +154,7 @@ function clearFilter(){
     if(startdate || enddate){
        $('#StartDate').val("");
        $('#EndDate').val("");
-       $('#collections').html('<img src="{{asset('assets/img/ajax-loader.gif')}}" id="ajaxSpinnerImage" title="working..." style="margin-top:20px; margin-left: 500px;" height="100px" width="100px">');
+       $('#collections').html('<img src="{{asset('assets/img/ajax-loader.gif')}}" id="ajaxSpinnerImage" title="working..." style="margin-top:20px; margin-left: 500px;" height="90px" width="90px">');
        window.location.reload();
     }
 }

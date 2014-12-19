@@ -63,16 +63,17 @@ class BudgetController extends BaseController {
 
         $mode        = $id !== false ? 'edit' : 'create';
         $budget      = $id !== false ? Budget::where('user_id', Auth::id())->findOrFail($id) : null;
-        $budget_type = array('weekly', 'monthly');
+        $budgetType  = array('weekly', 'monthly');
 		
 		if($id !== false)
         {
         	$accounts    = CloudAccount::where('user_id', Auth::id())->where('cloudAccountId', $budget->cloudAccountId)->get();
 		}
-		else {
+		else 
+        {
 			$accounts    = CloudAccount::where('user_id', Auth::id())->get();
 		}
-        return View::make('site/account/budget/create_edit', compact('mode', 'budget', 'budget_type', 'accounts'));
+        return View::make('site/account/budget/create_edit', compact('mode', 'budget', 'budgetType', 'accounts'));
     }
 
 
@@ -92,12 +93,12 @@ class BudgetController extends BaseController {
                 throw new Exception('general.access_denied');
             }
 
-            $cloudAccountId             = Input::get('cloudAccountId');
-            $budget->cloudAccountId     = empty($cloudAccountId) ? 0 : $cloudAccountId;
-            $budget->budgetType        = Input::get('budgetType');
-            $budget->budget             = Input::get('budget');
+            $cloudAccountId                  = Input::get('cloudAccountId');
+            $budget->cloudAccountId          = empty($cloudAccountId) ? 0 : $cloudAccountId;
+            $budget->budgetType              = Input::get('budgetType');
+            $budget->budget                  = Input::get('budget');
             $budget->budgetNotificationEmail = Input::get('budgetNotificationEmail');
-            $budget->user_id            = Auth::id();
+            $budget->user_id                 = Auth::id();
 
             $success = $budget->save();
             

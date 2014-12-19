@@ -61,7 +61,7 @@
 	@endif
 </div>
 <div>
-<a href="{{ URL::to('security/portPreferences/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('security/portPreferences.portPreference_add') }}}</a>
+<a id="portpre_create_btn" href="{{ URL::to('security/portPreferences/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('security/portPreferences.portPreference_add') }}}</a>
 </div>
 @include('deletemodal')
 @stop
