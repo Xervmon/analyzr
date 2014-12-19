@@ -10,7 +10,7 @@
 			<h5>{{{ Lang::get('budget/budget.your_budgets') }}}</h5>
 		</div>
 		<div class="col-md-3">
-			<a href="{{ URL::to('budget/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('budget/budget.add_budget') }}}</a>
+			<a href="{{ URL::to('budget/create') }}" class="btn btn-primary pull-right" role="button" id="budget_add_btn">{{{ Lang::get('budget/budget.add_budget') }}}</a>
 		</div>
 	</div>
 </div>
@@ -29,18 +29,18 @@
 					<!-- CSRF Token -->
 					<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 					<!-- ./ csrf token -->
-					<button type="button" class="btn btn-warning pull-right" role="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Budget" data-message="{{ Lang::get('budget/budget.budget_delete') }}">
+					<button type="button" class="btn btn-warning pull-right" id="budget_delete_btn" role="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Budget" data-message="{{ Lang::get('budget/budget.budget_delete') }}">
 						<span class="glyphicon glyphicon-trash"></span>
 					</button>
 
 				</form>
-				<a href="{{ URL::to('budget/' . $budget->id . '/edit') }}" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-edit"></span></a>
+				<a href="{{ URL::to('budget/' . $budget->id . '/edit') }}" id="budget_edit_btn" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-edit"></span></a>
 
 				<div class="media-body">
 					<h4 class="media-heading">{{ String::title($budget->name) }} : {{ String::title($budget->profileType) }}</h4><br>
 					
                     <p>
-                     	<b>Budget Type :</b> {{$budget->budget_type}}
+                     	<b>Budget Type :</b> {{$budget->budgetType}}
                      
                     </p>
                     <p>
@@ -49,7 +49,7 @@
                     </p>
 
                     <p>
-						<span class="glyphicon glyphicon-calendar"></span> {{{ $budget->created_at }}}
+						<b>Created At:</b> <span class="glyphicon glyphicon-calendar"></span> {{{ $budget->created_at }}}
 
 					</p>
 				</div>
