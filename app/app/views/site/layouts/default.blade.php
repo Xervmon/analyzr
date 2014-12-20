@@ -143,8 +143,7 @@
 				</div>
 			</nav>
 
-	@section('breadcrumbs', Breadcrumbs::render('home'))
-
+	
 			<!-- ./ navbar -->
 			<!--
 			<a class="banner-github {{ (Request::is('/') ? '' : 'hide') }}" href="https://github.com/XDocker/app" target="_blank">
