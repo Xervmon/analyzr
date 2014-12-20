@@ -5,7 +5,7 @@
 			<h5>Dashboard</h5>
 		</div>
 		<div class="col-md-3">
-			<a id="dash_add_acc" href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
+			<a href="{{ URL::to('account/create') }}" class="btn btn-primary pull-right" role="button">{{{ Lang::get('account/account.add_account') }}}</a>
 		</div>
 	</div>
 </div>
@@ -19,9 +19,11 @@
 	<div class="panel-body">
 
 			<div class="media-body bs-callout-danger">
+			<div class="col-md-4"></div>
+			<div class="col-md-3">
 				<ul class="list-group list-group-horizontal">
 
-					<li class="list-group-item panel panel-status panel-success" style="margin-left:28em;">
+					<li class="list-group-item panel panel-status panel-success" >
 						<div class="panel-heading" style="text-align:center; color:black;">
 							&nbsp;&nbsp;&nbsp;<i class="fa fa-usd"></i> Total Cost&nbsp;&nbsp;&nbsp;&nbsp;
 						</div>
@@ -36,8 +38,11 @@
 							{{array_sum($totalcost)}} USD
 						</div>
 					</li>
-					
-					<li class="list-group-item panel panel-status panel-danger" style="margin-left:8em;">
+					</ul>
+					</div>
+					<div class="col-md-3">
+					<ul class="list-group list-group-horizontal">
+					<li class="list-group-item panel panel-status panel-danger" >
 						<div class="panel-heading" style="text-align:center; color:black;">
 							<i class="fa fa-usd"></i> Predicted Cost
 						</div>
@@ -78,6 +83,7 @@
 					</li>
 
 				</ul>
+				</div><div class="col-md-2"></div>
 			</div>
 
 			
