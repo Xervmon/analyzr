@@ -131,7 +131,7 @@
 
     <!-- Services -->
     <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
-    <section id="services" class="services bg-section-primary">
+    <!-- <section id="services" class="services bg-section-primary">
         <div class="container">
             <div class="row text-center">
                 <div class="col-lg-10 col-lg-offset-1">
@@ -192,13 +192,14 @@
                         </div>
                     </div>
                     <!-- /.row (nested) -->
-                </div>
+               <!--  </div>
                 <!-- /.col-lg-10 -->
-            </div>
+           <!--  </div>
             <!-- /.row -->
-        </div>
+       <!--  </div>
         <!-- /.container -->
-    </section>
+    <!-- </section>
+ -->
 
 
     <section id="pricing" class="section section-center section-pricing loaded">
@@ -209,7 +210,7 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="paneltemplate paneltemplate-default">
                                 <header class="paneltemplate-heading">
-                                    <h1>Bronze</h1>
+                                    <h1 style="font-size: 40px;">Bronze</h1>
                                     <div class="the-price">$5 <span class="subscript">/ month</span></div>
                                 </header>
                                 <div class="paneltemplate-body">
@@ -224,13 +225,13 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <footer class="paneltemplate-footer"><a href="#" class="btn btn-default">Sign up now</a></footer>
+                                <footer class="paneltemplate-footer"><a href="{{{ URL::to('user/create') }}}" class="btn btn-default">Sign up now</a></footer>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="paneltemplate paneltemplate-default">
                                 <header class="paneltemplate-heading">
-                                    <h1>Silver</h1>
+                                    <h1 style="font-size: 40px;">Silver</h1>
                                     <div class="the-price">$10 <span class="subscript">/ month</span></div>
                                 </header>
                                 <div class="paneltemplate-body">
@@ -245,14 +246,14 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <footer class="paneltemplate-footer"><a href="#" class="btn btn-default">Sign up now</a></footer>
+                                <footer class="paneltemplate-footer"><a href="{{{ URL::to('user/create') }}}" class="btn btn-default">Sign up now</a></footer>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="paneltemplate paneltemplate-primary">
                                 <header class="paneltemplate-heading">
-                                    <h1>Gold</h1>
-                                    <div class="the-price">$20 <span class="subscript">/ month</span></div>
+                                    <h1 style="font-size: 40px;">Gold</h1>
+                                    <div class="the-price" style="text-color:black;">$20 <span class="subscript">/ month</span></div>
                                 </header>
                                 <div class="paneltemplate-body">
                                     <table class="table">
@@ -266,13 +267,13 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <footer class="paneltemplate-footer"><a href="#" class="btn btn-primary">Sign up now</a></footer>
+                                <footer class="paneltemplate-footer"><a href="{{{ URL::to('user/create') }}}" class="btn btn-primary">Sign up now</a></footer>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="paneltemplate paneltemplate-default">
                                 <header class="paneltemplate-heading">
-                                    <h1>Diamond</h1>
+                                    <h1 style="font-size: 40px;">Diamond</h1>
                                     <div class="the-price">$35 <span class="subscript">/ month</span></div>
                                 </header>
                                 <div class="paneltemplate-body">
@@ -288,7 +289,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <footer class="paneltemplate-footer"><a href="#" class="btn btn-default">Sign up now</a></footer>
+                                <footer class="paneltemplate-footer"><a href="{{{ URL::to('user/create') }}}" class="btn btn-default">Sign up now</a></footer>
                             </div>
                         </div>
                     </div>
@@ -297,7 +298,8 @@
         </section>
 
 
-        <section id="team" class="section section-center section-hilite section-team loaded">
+
+       <!--  <section id="team" class="section section-center section-hilite section-team loaded">
             <div class="container" style="padding-right: 50px;">
                 <h2 class="section-title"><span>Our Team</span></h2>
                 <div class="row">
@@ -330,11 +332,12 @@
                 </div>
             </div>
         </section>
+ -->
 
 
 
      <!-- blog -->
-   <section id="blog" class="section section-blog loaded">
+ <!--   <section id="blog" class="section section-blog loaded">
           <div class="container">
             <h2 class="section-title"><span>Our Latest Blog</span></h2>
             <div class="row">
@@ -384,10 +387,11 @@
               </div>
             </div>
           </div>
-        </section>
+        </section> -->
 
 
-        <section id="clients" class="section section-hilite section-our-clients loaded">
+
+      <!--   <section id="clients" class="section section-hilite section-our-clients loaded">
           <div class="container" style="padding-right: 50px;">
             <h2 class="section-title"><span>What Others are Saying</span></h2>
             <div class="row">
@@ -411,10 +415,11 @@
               </div>
             </div>
           </div>
-        </section>
+        </section> -->
 
 
-        <section id="contact" class="section section-center section-contact loaded">
+
+        <!-- <section id="contact" class="section section-center section-contact loaded">
           <div class="container">
             <h2 class="section-title"><span>Contact Us</span></h2>
             <p>Want to say hello? Want to know more about us? Give us a call or drop us an email and we will get back to you as soon as we can.</p>
@@ -446,7 +451,7 @@
               </form>
             </div>
           </div>
-        </section>
+        </section> -->
        
 
    
