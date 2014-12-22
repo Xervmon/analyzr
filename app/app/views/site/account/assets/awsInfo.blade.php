@@ -32,7 +32,8 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
     <div class="panel-heading">
       <h4 class="panel-title">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseEight">
-        	<img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/aws.png') }}}" />{{{ Lang::get('account/account.aws_tags') }}}
+        	<span class="glyphicon glyphicon-tags" style="margin-left: 26px; margin-right: 26px;"></span> 
+        	{{{ Lang::get('account/account.aws_tags') }}}
 		<i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
       </h4></a>
     </div>
@@ -259,7 +260,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
     <div class="panel-heading">
       <h4 class="panel-title">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-         <img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/aws.png') }}}" />{{{ Lang::get('account/account.aws_sg') }}}
+         <img style="height: 33px; width: 73px;" alt="300x200" src="{{{ asset('assets/img/aws/sec_group.png') }}}" />{{{ Lang::get('account/account.aws_sg') }}}
 		 <i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
       </h4></a>
     </div>
@@ -337,7 +338,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
       <h4 class="panel-title">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
         	
-      					<img alt="73x33" src="{{{ asset('assets/img/aws/aws.png') }}}" />{{{ Lang::get('account/account.aws_kp') }}}
+      					<img alt="73x33" src="{{{ asset('assets/img/aws/key.png') }}}" />{{{ Lang::get('account/account.aws_kp') }}}
 						
         <i class="indicator glyphicon glyphicon-chevron-down pull-right"></i>
       </h4></a>
