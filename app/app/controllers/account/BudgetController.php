@@ -67,11 +67,11 @@ class BudgetController extends BaseController {
 		
 		if($id !== false)
         {
-        	$accounts    = CloudAccount::where('user_id', Auth::id())->where('cloudAccountId', $budget->cloudAccountId)->get();
+        	$accounts    = CloudAccount::where('user_id', Auth::id())->where('id', $budget->cloudAccountId)->where('profileType', Lang::get('security/portPreferences.readonlyProfile'))->get();
 		}
 		else 
         {
-			$accounts    = CloudAccount::where('user_id', Auth::id())->get();
+			$accounts    = CloudAccount::where('user_id', Auth::id())->where('profileType', Lang::get('security/portPreferences.readonlyProfile'))->get();
 		}
         return View::make('site/account/budget/create_edit', compact('mode', 'budget', 'budgetType', 'accounts'));
     }
