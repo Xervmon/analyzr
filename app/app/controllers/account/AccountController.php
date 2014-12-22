@@ -523,7 +523,8 @@ class AccountController extends BaseController {
         }
     }
 
-     public function getTaggedcost()
+    //Get Taggedcost By Key and Value 
+     /*public function getTaggedcost()
     {
     	$tag_key = Input::get('key');
     	$tag_value = Input::get('value');
@@ -598,6 +599,6 @@ class AccountController extends BaseController {
 
     	}
     	
-    }
+    }*/
 	
 }
