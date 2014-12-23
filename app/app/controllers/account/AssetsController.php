@@ -267,25 +267,84 @@ class AssetsController extends BaseController {
 
   public function getTagNameValue($id)
   {
-     UtilHelper::check();
-         $account = CloudAccount::where('user_id', Auth::id())->find($id);
-         $getTagsAll = CloudProvider::getTags($id);
-            $arr = array();$i=0;
-            if(!empty($getTagsAll['Tags']))
-            {
-                foreach($getTagsAll['Tags'] as $key => $value)
-                {
+      UtilHelper::check();
+      $account = CloudAccountHelper::findAndDecrypt($id);
+      $cred = json_decode($account->credentials);
+             
+      
+      $responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+      EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - Collection', 'return' => $responseJson));
+      $obj = WSObj::getObject($responseJson);
+      
+      if($obj->status == 'OK')
+      {
+        $response = AWSBillingEngine::getCurrentTaggedcost(array('token' => $obj->token,'accountId' =>$cred->accountId));
+        $result = WSObj::getObject($response);
+      }  
 
-                    $arr[$i]['ResourceId']   = empty($value['ResourceId']) ? '' : $value['ResourceId'];
-                    $arr[$i]['ResourceType'] = empty($value['ResourceType']) ? '' : $value['ResourceType'];
-                    $arr[$i]['Key']          = empty($value['Key']) ? '' : $value['Key'];
-                    $arr[$i]['Value']        = empty($value['Value']) ? '' : $value['Value'];
-                    $arr[$i]['url']          = URL::to('account/Taggedcost');//.'?id='.$id.'&key='.$arr[$i]['Key'].'&value='.$arr[$i]['Value'];
-                    $arr[$i]['id']           = $id;
-                    $i++;
-                }
-            }   
-       return View::make('site/account/assets/tagsInfo', array('account' => $account,'tagDetails'=> $arr));
+
+      $account = CloudAccount::where('user_id', Auth::id())->find($id);
+      $getTagsTemp =$getTagsAll = CloudProvider::getTags($id);
+
+       
+      foreach ($getTagsTemp['Tags'] as $key8=>$value8) {
+      $tag_key = $value8['Key'];
+      $tag_value = $value8['Value'];
+
+      $arr = array();$i = 0;$taggedcost = 0;
+      foreach($result->tagged_data->$tag_key as $key => $value)
+      {
+        if($key == $tag_value)
+        {
+          foreach ($value as $key1 => $value1) {
+            foreach ($value1 as $key2 => $value2) {
+                  $taggedcost +=   $value2->cost; 
+            }
+          }
+             
+          if(!empty($value))
+          {
+              $arr[$i]['ResourceId'] = empty($value8['ResourceId']) ? '' : $value8['ResourceId'];
+              $arr[$i]['ResourceType'] = empty($value8['ResourceType']) ? '' : $value8['ResourceType'];
+              
+              if(empty($value))
+              {
+                  $arr[$i]['Resource'] = '';
+                  $arr[$i]['taggedcost'] = '';
+              }
+              else
+              {
+                  $arr[$i]['Resource'] = key((array)$value);
+                  $arr[$i]['Key'] = $tag_key;
+                  $arr[$i]['Value'] = $tag_value;
+                  $arr[$i]['taggedcost'] = '$ '.$taggedcost;
+              }
+                  $arr[$i]['LastUpdated'] = $result->lastUpdate;
+          }
+          $i++;
+          $arr_res[]= $arr[0];
+          unset($getTagsTemp['Tags'][$key8]);
+        } 
+           
+      }
+           
+      }
+        
+      $index = count($arr_res)-1;
+
+      foreach ($getTagsTemp['Tags'] as $key6 => $value6) {
+
+          $arr['ResourceId'] = $value6['ResourceId'];
+          $arr['ResourceType'] = $value6['ResourceType'];
+          $arr['Resource'] = '';
+          $arr['Key'] = $value6['Key'];
+          $arr['Value'] = $value6['Value'];
+          $arr['taggedcost'] = '';
+          $arr['LastUpdated'] = '';
+
+          $arr_res[]= $arr;
+      }
+      return View::make('site/account/assets/tagsInfo', array('account' => $account,'tagDetails'=> $arr_res));
       } 
 		
     

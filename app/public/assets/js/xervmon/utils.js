@@ -322,15 +322,9 @@ convertJsonToTableTags = function(data) {
     var pageSize = 10;
     if (data.length > 0) {
         var mediaClass = '';
-        for (var i = 0; i < data.length; i++) 
-        {
-            data[i]["actions"] = '<div id="tagged_reports'+i+'">' + '<a href class="viewTaggedcost" id="viewTaggedcost" onclick="viewTaggedCost(\'' + data[i]['url'] + '\', \'' + data[i]['id'] + '\', \'' + data[i]['Key'] + '\', \'' + data[i]['Value'] + '\', \'' + i + '\'); return false;" name="viewTaggedcost">View Current Tagged cost</a></div>';
-            delete data[i]['url'];
-        	delete data[i]['id'];
-        }
-        
+              
         mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {
-             "name" : " filter-select filter-exact ",
+             "Resource" : " filter-select filter-exact ",
              "ResourceType" : " filter-select filter-exact ",
              "Key" : " filter-select filter-exact ",
              "Value" : " filter-select filter-exact "
@@ -357,7 +351,7 @@ convertJsonToTableTags = function(data) {
 };
 
 
-viewTaggedCost = function (url,id,key,value,i)
+/*viewTaggedCost = function (url,id,key,value,i)
 {
     var jqxhr= $.ajax({
     url :url,
@@ -387,7 +381,7 @@ viewTaggedCost = function (url,id,key,value,i)
 
     });
 
-};
+};*/
 
 
 convertJsonToTableInstances = function(data) {

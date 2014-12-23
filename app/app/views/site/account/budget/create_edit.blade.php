@@ -34,9 +34,7 @@
 			<div class="col-md-6">
 				<select class="form-control" name="cloudAccountId" id="cloudAccountId">
 					@foreach ($accounts as $key )
-					@if($key->profileType == Constants::READONLY_PROFILE)
 						<option value="{{$key->id}}" {{{ Input::old('cloudAccountId', isset($budget->cloudAccountId) && ($budget->cloudAccountId == $key->id) ? 'selected="selected"' : '') }}}>{{{ $key->name }}}</option>
-						@endif
 					@endforeach
 				</select>
 			</div>
