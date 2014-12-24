@@ -59,7 +59,8 @@ return array(
 		'aws_rds'                          => 'Relational Database Service',
 		'aws_sn'                           => 'Subnets',
 		'aws_tags'                         => 'Tags',
-		'account_delete'                   => 'Are You Sure  Want To Delete This Account ?. This would also Delete PORT PREFERENCES Associated with this Account.',
+		'read_account_delete'              => 'Are You Sure  Want To Delete This Account ?. This would also Delete PORT PREFERENCES, BUDGET Associated with this Account.',
+		'security_account_delete'          => 'Are You Sure  Want To Delete This Account ?',
 		'portpreference_delete'            => 'Are You Sure  Want To Delete This PortPreference ?',
 		'create_services'                  => 'create_services',
 		'create_billing'                   => 'create_billing',
@@ -80,4 +81,5 @@ return array(
 		'collection_data'                  => 'Collection Data Of AWS Services',
 		'apn_fee'                          => 'APN Fee',
 		'multiple_value'                   => '12',
+		'setScheduler'                     => 'Time Based Event Scheduler',
 );

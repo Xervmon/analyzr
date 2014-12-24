@@ -107,6 +107,8 @@
 	    								<li class="divider"></li>
 	    								<li><a href="{{{ URL::to('budget') }}}"><i class="fa fa-money"></i> {{{ Lang::get('site.budget') }}}</a></li>
 	    								<li class="divider"></li>
+	    								<li><a href="{{{ URL::to('scheduler') }}}"><i class="fa fa-clock-o"></i> {{{ Lang::get('site.scheduler') }}}</a></li>
+	    								<li class="divider"></li>
 	    								<li><a href="{{{ URL::to('ServiceStatus') }}}"><span class="glyphicon glyphicon-signal"></span> {{{ Lang::get('site.webservice_status') }}}</a></li>
 	    								
 	    								
@@ -132,7 +134,8 @@
 	    							</ul>
 	    						</li>
 	                        @else
-	                        <li><a href="#Howitworks">How it works</a></li>
+	                        <li id="howitworks"><a href="#Howitworks">How it works</a></li>
+	                        <li id="pricings"><a href="#pricing">Pricing</a></li>
                        <!-- <li><a href="#services">Services</a></li>
                             <li><a href="#blog">Blog</a></li>-->
 	                        <li {{ (Request::is('user/login') ? ' class="active"' : '') }}><a href="{{{ URL::to('user/login') }}}"><span class="glyphicon glyphicon-log-in"></span> {{{ Lang::get('site.login') }}}</a></li>
