@@ -29,10 +29,19 @@
 					<!-- CSRF Token -->
 					<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 					<!-- ./ csrf token -->
-					<button type="button" class="btn btn-warning pull-right" id="acc_delete_btn" role="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Account" data-message="{{ Lang::get('account/account.account_delete') }}">
+					@if($account -> profileType == Constants::READONLY_PROFILE)
+					
+					<button type="button" class="btn btn-warning pull-right" id="acc_delete_btn" role="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Account" data-message="{{ Lang::get('account/account.read_account_delete') }}">
 						<span class="glyphicon glyphicon-trash"></span>
 					</button>
 
+                    @else
+
+                    <button type="button" class="btn btn-warning pull-right" id="acc_delete_btn" role="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Account" data-message="{{ Lang::get('account/account.security_account_delete') }}">
+						<span class="glyphicon glyphicon-trash"></span>
+					</button>
+
+                    @endif
 				</form>
 				<a href="{{ URL::to('account/' . $account->id . '/edit') }}" id="acc_edit_btn" class="btn btn-success pull-right" role="button"><span class="glyphicon glyphicon-edit"></span></a>
 				<div class="media-body">
