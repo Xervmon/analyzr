@@ -150,9 +150,10 @@ class AWSPRoviderImpl implements IProvider
 			try
 			{	
 				$nstanceResult = $this->ec2Client->DescribeInstances(array(
-		        'Filters' => array(
-		                		array('Name' => 'instance-id', 'Values' => $params['InstanceIds']),
-		        			)
+				'InstanceIds' => $params['InstanceIds'],
+		        /*'Filters' => array(
+		                		array('Name' => 'instance-id', $params['InstanceIds']),
+		        			)*/
 						));
 				if (!empty($nstanceResult))
 				{
