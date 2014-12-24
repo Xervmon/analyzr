@@ -51,11 +51,11 @@ class CloudProvider
         return self::getDriver($account)->authenticate();
     }
     
-    public static function getDriver($account) {
+    public static function getDriver($account, $region = 'us-east-1') {
         $iProvider = '';
 		switch ($account->cloudProvider) {
             case Constants::AWS_CLOUD:
-                $iProvider = new AWSPRoviderImpl($account);
+                $iProvider = new AWSPRoviderImpl($account, $region);
                 return $iProvider;
             break;
         }
