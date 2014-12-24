@@ -16,10 +16,12 @@ class AWSPRoviderImpl implements IProvider
 {
 	private $ec2Client;
 	private $account;
+	private $region;
 	
-	public function __construct($acct) 
+	public function __construct($acct, $region) 
 	{
 	   $this->account = $acct;
+	   $this->region = $region;
     }
 	 
 	public function authenticate() 
@@ -31,7 +33,8 @@ class AWSPRoviderImpl implements IProvider
 	 	$credentials = json_decode($this->account->credentials);
         $config['key'] = $credentials->apiKey;
         $config['secret'] = $credentials->secretKey;
-        $config['region'] = empty($credentials -> instanceRegion) ? 'us-east-1' : $credentials->instanceRegion;
+        $config['region'] = $this->region;
+        //empty($credentials -> instanceRegion) ? 'us-east-1' : $credentials->instanceRegion;
 		$conStatus = FALSE;
         $conStatus = $this->checkCreds($config);
 		return $conStatus;
