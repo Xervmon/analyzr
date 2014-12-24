@@ -61,7 +61,7 @@ class CloudProvider
         }
     }
     
-    public static function executeAction($instanceAction, $account, $instanceID) {
+    public static function executeAction($instanceAction, $account, $instanceID, $region='us-east-1') {
         $response = '';
         switch ($instanceAction) {
             case 'start':
@@ -98,12 +98,9 @@ class CloudProvider
                 ));
             break;
             case 'describeInstances':
-                $response = self::getDriver($account)->describeInstances(array(
+                $response = self::getDriver($account,$region)->describeInstances(array(
                     'DryRun' => false,
-                    'InstanceIds' => array(
-                        $instanceID
-                    )
-                ));
+                    'InstanceIds' => $instanceID));
             break;
             case 'getSecurityGroups':
                 $response = self::getDriver($account)->describeSecurityGroups(array(
@@ -152,6 +149,7 @@ class CloudProvider
         $account = CloudAccountHelper::findAndDecrypt($cloudAccountId);
         
         $data = self::executeAction('describeInstances', $account, $instanceID);
+
         if ($data['status'] == 'OK') {
             if (!empty($data['message']['Reservations'][0]['Instances'][0]['State']['Name'])) return UIHelper::getLabel($data['message']['Reservations'][0]['Instances'][0]['State']['Name']);
             else return UIHelper::getLabel('NA');
@@ -198,13 +196,12 @@ class CloudProvider
 
 
 
-    public static function getInstances($cloudAccountId)
+    public static function getInstances($cloudAccountId, $instanceID,$region)
     {
         $account = CloudAccountHelper::findAndDecrypt($cloudAccountId);
 
-         $response = self::getDriver($account)->describeInstancesall(array(
-                    'DryRun' => false,
-                    'InstanceIds' => array('')));//'i-651fda89','i-5c579e0f'
+        //$response = self::getDriver($account,$region)->describeInstancesall(array('DryRun' => false              'InstanceIds' => array('')));
+        $response = self::executeAction('describeInstances', $account, $instanceID,$region);
 
         if (!empty($response) && $response['status'] === 'OK') {
             return $response['message'];
@@ -213,6 +210,7 @@ class CloudProvider
        }
 
     }
+
 
     public static function getEBS($cloudAccountId)
     {

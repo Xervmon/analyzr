@@ -204,13 +204,14 @@ class AssetsController extends BaseController {
   }
 
 
-    public function instanceInfo($id)
+    public function instanceInfo($id, $region)
     {
             UtilHelper::check();
 
             $account = CloudAccount::where('user_id', Auth::id())->find($id);
-            $getInstancesAll = CloudProvider::getInstances($id);
+            $getInstancesAll = CloudProvider::getInstances($id,array(),$region);
 
+                      
             $arr = array();$i=0;
             if(!empty($getInstancesAll['Reservations']))
             {
@@ -235,6 +236,7 @@ class AssetsController extends BaseController {
                  $i++;
                 }
             }   
+
       return View::make('site/account/assets/instanceInfo', array('account' => $account,'instanceDetails'=> $arr));
     }
 
