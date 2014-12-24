@@ -141,7 +141,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ Lang::get('account/account.total_instances') }}}</strong>
 											<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/EC2') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/'. $account->id.'/'.$key_i.'/EC2') }}">Details</a>
 											</p>
 										</div>
 									</li>
@@ -164,7 +164,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 										<div class="panel-body text-center">
 											<strong>{{{ ucfirst ( $key_is ) . ' Instances' }}}</strong>
 											<p style="text-align:center">
-												<a class="btn" href="{{ URL::to('assets/' . $account->id . '/EC2') }}">Details</a>
+												<a class="btn" href="{{ URL::to('assets/' . $account->id.'/'.$key_i.'/EC2') }}">Details</a>
 											</p>
 										</div>
 									</li>
