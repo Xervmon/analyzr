@@ -101,12 +101,18 @@ class BudgetController extends BaseController {
             $budget->user_id                 = Auth::id();
 
             $success = $budget->save();
+
+            $account = CloudAccount::where('user_id', Auth::id())->find($budget -> cloudAccountId);
+           
+
+            $account->profileType = Constants::BUDGET;
+
+
+            $processJobLib = new ProcessJobLib();
+            $ret = $processJobLib->process($account, $budget);
             
-            if ($success) {
-                return Redirect::intended('budget')->with('success', Lang::get('budget/budget.budget_created'));
-            } else {
-                return Redirect::to('budget')->with('error', Lang::get('budget/budget.budget_auth_failed'));
-            }
+            return Redirect::intended('budget')->with('success', Lang::get('budget/budget.budget_created'));
+           
         }
         catch(Exception $e) {
             Log::error($e);
@@ -128,6 +134,65 @@ class BudgetController extends BaseController {
 
             return Redirect::to('budget')->with('error', 'Error while deleting Budget Account');
         }
+    }
+
+    public function getBudgetStatus($id)
+    {
+      UtilHelper::check();
+     
+      $account = CloudAccountHelper::findAndDecrypt($id);
+      $responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+      EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
+      $obj = WSObj::getObject($responseJson);
+
+      if($obj->status == 'OK')
+      {
+         Log::info('Preparing the ServiceSummary for processing..');
+         $credentials           = json_decode($account->credentials);
+         $data['token']         = $obj->token;
+         $data['accountId']     = $credentials->accountId;
+
+         $json = AWSBillingEngine::getBudgetStatus($data);
+         $ret = WSObj::getObject($responseJson);        
+         $ret = json_decode($json);
+         
+       /*
+        @Hard Coding for testing purpose 
+
+         $ret1['status'] = 'OK';
+         $ret1['last_alert'] = array('username' => 'sudhi',
+            'accountId' => '297860697318','last_update' => '1419449459','current_budget' => '2451.59',);
+        */
+        
+
+
+         if($ret->status == 'OK')
+         {
+              if(!empty($ret->last_alert))
+              { 
+                foreach ($ret->last_alert as $key => $value) 
+                {
+                  $budgetstatus[$key]   = empty($value)         ? '' : $value;
+                }
+
+                Log::info('GetBudgetStatus Generated Successfully');     
+                return View::make('site/account/budget/budgetStatus', array('account' => $account,
+                'budgetstatus'=> $budgetstatus));
+              }
+              Log::error($ret->last_alert.' '.json_encode($account));
+              return Redirect::to('budget')->with('warning', 'No History available on Last Alert');
+              
+        }  
+          else if($ret->status == 'error')
+          {
+            Log::error($ret->message.' '.json_encode($account));
+            RedirectHelper::redirectAccount(Constants::FAILURE);
+          }
+       }
+       else
+       {
+          RedirectHelper::redirectAccount(Constants::ENGINE_CREDENTIALS_FAILURE);
+       }
     }
 
 }

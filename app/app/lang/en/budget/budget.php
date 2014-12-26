@@ -23,6 +23,7 @@ return array(
 	'budgettype'            => 'Budget Type',
 	'notification_email'    => 'Notification Email',
 	'budget_delete'         => 'Are You Sure Want To Delete Budget For This Account ?',
+	'Budget_details'        => 'Budget Details',
 
 
 );

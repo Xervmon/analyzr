@@ -40,4 +40,5 @@ return array(
     'TaggedCost'			  => 'TaggedCost',
     'Budget'                  => 'Budget',
 	'CreateBudget'            => 'CreateBudget',
+	'BudgetDetails'           => 'BudgetDetails',
 );
