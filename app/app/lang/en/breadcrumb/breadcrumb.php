@@ -4,7 +4,7 @@ return array(
 
 	'home'                    => 'home',
 	'account'                 => 'account',
-    'EditProfile'             => 'EditProfile',
+	'EditProfile'             => 'EditProfile',
 	'CreateAccount'           => 'CreateAccount',
 	'EditAccount'             => 'EditAccount',
 	'SecurityGroups'          => 'SecurityGroups',
@@ -44,4 +44,5 @@ return array(
 	'EditBudget'              => 'EditBudget',
 	// 'Scheduler'               => 'Scheduler',
 	// 'CreateScheduler'         => 'CreateScheduler',
+	'BudgetDetails'           => 'BudgetDetails',
 );

@@ -101,6 +101,23 @@ class ProcessJobLib
 												   Log::info('After adding...'.$json);
 												   $this->pushToProcessJobTable($account, $data, $pJob1 , Constants::SECURITY_AUDIT); 	
 												   break;
+				case Constants::BUDGET			 : unset($data['apiKey']);
+												   unset($data['secretKey']);												   
+												   $data['budget'] = $portPreference->budget;
+												   $data['message'] = 'Notify';
+												   $data['subject'] =  'Test Mail';
+												   $data['email'] = $portPreference->budgetNotificationEmail;
+												   $data['type'] = $portPreference->budgetType;
+												   $data['accountId'] 	 =  $credentials->accountId;
+												   /*echo '<pre>';
+												   print_r($data);
+												   die();*/
+												   $json = $this->executeProcess( Constants::BUDGET, $data);
+												   Log::info('Adding the job to '.Constants::BUDGET.' queue for processing..'.$json);
+												   $pJob1 = WSObj::getObject($json);
+												   Log::info('After adding...'.$json);
+												   $this->pushToProcessJobTable($account, $data, $pJob1 , Constants::BUDGET); 	
+												   break;
 			}
 		}
 		else 
@@ -117,6 +134,7 @@ class ProcessJobLib
 			case Constants::BILLING  	  : $response   = AWSBillingEngine::create_billing($data); break;
 			case Constants::SERVICES 	  : $response   = AWSBillingEngine::create_services($data); break;
 			case Constants::SECURITY_AUDIT: $response 	= AWSBillingEngine::create_audit($data); break;
+			case Constants::BUDGET        : $response 	= AWSBillingEngine::setBudget($data); break;
 			case Constants::PORT_SCANNING : $response   = AWSBillingEngine::create_secgroup($data);
 		}
 		return $response;
