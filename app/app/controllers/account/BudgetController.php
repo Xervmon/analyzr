@@ -101,12 +101,18 @@ class BudgetController extends BaseController {
             $budget->user_id                 = Auth::id();
 
             $success = $budget->save();
+
+            $account = CloudAccount::where('user_id', Auth::id())->find($budget -> cloudAccountId);
+           
+
+            $account->profileType = Constants::BUDGET;
+
+
+            $processJobLib = new ProcessJobLib();
+            $ret = $processJobLib->process($account, $budget);
             
-            if ($success) {
-                return Redirect::intended('budget')->with('success', Lang::get('budget/budget.budget_created'));
-            } else {
-                return Redirect::to('budget')->with('error', Lang::get('budget/budget.budget_auth_failed'));
-            }
+            return Redirect::intended('budget')->with('success', Lang::get('budget/budget.budget_created'));
+           
         }
         catch(Exception $e) {
             Log::error($e);
@@ -128,6 +134,56 @@ class BudgetController extends BaseController {
 
             return Redirect::to('budget')->with('error', 'Error while deleting Budget Account');
         }
+    }
+
+    public function getBudgetStatus($id)
+    {
+      UtilHelper::check();
+     
+      $account = CloudAccountHelper::findAndDecrypt($id);
+      $responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+      EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate', 'return' => $responseJson));
+      $obj = WSObj::getObject($responseJson);
+
+      if($obj->status == 'OK')
+      {
+         Log::info('Preparing the ServiceSummary for processing..');
+         $credentials           = json_decode($account->credentials);
+         $data['token']         = $obj->token;
+         $data['accountId']     = $credentials->accountId;
+
+         $json = AWSBillingEngine::getBudgetStatus($data);
+         $ret = WSObj::getObject($responseJson);        
+         $ret = json_decode($json);
+
+         if($ret->status == 'OK')
+         {
+              if(!empty($ret->last_alert))
+              { 
+                foreach ($ret->last_alert as $key => $value) 
+                {
+                  $budgetstatus[$key]   = empty($value['username'])         ? '' : $value['username'];
+                  $budgetstatus[$key]   = empty($value['accountId'])        ? '' : $value['accountId'];
+                  $budgetstatus[$key]   = empty($value['last_update'])      ? '' : $value['last_update'];
+                  $budgetstatus[$key]   = empty($value['current_budget'])   ? '' : $value['current_budget'];
+                  
+                }
+
+                Log::info('GetBudgetStatus Generated Successfully');     
+                return View::make('site/account/budget/budgetStatus', array('account' => $account,
+                'budgetstatus'=> $budgetstatus));
+              }
+          }  
+          else if($ret->status == 'error')
+          {
+            Log::error($ret->message.' '.json_encode($account));
+            RedirectHelper::redirectAccount(Constants::FAILURE);
+          }
+       }
+       else
+       {
+          RedirectHelper::redirectAccount(Constants::ENGINE_CREDENTIALS_FAILURE);
+       }
     }
 
 }
