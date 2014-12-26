@@ -4,7 +4,7 @@ return array(
 
 	'home'                    => 'home',
 	'account'                 => 'account',
-    'EditProfile'             => 'EditProfile',
+	'EditProfile'             => 'EditProfile',
 	'CreateAccount'           => 'CreateAccount',
 	'EditAccount'             => 'EditAccount',
 	'SecurityGroups'          => 'SecurityGroups',
@@ -26,6 +26,7 @@ return array(
 	'EC2Products'             => 'EC2Products',
 	'Ticket'                  => 'Ticket',
 	'AddTicket'               => 'AddTicket',
+	'ReplyTicket'             => 'ReplyTicket',
 	'DataSecurity'            => 'DataSecurity',
 	'Roadmap'                 => 'Roadmap',
 	'CloudExperts'            => 'CloudExperts',
@@ -40,5 +41,8 @@ return array(
     'TaggedCost'			  => 'TaggedCost',
     'Budget'                  => 'Budget',
 	'CreateBudget'            => 'CreateBudget',
+	'EditBudget'              => 'EditBudget',
+	// 'Scheduler'               => 'Scheduler',
+	// 'CreateScheduler'         => 'CreateScheduler',
 	'BudgetDetails'           => 'BudgetDetails',
 );

@@ -1,5 +1,14 @@
 @extends('site.layouts.default')
 
+@if(isset($budget->id)&& $mode=='edit')
+
+@section('breadcrumbs', Breadcrumbs::render('EditBudget'))
+
+@else
+
+@section('breadcrumbs', Breadcrumbs::render('CreateBudget'))
+
+@endif
 {{-- Content --}}
 @section('content')
 @section('breadcrumbs', Breadcrumbs::render('CreateBudget'))
