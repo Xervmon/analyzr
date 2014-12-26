@@ -23,6 +23,7 @@ class Constants
 		
 		const READONLY_PROFILE              = 'ReadOnly Profile';
 		const SECURITY_PROFILE              = 'Security Profile';
+		const BUDGET		                = 'Budget';
 		
 		const SUCCESS                       = 'SUCCESS';
 		const BAD_CREDENTIALS               = 'BAD_CREDENTIALS';

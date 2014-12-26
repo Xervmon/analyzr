@@ -250,7 +250,7 @@ class AssetsController extends BaseController {
             {
                 foreach($getEBSAll['Volumes'] as $key => $value)
                 {
-                  $stdClass = new stdClass();
+                    $stdClass = new stdClass();
                     $stdClass->VolumeId         = empty($value['VolumeId']) ? '' : $value['VolumeId'];
                     $stdClass->Description      = empty($value['SnapshotId']) ? '' : 'SnapshotId : '. $value['SnapshotId'] .'<br/>'. 'CreateTime : ' .$value['CreateTime']. '<br/>';
                     $stdClass->AvailabilityZone = empty($value['AvailabilityZone']) ? '' : $value['AvailabilityZone'];
