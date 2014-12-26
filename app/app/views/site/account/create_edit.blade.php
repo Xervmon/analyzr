@@ -1,6 +1,14 @@
-@section('breadcrumbs', Breadcrumbs::render('CreateAccount'))
-@section('breadcrumbs', Breadcrumbs::render('EditAccount'))
 @extends('site.layouts.default')
+
+@if(isset($account->id)&& $mode=='edit')
+
+@section('breadcrumbs', Breadcrumbs::render('EditAccount'))
+
+@else
+
+@section('breadcrumbs', Breadcrumbs::render('CreateAccount'))
+
+@endif
 
 {{-- Content --}}
 @section('content')
