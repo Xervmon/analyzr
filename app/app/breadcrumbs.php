@@ -181,3 +181,8 @@ Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.CreateBudget'), function 
 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.Budget'), URL::to('budget/'));
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.CreateBudget'), URL::to('budget/create'));
 });
+
+Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.BudgetDetails'), function ($breadcrumbs) {
+	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.account'));
+	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.BudgetDetails'), URL::to('account/{account}/CollectionData'));
+});

@@ -2,12 +2,12 @@
 
 {{-- Content --}}
 @section('content')
-@section('breadcrumbs', Breadcrumbs::render('EbsInfo',$account->id))
+@section('breadcrumbs', Breadcrumbs::render(Lang::get('breadcrumb/breadcrumb.BudgetDetails'),$account->id))
 
 <div class="page-header">
 	<div class="row">
 		<div class="col-md-9">
-			<h5>{{{ Lang::get('account/account.awsVolumesDetails') }}} : <a href="{{ URL::to('account/'.$account->id.'/edit') }}">{{ $account->name }} </a></h5>
+			<h5>{{{ Lang::get('budget/budget.Budget_details') }}} : <a href="{{ URL::to('account/'.$account->id.'/edit') }}">{{ $account->name }} </a></h5>
 		</div>
 	</div>
 </div>

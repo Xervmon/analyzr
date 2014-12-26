@@ -155,6 +155,16 @@ class BudgetController extends BaseController {
          $json = AWSBillingEngine::getBudgetStatus($data);
          $ret = WSObj::getObject($responseJson);        
          $ret = json_decode($json);
+         
+       /*
+        @Hard Coding for testing purpose 
+
+         $ret1['status'] = 'OK';
+         $ret1['last_alert'] = array('username' => 'sudhi',
+            'accountId' => '297860697318','last_update' => '1419449459','current_budget' => '2451.59',);
+        */
+        
+
 
          if($ret->status == 'OK')
          {
@@ -162,18 +172,17 @@ class BudgetController extends BaseController {
               { 
                 foreach ($ret->last_alert as $key => $value) 
                 {
-                  $budgetstatus[$key]   = empty($value['username'])         ? '' : $value['username'];
-                  $budgetstatus[$key]   = empty($value['accountId'])        ? '' : $value['accountId'];
-                  $budgetstatus[$key]   = empty($value['last_update'])      ? '' : $value['last_update'];
-                  $budgetstatus[$key]   = empty($value['current_budget'])   ? '' : $value['current_budget'];
-                  
+                  $budgetstatus[$key]   = empty($value)         ? '' : $value;
                 }
 
                 Log::info('GetBudgetStatus Generated Successfully');     
                 return View::make('site/account/budget/budgetStatus', array('account' => $account,
                 'budgetstatus'=> $budgetstatus));
               }
-          }  
+              Log::error($ret->last_alert.' '.json_encode($account));
+              return Redirect::to('budget')->with('warning', 'No History available on Last Alert');
+              
+        }  
           else if($ret->status == 'error')
           {
             Log::error($ret->message.' '.json_encode($account));
