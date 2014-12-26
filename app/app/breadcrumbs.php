@@ -138,6 +138,10 @@ Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.AddTicket'), function ($b
 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.Ticket'), URL::to('ticket/'));
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.AddTicket'), URL::to('ticket/create'));
 });
+Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.ReplyTicket'), function ($breadcrumbs) {
+	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.Ticket'), URL::to('ticket/'));
+	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.ReplyTicket'), URL::to('ticket/{ticket}/reply'));
+});
 Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.DataSecurity'), function ($breadcrumbs) {
 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.home'));
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.DataSecurity'), URL::to('data-security'));
@@ -177,7 +181,23 @@ Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.Budget'), function ($brea
 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.home'));
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.Budget'), URL::to('budget/'));
 });
+
 Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.CreateBudget'), function ($breadcrumbs) {
 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.Budget'), URL::to('budget/'));
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.CreateBudget'), URL::to('budget/create'));
 });
+
+Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.EditBudget'), function ($breadcrumbs) {
+	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.Budget'), URL::to('budget/'));
+	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.EditBudget'), URL::to('budget/{budget}/edit'));
+});
+
+// Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.Scheduler'), function ($breadcrumbs) {
+// 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.home'));
+// 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.Scheduler'), URL::to('scheduler/'));
+// });
+
+// Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.CreateScheduler'), function ($breadcrumbs) {
+// 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.Scheduler'), URL::to('scheduler/'));
+// 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.CreateScheduler'), URL::to('scheduler/create'));
+// });
