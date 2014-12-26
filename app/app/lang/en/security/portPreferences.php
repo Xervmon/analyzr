@@ -17,6 +17,7 @@ return array(
 	'portPreference_add'     => 'Add Port policy',
 	'portPreference_list'    => 'Security Port Details',
 	'create_secgroup'        => 'create_secgroup',
-	'securityProfile'        => 'Security Profile'
+	'securityProfile'        => 'Security Profile',
+	'readonlyProfile'		 => 'ReadOnly Profile',
 	
 	);
