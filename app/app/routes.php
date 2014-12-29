@@ -226,6 +226,8 @@ Route::group(array(
     Route::any('budget/', 'BudgetController@getIndex');
     Route::get('budget/create', 'BudgetController@getCreate');
     Route::get('budget/{budget}/edit', 'BudgetController@getCreate');
+    Route::any('budget/{account}/BudgetStatus', 'BudgetController@getBudgetStatus');
+    
 
 
     // Route::get('deployment/{id}/edit/', 'DeploymentController@getCreate');

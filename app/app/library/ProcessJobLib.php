@@ -28,18 +28,18 @@ class ProcessJobLib
 		$processJob->save();
 	}
 	
-	public function process(& $account, $portPreference= '')
+	public function process(& $account, $objectContext= '')
 	{
 		UtilHelper::check();
 		$user = Auth::user();
 
 		//@TODO : If user has a subscription, we can control here..
 		Log::info('Processing ..' . $account->cloudProvider. '..');
-		$response = $this->backgroundJob($account, $portPreference);
+		$response = $this->backgroundJob($account, $objectContext);
 		return $response;
 	}
 	
-	private function backgroundJob(& $account, $portPreference)
+	private function backgroundJob(& $account, $objectContext)
 	{
 		/*
 		Step 1 - first login
@@ -66,7 +66,7 @@ class ProcessJobLib
 												   $data['accountId'] 	 =  $credentials->accountId;
 												   $data['billingBucket'] = $credentials->billingBucket;
 											
-												if(empty($portPreference))
+												if(empty($objectContext))
 												{
 													$json = $this->executeProcess(Constants::BILLING, $data);
 													Log::info('Adding the job to '.Constants::READONLY_PROFILE.' '.Constants::BILLING.' queue for processing..'.$json);
@@ -80,7 +80,7 @@ class ProcessJobLib
 												}			
 												else
 												{
-														$preferences = json_decode($portPreference ->preferences);
+														$preferences = json_decode($objectContext ->preferences);
 														unset($data['billingBucket']);
 														$data['dangerPorts'] = $preferences -> dangerPorts;
 														$data['warningPorts'] = $preferences -> warningPorts;
@@ -101,6 +101,21 @@ class ProcessJobLib
 												   Log::info('After adding...'.$json);
 												   $this->pushToProcessJobTable($account, $data, $pJob1 , Constants::SECURITY_AUDIT); 	
 												   break;
+				case Constants::BUDGET			 : unset($data['apiKey']);
+												   unset($data['secretKey']);												   
+												   $data['budget'] = $objectContext->budget;
+												   $data['message'] = 'Notify';
+												   $data['subject'] =  'Test Mail';
+												   $data['email'] = $objectContext->budgetNotificationEmail;
+												   $data['type'] = $objectContext->budgetType;
+												   $data['accountId'] 	 =  $credentials->accountId;
+												   
+												   $json = $this->executeProcess( Constants::BUDGET, $data);
+												   Log::info('Adding the job to '.Constants::BUDGET.' queue for processing..'.$json);
+												   $pJob1 = WSObj::getObject($json);
+												   Log::info('After adding...'.$json);
+												   $this->pushToProcessJobTable($account, $data, $pJob1 , Constants::BUDGET); 	
+												   break;
 			}
 		}
 		else 
@@ -117,6 +132,7 @@ class ProcessJobLib
 			case Constants::BILLING  	  : $response   = AWSBillingEngine::create_billing($data); break;
 			case Constants::SERVICES 	  : $response   = AWSBillingEngine::create_services($data); break;
 			case Constants::SECURITY_AUDIT: $response 	= AWSBillingEngine::create_audit($data); break;
+			case Constants::BUDGET        : $response 	= AWSBillingEngine::setBudget($data); break;
 			case Constants::PORT_SCANNING : $response   = AWSBillingEngine::create_secgroup($data);
 		}
 		return $response;

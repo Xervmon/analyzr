@@ -172,6 +172,21 @@ class AWSBillingEngine {
         self::init();
         return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['serviceSummary'], $data);
     }
+
+    public static function setBudget($data) {
+        self::init();
+        Log::info('Debug :' . json_encode($data));
+        Log::info('URL ' . self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['setBudget']);
+        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['setBudget'], $data);
+    }
+
+    public static function getBudgetStatus($data) {
+        self::init();
+        Log::info('Debug :' . json_encode($data));
+        Log::info('URL ' . self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['getBudgetStatus']);
+        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['getBudgetStatus'], $data);
+    }
+
     
 	
 }

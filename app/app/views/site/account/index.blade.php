@@ -61,6 +61,9 @@
 						<a href="{{ URL::to('account/' . $account->id . '/Collection') }}" id="acc_collection_btn"><i class="fa fa-briefcase"></i></a>
 						|
 						<a href="{{ URL::to('account/' . $account->id . '/ChartsData') }}" id="acc_charts_btn"><i class="fa fa-bar-chart"></i></a>
+						|
+						<a href="{{ URL::to('budget/' . $account->id . '/BudgetStatus') }}" id="acc_budget_btn"><i class="fa fa-money"></i></a>
+
 					</p>
 					<!-- <p>UIHelper::getCurrentCostAndServices($account->id, CloudAccountHelper::findCurrentCost($account))</p> -->
 
