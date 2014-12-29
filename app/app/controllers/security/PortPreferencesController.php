@@ -110,15 +110,33 @@ class PortPreferencesController extends BaseController {
 		$errors = '';
 		foreach($preferences as $prefernce => $ports)
 		{
-			$array = explode(',', $ports);
+			$array = array_map('trim', explode(',', $ports));
+			$arr[] = $array;
+
 			$ret = array_filter($array, 'is_numeric') === $array;
 			if(!$ret)
 			{
 				$errors[] = StringHelper::removeUnderscoreUCWords($prefernce) . ' should have all numeric values separated by commas';
 			}
 		}
+
 	
-		if(!empty($errors))
+		$result = array();
+		$first = $arr[0];
+			for($i = 1; $i < count($arr); $i++){
+ 				$result = array_merge($first, $arr[$i]);
+ 				$first = $result;
+			}
+		$array_check = array_unique($result);
+
+		echo count($errors);
+
+	if(!(count($result)==count($array_check)))
+	{
+	   $errors[] = 'Ports Values Must be Unique';
+	}
+
+	if(!empty($errors))
 		{
 			 Log::error(json_encode($errors));
            	 throw new Exception(implode('<br/>', $errors));

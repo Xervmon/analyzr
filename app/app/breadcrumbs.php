@@ -201,7 +201,6 @@ Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.EditBudget'), function ($
 // 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.Scheduler'), URL::to('scheduler/'));
 // 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.CreateScheduler'), URL::to('scheduler/create'));
 // });
-=======
 Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.BudgetDetails'), function ($breadcrumbs) {
 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.account'));
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.BudgetDetails'), URL::to('account/{account}/CollectionData'));
