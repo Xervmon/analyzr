@@ -23,7 +23,7 @@
         <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
         <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
         <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
-        
+                
         <style>
 		@section('styles')
 		@show
@@ -106,8 +106,8 @@
 	    								<li><a href="{{{ URL::to('enginelog') }}}"><span class="glyphicon glyphicon-inbox"></span> {{{ Lang::get('site.enginelog') }}}</a></li>
 	    								<li class="divider"></li>
 	    								<li><a href="{{{ URL::to('budget') }}}"><i class="fa fa-money"></i> {{{ Lang::get('site.budget') }}}</a></li>
-	    								<!--<li class="divider"></li>
-	    								<li><a href="{{{ URL::to('scheduler') }}}"><i class="fa fa-clock-o"></i> {{{ Lang::get('site.scheduler') }}}</a></li>-->
+	    								<li class="divider"></li>
+	    								<li><a href="{{{ URL::to('scheduler') }}}"><i class="fa fa-clock-o"></i> {{{ Lang::get('site.scheduler') }}}</a></li>
 	    								<li class="divider"></li>
 	    								<li><a href="{{{ URL::to('ServiceStatus') }}}"><span class="glyphicon glyphicon-signal"></span> {{{ Lang::get('site.webservice_status') }}}</a></li>
 	    								
