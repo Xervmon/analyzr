@@ -81,5 +81,5 @@ return array(
 		'collection_data'                  => 'Collection Data Of AWS Services',
 		'apn_fee'                          => 'APN Fee',
 		'multiple_value'                   => '12',
-		'setScheduler'                     => 'Time Based Event Scheduler',
+		
 );

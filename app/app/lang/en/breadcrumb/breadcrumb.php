@@ -42,7 +42,8 @@ return array(
     'Budget'                  => 'Budget',
 	'CreateBudget'            => 'CreateBudget',
 	'EditBudget'              => 'EditBudget',
-	// 'Scheduler'               => 'Scheduler',
-	// 'CreateScheduler'         => 'CreateScheduler',
+	'Scheduler'               => 'Scheduler',
+	'CreateScheduler'         => 'CreateScheduler',
+	'EditScheduler'           => 'EditScheduler',
 	'BudgetDetails'           => 'BudgetDetails',
 );
