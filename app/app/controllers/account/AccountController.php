@@ -553,6 +553,115 @@ class AccountController extends BaseController {
         }
     }
 
+
+    public function CloudTrail($id)
+	{
+		$account = CloudAccountHelper::findAndDecrypt($id);
+		$cred = json_decode($account->credentials);
+
+		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - Collection', 'return' => $responseJson));
+		$obj = WSObj::getObject($responseJson);
+		
+		if($obj->status == 'OK')
+		{
+			$response = AWSBillingEngine::get_cloudTrail(array('token'         => $obj->token, 
+														       'filter'        => 'eventName', 
+														       'accountId'     => $cred->accountId,
+														 ));
+			$result = WSObj::getObject($response);							
+			if($result->status == 'OK')
+			{
+
+				$arr['eventName'] = $result->get_cloudtrail_data;
+				
+			}
+			$response = AWSBillingEngine::get_cloudTrail(array('token'         => $obj->token, 
+														       'filter'        => 'eventType', 
+														       'accountId'     => $cred->accountId,
+														 ));
+			$result = WSObj::getObject($response);							
+			if($result->status == 'OK')
+			{
+
+				$arr['eventType'] = $result->get_cloudtrail_data;
+				
+			}
+		}
+
+		return View::make('site/account/cloudtrail', array(
+            	                                   'account'  => $account,
+            	                                   'eventName' => $arr['eventName'],
+            	                                   'eventType' => $arr['eventType'],
+
+            	                                         ));
+		
+	}
+
+	public function getcloudTrailCollection($id)
+	{
+		$account = CloudAccountHelper::findAndDecrypt($id);
+		$cred = json_decode($account->credentials);
+
+		$accountId    = Input::get('AccountId');
+		$eventName  = Input::get('eventName');
+		$eventType  = Input::get('eventType');
+
+		if(empty($eventName)) $eventName   = 'DescribeInstances';
+		if(empty($eventType)) $eventType   = 'AwsApiCall'; 
+		if(empty($accountId)) $accountId   = $cred->accountId;
+				
+		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
+		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - cloudTrailCollection', 'return' => $responseJson));
+		$obj = WSObj::getObject($responseJson);
+		
+		if($obj->status == 'OK')
+		{
+			$response = AWSBillingEngine::cloudTrailCollection(array('token'         => $obj->token, 
+														   'eventName' => $eventName, 
+														   'eventType' => $eventType, 
+														   'accountId'     => $accountId,
+														  											   
+												    ));
+
+
+			$result = WSObj::getObject($response);										
+			
+			if($result->status == 'OK')
+			{
+				$cloudTrailData = $result -> cloudTrailcollection_data;
+
+				if(!empty($cloudTrailData))
+				{
+					$arr = []; $tags=[]; $i=0;
+
+					foreach($cloudTrailData as $keys => $values)
+					{
+
+						foreach( $values as $key => $value)
+                		{
+                			$arr[$i]['eventVersion']    = $value->eventVersion;
+                			$arr[$i]['eventID'] 	    = $value->eventID;
+							$arr[$i]['eventTime']       = $value->eventTime;							
+							$arr[$i]['sourceIPAddress'] = $value->sourceIPAddress;
+							$arr[$i]['awsRegion']      = $value->awsRegion;
+							$arr[$i]['eventSource']   = $value->eventSource;
+							$arr[$i]['userAgent']   = $value->userAgent;
+							$arr[$i]['requestID']     = $value->requestID;
+								
+                			$i++;
+                		}
+                		
+					}
+              	}
+			}
+		}
+
+		print json_encode($arr);
+	}
+
+
+
     //Get Taggedcost By Key and Value 
      /*public function getTaggedcost()
     {

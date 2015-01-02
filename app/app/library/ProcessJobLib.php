@@ -63,8 +63,17 @@ class ProcessJobLib
 			switch($account->profileType)
 			{
 				case Constants::READONLY_PROFILE : 	
-												   $data['accountId'] 	 =  $credentials->accountId;
-												   $data['billingBucket'] = $credentials->billingBucket;
+												$data['accountId'] 	 =  $credentials->accountId;
+												if(!empty($credentials->cloudTrailBucket))
+												{											   
+			     								 	$data['cloudTrailBucket'] = $credentials->cloudTrailBucket;
+	 												$json = $this->executeProcess(Constants::CLOUDTRAIL, $data);
+												   	Log::info('Adding the job to '.Constants::READONLY_PROFILE.' '.Constants::CLOUDTRAIL.' queue for processing..'.$json);
+												   	$pJob1 = WSObj::getObject($json);
+												   	$this->pushToProcessJobTable($account, $data, $pJob1 , Constants::CLOUDTRAIL); 													
+												}
+												$data['billingBucket'] = $credentials->billingBucket;
+												  
 											
 												if(empty($objectContext))
 												{
@@ -133,6 +142,7 @@ class ProcessJobLib
 			case Constants::SERVICES 	  : $response   = AWSBillingEngine::create_services($data); break;
 			case Constants::SECURITY_AUDIT: $response 	= AWSBillingEngine::create_audit($data); break;
 			case Constants::BUDGET        : $response 	= AWSBillingEngine::setBudget($data); break;
+			case Constants::CLOUDTRAIL    : $response 	= AWSBillingEngine::create_cloudTrail($data); break;
 			case Constants::PORT_SCANNING : $response   = AWSBillingEngine::create_secgroup($data);
 		}
 		return $response;

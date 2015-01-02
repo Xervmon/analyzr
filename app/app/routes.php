@@ -214,6 +214,9 @@ Route::group(array(
 	//Route::any('account/{account}/ChartData', 'AccountController@getChartData');
 	Route::any('account/{account}/CollectionData', 'AccountController@getCollectionData');
     Route::any('account/{account}/CurrentTagCost', 'AccountController@CurrentTagCostInfo');
+
+    Route::get('account/{account}/cloudTrail', 'AccountController@CloudTrail');
+    Route::any('account/{account}/cloudTrailCollection', 'AccountController@getcloudTrailCollection');
 	
 	Route::any('EC2Products/', 'AWSProductsController@getEC2Products');
 	Route::get('ServiceStatus/', 'WebserviceController@getIndex');
