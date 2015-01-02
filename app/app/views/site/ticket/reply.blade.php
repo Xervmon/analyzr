@@ -31,7 +31,9 @@
 			<label class="col-md-2 control-label" for="email">{{{ Lang::get('ticket/ticket.Description') }}}</label>
 			<div class="col-md-6">
             		<textarea class="form-control full-width wysihtml5" name="description" value="description" rows="3" readonly>{{{ Input::old('description', isset($ticket) ? $ticket->description : null) }}}</textarea>
-					{{{ $errors->first('description', '<span class="help-block">{{{ Lang::get('ticket/ticket.message') }}}</span>') }}}
+					{{{ $errors->first('description', '<span class="help-block"> :message</span>') }}}
+
+
 			</div>
 		</div>
 
@@ -62,7 +64,7 @@
 			<label class="col-md-2 control-label" for="email">{{{ Lang::get('ticket/ticket.Comment') }}} <font color="red">*</font></label>
 			<div class="col-md-6">
             		<textarea class="form-control full-width wysihtml5" name="comments" value="comments" rows="5" required></textarea>
-					{{{ $errors->first('comments', '<span class="help-block">{{{ Lang::get('ticket/ticket.message') }}}</span>') }}}
+					{{{ $errors->first('comments', '<span class="help-block">:message</span>') }}}
 			</div>
 		</div>
 
