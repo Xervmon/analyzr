@@ -192,15 +192,21 @@ Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.EditBudget'), function ($
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.EditBudget'), URL::to('budget/{budget}/edit'));
 });
 
-// Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.Scheduler'), function ($breadcrumbs) {
-// 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.home'));
-// 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.Scheduler'), URL::to('scheduler/'));
-// });
+Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.Scheduler'), function ($breadcrumbs) {
+	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.home'));
+	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.Scheduler'), URL::to('scheduler/'));
+});
 
-// Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.CreateScheduler'), function ($breadcrumbs) {
-// 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.Scheduler'), URL::to('scheduler/'));
-// 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.CreateScheduler'), URL::to('scheduler/create'));
-// });
+Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.CreateScheduler'), function ($breadcrumbs) {
+	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.Scheduler'), URL::to('scheduler/'));
+	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.CreateScheduler'), URL::to('scheduler/create'));
+});
+
+Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.EditScheduler'), function ($breadcrumbs) {
+	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.Scheduler'), URL::to('scheduler/'));
+	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.EditScheduler'), URL::to('scheduler/{scheduler}/edit'));
+});
+
 Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.BudgetDetails'), function ($breadcrumbs) {
 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.account'));
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.BudgetDetails'), URL::to('account/{account}/CollectionData'));

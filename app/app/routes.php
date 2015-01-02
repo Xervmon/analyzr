@@ -228,9 +228,12 @@ Route::group(array(
     Route::get('budget/{budget}/edit', 'BudgetController@getCreate');
     Route::any('budget/{account}/BudgetStatus', 'BudgetController@getBudgetStatus');
     
+    Route::any('scheduler/', 'SchedulerController@getIndex');
+    Route::get('scheduler/create', 'SchedulerController@getCreate');
+    Route::get('scheduler/{account}/{region}/instances', 'SchedulerController@getInstanceInfo');
+    Route::get('scheduler/{scheduler}/edit', 'SchedulerController@getCreate');
 
-
-    // Route::get('deployment/{id}/edit/', 'DeploymentController@getCreate');
+    //Route::get('deployment/{id}/edit/', 'DeploymentController@getCreate');
     
     Route::group(array(
         'before' => 'csrf'
@@ -251,6 +254,10 @@ Route::group(array(
         Route::post('budget/create', 'BudgetController@postEdit');
         Route::post('budget/{budget}/edit', 'BudgetController@postEdit');
         Route::post('budget/{budget}/delete', 'BudgetController@postDelete');
+
+        Route::post('scheduler/create', 'SchedulerController@postEdit');
+        Route::post('scheduler/{scheduler}/edit', 'SchedulerController@postEdit');
+        Route::post('scheduler/{scheduler}/delete', 'SchedulerController@postDelete');
 
     });
     

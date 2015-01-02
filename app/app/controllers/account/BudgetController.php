@@ -111,7 +111,7 @@ class BudgetController extends BaseController {
             $processJobLib = new ProcessJobLib();
             $ret = $processJobLib->process($account, $budget);
             
-            return Redirect::intended('budget')->with('success', Lang::get('budget/budget.budget_created'));
+            return Redirect::intended('budget')->with('success', Lang::get('budget/budget.budget_updated'));
            
         }
         catch(Exception $e) {
