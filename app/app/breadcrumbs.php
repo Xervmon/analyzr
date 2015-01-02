@@ -211,3 +211,8 @@ Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.BudgetDetails'), function
 	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.account'));
 	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.BudgetDetails'), URL::to('account/{account}/CollectionData'));
 });
+
+Breadcrumbs::register(Lang::get('breadcrumb/breadcrumb.CloudTrail'), function ($breadcrumbs) {
+	$breadcrumbs->parent(Lang::get('breadcrumb/breadcrumb.account'));
+	$breadcrumbs->push(Lang::get('breadcrumb/breadcrumb.CloudTrail'), URL::to('account/{account}/cloudTrailData'));
+});

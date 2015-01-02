@@ -79,6 +79,7 @@ return array(
 		'warning_cost_data_empty'	       => 'No cost data were processed for previous month. Please dump the previous months usage to the same bucket to process for past months.',
 		'processnotcompleted' 		       => 'Process is yet to be Completed',
 		'collection_data'                  => 'Collection Data Of AWS Services',
+		'CloudTrail'                       => 'Cloud Trail Logs Of AWS Services',
 		'apn_fee'                          => 'APN Fee',
 		'multiple_value'                   => '12',
 		

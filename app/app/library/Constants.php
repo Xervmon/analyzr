@@ -24,6 +24,7 @@ class Constants
 		const READONLY_PROFILE              = 'ReadOnly Profile';
 		const SECURITY_PROFILE              = 'Security Profile';
 		const BUDGET		                = 'Budget';
+		const CLOUDTRAIL                    = 'CloudTrail';
 		
 		const SUCCESS                       = 'SUCCESS';
 		const BAD_CREDENTIALS               = 'BAD_CREDENTIALS';
