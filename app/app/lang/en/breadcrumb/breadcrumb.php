@@ -46,4 +46,5 @@ return array(
 	'CreateScheduler'         => 'CreateScheduler',
 	'EditScheduler'           => 'EditScheduler',
 	'BudgetDetails'           => 'BudgetDetails',
+	'CloudTrail'              => 'CloudTrail',
 );

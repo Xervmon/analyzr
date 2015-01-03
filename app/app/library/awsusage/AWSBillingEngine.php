@@ -187,6 +187,29 @@ class AWSBillingEngine {
         return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['getBudgetStatus'], $data);
     }
 
+
+     public static function create_cloudTrail($data) {
+        self::init();
+        Log::info('Debug :' . json_encode($data));
+        Log::info('URL ' . self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['create_cloudTrail']);
+        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['create_cloudTrail'], $data);
+    }
+
+
+     public static function cloudTrailCollection($data) {
+        self::init();
+        Log::info('Debug :' . json_encode($data));
+        Log::info('URL ' . self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['cloudTrailCollection']);
+        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['cloudTrailCollection'], $data);
+    }
+
+     public static function get_cloudTrail($data) {
+        self::init();
+        Log::info('Debug :' . json_encode($data));
+        Log::info('URL ' . self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['get_cloudTrail']);
+        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['get_cloudTrail'], $data);
+    }
+
     
 	
 }
