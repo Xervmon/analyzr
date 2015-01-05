@@ -32,5 +32,11 @@ return array(
 	'create_services'     => '/create_services',
 	'serviceSummary'      => '/serviceSummary',
 	'getLog' 			  => '/getLog',
+	'getCurrentTaggedcost' 	=> '/getCurrentTaggedcost',
+	'setBudget'			  	=>'/setBudget',
+	'getBudgetStatus'	  	=>'/getBudgetStatus',
+	'create_cloudTrail'	  	=>'/create_cloudTrail',
+	'cloudTrailCollection'	=>'/cloudTrailCollection',
+	'getCloudTrailFilters'	   	=>'/getCloudTrailFilters',
 	);
 
