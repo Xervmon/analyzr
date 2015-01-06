@@ -67,10 +67,10 @@ class ProcessJobLib
 												if(!empty($credentials->cloudTrailBucket))
 												{											   
 			     								 	$data['cloudTrailBucket'] = $credentials->cloudTrailBucket;
-	 												$json = $this->executeProcess(Constants::CLOUDTRAIL, $data);
-												   	Log::info('Adding the job to '.Constants::READONLY_PROFILE.' '.Constants::CLOUDTRAIL.' queue for processing..'.$json);
+	 												$json = $this->executeProcess(Constants::CLOUD_TRAIL, $data);
+												   	Log::info('Adding the job to '.Constants::READONLY_PROFILE.' '.Constants::CLOUD_TRAIL.' queue for processing..'.$json);
 												   	$pJob1 = WSObj::getObject($json);
-												   	$this->pushToProcessJobTable($account, $data, $pJob1 , Constants::CLOUDTRAIL); 													
+												   	$this->pushToProcessJobTable($account, $data, $pJob1 , Constants::CLOUD_TRAIL); 													
 												}
 												$data['billingBucket'] = $credentials->billingBucket;
 												  
@@ -119,11 +119,11 @@ class ProcessJobLib
 												   $data['type'] = $objectContext->budgetType;
 												   $data['accountId'] 	 =  $credentials->accountId;
 												   
-												   $json = $this->executeProcess( Constants::BUDGET, $data);
-												   Log::info('Adding the job to '.Constants::BUDGET.' queue for processing..'.$json);
+												   $json = $this->executeProcess( Constants::CREATE_BUDGET, $data);
+												   Log::info('Adding the job to '.Constants::CREATE_BUDGET.' queue for processing..'.$json);
 												   $pJob1 = WSObj::getObject($json);
 												   Log::info('After adding...'.$json);
-												   $this->pushToProcessJobTable($account, $data, $pJob1 , Constants::BUDGET); 	
+												   $this->pushToProcessJobTable($account, $data, $pJob1 , Constants::CREATE_BUDGET); 	
 												   break;
 			}
 		}
@@ -141,8 +141,8 @@ class ProcessJobLib
 			case Constants::BILLING  	  : $response   = AWSBillingEngine::create_billing($data); break;
 			case Constants::SERVICES 	  : $response   = AWSBillingEngine::create_services($data); break;
 			case Constants::SECURITY_AUDIT: $response 	= AWSBillingEngine::create_audit($data); break;
-			case Constants::BUDGET        : $response 	= AWSBillingEngine::setBudget($data); break;
-			case Constants::CLOUDTRAIL    : $response 	= AWSBillingEngine::create_cloudTrail($data); break;
+			case Constants::CREATE_BUDGET        : $response 	= AWSBillingEngine::setBudget($data); break;
+			case Constants::CLOUD_TRAIL    : $response 	= AWSBillingEngine::create_cloudTrail($data); break;
 			case Constants::PORT_SCANNING : $response   = AWSBillingEngine::create_secgroup($data);
 		}
 		return $response;

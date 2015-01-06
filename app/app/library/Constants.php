@@ -31,10 +31,12 @@ class Constants
 		const FAILURE                       = 'FAILURE' ;
 		const ENGINE_FAILURE                = 'ENGINE_FAILURE' ;
 		const ENGINE_CREDENTIALS_FAILURE    = 'ENGINE_CREDENTIALS_FAILURE';
-		const BILLING = 'create_billing';
-		const SERVICES = 'create_services';
-		const SECURITY_AUDIT = 'create_audit';
-		const PORT_SCANNING = 'create_secgroup';
+		const BILLING 						= 'create_billing';
+		const SERVICES 						= 'create_services';
+		const SECURITY_AUDIT 				= 'create_audit';
+		const PORT_SCANNING 				= 'create_secgroup';
+		const CLOUD_TRAIL 				    = 'create_cloudtrail';
+		const CREATE_BUDGET					= 'create_budget';
 		
 		
 		const describeAccountAttributes     = 'describeAccountAttributes';
