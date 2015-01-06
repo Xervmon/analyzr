@@ -294,8 +294,39 @@ convertJsonToTableSecurityGroups = function(data) {
              "Operation" : " filter-select filter-exact ",
              "ResourceId" : " filter-select filter-exact ",
              "ReservedInstance" : " filter-select filter-exact ",
-             "AvailabilityZone" : " filter-select filter-exact "
-        }), $table = $(mediaClass);
+             "AvailabilityZone" : " filter-select filter-exact ",
+    }), $table = $(mediaClass);
+        mediaClass += setupTableSorterChecked($table, false, pageSize);
+        $table.find('td[data-title="id"]').each(function() {
+            var $td = $(this);
+            var $parent = $td.parent();
+            //$td = $this.parent();
+            $td.addClass("btn-link").on("click", function(e) {
+                e.preventDefault();
+
+                var $selectedLink = this.dataset.title;
+
+            });
+        })
+
+        return $table;
+    } else {
+        return '<div class="no_data"><span class="label label-primary">No Data</span></div>';
+
+    }
+
+};
+
+convertJsonToTableCloudTrails = function(data) {
+    var pageSize = 10;
+   
+
+    if (data.length > 0) {
+        var mediaClass = '';
+        mediaClass = buildTableFromArray(data || [], ["services_with_info,links"], null, null, {
+             "awsRegion" : " filter-select filter-exact ",
+            
+    }), $table = $(mediaClass);
         mediaClass += setupTableSorterChecked($table, false, pageSize);
         $table.find('td[data-title="id"]').each(function() {
             var $td = $(this);
