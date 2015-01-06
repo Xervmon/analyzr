@@ -87,7 +87,7 @@ $(document).ready(function() {
     if (!$.isArray(response)) {
      response = JSON.parse(response);
     }
-    $('#collections').html(convertJsonToTableSecurityGroups(response));
+    $('#collections').html(convertJsonToTableCloudTrails(response));
   });
 
 });
@@ -107,7 +107,7 @@ function applyFilter(){
      if (!$.isArray(response)) {
          response = JSON.parse(response);
       }
-     $('#collections').html(convertJsonToTableSecurityGroups(response));
+     $('#collections').html(convertJsonToTableCloudTrails(response));
     });
 }
 

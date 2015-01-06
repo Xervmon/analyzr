@@ -206,8 +206,8 @@ class AWSBillingEngine {
      public static function getCloudTrailFilters($data) {
         self::init();
         Log::info('Debug :' . json_encode($data));
-        Log::info('URL ' . self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['get_cloudTrail']);
-        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['get_cloudTrail'], $data);
+        Log::info('URL ' . self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['getCloudTrailFilters']);
+        return self::request(self::$orchestrationParams['endpoint_ip'] . self::$orchestrationParams['getCloudTrailFilters'], $data);
     }
 
     
