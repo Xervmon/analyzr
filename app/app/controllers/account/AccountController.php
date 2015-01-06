@@ -562,21 +562,26 @@ class AccountController extends BaseController {
 		$responseJson = AWSBillingEngine::authenticate(array('username' => Auth::user()->username, 'password' => md5(Auth::user()->engine_key)));
 		EngineLog::logIt(array('user_id' => Auth::id(), 'method' => 'authenticate - Collection', 'return' => $responseJson));
 		$obj = WSObj::getObject($responseJson);
-		
+
+		$arr['eventName'] = array();
+		$arr['eventType'] = array();
+
 		if($obj->status == 'OK')
 		{
-			$response = AWSBillingEngine::get_cloudTrail(array('token'         => $obj->token, 
+			$response = AWSBillingEngine::getCloudTrailFilters(array('token'         => $obj->token, 
 														       'filter'        => 'eventName', 
 														       'accountId'     => $cred->accountId,
 														 ));
-			$result = WSObj::getObject($response);							
+			$result = WSObj::getObject($response);	
+
+						
 			if($result->status == 'OK')
 			{
 
-				$arr['eventName'] = $result->get_cloudtrail_data;
+				$arr['eventName'] = $result->getCloudTrailFilters;
 				
 			}
-			$response = AWSBillingEngine::get_cloudTrail(array('token'         => $obj->token, 
+			$response = AWSBillingEngine::getCloudTrailFilters(array('token'         => $obj->token, 
 														       'filter'        => 'eventType', 
 														       'accountId'     => $cred->accountId,
 														 ));
@@ -584,7 +589,7 @@ class AccountController extends BaseController {
 			if($result->status == 'OK')
 			{
 
-				$arr['eventType'] = $result->get_cloudtrail_data;
+				$arr['eventType'] = $result->getCloudTrailFilters;
 				
 			}
 		}
@@ -640,15 +645,14 @@ class AccountController extends BaseController {
 
 						foreach( $values as $key => $value)
                 		{
-                			$arr[$i]['eventVersion']    = $value->eventVersion;
-                			$arr[$i]['eventID'] 	    = $value->eventID;
+                			//$arr[$i]['eventVersion']    = $value->eventVersion;
+                			//$arr[$i]['eventID'] 	    = $value->eventID;
 							$arr[$i]['eventTime']       = $value->eventTime;							
 							$arr[$i]['sourceIPAddress'] = $value->sourceIPAddress;
 							$arr[$i]['awsRegion']      = $value->awsRegion;
 							$arr[$i]['eventSource']   = $value->eventSource;
 							$arr[$i]['userAgent']   = $value->userAgent;
-							$arr[$i]['requestID']     = $value->requestID;
-								
+							//$arr[$i]['requestID']     = $value->requestID;								
                 			$i++;
                 		}
                 		

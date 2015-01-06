@@ -342,10 +342,14 @@ Inverse	<span class="label label-inverse">Inverse</span>
 			{
 				$temp_url = URL::full().'/'.$job->cloudAccountId.'/refresh';
 				$str .= '<tr>';
-				if($job -> operation==Lang::get('account/account.create_billing'))
+				if($job -> operation     == Constants::BILLING)
 					$str .= '<td> <i class="fa fa-cogs"></i> ' . $job -> operation. '</td>';	
-				elseif($job -> operation==Lang::get('account/account.create_services'))
+				elseif($job -> operation == Constants::SERVICES)
 				 	$str .= '<td> <i class="fa fa-credit-card"></i> ' . $job -> operation. '</td>';
+				elseif($job -> operation == Constants::CLOUD_TRAIL)
+				 	$str .= '<td> <i class="fa fa-file-text"></i> ' . $job -> operation. '</td>';
+				elseif($job -> operation == Constants::CREATE_BUDGET)
+				 	$str .= '<td> <i class="fa fa-money"></i> ' . $job -> operation. '</td>'; 	 
 				else
 					$str .= '<td> <i class="fa fa-lock"></i> ' . $job -> operation. '</td>';
 
