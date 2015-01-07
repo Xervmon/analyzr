@@ -55,6 +55,8 @@ class BudgetController extends BaseController {
                                                ));
     }     
 
+
+
     /**
      * Displays the form for budget creation
      *
@@ -63,7 +65,7 @@ class BudgetController extends BaseController {
 
         $mode        = $id !== false ? 'edit' : 'create';
         $budget      = $id !== false ? Budget::where('user_id', Auth::id())->findOrFail($id) : null;
-        $budgetType  = array('weekly', 'monthly');
+
 		
 		if($id !== false)
         {
@@ -73,7 +75,7 @@ class BudgetController extends BaseController {
         {
 			$accounts    = CloudAccount::where('user_id', Auth::id())->where('profileType', Lang::get('security/portPreferences.readonlyProfile'))->get();
 		}
-        return View::make('site/account/budget/create_edit', compact('mode', 'budget', 'budgetType', 'accounts'));
+        return View::make('site/account/budget/create_edit', compact('mode', 'budget', 'accounts'));
     }
 
 
@@ -121,7 +123,7 @@ class BudgetController extends BaseController {
     }
 
 
-     public function postDelete($id) {
+    public function postDelete($id) {
         
         Budget::where('id', $id)->where('user_id', Auth::id())->delete();
 
@@ -194,6 +196,21 @@ class BudgetController extends BaseController {
           RedirectHelper::redirectAccount(Constants::ENGINE_CREDENTIALS_FAILURE);
        }
     }
+
+
+    public function getBudgetType($cloudAccountId){
+
+      $budget    = Budget::select('budgetType')->where('user_id', Auth::id())->where('cloudAccountId', $cloudAccountId)->get();
+      print json_encode($budget);
+
+    }
+
+
+    public static function checkBudgetStatus($cloudAccountId){
+
+     return  $budget    = Budget::where('user_id', Auth::id())->where('cloudAccountId', $cloudAccountId)->get();
+     
+     }
 
 }
 
