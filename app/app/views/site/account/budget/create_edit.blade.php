@@ -42,6 +42,9 @@
 			<label class="col-md-2 control-label" for="cloudAccountId">{{{ Lang::get('budget/budget.choose_an_account') }}} <font color="red">*</font></label>
 			<div class="col-md-6">
 				<select class="form-control" name="cloudAccountId" id="cloudAccountId">
+					@if(!isset($budget->cloudAccountId))
+					    <option value="">{{{ Lang::get('budget/budget.select_an_account') }}}</option>
+					@endif
 					@foreach ($accounts as $key )
 						<option value="{{$key->id}}" {{{ Input::old('cloudAccountId', isset($budget->cloudAccountId) && ($budget->cloudAccountId == $key->id) ? 'selected="selected"' : '') }}}>{{{ $key->name }}}</option>
 					@endforeach
@@ -53,9 +56,13 @@
 			<label class="col-md-2 control-label" for="budgetType">{{{ Lang::get('budget/budget.budgettype') }}}<font color="red">*</font></label>
 			<div class="col-md-6">
 				<select class="form-control" name="budgetType" id="budgetType" required>
-					@foreach ($budgetType as $key )
-						<option value="{{$key}}" {{{ Input::old('budgetType', isset($budget->budgetType) && ($budget->budgetType == $key) ? 'selected="selected"' : '') }}}>{{{ $key }}}</option>
-					@endforeach
+					@if(isset($budget->budgetType))
+                      <option value="{{{$budget->budgetType}}}" >{{{$budget->budgetType}}}</option>
+					@else
+                      <option value="" >{{{Lang::get('budget/budget.select_an_type')}}}</option>
+					@endif
+					    
+					
 				</select>
 			</div>
 		</div></br>
@@ -89,4 +96,46 @@
 @stop
 
 @section('scripts')
+
+<script type="text/javascript">
+
+
+       $('#cloudAccountId').change(function(){
+	        var cloudAccountId = $('#cloudAccountId').val();
+	        if(cloudAccountId !== ''){
+	         var url = "{{ URL::to('budget/:id/budgettype') }}";
+                 url = url.replace(':id', cloudAccountId );
+                 $.ajax({
+                  url:url,
+                  cache: false
+            })
+            .done(function( response ) {
+                if (!$.isArray(response)) {
+                     response = JSON.parse(response);
+                     console.log(response);
+                    if(response !== '[]' && response.length > 0){
+                        var i ;var result = [];
+                        for(var i = 0; i < response.length; i++){
+                  	    result[i] = response[i].budgetType;
+                        }
+                        console.log(result);
+                        if(result == 'weekly'){
+                   	    $("#budgetType").html('<option value="">{{{Lang::get('budget/budget.select_an_type')}}}</option>'+'<option value="monthly">monthly</option>');
+                        }else if(result == 'monthly'){
+                        $("#budgetType").html('<option value="">{{{Lang::get('budget/budget.select_an_type')}}}</option>'+'<option value="weekly">weekly</option>');
+                        }else{
+                       	$("#budgetType").html('<option value="">{{{Lang::get('budget/budget.budget_exists')}}}</option>');
+                        }
+                    }else {
+                   	$("#budgetType").html('<option value="">{{{Lang::get('budget/budget.select_an_type')}}}</option>'+'<option value="weekly">weekly</option>'+'<option value="monthly">monthly</option>');
+                   	}
+                }
+            });
+          }else{
+          	$("#budgetType").html('<option value="">{{{Lang::get('budget/budget.select_an_type')}}}</option>');
+          }
+
+        });
+
+</script>
 @stop

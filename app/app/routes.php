@@ -229,6 +229,7 @@ Route::group(array(
     Route::any('budget/', 'BudgetController@getIndex');
     Route::get('budget/create', 'BudgetController@getCreate');
     Route::get('budget/{budget}/edit', 'BudgetController@getCreate');
+    Route::get('budget/{budget}/budgettype', 'BudgetController@getBudgetType');
     Route::any('budget/{account}/BudgetStatus', 'BudgetController@getBudgetStatus');
     
     Route::any('scheduler/', 'SchedulerController@getIndex');

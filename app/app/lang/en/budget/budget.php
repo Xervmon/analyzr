@@ -24,6 +24,9 @@ return array(
 	'notification_email'    => 'Notification Email',
 	'budget_delete'         => 'Are You Sure Want To Delete Budget For This Account ?',
 	'Budget_details'        => 'Budget Details',
+	'select_an_account'     => 'Select Account',
+	'select_an_type'        => 'Select Type',
+	'budget_exists'         => 'Budget Type For This Account Is Already Set.  Choose Another Account',
 
 
 );
