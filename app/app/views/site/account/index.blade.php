@@ -31,13 +31,13 @@
 					<!-- ./ csrf token -->
 					@if($account -> profileType == Constants::READONLY_PROFILE)
 					
-					<button type="button" class="btn btn-warning pull-right" id="acc_delete_btn" role="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Account" data-message="{{ Lang::get('account/account.read_account_delete') }}">
+					<button type="button" class="btn btn-danger pull-right" id="acc_delete_btn" role="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Account" data-message="{{ Lang::get('account/account.read_account_delete') }}">
 						<span class="glyphicon glyphicon-trash"></span>
 					</button>
 
                     @else
 
-                    <button type="button" class="btn btn-warning pull-right" id="acc_delete_btn" role="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Account" data-message="{{ Lang::get('account/account.security_account_delete') }}">
+                    <button type="button" class="btn btn-danger pull-right" id="acc_delete_btn" role="button" data-toggle="modal" data-target="#confirmDelete" data-title="Delete Account" data-message="{{ Lang::get('account/account.security_account_delete') }}">
 						<span class="glyphicon glyphicon-trash"></span>
 					</button>
 
@@ -61,8 +61,10 @@
 						<a href="{{ URL::to('account/' . $account->id . '/Collection') }}" id="acc_collection_btn"><i class="fa fa-briefcase"></i></a>
 						|
 						<a href="{{ URL::to('account/' . $account->id . '/ChartsData') }}" id="acc_charts_btn"><i class="fa fa-bar-chart"></i></a>
+						@if( UIHelper :: checkCloudTrail($account->id))				
 						|
 						<a href="{{ URL::to('account/' . $account->id . '/cloudTrail') }}" id="acc_budget_btn"><i class="fa fa-file-text"></i></a>
+						@endif
 
 						<?php   $budgetStatus = BudgetController::checkBudgetStatus($account->id); ?>
 
