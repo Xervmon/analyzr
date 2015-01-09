@@ -447,4 +447,15 @@ Inverse	<span class="label label-inverse">Inverse</span>
 		}
 	}
 
+	public static function checkCloudTrail($acc_id)
+	{
+		$cloud_trail = ProcessJob::where('cloudAccountId', $acc_id) -> where('operation', Constants::CLOUD_TRAIL)-> get();
+		$cloud_trail = json_decode($cloud_trail->toJson());
+
+		if(empty($cloud_trail))
+			return false;
+		else
+			return true;		
+	}
+
 }
