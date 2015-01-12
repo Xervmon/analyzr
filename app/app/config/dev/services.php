@@ -19,7 +19,7 @@ return array(
 					                'ap-southeast-2',
 					                'cn-north-1'
 					                
-					            ),
+					    ),
     					'services' => array(
     										'describeAccountAttributes', 'describeAddresses', 'describeAvailabilityZones', 
     										'describeCustomerGateways', 'describeDhcpOptions', 'describeImages', 'describeInstances', 
