@@ -69,9 +69,9 @@
 
 
         <div class="form-group {{{ $errors->has('username') ? 'error' : '' }}}">
-			<label class="col-md-2 control-label" for="budget">{{{ Lang::get('budget/budget.setbudget') }}}<font color="red">*</font></label>
+			<label class="col-md-2 control-label" for="budget">{{{ Lang::get('budget/budget.setbudget') }}}<font color="red">*</font>(Numeric Value)</label>
 			<div class="col-md-6">
-				<input class="form-control" type="text" name="budget" id="budget" value="{{{ Input::old('budget', isset($budget->budget) ? $budget->budget : null) }}}" required />
+				<input class="form-control" type="number" step="any" name="budget" id="budget" value="{{{ Input::old('budget', isset($budget->budget) ? $budget->budget : null) }}}" required />
 			</div>
 		</div></br>
 
