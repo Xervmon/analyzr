@@ -32,12 +32,12 @@ return array(
             'required' => true,
             'description' => 'The bucket configured to host aws usage data. <a target="_blank" href="https://console.aws.amazon.com/billing/home?#/preferences">Billing Preferences</a>'
         ) ,
-        'credentials[cloudTrailBucket]' => array(
+        /* 'credentials[cloudTrailBucket]' => array(
             'type' => 'string',
             'title' => 'Cloud Trail Bucket',
             'required' => false,
             'description' => 'The bucket configured to host cloud Trail Logs . <a target="_blank" href="https://console.aws.amazon.com/billing/home?#/preferences">Billing Preferences</a>'
-        ) ,
+        ) , */
     ) ,
      'Amazon AWS:Security Profile' => array(
         'credentials[apiKey]' => array(
