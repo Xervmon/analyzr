@@ -54,6 +54,10 @@
 							foreach ($chartDataForAccounts['drilldownSeries'] as $keys => $values) {
 
 								$alls[$keys] = $values;
+								
+                                if(isset($values)){
+
+                                if(isset($values->data)){
 
 								$arr = $values -> data;
 
@@ -65,12 +69,12 @@
 
 											$Apnsum += $value1[1];
 
-									}
+									 }
 
-								}
-
-							}
-
+								  }
+                                }
+							  }
+                            }
 							$cost      = array_sum($totalcost);
 							$multiple  = Lang::get('account/account.multiple_value');
 							$Predicted = $cost - $Apnsum;
