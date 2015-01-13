@@ -82,5 +82,6 @@ return array(
 		'CloudTrail'                       => 'Cloud Trail Logs Of AWS Services',
 		'apn_fee'                          => 'APN Fee',
 		'multiple_value'                   => '12',
+		'discount_added'				   => 'Amazon partnership benefits applied on your spend Credit : USD'
 		
 );

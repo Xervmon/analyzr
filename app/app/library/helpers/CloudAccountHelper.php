@@ -124,7 +124,12 @@ class CloudAccountHelper
 						$currentCost = self::findCurrentCost($account);
 						if($currentCost['status'] == 'OK')
 						{
-							$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $currentCost['total'];
+							if(isset($currentCost['discount']))
+								$temp_series = array('total' => $currentCost['total'],'discount' => $currentCost['discount'] );
+							else
+								$temp_series = array('total' => $currentCost['total']);
+						
+							$series -> {$account->name .'-' .Constants::READONLY_PROFILE} = $temp_series; 
 							$costData = $currentCost['cost_data'];
 							$drilldownSeries = new stdClass();
 							$drilldownSeries->accountId = $account->id; 
