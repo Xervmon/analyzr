@@ -134,8 +134,13 @@
 	    							</ul>
 	    						</li>
 	                        @else
-	                        <li id="howitworks"><a href="#Howitworks">How it works</a></li>
-	                        <li id="pricings"><a href="#pricing">Pricing</a></li>
+	                         @if(Request::url()==URL::to('/'))
+	                          	<li id="howitworks"><a href="#Howitworks">How it works</a></li>
+	                         	<li id="pricings"><a href="#pricing">Pricing</a></li>
+	                         @else
+	                         	<li id="howitworks"><a href="{{{ URL::to('/').'#Howitworks' }}}">How it works</a></li>
+	                         	<li id="pricings"><a href="{{{ URL::to('/').'#pricing' }}}">Pricing</a></li>
+	                         @endif	
                        <!-- <li><a href="#services">Services</a></li>
                             <li><a href="#blog">Blog</a></li>-->
 	                        <li {{ (Request::is('user/login') ? ' class="active"' : '') }}><a href="{{{ URL::to('user/login') }}}"><span class="glyphicon glyphicon-log-in"></span> {{{ Lang::get('site.login') }}}</a></li>
