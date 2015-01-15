@@ -88,14 +88,14 @@
 
               <div class="col-md-4 col-sm-6">
                 <div class="icon-wrap"><img src="{{asset('assets/img/icon-easel-flat.png')}}" alt=""></div>
-                <h4>Subheading</h4>
-                <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+                <h4>Spend Management</h4>
+                <p>Track and Manage your spend across your AWS accounts.</p>
               </div>
 
               <div class="col-md-4 col-sm-6">
-                <div class="icon-wrap"><img src="{{asset('assets/img/icon-comments-flat.png')}}" alt=""></div>
-                <h4>Subheading</h4>
-                <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+                <div class="icon-wrap"><img src="{{asset('assets/img/locked68.png')}}" alt=""></div>
+                <h4>Security Audit</h4>
+                <p>Using security credentials, we provide comprehensive security audit reports on your AWS assets.</p>
               </div>
 
               <div class="col-md-4 col-sm-6">
