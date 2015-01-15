@@ -101,7 +101,7 @@
               <div class="col-md-4 col-sm-6">
                 <div class="icon-wrap"><img src="{{asset('assets/img/verification5.png')}}" alt=""></div>
                 <h4>Port Scaning Audit</h4>
-                <p>Track your inbound and outbound ports originating from your security groups across AWS accounts</p>
+                <p>Track your inbound and outbound ports originating from your security groups across AWS accounts.</p>
               </div>
 
               <div class="col-md-4 col-sm-6">
@@ -119,7 +119,7 @@
               <div class="col-md-4 col-sm-6">
                 <div class="icon-wrap"><img src="{{asset('assets/img/operations.png')}}" alt=""></div>
                 <h4>AWS Pricing</h4>
-                <p>Know the pricing for Reserved and Ondemand Instances</p>
+                <p>Know the pricing for Reserved and Ondemand Instances.</p>
               </div>
 
             </div>
