@@ -93,7 +93,7 @@
               </div>
 
               <div class="col-md-4 col-sm-6">
-                <div class="icon-wrap"><img src="{{asset('assets/img/locked68.png')}}" alt=""></div>
+                <div class="icon-wrap"><img src="{{asset('assets/img/locked53.png')}}" alt=""></div>
                 <h4>Security Audit</h4>
                 <p>Using security credentials, we provide comprehensive security audit reports on your AWS assets.</p>
               </div>
