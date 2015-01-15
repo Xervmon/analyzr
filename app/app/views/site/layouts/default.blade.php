@@ -72,7 +72,11 @@
 	                		<li{{ (Request::is('data-security') ? ' class="active"' : '') }}><a href="{{{ URL::to('data-security') }}}"><span class="glyphicon glyphicon-lock"></span> {{{ Lang::get('site.data_security') }}}</a></li>
     						<li{{ (Request::is('roadmap') ? ' class="active"' : '') }}><a href="{{{ URL::to('roadmap') }}}"><span class="glyphicon glyphicon-list-alt"></span> {{{ Lang::get('site.roadmap') }}}</a></li>
 	                		<li{{ (Request::is('cloudExperts') ? ' class="active"' : '') }}><a href="{{{ URL::to('cloudExperts') }}}"><span class="glyphicon glyphicon-plane"></span> {{{ Lang::get('site.cloudExperts') }}}</a></li>
-							
+							 @if(Request::url()==URL::to('/'))
+	                          	<li id="howitworks"><a href="#Howitworks"><span class="glyphicon glyphicon-check"></span>Features</a></li>
+	                         @else
+	                         	<li id="howitworks"><a href="{{{ URL::to('/').'#Howitworks' }}}"><span class="glyphicon glyphicon-check"></span>Features</a></li>
+	                         @endif	
 	                	</ul>
 	                    <ul class="nav navbar-nav pull-right">
 	                        @if (Auth::check())
@@ -133,12 +137,7 @@
 	    							
 	    							</ul>
 	    						</li>
-	                        @else
-	                         @if(Request::url()==URL::to('/'))
-	                          	<li id="howitworks"><a href="#Howitworks">Features</a></li>
-	                         @else
-	                         	<li id="howitworks"><a href="{{{ URL::to('/').'#Howitworks' }}}">Features</a></li>
-	                         @endif	
+	                       
                        <!-- <li><a href="#services">Services</a></li>
                             <li><a href="#blog">Blog</a></li>-->
 	                        <li {{ (Request::is('user/login') ? ' class="active"' : '') }}><a href="{{{ URL::to('user/login') }}}"><span class="glyphicon glyphicon-log-in"></span> {{{ Lang::get('site.login') }}}</a></li>
