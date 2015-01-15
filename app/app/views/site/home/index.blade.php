@@ -83,7 +83,7 @@
   <section id="Howitworks" class="section section-center section-hilite section-features loaded" style="margin-top:0.5em;">
      
          <div class="container" style="padding-right: 40px;">
-            <h2 class="section-title"><span>How it works?</span></h2>
+            <h2 class="section-title"><span>Features</span></h2>
             <div class="row">
 
               <div class="col-md-4 col-sm-6">
@@ -201,7 +201,7 @@
     <!-- </section>
  -->
 
-
+   <!--
     <section id="pricing" class="section section-center section-pricing loaded">
             <div class="container" style="padding-right: 50px;">
                 <h2 class="section-title"><span>Pricing Table Made Easy</span></h2>
@@ -296,8 +296,7 @@
                 </div>
             </div>
         </section>
-
-
+	-->
 
        <!--  <section id="team" class="section section-center section-hilite section-team loaded">
             <div class="container" style="padding-right: 50px;">
