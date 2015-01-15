@@ -111,15 +111,15 @@
               </div>
 
               <div class="col-md-4 col-sm-6">
-                <div class="icon-wrap"><img src="{{asset('assets/img/icon-photo-flat.png')}}" alt=""></div>
-                <h4>Subheading</h4>
-                <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+                <div class="icon-wrap"><img src="{{asset('assets/img/log5.png')}}" alt=""></div>
+                <h4>Cloud Trail Logs</h4>
+                <p>Scan your cloud trail logs across AWS accounts.</p>
               </div>
 
               <div class="col-md-4 col-sm-6">
                 <div class="icon-wrap"><img src="{{asset('assets/img/icon-calculator-flat.png')}}" alt=""></div>
-                <h4>Subheading</h4>
-                <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+                <h4>AWS Pricing</h4>
+                <p>Know the pricing for Reserved and Ondemand Instances</p>
               </div>
 
             </div>
