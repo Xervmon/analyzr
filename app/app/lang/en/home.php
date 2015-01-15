@@ -21,6 +21,6 @@ return array(
             'description' => 'We aggregate your spend and analyze your cost data!'
         )
     ),
-    'xervmon_intro'=>'Analyzr is a part of the powerful Xervmon cloud management suite',
+    'xervmon_intro'=>'Analyzr is completely open source with the flexibility of self hosting within your AWS account.',
     'xervmon_call_to_action'=>'Learn how you can save upto 50% on cloud costs with Xervmon'
 );
